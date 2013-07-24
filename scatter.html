@@ -2,10 +2,10 @@
 <html>
     <head>
         <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-  	<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+		<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
         <style type="text/css">
         body, html {
-            font-family: brandon grotesque,futura,helvetica,sans-serif;
+        font-family:akkurat, univers, arial, sans-serif;
         }
         #sort span {
         	cursor: pointer;
@@ -14,7 +14,7 @@
         	text-decoration: underline;
         }
         #info {
-        	font-family: akkurat, franklin gothic, helvetica, sans-serif;
+        	font-family:akkurat, univers, arial, sans-serif;
             width: 420px;
             position: absolute;
             left: 950px;
@@ -55,16 +55,16 @@
         	padding: 0;
         	margin: 0;
         	font-weight: bold;
-        }
+      		font-size: 12px;
+      		}
+
         #creator li, #lcsh li {
         	cursor: pointer;
         }
         #creator li:hover, #lcsh li:hover {
         	text-decoration: underline;
         }
-        #creator li {
-        	font-size: 12px;
-        }
+    
         #graph rect{
             fill: none;
             stroke: #ccc;
@@ -86,12 +86,12 @@
         }
         
         .axis text{
-        font-family:brandon grotesque, futura, arial;
+        font-family:akkurat, univers, arial, sans-serif;
         font-size: 11px;
         }
         
         .axis_labels{
-        font-family:brandon grotesque, futura, arial;
+        font-family:akkurat, univers, arial, sans-serif;
         font-size: 16px;
         }
         
@@ -121,16 +121,17 @@
         <div id="info">
             <h2 id="title"></h2>
             <p class="infoLabel">Subject:</p>
-  			<p id="letter"><span></span></p>
+  			<p id="letter"><span></span>
+  			<div id="subject"></div></p>
             <p class="infoLabel">Authors:</p>
             <ul id="creator"></ul>
             <p class="infoLabel">Publisher information: </p>
-            <p id="publisher"><span></span></p>
-            <p id="pub_location"><span></span></p>
-            <p id="pub_date_numeric"><span></span></p>
+            <p id="publisher"><span></span>
+            <div id="pub_location"><span></span></div>
+            <div id="pub_date_numeric"><span></span></div>
+            </p>
             <p class="infoLabel">Call Number: </p>
             <p id="lc"> <span></span></p>
-            <p class="infoLabel">Subjects: </p>
          	<div id="subject"></div>
         	<p class="infoLabel">Format: </p>
          	<p id="format"> <span></span></p>      	
@@ -325,12 +326,12 @@
 
 
 	var timescale = d3.scale.linear();
-	timescale.domain([1950,2020]);
+	timescale.domain([1850,2020]);
 	timescale.range([0,800]);
 
 	
 	var xscale = d3.scale.linear();
-	xscale.domain([1950,2020]);
+	xscale.domain([1850,2020]);
 	xscale.range([0,gWidth]);
 
 
@@ -455,7 +456,9 @@
     	info.style("display","block");
         info.select("#title").text(data.title);
         if (data.creator)
-            info.select("#creator").html("<li class='c'>" + data.creator.join("</li><li>") + "</li>");
+         info.select("#creator").html("<li class='c'>" + data.creator.join("</li><li>") + "</li>");
+ //           info.select("#creator").html(data.creator.join(", "));
+            
         info.select("#pub_date_numeric span").text(data.pub_date_numeric);
         info.select("#shelfrank span").text(data.shelfrank);
         info.select("#subject").text(data.loc_call_num_subject);
@@ -463,8 +466,8 @@
            info.select("#lc span").text(data.call_num.join("or "));
         if (data.lcsh)
             info.select("#lcsh").html("<li class='c'>" + data.lcsh.join("</li><li>") + "</li>");
-		info.select("#publisher").text(data.publisher);
-		info.select("#pub_location").text(data.pub_location);
+		info.select("#publisher span").text(data.publisher);
+		info.select("#pub_location span").text(data.pub_location);
         info.select("#fac_score span").text(data.score_checkouts_fac);
         info.select("#grad_score span").text(data.score_checkouts_grad);
         info.select("#undergrad_score span").text(data.score_checkouts_undergrad);
@@ -562,24 +565,24 @@ function set_x_axis(){
 						
 							switch(x_axis_type) {
 								case 'chronological_x':
-									xscale.domain([1950,2020]);
+									xscale.domain([1850,2020]);
 									xscale.range([0,gWidth]);
 				        			if (d.pub_date_numeric){
               						return (xscale(d.pub_date_numeric));
               						// - 1850)*(gWidth/170);
 									}
 									else{
-									return gWidth;
+									return xscale(0);
 									}
 									break;
 								case 'call_number_sort_order_x':
-									yscale.domain([0,16000000]);
-									yscale.range([0,gWidth]);
+									xscale.domain([0,16000000]);
+									xscale.range([0,gWidth]);
 									if (d.loc_call_num_sort_order){
-		   					        return yscale(d.loc_call_num_sort_order[0]);
+		   					        return xscale(d.loc_call_num_sort_order[0]);
 									}
 									else{
-									return gWidth;
+									return xscale(0);
 									}									
 									break;	
 					}});
@@ -607,7 +610,7 @@ function set_x_axis(){
 		            				// * gHeight/200);
 									}
 									else{
-									return 0;
+									return yscale(0);
 									}
 									break;
 								case 'undergrads':
@@ -618,7 +621,7 @@ function set_x_axis(){
 		          					// * gHeight/200);
 									}
 									else{
-									return 0;
+									return yscale(0);
 									}									
 									break;
 								case 'faculty':
@@ -629,7 +632,7 @@ function set_x_axis(){
 		          					// * gHeight/200);
 									}
 									else{
-									return 0;
+									return yscale(0);
 									}									
 									break;								
 								case 'popularity_y':
@@ -644,14 +647,14 @@ function set_x_axis(){
 									}									
 									break;		
 								case 'date_y':
-									yscale.domain([1950,2020]);
+									yscale.domain([1850,2020]);
 									yscale.range([gHeight,0]);
 									if (d.pub_date_numeric){
 					                return yscale(d.pub_date_numeric);
 					                // - 1850)*(gHeight/100)-400);
 									}
 									else{
-									return 0;
+									return yscale(0);
 									}									
 									break;		
 								case 'call_number_sort_order_y':
@@ -662,7 +665,7 @@ function set_x_axis(){
 						            // * (gHeight/19000000)));
 									}
 									else{
-									return 0;
+									return yscale(0);
 									}									
 									break;		
 					}});
