@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script type="text/javascript" src="lib/d3.js"></script>
+        <script type="text/javascript" src="lib/d3.csv.js"></script>
+        <script type="text/javascript" src="lib/d3.geom.js"></script>
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+        <style type="text/css">
+        body, html {
+            margin: 0;
+            padding: 0;
+        }
+        </style>
+    </head>
+    <body>
+        <canvas id="canvas" width="1000px" height="500px"></canvas>
+    </body>
+    <script type="text/javascript">
+
+    var getQueryVariable = function(variable) {
+        var query = window.location.search.substring(1);
+        var vars = query.split("&");
+        for (var i=0;i<vars.length;i++) {
+            var pair = vars[i].split("=");
+            if (pair[0] == variable) {
+                return pair[1];
+            }
+        }
+        return(false);
+    };
+
+    var baseurl = 'http://librarycloud.law.harvard.edu/v1/api/item/',
+        api = baseurl + '?filter=collection:hollis_catalog&filter=lcsh_keyword:{keyword}&limit=250&facet=pub_date_numeric&key=5239997b68e033fbf2854d77c6295310',
+        search = getQueryVariable('search') || 'technology';
+
+    console.log(search);
+
+    var canvas = document.getElementById('canvas'),
+        ctx = canvas.getContext('2d');
+
+    var drawCircle = function(x, y, r) {
+        r = r || 5;
+
+        ctx.beginPath();
+        ctx.arc(x, canvas.height - y, r, 0, 2*Math.PI, false);
+        ctx.fillStyle = 'green';
+        ctx.fill();
+        ctx.lineWidth = 1;
+        ctx.strokeStyle = '#FFF';
+        ctx.stroke();
+    };
+
+
+    $.ajax({
+        url: api.replace('{keyword}', search),
+        success: function(response) {
+            console.log(arguments);
+            var docs = response.docs;
+            for (i in docs) {
+                var doc = docs[i],
+                    year = doc.pub_date_numeric,
+                    shelfRank = doc.shelfrank;
+
+                drawCircle((year - 1850) * 5, shelfRank * (canvas.height / 100));
+            }
+        }
+    });
+
+    </script>
+</html>

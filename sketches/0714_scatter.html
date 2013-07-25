@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+		<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+        <style type="text/css">
+        body, html {
+            font-family: Helvetica;
+        }
+        #info {
+            width: 350px;
+            position: absolute;
+            left: 1050px;
+            top: 0;
+        }
+        #graph rect{
+            fill: none;
+            stroke: #ccc;
+        }
+        circle {
+            opacity: .25;
+        }
+        circle:hover {
+            fill: #000;
+            opacity: 1;
+        }
+        </style>
+    </head>
+    <body>
+<!--         <canvas id="canvas" width="1000px" height="500px"></canvas> -->
+        <input id="search-field" type="text" value="technology"></input><input id="search" type="submit"/>
+        <div id="graph"></div>
+        <div id="info">
+            <h2 id="title"></h2>
+            <h3 id="creator"><span></span></h3>
+            <p id="pub_date_numeric">Publication Date: <span></span></p>
+            <p id="shelfrank">Shelfrank: <span></span></p>
+            <p id="lc">LC#: <span></span></p>
+         	<p id="subject">Subjects: <span></span></p>
+         	<p id="format">Format: <span></span></p>
+         	<p id="lcsh">multiheadings: <span></span></p>
+         	<p id="fac_score">Faculty Circulation Score: <span></span></p>
+         	<p id="grad_score">Graduate Circulation Score: <span></span></p>
+         	<p id="undergrad_score">Undergraduate Circulation Score: <span></span></p>
+			<p id="reserve_score">Reserve Circulation Score: <span></span></p>
+			<p id="letter">First Letter of Call #: <span></span></p>
+        </div>
+    </body>
+    <script type="text/javascript">
+
+
+
+    var getQueryVariable = function(variable) {
+        var query = window.location.search.substring(1);
+        var vars = query.split("&");
+        for (var i=0;i<vars.length;i++) {
+            var pair = vars[i].split("=");
+            if (pair[0] == variable) {
+                return pair[1];
+            }
+        }
+        return(false);
+    };
+    
+// This just takes what's in the search box and adds an "&" between words.     
+
+    var baseurl = 'http://librarycloud.law.harvard.edu/v1/api/item/',
+        api = baseurl + '?filter=collection:hollis_catalog&filter=lcsh_keyword:{keyword}&limit=250&facet=pub_date_numeric&key=5239997b68e033fbf2854d77c6295310',
+        search = getQueryVariable('search') || 'los angeles';
+
+// 
+
+    var width = 1000,
+        height = 700,
+        gWidth = 950,
+        gHeight = 600;
+
+	var lcObjectArray = [
+	{
+	name: "A",
+	color: "#ff0000",
+	subject: "General Works"
+	},
+	{
+	name: "B",
+	color: "#ff3800",
+	subject: "Philosophy, Psychology, Religion"
+	},
+	{	
+	name: "C",
+	color: "#ff7000",
+	subject: "Auxillary Sciences of History"
+	},
+	{	
+	name: "D",
+	color: "#ffa800",
+	subject: "History: General & Outside the Americas"
+	},
+	{	
+	name: "E",
+	color: "#ffe000",
+	subject: "History: United States"
+	},
+	{	
+	name: "F",
+	color: "#e6ff00",
+	subject:  "History: United States Local & America"
+	},
+	{	
+	name: "G",
+	color: "#adff00",
+	subject:  "Geography, Anthropology, Recreation"
+	},
+	{	
+	name: "H",
+	color: "#75ff00",
+	subject:  "Social Sciences"
+	},
+	{	
+	name: "J",
+	color: "#05ff00",
+	subject:  "Political Science"
+	},
+	{	
+	name: "K",
+	color: "#00ff33",
+	subject:  "Law"
+	},
+	{	
+	name: "L",
+	color: "#00ff6b",
+	subject:  "Education"
+	},
+	{	
+	name: "M",
+	color: "#00ffa3",
+	subject:  "Music"
+	},
+	{	
+	name: "N",
+	color: "#00ffdb",
+	subject:  "Fine Arts<"
+	},
+	{	
+	name: "P",
+	color: "#00b3ff",
+	subject:  "Language and Literature"
+	},
+	{	
+	name: "Q",
+	color: "#007aff",
+	subject:  "Science"
+	},	
+	{	
+	name: "R",
+	color: "#00b3ff",
+	subject:  "Medicine"
+	},	
+	{	
+	name: "S",
+	color: "#0042ff",
+	subject:  "Science"
+	},	
+	{	
+	name: "T",
+	color: "#000aff",
+	subject:  "Agriculture"
+	},	
+	{	
+	name: "U",
+	color: "#6600ff",
+	subject:  "Military Science"
+	},	
+	{	
+	name: "V",
+	color: "#9e00ff",
+	subject:  "Naval Science"
+	},	
+	{	
+	name: "Z",
+	color: "#ff0080",
+	subject:  "Library Science & Information Resources"
+	}
+	];	
+    
+    var LCindex ="ABCDEFGHJKLMNPQRSTUVZ";
+  
+    var circleColor = "blue";
+
+    var svg = d3.select("#graph").append("svg").attr("height",height).attr("width",width);
+    //I think this is where the thing picks a section to append the svg canvas to. 
+    
+    var circleGroup = svg.append("g").attr("class","circles").attr("transform","translate(40,40)");
+    //adds the circles and moves them over 40 pixels?
+    
+     	circleGroup.append("rect").attr("width",gWidth).attr("height",gHeight)
+    //not totally sure, I guess this is making rectangles? 	
+    
+    var axes = svg.append("g").attr("class","axes");
+    // creates the axes
+
+    function appendAxes() {
+        axes.append("text").attr("id","searchTerm").text(search).attr("text-anchor","middle").attr("transform","translate("+width/2+",20)");
+        axes.append("text").text("Publication Date").attr("text-anchor","middle").attr("transform","translate("+width/2+","+(height-20)+")")
+        axes.append("text").text("Shelfrank").attr("text-anchor","middle").attr("transform","translate(20,"+(height/2)+") rotate(-90)")
+    }
+    //defines function that ads labels to the axes
+    
+    appendAxes();
+	
+	// calls that function
+	
+    function appendCircles(data) {
+        var circles = circleGroup.selectAll("circle").data(data);
+        //binds data to circles
+        circles.enter().append("circle").attr("class","c").attr("r",5);
+        circles.attr("cx",function(d){
+            if (d.pub_date_numeric)
+                return (d.pub_date_numeric - 1850)*(gWidth/170);
+            else
+                return 0;
+                //assigns x to the date
+        }).attr("cy",function(d){
+            return (gHeight) - (d.shelfrank * gHeight/100);
+             //assigns y to the shelfrank
+        }).attr("fill",function(d){
+		        if (d.call_num){
+   			var splitIndex=LCindex.split(d.call_num[0].split("")[0]);
+   			var indexNumber=splitIndex[0].length;
+        	return lcObjectArray[indexNumber].color;
+        	}
+        else {
+         	return "black";
+         }
+        });
+       
+        circles.on("mouseover",function(d){
+            showInfo(d);
+            //runs the showInfo on mouseover
+        })
+    }
+    var info = d3.select("#info");
+
+    function showInfo(data) {
+        info.select("#title").text(data.title);
+        if (data.creator)
+            info.select("#creator").text(data.creator.join(", "));
+        info.select("#pub_date_numeric span").text(data.pub_date_numeric);
+        info.select("#shelfrank span").text(data.shelfrank);
+        info.select("#subject span").text(data.loc_call_num_subject);
+        if (data.call_num)
+           info.select("#lc span").text(data.call_num.join("or "));
+        if (data.lcsh)
+            info.select("#lcsh span").text(data.lcsh.join("-- "));
+        info.select("#fac_score span").text(data.score_checkouts_fac);
+        info.select("#grad_score span").text(data.score_checkouts_grad);
+        info.select("#undergrad_score span").text(data.score_checkouts_undergrad);
+        info.select("#reserve_score span").text(data.score_reserves);
+        info.select("#format span").text(data.format);
+        info.select("#letter span").text(function(d){
+        var firstHalf = data.call_num[0].split("")[0];
+     //   var indexingArrayNumber = LCindex.split(firstHalf);
+     //   var indexerNumber=LCindex.split(firstHalf)[0].length;
+        var secondHalf = lcObjectArray[LCindex.split(firstHalf)[0].length].subject;
+        return firstHalf + " -- " + secondHalf;
+        }).attr("color", "red")
+        ;
+
+        
+    }
+    
+    
+
+    $("#search").click(function() {
+        search = $("#search-field").val();
+        axes.select("#searchTerm").text(search);
+        runSearch();
+    });
+
+    var runSearch = function(q) {
+        $.ajax({
+            url: api.replace('{keyword}', search),
+            success: function(response) {
+                console.log(arguments);
+                var docs = response.docs;
+                appendCircles(docs);
+            }
+        });
+    };
+
+    $.ajax({
+        url: api.replace('{keyword}', search),
+        success: function(response) {
+            console.log(arguments);
+            var docs = response.docs;
+            appendCircles(docs);
+        }
+    });
+
+    </script>
+</html>
+
+

@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+		<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+        <style type="text/css">
+        body, html {
+            font-family: Helvetica;
+        }
+        #wrapper {
+        	overflow: hidden;
+
+        }
+        #title {
+        	width: 10000px;
+        }
+        #info {
+            width: 10000px;
+        }
+        circle {
+            opacity: .25;
+        }
+        circle:hover {
+            fill: #000;
+            opacity: 1;
+        }
+        .shufflable:hover {
+        	background: yellow;
+        	cursor: pointer;
+        }
+        </style>
+    </head>
+    <body>
+        <input id="search-field" type="text" value="los angeles"></input><input id="search" type="submit"/></br>
+        <div id="wrapper">
+	        <h1 id="title">Searching for '<span id="search-value"></span>'<span id="search-addition"></span></h1>
+	        <div id="info">
+	            <h2 id="title"></h2>
+	            <span id="creator"><span></span></span>
+	            <h3 id="pub_date_numeric" class="shufflable">Publication Date: <span></span></h3>
+	            <h3 id="shelfrank" class="shufflable">Shelfrank: <span></span></h3>
+	            <p id="lc">LC#: <span></span></p>
+	         	<h3 id="subject" class="shufflable">Subject: <span></span></h3>
+	         	<h3 id="format" class="shufflable">Format: <span></span></h3>
+	         	<p id="lcsh">multiheadings: <span></span></p>
+	         	<p id="fac_score">Faculty Circulation Score: <span></span></p>
+	         	<p id="grad_score">Graduate Circulation Score: <span></span></p>
+	         	<p id="undergrad_score">Undergraduate Circulation Score: <span></span></p>
+				<p id="reserve_score">Reserve Circulation Score: <span></span></p>
+				<p id="letter">First Letter of Call #: <span></span></p>
+	        </div>
+	    </div>
+    </body>
+    <script type="text/javascript">
+
+
+
+    var getQueryVariable = function(variable) {
+        var query = window.location.search.substring(1);
+        var vars = query.split("&");
+        for (var i=0;i<vars.length;i++) {
+            var pair = vars[i].split("=");
+            if (pair[0] == variable) {
+                return pair[1];
+            }
+        }
+        return(false);
+    };
+
+// This just takes what's in the search box and adds an "&" between words.
+
+    var baseurl = 'http://librarycloud.law.harvard.edu/v1/api/item/',
+        api = baseurl + '?filter=collection:hollis_catalog&filter=lcsh_keyword:{keyword}&limit=250&facet=pub_date_numeric&key=5239997b68e033fbf2854d77c6295310',
+        search = getQueryVariable('search') || 'los angeles',
+        results = [], current = 0, cyclingID = null;
+
+    var width = 1000,
+        height = 700,
+        gWidth = 950,
+        gHeight = 600;
+
+	var lcObjectArray = [
+		{
+		name: "A",
+		color: "#ff0000",
+		subject: "General Works"
+		},
+		{
+		name: "B",
+		color: "#ff3800",
+		subject: "Philosophy, Psychology, Religion"
+		},
+		{
+		name: "C",
+		color: "#ff7000",
+		subject: "Auxillary Sciences of History"
+		},
+		{
+		name: "D",
+		color: "#ffa800",
+		subject: "History: General & Outside the Americas"
+		},
+		{
+		name: "E",
+		color: "#ffe000",
+		subject: "History: United States"
+		},
+		{
+		name: "F",
+		color: "#e6ff00",
+		subject:  "History: United States Local & America"
+		},
+		{
+		name: "G",
+		color: "#adff00",
+		subject:  "Geography, Anthropology, Recreation"
+		},
+		{
+		name: "H",
+		color: "#75ff00",
+		subject:  "Social Sciences"
+		},
+		{
+		name: "J",
+		color: "#05ff00",
+		subject:  "Political Science"
+		},
+		{
+		name: "K",
+		color: "#00ff33",
+		subject:  "Law"
+		},
+		{
+		name: "L",
+		color: "#00ff6b",
+		subject:  "Education"
+		},
+		{
+		name: "M",
+		color: "#00ffa3",
+		subject:  "Music"
+		},
+		{
+		name: "N",
+		color: "#00ffdb",
+		subject:  "Fine Arts<"
+		},
+		{
+		name: "P",
+		color: "#00b3ff",
+		subject:  "Language and Literature"
+		},
+		{
+		name: "Q",
+		color: "#007aff",
+		subject:  "Science"
+		},
+		{
+		name: "R",
+		color: "#00b3ff",
+		subject:  "Medicine"
+		},
+		{
+		name: "S",
+		color: "#0042ff",
+		subject:  "Science"
+		},
+		{
+		name: "T",
+		color: "#000aff",
+		subject:  "Agriculture"
+		},
+		{
+		name: "U",
+		color: "#6600ff",
+		subject:  "Military Science"
+		},
+		{
+		name: "V",
+		color: "#9e00ff",
+		subject:  "Naval Science"
+		},
+		{
+		name: "Z",
+		color: "#ff0080",
+		subject:  "Library Science & Information Resources"
+		}
+	];
+
+    var LCindex ="ABCDEFGHJKLMNPQRSTUVZ";
+
+    var info = d3.select("#info");
+
+    var showInfo = function(data) {
+        info.select("#title").text(data.title);
+        if (data.creator)
+            info.select("#creator").text(data.creator.join(", "));
+        info.select("#pub_date_numeric span").text(data.pub_date_numeric);
+        info.select("#shelfrank span").text(data.shelfrank);
+        info.select("#subject span").text(data.loc_call_num_subject);
+        if (data.call_num)
+           info.select("#lc span").text(data.call_num.join("or "));
+        if (data.lcsh)
+            info.select("#lcsh span").text(data.lcsh.join("-- "));
+        info.select("#fac_score span").text(data.score_checkouts_fac);
+        info.select("#grad_score span").text(data.score_checkouts_grad);
+        info.select("#undergrad_score span").text(data.score_checkouts_undergrad);
+        info.select("#reserve_score span").text(data.score_reserves);
+        info.select("#format span").text(data.format);
+        info.select("#letter span").text(function(d){
+	        if (data.call_num && data.call_num.length) {
+		        var firstHalf = data.call_num[0].split("")[0];
+				//	var indexingArrayNumber = LCindex.split(firstHalf);
+				//	var indexerNumber=LCindex.split(firstHalf)[0].length;
+		        var secondHalf = lcObjectArray[LCindex.split(firstHalf)[0].length].subject;
+
+		        return firstHalf + " -- " + secondHalf;
+	        } else {
+	        	return 'N/A';
+	        }
+        }).attr("text-color", "red")
+        ;
+    };
+
+
+	var smallSet = [],
+		realIndexes = [],
+		currentBook = null,
+		smallCurrent = 0;
+    var startCycling = function(property) {
+    	return function() {
+    		smallSet = [];
+			realIndexes = [];
+			currentBook = results[current];
+			smallCurrent = 0;
+
+    		// create subset
+    		for (var i = current; i < results.length; i++) {
+    			var doc = results[i];
+    			if (currentBook[property] == doc[property]) {
+    				smallSet.push(doc);
+    				realIndexes.push(i);
+    			}
+    		}
+
+    		if (smallSet.length == 0) {
+	    		for (var i = 0; i < current; i++) {
+	    			var doc = results[i];
+	    			if (currentBook[property] == doc[property]) {
+	    				smallSet.push(doc);
+	    				realIndexes.push(i);
+	    			}
+	    		}
+    		}
+
+    		console.log(currentBook[property], smallSet.length, property);
+
+    		stopCycling();
+
+    		// update title
+    		$("#search-addition").html(" + '" + currentBook[property] + "'");
+
+    		// start cycling
+    		cyclingID = setTimeout(function() {
+    			// increment
+    			smallCurrent = smallCurrent == smallSet.length - 1 ? 0 : smallCurrent + 1;
+
+    			// keep track of the current place
+    			current = realIndexes[smallCurrent];
+
+    			// show from subselection
+    			showInfo(smallSet[smallCurrent]);
+    		}, 100);
+    	};
+    };
+
+    var stopCycling = function() {
+    	if (cyclingID) {
+    		$("#search-addition").html("");
+    		clearInterval(cyclingID);
+    	}
+    };
+
+    var attachInfoEvents = function() {
+    	$("#pub_date_numeric").mousedown(startCycling('pub_date_numeric'))
+    		.mouseup(stopCycling);
+
+    	$("#format").mousedown(startCycling('format'))
+    		.mouseup(stopCycling);
+
+    	$("#shelfrank").mousedown(startCycling('shelfrank'))
+    		.mouseup(stopCycling);
+
+    	$("#lcsh").mousedown(startCycling('lcsh'))
+    		.mouseup(stopCycling);
+
+    	$("#subject").mousedown(startCycling('loc_call_num_subject'))
+    		.mouseup(stopCycling);
+    };
+    attachInfoEvents();
+
+    $(window).keyup(function(e) {
+    	// right
+    	if (e.keyCode == 39) {
+    		current = current > results.length ? 0 : current + 1;
+    		showInfo(results[current]);
+    	} else if (e.keyCode == 37) {
+    		current = current == 0 ? results.length - 1 : current - 1;
+    		showInfo(results[current]);
+    	}
+    });
+
+    $("#search").click(function() {
+        search = $("#search-field").val();
+        runSearch();
+    });
+
+    var runSearch = function() {
+    	$("#search-value").html(search);
+        $.ajax({
+            url: api.replace('{keyword}', search),
+            success: function(response) {
+                results = response.docs;
+                current = 0;
+                showInfo(results[current]);
+            }
+        });
+    };
+
+    runSearch();
+
+    </script>
+</html>
+
+
