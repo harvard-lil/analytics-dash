@@ -51,7 +51,8 @@
         #title {
         	font-weight: normal;
     	  	font-size: 24px;
-               }
+    	  	text-transform: capitalize;
+       }
 
         #creator, #lcsh {
         	list-style-type: none;
@@ -189,7 +190,6 @@
             url: url,
             success: function(response) {
                 appendCircles(response.docs);
-                facets = response.facets;
                 drawArea(response.facets);
 
                 axes.select("#searchTerm").text(filter+": "+keyword);
@@ -351,6 +351,7 @@
 	circleGroup.append("rect").attr("width",gWidth).attr("height",gHeight);
     //not totally sure, I guess this is making rectangles?
 
+    // draw the area for the mountains - super preliminary
     circleGroup.append("path").attr("class","area");
 
     var axes = svg.append("g").attr("class","axes");
@@ -437,19 +438,22 @@
         	else {
 	         	return "black";
 	         }
-		});
+		})
+		.transition()
+		// .ease("linear")
+		.delay(function(d,i){
+			return i*5;
+		})
+		.duration(500)
+		.attr("cx", calculateX)
+		.attr("cy", calculateY)
+		.attr("r", calculateRadius);
 
         //runs the showInfo on mouseover
         circles.on("mouseover",function(d){
   			this.parentNode.appendChild(this);
             showInfo(d);
         });
-
-        // call each of these once
-        // these are probably breaking each others transitions?
-        set_radius();
-        set_x_axis();
-        set_y_axis();
     }
 
     // use the API facet response to draw data
@@ -481,10 +485,11 @@
 
     	var areaPath = circleGroup.selectAll(".area");
     	areaPath
-	      .datum(data)
-	      .attr("class", "area")
-	      .transition(2000)
-	      .attr("d", area);
+			.datum(data)
+			.attr("class", "area")
+			.transition()
+			.duration(500)
+			.attr("d", area);
     }
 
     var info = d3.select("#info");
@@ -594,34 +599,36 @@
 				return i*5;
 			})
 			.duration(500)
-			.attr("cx", function(d){
-				switch(x_axis_type) {
-					case 'chronological_x':
-						xscale.domain([1850,yearEnd]);
-						xscale.range([0,gWidth]);
-	        			if (d.pub_date_numeric){
-  							return (xscale(d.pub_date_numeric));
-						}
-						else {
-							return xscale(0);
-						}
-						break;
-					case 'call_number_sort_order_x':
-						xscale.domain([0,16000000]);
-						xscale.range([0,gWidth]);
-						if (d.loc_call_num_sort_order){
-					        return xscale(d.loc_call_num_sort_order[0]);
-						}
-						else {
-							return xscale(0);
-						}
-						break;
-				}
-			});
+			.attr("cx", calculateX);
 		updateAxes();
 	}
 
-   function set_y_axis(){
+	function calculateX(d) {
+		switch(x_axis_type) {
+			case 'chronological_x':
+				xscale.domain([1850,yearEnd]);
+				xscale.range([0,gWidth]);
+    			if (d.pub_date_numeric){
+						return (xscale(d.pub_date_numeric));
+				}
+				else {
+					return xscale(0);
+				}
+				break;
+			case 'call_number_sort_order_x':
+				xscale.domain([0,16000000]);
+				xscale.range([0,gWidth]);
+				if (d.loc_call_num_sort_order){
+			        return xscale(d.loc_call_num_sort_order[0]);
+				}
+				else {
+					return xscale(0);
+				}
+				break;
+		}
+	}
+
+	function set_y_axis(){
 		var circles = circleGroup.selectAll("circle");
 		circles
 		.transition()
@@ -630,71 +637,73 @@
 			return i*5;
 		})
 		.duration(500)
-		.attr("cy", function(d){
-
-			switch(y_axis_type) {
-				case 'grads':
-					yscale.domain([0,300]);
-					yscale.range([gHeight,0]);
-        			if (d.score_checkouts_grad){
-        				return  yscale(d.score_checkouts_grad);
-					}
-					else{
-						return yscale(0);
-					}
-					break;
-				case 'undergrads':
-					yscale.domain([0,300]);
-					yscale.range([gHeight,0]);
-					if (d.score_checkouts_undergrad){
-      					return  yscale(d.score_checkouts_undergrad);
-					}
-					else {
-						return yscale(0);
-					}
-					break;
-				case 'faculty':
-					yscale.domain([0,300]);
-					yscale.range([gHeight,0]);
-					if (d.score_checkouts_fac){
-	  					return  yscale(d.score_checkouts_fac);
-					}
-					else{
-						return yscale(0);
-					}
-					break;
-				case 'popularity_y':
-					yscale.domain([0,100]);
-					yscale.range([gHeight,0]);
-					if (d.shelfrank){
-			            return yscale(d.shelfrank);
-					}
-					else {
-						return 0;
-					}
-					break;
-				case 'date_y':
-					yscale.domain([1850,yearEnd]);
-					yscale.range([gHeight,0]);
-					if (d.pub_date_numeric){
-		                return yscale(d.pub_date_numeric);
-					}
-					else {
-						return yscale(0);
-					}
-					break;
-				case 'call_number_sort_order_y':
-					yscale.domain([0,16000000]);
-					yscale.range([gHeight,0]);
-					if (d.loc_call_num_sort_order){
-			            return (yscale(d.loc_call_num_sort_order[0]));
-					}
-					else {
-						return yscale(0);
-					}
-					break;
-		}});
+		.attr("cy", calculateY);
 		updateAxes();
+	}
+
+	function calculateY(d) {
+		switch(y_axis_type) {
+			case 'grads':
+				yscale.domain([0,300]);
+				yscale.range([gHeight,0]);
+    			if (d.score_checkouts_grad){
+    				return  yscale(d.score_checkouts_grad);
+				}
+				else{
+					return yscale(0);
+				}
+				break;
+			case 'undergrads':
+				yscale.domain([0,300]);
+				yscale.range([gHeight,0]);
+				if (d.score_checkouts_undergrad){
+  					return  yscale(d.score_checkouts_undergrad);
+				}
+				else {
+					return yscale(0);
+				}
+				break;
+			case 'faculty':
+				yscale.domain([0,300]);
+				yscale.range([gHeight,0]);
+				if (d.score_checkouts_fac){
+  					return  yscale(d.score_checkouts_fac);
+				}
+				else{
+					return yscale(0);
+				}
+				break;
+			case 'popularity_y':
+				yscale.domain([0,100]);
+				yscale.range([gHeight,0]);
+				if (d.shelfrank){
+		            return yscale(d.shelfrank);
+				}
+				else {
+					return 0;
+				}
+				break;
+			case 'date_y':
+				yscale.domain([1850,yearEnd]);
+				yscale.range([gHeight,0]);
+				if (d.pub_date_numeric){
+	                return yscale(d.pub_date_numeric);
+				}
+				else {
+					return yscale(0);
+				}
+				break;
+			case 'call_number_sort_order_y':
+				yscale.domain([0,16000000]);
+				yscale.range([gHeight,0]);
+				if (d.loc_call_num_sort_order){
+		            return (yscale(d.loc_call_num_sort_order[0]));
+				}
+				else {
+					return yscale(0);
+				}
+				break;
+		}
 	}
 
 
@@ -704,40 +713,36 @@
 				.transition()
 				// .ease("linear")
 				.duration(500)
-				.attr("r", function(d){
-					switch(radius_type) {
-						case 'pages':
-		        			if (d.pages_numeric){
-           				 return (d.pages_numeric / 50);
-							}
-							else{
-							return 6;
-							}
-							break;
-						case 'shelfrank':
-							if (d.shelfrank){
-            				return (d.shelfrank / 5);
-							}
-							else{
-							return 6;
-							}
-							break;
-						case 'same':
-							if (d.shelfrank){
-            				return 4;
-							}
-							else{
-							return 7;
-							}
-							break;
-					}
-				});
+				.attr("r", calculateRadius);
 	}
 
-
-
-
-
-
+	function calculateRadius(d) {
+		switch(radius_type) {
+			case 'pages':
+    			if (d.pages_numeric){
+				 return (d.pages_numeric / 50);
+				}
+				else{
+				return 6;
+				}
+				break;
+			case 'shelfrank':
+				if (d.shelfrank){
+				return (d.shelfrank / 5);
+				}
+				else{
+				return 6;
+				}
+				break;
+			case 'same':
+				if (d.shelfrank){
+				return 4;
+				}
+				else{
+				return 7;
+				}
+				break;
+		}
+	}
     </script>
 </html>
