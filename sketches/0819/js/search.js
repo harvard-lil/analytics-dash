@@ -42,6 +42,8 @@ lc.search = function() {
              	lc.graph.drawArea(response.facets);
             	lc.graph.appendCircles(response.docs);
                 lc.histogram.appendHistogram(response.docs);
+
+                d3.select("#graph svg").attr("class","");
             }
         });
     };

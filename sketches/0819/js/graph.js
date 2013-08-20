@@ -111,8 +111,15 @@ lc.graph = function() {
 
         //runs the showInfo on mouseover
         circles.on("mouseover",function(d){
+        	if (svg.attr("class") == "frozen") return;
   			this.parentNode.appendChild(this);
             self.showInfo(d, true);
+        }).on("click",function(d){
+        	if (svg.attr("class") == "frozen") {
+        		this.parentNode.appendChild(this);
+            	self.showInfo(d, true);
+        	}
+        	svg.attr("class","frozen");
         });
 
         updateCircles();
