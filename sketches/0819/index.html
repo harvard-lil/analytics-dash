@@ -36,8 +36,7 @@
         <div id="graph"></div>
 
         <div id="histogram">
-            <label for="amount">Date Range:</label>
-            <span id="amount"></span>
+            <svg></svg>
             <div id="slider-range"></div>
         </div>
 
@@ -115,12 +114,10 @@
             url: url,
             success: function(response) {
                 lc.graph.dataPrep(response.docs);
-                
-             	lc.graph.drawArea(response.facets);
-				// lc.graph.updateHistoryBar(response.facets);
 
                 axes.select("#searchTerm").text(filter+": "+keyword);
 
+             	lc.graph.drawArea(response.facets);
             	lc.graph.appendCircles(response.docs);
                 lc.histogram.appendHistogram(response.docs);
             }

@@ -2,22 +2,25 @@ var lc = lc || {};
 
 lc.histogram = function() {
 
-    var histoGroup = d3.select("#histogram").append("svg").attr("width","100%").attr("height","100%").append("g");
+    var gWidth = 800,
+        gHeight = 75;
+    var histoGroup = d3.select("#histogram").select("svg").attr("width",gWidth).attr("height",gHeight).append("g");
 
     self.appendHistogram = function(data) {
 
         var booksByYear = d3.nest().key(function(d){
-            return d["pub_date_numeric"];
+            if (d["pub_date_numeric"])
+                return d["pub_date_numeric"];
         }).entries(data).sort(function(a,b){
             return a.key - b.key;
         });
 
-        var minYear = parseInt(booksByYear[0].key),
-            maxYear = parseInt(booksByYear[booksByYear.length-1].key),
+        var minYear = parseInt(d3.min(booksByYear,function(d){ return d.key; })),
+            maxYear = parseInt(d3.max(booksByYear,function(d){ if (d.key != "undefined") return d.key; })),
             maxBooks = d3.max(booksByYear,function(d){ return d.values.length; });
 
-        var yearScale = d3.scale.linear().domain([minYear,maxYear]).range([0,590]),
-            bookScale = d3.scale.linear().domain([0,maxBooks]).range([0,100]);
+        var yearScale = d3.scale.linear().domain([minYear,maxYear]).range([0,gWidth]),
+            bookScale = d3.scale.linear().domain([0,maxBooks]).range([0,gHeight]);
 
         var bars = histoGroup.selectAll("rect").data(booksByYear);
 
@@ -26,13 +29,17 @@ lc.histogram = function() {
 
         bars.attr("fill","yellow")
             .attr("width",function(){
-                return 600/(maxYear-minYear);
+                return gWidth/(maxYear-minYear);
             }).attr("height",function(d){
                 return bookScale(d.values.length);
             }).attr("y",function(d){
-                return 100 - bookScale(d.values.length);
+                return gHeight - bookScale(d.values.length);
             }).attr("x",function(d){
-                return yearScale(d.key);
+                if (d.key != "undefined")
+                    return yearScale(d.key);
+            }).attr("opacity",function(d){
+                if (d.key == "undefined")
+                    return 0;
             });
 
         $("#slider-range").slider({
@@ -41,7 +48,8 @@ lc.histogram = function() {
             max: maxYear,
             values: [ minYear, maxYear ],
             slide: function( event, ui ) {
-                $("#amount").text( ui.values[0]+" - "+ui.values[1] );
+                $(".ui-slider-handle:first").text(ui.values[0]);
+                $(".ui-slider-handle:last").text(ui.values[1]);
                 histoGroup.selectAll("rect").attr("fill",function(d){
                     if ((d.key >= ui.values[0]) && (d.key <= ui.values[1]))
                         return "yellow";
@@ -50,8 +58,9 @@ lc.histogram = function() {
                 });
                 lc.graph.updateDateRange(ui.values[0],ui.values[1]);
             }
-            });
-        $("#amount").text($("#slider-range").slider("values",0)+" - "+$("#slider-range").slider("values",1));
+        });
+        $(".ui-slider-handle:first").text(minYear);
+        $(".ui-slider-handle:last").text(maxYear);
     };
 
     return self;
