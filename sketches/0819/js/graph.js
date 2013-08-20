@@ -25,10 +25,12 @@ lc.graph = function() {
 
 
     var svg = d3.select("#graph").append("svg").attr("height",height).attr("width",width);
+    svg.append("clipPath").attr("id","graph-box")
+    	.append("rect").attr("width",gWidth).attr("height",gHeight);
 
-	var barCharts = svg.append("g").attr("class","barchart").attr("transform","translate(120,40)").attr("width",gWidth).attr("height",gHeight);
+	var barCharts = svg.append("g").attr("class","barchart").attr("transform","translate(120,40)").attr("clip-path","url(#graph-box)");
 
-    var circleGroup = svg.append("g").attr("class","circles").attr("transform","translate(120,40)");
+    var circleGroup = svg.append("g").attr("class","circles").attr("transform","translate(120,40)").attr("clip-path","url(#graph-box)");
 
     var axes = svg.append("g").attr("class","axes");
     // creates the axes
@@ -47,21 +49,20 @@ lc.graph = function() {
 
     	axes.append("g")
     		.attr("class", "axis")
-    		.attr("id","xAxes")
-    		.call(xAxis)
+    		.attr("id","xAxis")
     		.attr("transform","translate(120," +(height-60) +")");
 
     	axes.append("g")
     		.attr("class", "axis")
-    		.attr("id","yAxes")
-    		.attr("transform","translate(120,40)")
-    		.call(yAxis);
+    		.attr("id","yAxis")
+    		.attr("transform","translate(120,40)");
 
         axes.append("text")
 	        .attr("id","searchTerm")
 	        .attr("class","axis_labels")
 	        .text("Searching for... '"+search+"'").attr("text-anchor","middle")
 	        .attr("transform","translate("+width/2+",20)");
+
         axes.append("text")
 	        .attr("id","x_axis")
     	    .attr("class","axis_labels")
@@ -81,29 +82,25 @@ lc.graph = function() {
     appendAxes();
 
     function updateAxes() {
-    	xAxis
-		.scale(xscale)
-		.orient("bottom")
-		.tickFormat(formatAsYear);
-
-		yAxis
-		.scale(yscale)
-		.orient("left")
-		.tickFormat(formatAsYear);
-
-		var xAxesNew = axes.select("#xAxes").call(xAxis);
-
-		var yAxesNew = axes.select("#yAxes").call(yAxis);
+		axes.select("#xAxis").call(xAxis);
+		axes.select("#yAxis").call(yAxis);
 	}
 
 	var minYear, maxYear;
 
 	self.dataPrep = function(data) {
-		maxYear = d3.max(data,function(d){ return d.pub_date_numeric; }),
-		minYear = d3.min(data,function(d){ return d.pub_date_numeric; });
+		var min = d3.min(data,function(d){ return d.pub_date_numeric; });
+		var max = d3.max(data,function(d){ return d.pub_date_numeric; });
+		self.updateDateRange(min,max);
+	};
+
+	self.updateDateRange = function(min, max) {
+		minYear = min, maxYear = max;
 		timescale.domain([minYear,maxYear]);
+		xscale.domain([minYear,maxYear]);
 		updateAxes();
-		console.log(minYear, maxYear)
+		updateCircles();
+		updateBars();
 	};
 
 	self.appendCircles = function(data) {
@@ -113,7 +110,17 @@ lc.graph = function() {
         circles.enter().append("circle").attr("class","c");
         circles.exit().remove();
 
-        circles.attr("fill",function(d){
+        //runs the showInfo on mouseover
+        circles.on("mouseover",function(d){
+  			this.parentNode.appendChild(this);
+            showInfo(d);
+        });
+
+        updateCircles();
+    }
+    function updateCircles() {
+    	var circles = circleGroup.selectAll("circle");
+    	circles.attr("fill",function(d){
 	        if (d.call_num){
 	   			var splitIndex=LCindex.split(d.call_num[0].split("")[0]);
 	   			var indexNumber=splitIndex[0].length;
@@ -131,57 +138,15 @@ lc.graph = function() {
 		.attr("cx", calculateX)
 		.attr("cy", calculateY)
 		.attr("r", calculateRadius);
-
-        //runs the showInfo on mouseover
-        circles.on("mouseover",function(d){
-  			this.parentNode.appendChild(this);
-            showInfo(d);
-        });
     }
 
     // use the API facet response to draw data
     // this means we have to turn the data into something d3 will like
     // and then use d3.area
+    var areaScale;
+
     self.drawArea = function(facets) {
-    	var data = [];
-        for (var i = 0; i < (maxYear - minYear); i++) {
-    		var year = i + minYear;
- 	    	var total = 0;
-    		var count = facets.pub_date_numeric[+year];
-			total = total + (count || 0 );
-			data[i] = {
-    			year: year,
-    			count: count || 0,
-    			total:total
-    		};
-
-    	}
-    	var areaScale = d3.scale.linear()
-		    .range([gHeight, 0])
-		    .domain([0, d3.max(data, function(d) { return d.total; })]);
-
-		var bars = barCharts.selectAll("rect").data(data);
-		bars.enter().append("rect");
-		bars.exit().remove();
-
-		bars.attr("x", function(d, i) {
-		   		return timescale(d.year);
-	        }).attr("y", function(d) {
-	            return areaScale(d.total);
-	        }).attr("class", "bars")
-		 	.attr("fill", "teal")
-			.attr("width", gWidth / (maxYear - minYear))
-			.attr("height", function(d) {
-			    return (gHeight-areaScale(d.total));
-			});
-        bars.on("mouseover",function(d){
-  		    // this.parentNode.appendChild(this);
-  			showCounts(d);
-    	});
-    };
-
-    self.updateHistoryBar = function(facets) {
-    	var data = [];
+		var data = [];
     	var total = 0;
     	for (var i = 0; i < (maxYear - minYear); i++) {
     		var year = i + minYear;
@@ -193,10 +158,23 @@ lc.graph = function() {
     			total:total
     		};
     	}
-    	var areaScale = d3.scale.linear().range([gHeight, 0])
-			.domain([0, d3.max(data, function(d) { return d.total; })]);
 
-		barCharts.selectAll("rect").data(data)
+    	areaScale = d3.scale.linear().range([gHeight, 0])
+		    .domain([0, d3.max(data, function(d) { return d.total; })]);
+
+		var bars = barCharts.selectAll("rect").data(data);
+		bars.enter().append("rect");
+		bars.exit().remove();
+
+		updateBars();
+
+        bars.on("mouseover",function(d){
+  			showCounts(d);
+    	});
+    };
+
+    function updateBars() {
+		barCharts.selectAll("rect")
 			.transition()
 			.ease("linear")
 			.delay(function(d,i){
@@ -210,8 +188,7 @@ lc.graph = function() {
 			.attr("height", function(d) {
 				return (gHeight-areaScale(d.total));
 			});
-
-	};
+	}
 
     var bookCounts = d3.select("#bookCounts");
 

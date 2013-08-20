@@ -48,6 +48,7 @@ lc.histogram = function() {
                     else
                         return "none";
                 });
+                lc.graph.updateDateRange(ui.values[0],ui.values[1]);
             }
             });
         $("#amount").text($("#slider-range").slider("values",0)+" - "+$("#slider-range").slider("values",1));
