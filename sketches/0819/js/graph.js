@@ -60,7 +60,7 @@ lc.graph = function() {
         axes.append("text")
 	        .attr("id","searchTerm")
 	        .attr("class","axis_labels")
-	        .text("Searching for... '"+search+"'").attr("text-anchor","middle")
+	        .attr("text-anchor","middle")
 	        .attr("transform","translate("+width/2+",20)");
 
         axes.append("text")
@@ -264,13 +264,13 @@ lc.graph = function() {
 
 	// Searching by results
 	$("#creator li").live("click",function(){
-		runSearch("creator",$(this).text());
+		lc.search.runSearch("creator",$(this).text());
 	});
 	$("#lcsh li").live("click",function(){
-		runSearch("lcsh",$(this).text());
+		lc.search.runSearch("lcsh",$(this).text());
 	});
 	$("#subject").live("click",function(){
-		runSearch("subject",$(this).text());
+		lc.search.runSearch("subject",$(this).text());
 	});
 
 

@@ -3,6 +3,7 @@
     <head>
         <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
         <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+        <link href="jquery-ui.min.css" rel="stylesheet" type="text/css">
         <link href="style.css" rel="stylesheet" type="text/css">
     </head>
     <body>
@@ -29,7 +30,7 @@
 
         <svg id="nav"></svg>
         <div id="carrel">
-            <!-- <p>Drag items into the carrel for safekeeping</p> -->
+            <p>Drag items into the carrel for safekeeping</p>
             <a id="export-carrel">Export as spreadsheet</a>
         </div>
 
@@ -80,52 +81,8 @@
     <script type="text/javascript" src="js/carrel.js"></script>
     <script type="text/javascript" src="js/histogram.js"></script>
     <script type="text/javascript" src="js/graph.js"></script>
-    <script type="text/javascript">
-
-    var getQueryVariable = function(variable) {
-        var query = window.location.search.substring(1);
-        var vars = query.split("&");
-        for (var i=0;i<vars.length;i++) {
-            var pair = vars[i].split("=");
-            if (pair[0] == variable) {
-                return pair[1];
-            }
-        }
-        return(false);
-    };
-
-// This just takes what's in the search box and adds an "&" between words.
-
-    var axes = d3.select(".axes");
-
-    var baseurl = 'http://librarycloud.law.harvard.edu/v1/api/item/',
-        api = baseurl + '?filter=collection:hollis_catalog&filter={filter}:{keyword}&limit=250&facet=pub_date_numeric&key=5239997b68e033fbf2854d77c6295310',
-        search = getQueryVariable('search') || 'los angeles';
-
-    $("#search").click(function() {
-        search = $("#search-field").val();
-        axes.select("#searchTerm").text("Searching for... '"+search+"'");
-        runSearch("lcsh_keyword",search);
-    });
-
-    var runSearch = function(filter, keyword) {
-    	var url = api.replace('{filter}',filter).replace('{keyword}',keyword);
-        $.ajax({
-            url: url,
-            success: function(response) {
-                lc.graph.dataPrep(response.docs);
-
-                axes.select("#searchTerm").text(filter+": "+keyword);
-
-             	lc.graph.drawArea(response.facets);
-            	lc.graph.appendCircles(response.docs);
-                lc.histogram.appendHistogram(response.docs);
-            }
-        });
-    };
-
-    // initial search request
-    runSearch("lcsh_keyword", search);
+    <script type="text/javascript" src="js/search.js"></script>
+    <script type="text/javascript">    
 
 	var lcObjectArray = [
 		{
