@@ -3,16 +3,36 @@ body, html {
 }
 #carrel {
     position: absolute;
-    top: 20px;
+    top: 0px;
     right: 20px;
+    font-size: 12px;
+}
+#carrel-box {
     width: 300px;
     height: 100px;
-    background-color: #ddd;
+    background-color: #eee;
     border: 1px solid #808080;
-    text-align: center;
+}
+#carrel-box ul {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+}
+#carrel-box li {
+    width: 15px;
+    height: 15px;
+    display: inline-block;
+    margin: 5px 0 0 5px;
+    cursor: pointer;
 }
 #export-carrel {
-
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+    cursor: pointer;
+}
+#export-carrel:hover {
+    text-decoration: underline;
 }
 #nav {
     height: 500px; 
@@ -68,7 +88,7 @@ body, html {
     width: 420px;
     position: absolute;
     left: 950px;
-    top: 120px;
+    top: 140px;
     font-size: 16px;
     padding:16px;
     display: none;
@@ -80,6 +100,9 @@ body, html {
     position: absolute;
     right: 0;
     cursor: pointer;
+}
+#add-to-carrel:hover {
+    text-decoration: underline;
 }
 
 .infoLabel {

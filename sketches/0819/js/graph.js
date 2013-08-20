@@ -5,7 +5,6 @@ lc.graph = function() {
         height = 600,
         gWidth = 800,
         gHeight = 500;
-	var LCindex ="ABCDEFGHJKLMNPQRSTUVZ";
 
     var circleColor = "blue";
 
@@ -113,7 +112,7 @@ lc.graph = function() {
         //runs the showInfo on mouseover
         circles.on("mouseover",function(d){
   			this.parentNode.appendChild(this);
-            showInfo(d);
+            self.showInfo(d, true);
         });
 
         updateCircles();
@@ -122,9 +121,7 @@ lc.graph = function() {
     	var circles = circleGroup.selectAll("circle");
     	circles.attr("fill",function(d){
 	        if (d.call_num){
-	   			var splitIndex=LCindex.split(d.call_num[0].split("")[0]);
-	   			var indexNumber=splitIndex[0].length;
-	        	return lcObjectArray[indexNumber] ? lcObjectArray[indexNumber].color : "black";
+	        	return lcObjectArray[d.call_num[0].substr(0,1)].color;
         	}
         	else {
 	         	return "black";
@@ -209,7 +206,7 @@ lc.graph = function() {
 
     var info = d3.select("#info");
 
-    function showInfo(data) {
+    self.showInfo = function(data, inBox) {
     	info.style("display","block");
         info.select("#title").text(data.title);
         if (data.creator)
@@ -231,8 +228,8 @@ lc.graph = function() {
         info.select("#format span").text(data.format);
         info.select("#letter span").text(function(d){
         	if (data.call_num) {
-        		var firstHalf = data.call_num[0].split("")[0];
-	            var secondHalf = lcObjectArray[LCindex.split(firstHalf)[0].length].subject;
+        		var firstHalf = data.call_num[0].substr(0,1);
+	            var secondHalf = lcObjectArray[firstHalf].subject;
 	            return firstHalf + " -- " + secondHalf;
         	}
         });
@@ -242,15 +239,22 @@ lc.graph = function() {
        		.style("border-bottom-width", "4px")
         	.style("border-bottom-color", function(d){
       		    if (data.call_num){
-           			var splitIndex=LCindex.split(data.call_num[0].split("")[0]);
-           			var indexNumber=splitIndex[0].length;
-                	return lcObjectArray[indexNumber].color;
+           			return lcObjectArray[data.call_num[0].substr(0,1)].color;
             	}
   		    });
-        info.select("#add-to-carrel").on("click",function(){
-            lc.carrel.sendToCarrel(data);
-        });
-    }
+  		if (inBox) {
+  			info.select("#add-to-carrel").text("Add To Carrel").on("click",function(){
+	            lc.carrel.sendToCarrel(data);
+	        });
+  		} else {
+  			info.select("#add-to-carrel").text("Remove From Carrel").on("click",function(){
+	            lc.carrel.removeFromCarrel(data);
+	            info.select("#add-to-carrel").text("Add To Carrel").on("click",function(){
+		            lc.carrel.sendToCarrel(data);
+		        });
+	        });
+  		}
+    };
 
     /*
 

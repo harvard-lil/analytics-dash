@@ -2,7 +2,8 @@ var lc = lc || {};
 
 lc.carrel = function() {
 
-    var carrel = [];
+    var carrel = [],
+        carrelBox = d3.select("#carrel-box ul");
 
     $("#export-carrel").click(function(){
         exportCarrel();
@@ -10,7 +11,30 @@ lc.carrel = function() {
     
     self.sendToCarrel = function(bookData) {
         carrel.push(bookData);
+        updateCarrelBoxes();
     };
+
+    self.removeFromCarrel = function(bookData) {
+        var index = carrel.indexOf(bookData);
+        carrel.splice(index,1);
+        updateCarrelBoxes();
+    }
+
+    function updateCarrelBoxes() {
+        var carrelBoxes = carrelBox.selectAll("li").data(carrel);
+        carrelBoxes.enter().append("li");
+        carrelBoxes.exit().remove();
+
+        carrelBoxes.style("background-color",function(d){
+            if (d.call_num){
+                return lcObjectArray[d.call_num[0].substr(0,1)].color;
+            } else {
+                return "black";
+            }
+        }).on("click",function(d){
+            lc.graph.showInfo(d, false);
+        });
+    }
 
     self.exportCarrel = function() {
         var headings = ["title", "creator", "publisher", "call_num", "holding_libs", "lcsh", "score_holding_libs", "id_isbn", "id",  "title_sort", "score_checkouts_undergrad", "height", "title_link_friendly", "score_checkouts_grad", "pub_date", "loc_call_num_subject", "pub_location", "ut_id", "pages", "loc_call_num_sort_order", "score_checkouts_fac", "data_source", "dataset_tag", "score_recalls", "shelfrank",  "language", "id_inst", "ut_count", "id_oclc", "note", "format",  "pub_date_numeric", "source_record"];

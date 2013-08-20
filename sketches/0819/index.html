@@ -31,7 +31,10 @@
         <svg id="nav"></svg>
         <div id="carrel">
             <p>Drag items into the carrel for safekeeping</p>
-            <a id="export-carrel">Export as spreadsheet</a>
+            <div id="carrel-box">
+                <ul></ul>
+                <a id="export-carrel">Export as spreadsheet</a>
+            </div>
         </div>
 
         <div id="graph"></div>
@@ -84,112 +87,91 @@
     <script type="text/javascript" src="js/search.js"></script>
     <script type="text/javascript">    
 
-	var lcObjectArray = [
-		{
-		name: "A",
-		color: "#ff0000",
-		subject: "General Works"
+	var lcObjectArray = {
+		"A":{
+    		color: "#ff0000",
+    		subject: "General Works"
 		},
-		{
-		name: "B",
-		color: "#ff3800",
-		subject: "Philosophy, Psychology, Religion"
+		"B":{
+    		color: "#ff3800",
+    		subject: "Philosophy, Psychology, Religion"
 		},
-		{
-		name: "C",
-		color: "#ff7000",
-		subject: "Auxillary Sciences of History"
+		"C":{
+    		color: "#ff7000",
+    		subject: "Auxillary Sciences of History"
 		},
-		{
-		name: "D",
-		color: "#ffa800",
-		subject: "History: General & Outside the Americas"
+		"D":{
+    		color: "#ffa800",
+    		subject: "History: General & Outside the Americas"
 		},
-		{
-		name: "E",
-		color: "#ffe000",
-		subject: "History: United States"
+		"E":{
+    		color: "#ffe000",
+    		subject: "History: United States"
 		},
-		{
-		name: "F",
-		color: "#e6ff00",
-		subject:  "History: United States Local & America"
+		"F":{
+    		color: "#e6ff00",
+    		subject:  "History: United States Local & America"
 		},
-		{
-		name: "G",
-		color: "#adff00",
-		subject:  "Geography, Anthropology, Recreation"
+		"G":{
+    		color: "#adff00",
+    		subject:  "Geography, Anthropology, Recreation"
 		},
-		{
-		name: "H",
-		color: "#75ff00",
-		subject:  "Social Sciences"
+		"H":{
+    		color: "#75ff00",
+    		subject:  "Social Sciences"
 		},
-		{
-		name: "J",
-		color: "#05ff00",
-		subject:  "Political Science"
+		"J":{
+    		color: "#05ff00",
+    		subject:  "Political Science"
 		},
-		{
-		name: "K",
-		color: "#00ff33",
-		subject:  "Law"
+		"K":{
+    		color: "#00ff33",
+    		subject:  "Law"
 		},
-		{
-		name: "L",
-		color: "#00ff6b",
-		subject:  "Education"
+		"L":{
+    		color: "#00ff6b",
+    		subject:  "Education"
 		},
-		{
-		name: "M",
-		color: "#00ffa3",
-		subject:  "Music"
+		"M":{
+    		color: "#00ffa3",
+    		subject:  "Music"
 		},
-		{
-		name: "N",
-		color: "#00ffdb",
-		subject:  "Fine Arts"
+		"N":{
+    		color: "#00ffdb",
+    		subject:  "Fine Arts"
 		},
-		{
-		name: "P",
-		color: "#00b3ff",
-		subject:  "Language and Literature"
+		"P":{
+    		color: "#00b3ff",
+    		subject:  "Language and Literature"
 		},
-		{
-		name: "Q",
-		color: "#007aff",
-		subject:  "Science"
+		"Q":{
+    		color: "#007aff",
+    		subject:  "Science"
 		},
-		{
-		name: "R",
-		color: "#00b3ff",
-		subject:  "Medicine"
+		"R":{
+    		color: "#00b3ff",
+    		subject:  "Medicine"
 		},
-		{
-		name: "S",
-		color: "#0042ff",
-		subject:  "Science"
+		"S":{
+    		color: "#0042ff",
+    		subject:  "Science"
 		},
-		{
-		name: "T",
-		color: "#000aff",
-		subject:  "Agriculture"
+		"T":{
+    		color: "#000aff",
+    		subject:  "Agriculture"
 		},
-		{
-		name: "U",
-		color: "#6600ff",
-		subject:  "Military Science"
+		"U":{
+    		color: "#6600ff",
+    		subject:  "Military Science"
 		},
-		{
-		name: "V",
-		color: "#9e00ff",
-		subject:  "Naval Science"
+		"V":{
+    		color: "#9e00ff",
+    		subject:  "Naval Science"
 		},
-		{
-		name: "Z",
-		color: "#ff0080",
-		subject:  "Library Science & Information Resources"
+		"Z":{
+    		color: "#ff0080",
+    		subject:  "Library Science & Information Resources"
 		}
-	];
+	};
     </script>
 </html>
