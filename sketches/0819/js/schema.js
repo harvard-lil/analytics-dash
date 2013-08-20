@@ -4,16 +4,12 @@ var schema = function() {
 	var self = {};
 	var allData = {};
 
-	// red to green	
+	// red to green
 	var startColor = d3.hsl(0, 1, .5);
 	var endColor = d3.hsl(330, 1, .5);
 
 	var depthData = [[], [], [], [], [], [], [], []];
 
-	// interpolates between two colors, and exposes it to others if they need it
-	// though you should really just use schema.color() for most things
-	self.interpolator = d3.interpolateHsl(startColor, endColor);
-	
 	// public way to parse a csv hierarchy
 	self.parseCSV = function(csv) {
 		// loop through each row and roll up each level of classification
@@ -33,7 +29,7 @@ var schema = function() {
 				allData[a] = makeEmptyRollup(d, 0);
 				depthData[0].push(allData[a]);
 			} else {
-				
+
 				if (!allData[a].sublevels[aa]) {
 					rollup = makeEmptyRollup(d, 1);
 					allData[a].sublevels[aa] = rollup;
@@ -45,12 +41,12 @@ var schema = function() {
 					rollup.parent = allData[a].sublevels[aa];
 					depthData[2].push(rollup);
 				}
-				
+
 				if (aaa.length == 3) {
 					recurse(allData[a], allData[a].sublevels[aa].sublevels[aaa], d, '');
 				} else {
 					// recurse regardless of aa length because sometimes we have single letter categories with sublevels [ie 'B', 'E', and 'F']
-					recurse(allData[a], allData[a].sublevels[aa], d, '');		
+					recurse(allData[a], allData[a].sublevels[aa], d, '');
 				}
 
 				// if (!allData[a].sublevels[aa]) {
@@ -64,13 +60,13 @@ var schema = function() {
 				// 	rollup.parent = allData[a];
 				// 	depthData[1].push(rollup);
 				// }
-				
+
 				// if (aaa.length == 3) {
 				// 	recurse(allData[a], allData[a].sublevels[aaa], d, '');
 				// } else {
-				// 	recurse(allData[a], allData[a].sublevels[aa], d, '');		
+				// 	recurse(allData[a], allData[a].sublevels[aa], d, '');
 				// }
-			} 
+			}
 		});
 
 		self.data = allData;
@@ -87,16 +83,16 @@ var schema = function() {
 
 				inSpace += '    ';
 				if (tracing) {
-					// console.log(inSpace, row.className, 'can go deeper, checking', sublevel.className);	
+					// console.log(inSpace, row.className, 'can go deeper, checking', sublevel.className);
 				}
 
 				recurse(data, sublevel, row, inSpace);
 				return;
 			}
-		}	
+		}
 
 		if (tracing) {
-			console.log(inSpace, row.className, 'is new sublevel of', data.className, 'depth:', inSpace.length / 4);	
+			console.log(inSpace, row.className, 'is new sublevel of', data.className, 'depth:', inSpace.length / 4);
 		}
 
 		parentData.count++;
@@ -151,7 +147,7 @@ var schema = function() {
 		d.totalCirc = runningCircTotal;
 		d.totalBooks = runningTotal;
 
-		return d;	
+		return d;
 	}
 
 	function makeEmptyRollup(d, depth) {
@@ -201,15 +197,16 @@ var schema = function() {
 	self.color = function(row, modifier) {
    		var firstChar = row.ClassLetters.charCodeAt(0);
    		// interpolate between start and end color
-		
+
    		var add = 0;
    		if (modifier) {
    			add = modifier % 2 == 0 ? 0 : .025;
    		}
 
-		// console.log(self.interpolator(((firstChar - 65) / 25) + add));
+		var percent = ((firstChar - 65) / 25) + add;
 
-   		return self.interpolator(((firstChar - 65) / 25) + add);	
+		// go from 0 to 330 hue
+   		return d3.hsl(percent * (endColor.h - startColor.h), 1, .5);
 	};
 
 	self.depth = function(i) {
@@ -281,16 +278,16 @@ var schema = function() {
 				count: 0,
 				name: d.ClassSubject,
 				sublevels: {
-					
+
 				}
 			}
 		}
 	}
 }
 */
-	
+
 // data structure, this is what the data looks like returned from d3
-// { 
+// {
 //   ClassLetters: "TT"
 //   ClassNumBegin: "387"
 //   ClassNumDiff: "23"
@@ -298,5 +295,5 @@ var schema = function() {
 //   ClassSubject: "Soft home furnishings"
 //   ClassSubjectFull: "Technology -- Handicrafts. Arts and crafts -- Soft home furnishings"
 //   RecordCreated: "3/9/11 20:12"
-//   SubjectID: "6321" 
+//   SubjectID: "6321"
 // }

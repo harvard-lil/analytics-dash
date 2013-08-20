@@ -202,12 +202,12 @@ lc.graph = function() {
 
 
     d3.csv('lc_class_schema_extended_20120223_parsed.csv', function(csv) {
-        schema.parseCSV(csv); 
+        schema.parseCSV(csv);
 
         // set initial data for the navigator
         // initially we go two levels deep
-        lc.stalactites.data(schema.data, 0);  
-        // lc.stalactites.data(schema.depth(1), 1);  
+        lc.stalactites.data(schema.data, 0);
+        // lc.stalactites.data(schema.depth(1), 1);
     });
 
 

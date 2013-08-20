@@ -38,8 +38,8 @@ lc.stalactites = function() {
 		stripes[i].attr("transform", "translate(20,0) rotate(90)");
 	}
 
-	/* 
-		make highlight stripe area 
+	/*
+		make highlight stripe area
 	*/
 	highlightStripe = d3.select("#nav").append("svg:g")
 		.attr("id", "highlight-stripe");
@@ -75,7 +75,7 @@ lc.stalactites = function() {
 
 			update(data, i, parent);
 		} else {
-			update(d, i, parent);	
+			update(d, i, parent);
 		}
 
 		return self;
@@ -84,7 +84,7 @@ lc.stalactites = function() {
 	self.year = function(y) {
 		// if we call lc.stalactites.year() it will return the year
 		if (!arguments.length)	return year;
-		
+
 		year = y;
 
 		// for each stripe, update the totals and recalculate the widths for all of these
@@ -200,7 +200,7 @@ lc.stalactites = function() {
 		self.highlightData(d);
 	};
 
-	/* 
+	/*
 		A whole different way to show schema blocks
 		This is just to highlight everything on one stack
 
@@ -272,16 +272,16 @@ lc.stalactites = function() {
 
 				// carry on as usual
 				if (d.count > 0) {
-					self.data(d.sublevels, d.depth + 1, d);	
+					self.data(d.sublevels, d.depth + 1, d);
 					self.click(d);
 				} else if (d.endblock == undefined) {
 					var end = schema.makeEndData(d);
 					self.data([end], end.depth, d);
 					self.click([end]);
-				}	
+				}
 			} else {
 				self.data(schema.data, d.depth);
-				self.data(d.sublevels, d.depth + 1, d);	
+				self.data(d.sublevels, d.depth + 1, d);
 				self.click(d);
 			}
 		});
@@ -339,7 +339,7 @@ lc.stalactites = function() {
 			.data(data);
 
 		updateDivsEnterExit(divs);
-		  
+
 		// start our cx at 0, this is in case we don't have a parent, we start stacking rects from the very left
 		// lastParent is to check if we're switching parents [ie going from A to B, for example]
 		// these two we keep track of as we iterate through the updated rects/
@@ -362,7 +362,7 @@ lc.stalactites = function() {
 
 					percentWidth = (percent * d.parent.divWidth);
 				}
-				
+
 				// set the divWidth of our rect, so that the children of that rect know how big to be
 				d.divWidth = percentWidth;
 
@@ -386,15 +386,15 @@ lc.stalactites = function() {
 		divs.on("click", function(d) {
 				if (d.depth > 0) {
 					if (d.count > 0) {
-						self.data(d.sublevels, d.depth + 1, d);	
+						self.data(d.sublevels, d.depth + 1, d);
 						self.click(d);
 					} else if (d.endblock == undefined) {
 						var end = schema.makeEndData(d);
 						self.data([end], end.depth, d);
 						self.click([end]);
-					}	
+					}
 				} else {
-					self.data(d.sublevels, d.depth + 1, d);	
+					self.data(d.sublevels, d.depth + 1, d);
 					self.click(d);
 				}
 			});
@@ -477,7 +477,7 @@ lc.stalactites = function() {
 		if (d.endblock) {
 			var offset = 3;
 
-			// can add more here to make the line thicker, like a +3 etc. 
+			// can add more here to make the line thicker, like a +3 etc.
 			// this is a dumb way to do it, but works for now
 			hpts.push([[cx, bot + offset + 1], [cx + totalWidth, bot + offset + 1]]);
 			hpts.push([[cx, bot + offset + 2], [cx + totalWidth, bot + offset + 2]]);
@@ -614,7 +614,7 @@ lc.stalactites = function() {
 			var stripe = stripes[i].selectAll("rect.schema");
 			stripe
 				.transition()
-				.duration(1000)	
+				.duration(1000)
 				.attr("height", 16);
 		}
 
@@ -678,6 +678,6 @@ lc.stalactites = function() {
 
 		return scaleString + translateString;
 	}
-	
-	return self;	
+
+	return self;
 }();
