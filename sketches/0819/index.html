@@ -7,7 +7,29 @@
         <link href="style.css" rel="stylesheet" type="text/css">
     </head>
     <body>
-        Search for a subject: <input id="search-field" type="text" value=""></input><input id="search" type="submit"/></br>
+        <div id="search-form">
+            <div class="form-column">
+                <div class="form-row">
+                    <label>Search Keyword</label><input id="search-lcsh_keyword" type="text" value=""></input>
+                </div>
+                <div class="form-row">
+                    <label>Title</label><input id="search-title" type="text" value=""></input>
+                </div>
+                <div class="form-row">
+                    <label>Author Name</label><input id="search-creator" type="text" value=""></input>
+                </div>
+            </div>
+            <div class="form-column">
+                <div class="form-row">
+                    <label>LCSH Heading</label><input id="search-lcsh" type="text" value=""></input>
+                </div>
+                <div class="form-row">
+                    <label>Subject</label><input id="search-subject" type="text" value=""></input>
+                </div>
+            </div>
+
+            <input id="search" type="submit"/></br>
+        </div>
         <div id="sort">
         	<div class="y_toggle">
 		       	y-sort by: <span id="grads" name="grads">grads</span> /
@@ -30,7 +52,7 @@
 
         <svg id="nav"></svg>
         <div id="carrel">
-            <p>Drag items into the carrel for safekeeping</p>
+            <p style="opacity: .2">Drag items into the carrel for safekeeping</p>
             <div id="carrel-box">
                 <ul></ul>
                 <a id="export-carrel">Export as spreadsheet</a>

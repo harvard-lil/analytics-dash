@@ -1,6 +1,25 @@
 body, html {
     font-family:akkurat, univers, arial, sans-serif;
 }
+#search-form {
+    width: 900px;
+    height: 100px;
+}
+.form-column {
+    width: 300px;
+    float: left;
+    margin-right: 20px;
+}
+.form-row {
+    width: 300px;
+    height: 30px;
+}
+.form-row input {
+    border: none;
+    border-bottom: 1px solid black;
+    float: right;
+    width: 150px;
+}
 #carrel {
     position: absolute;
     top: 0px;
@@ -39,7 +58,7 @@ body, html {
     width: 20px; 
     position: absolute;
     left: 30px;
-    top: 120px;
+    top: 140px;
 }
 #histogram {
     width: 800px;
@@ -70,10 +89,15 @@ body, html {
 }
 #bookCounts {
     position: absolute;
-    top: 790px;
-    left: 120px;
+    top: 800px;
+    left: 650px;
+    width: 300px;
+    color: #808080;
 }
-
+#sort {
+    position: absolute;
+    top: 820px;
+}
 #sort span {
 	cursor: pointer;
 }

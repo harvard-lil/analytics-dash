@@ -21,9 +21,22 @@ lc.search = function() {
     var graphTitle = d3.select("#searchTerm")
 
     $("#search").click(function() {
-        search = $("#search-field").val();
-        graphTitle.text("Searching for... '"+search+"'");
-        runSearch("lcsh_keyword",search);
+    	var searchTerms = {};
+    	$("#search-form input").each(function(){
+    		var t = $(this);
+    		if (t.val()) {
+    			var key = t.attr("id").split("-")[1];
+    			searchTerms[key] = t.val(); //to do: add mulitple functionality
+
+
+    			graphTitle.text("Searching for... '"+t.val()+"'");
+    			runSearch(key,t.val()); //hackity hack
+    			return;
+    		}
+    	});
+        // search = $("#search-keyword").val();
+        // graphTitle.text("Searching for... '"+search+"'");
+        // runSearch("lcsh_keyword",search);
     });
 
     self.getSearchTerm = function() {
@@ -35,6 +48,7 @@ lc.search = function() {
         $.ajax({
             url: url,
             success: function(response) {
+            	console.log(url, response);
                 lc.graph.dataPrep(response.docs);
 
                 graphTitle.text(filter+": "+keyword);
