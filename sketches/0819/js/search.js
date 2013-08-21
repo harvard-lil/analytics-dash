@@ -58,6 +58,10 @@ lc.search = function() {
                 lc.histogram.appendHistogram(response.docs);
 
                 d3.select("#graph svg").attr("class","");
+
+                $("#show-list").click(function(){
+                	lc.list.showList(response.docs);
+                })
             }
         });
     };

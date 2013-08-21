@@ -242,8 +242,6 @@ lc.graph = function() {
         });
 
         info.select("#letter")
-        	.style("border-bottom-style","solid")
-       		.style("border-bottom-width", "4px")
         	.style("border-bottom-color", function(d){
       		    if (data.call_num){
            			return lcObjectArray[data.call_num[0].substr(0,1)].color;

@@ -21,7 +21,7 @@ body, html {
     width: 150px;
 }
 #carrel {
-    position: absolute;
+    position: fixed;
     top: 0px;
     right: 20px;
     font-size: 12px;
@@ -110,13 +110,15 @@ body, html {
 #info {
 	font-family:akkurat, univers, arial, sans-serif;
     width: 420px;
-    position: absolute;
+    position: fixed;
     left: 950px;
     top: 140px;
     font-size: 16px;
     padding:16px;
     display: none;
-
+    border: 1px solid #000;
+    max-height: 600px;
+    overflow: scroll;
 }
 #add-to-carrel {
     font-family: courier, monospace;
@@ -168,6 +170,47 @@ p {
 #creator li:hover, #lcsh li:hover {
 	text-decoration: underline;
 }
+#show-list {
+    position: absolute;
+    top: 20px;
+    right: 400px;
+    border: 1px solid 
+    black;
+    padding: 3px 5px;
+    width: 83px;
+    text-align: center;
+    cursor: pointer;
+}
+#show-list:hover {
+    background-color: #eee;
+}
+#list {
+    width: 600px;
+    position: absolute;
+    top: 900px;
+}
+#list ul {
+    list-style-type: none;
+}
+#list li {
+    position: relative;
+    margin-bottom: 50px;
+}
+#list li a {
+    position: absolute;
+    top: 3px;
+    right: 0;
+    color: #808080;
+    text-transform: uppercase;
+    font-size: 12px;
+    cursor: pointer;
+}
+#list .title {
+    border-bottom: 4px solid black;
+    font-weight: normal;
+    padding-right: 120px;
+}
+
 
 #graph rect{
     fill: none;
