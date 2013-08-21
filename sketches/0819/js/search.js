@@ -44,6 +44,7 @@ lc.search = function() {
     }
 
 	self.runSearch = function(filter, keyword) {
+		lc.list.hideList();
     	var url = api.replace('{filter}',filter).replace('{keyword}',keyword);
         $.ajax({
             url: url,
@@ -55,13 +56,12 @@ lc.search = function() {
 
              	lc.graph.drawArea(response.facets);
             	lc.graph.appendCircles(response.docs);
+                
                 lc.histogram.appendHistogram(response.docs);
 
-                d3.select("#graph svg").attr("class","");
+                lc.list.saveDocs(response.docs);
 
-                $("#show-list").click(function(){
-                	lc.list.showList(response.docs);
-                })
+                d3.select("#graph svg").attr("class","");
             }
         });
     };
