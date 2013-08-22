@@ -206,8 +206,12 @@ lc.graph = function() {
 
         // set initial data for the navigator
         // initially we go two levels deep
-        lc.stalactites.data(schema.data, 0);
-        // lc.stalactites.data(schema.depth(1), 1);
+        lc.subjectsorter
+        	.initialData(schema.data)
+        	.on("click", function(d) {
+        		console.log(d);
+        	});
+        // lc.subjectsorter.data(schema.data);
     });
 
 

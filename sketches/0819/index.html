@@ -59,7 +59,10 @@
             </div>
         </div>
 
-        <div id="graph"></div>
+        <div id="graph">
+
+            <svg id="graph-subjects"></svg>
+        </div>
 
         <div id="histogram">
             <svg></svg>
@@ -103,16 +106,23 @@
             <ul>
             </ul>
         </div>
+
+        <div id="tooltip">
+            <div id="currentSelection">
+                Currently selected:
+            </div>
+        </div>
     </body>
     <script type="text/javascript" src="lib/jquery-ui-1.10.3.custom.min.js"></script>
-    <script type="text/javascript" src="js/stalactites.js"></script>
+    <script type="text/javascript" src="js/subjectsorter.js"></script>
     <script type="text/javascript" src="js/schema.js"></script>
     <script type="text/javascript" src="js/carrel.js"></script>
     <script type="text/javascript" src="js/histogram.js"></script>
     <script type="text/javascript" src="js/graph.js"></script>
     <script type="text/javascript" src="js/list.js"></script>
     <script type="text/javascript" src="js/search.js"></script>
-    <script type="text/javascript">    
+    <script type="text/javascript" src="js/tooltip.js"></script>
+    <script type="text/javascript">
 
 	var lcObjectArray = {
 		"A":{
@@ -200,5 +210,14 @@
     		subject:  "Library Science & Information Resources"
 		}
 	};
+    </script>
+    <script type="text/javascript">
+        lc.subjectsorter
+            .on("mouseover", function(d) {
+                lc.tooltip.show(d);
+            })
+            .on("mouseout", function() {
+                lc.tooltip.hide();
+            });
     </script>
 </html>
