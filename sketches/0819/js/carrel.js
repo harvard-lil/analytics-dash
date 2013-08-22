@@ -20,9 +20,15 @@ lc.carrel = function() {
         updateCarrelBoxes();
     }
 
+    var widthScale = d3.scale.linear().domain([0,600]).range([10,40]);
+    var heightScale = d3.scale.linear().domain([0,14]).range([120,150]);
+
     function updateCarrelBoxes() {
         var carrelBoxes = carrelBox.selectAll("li").data(carrel);
-        carrelBoxes.enter().append("li");
+        carrelBoxes.enter().append("li")
+            .on("click",function(d){
+                lc.graph.showInfo(d, false);
+            }).append("span");
         carrelBoxes.exit().remove();
 
         carrelBoxes.style("background-color",function(d){
@@ -31,8 +37,24 @@ lc.carrel = function() {
             } else {
                 return "black";
             }
-        }).on("click",function(d){
-            lc.graph.showInfo(d, false);
+        }).style("width",function(d){
+            if (d.pages_numeric)
+                return widthScale(d.pages_numeric) + "px";
+            else
+                return "15px";
+        }).style("height",function(d){
+            if (d.height) {
+                var m = d.height.split(" ");
+                if (m[m.length-1] == "cm")
+                    d.bookHeight = Math.max(120,heightScale(m[0]/2.5));
+                else
+                    d.bookHeight = Math.max(120,heightScale(m[0]));
+                return d.bookHeight + "px";
+            } else return "50px";
+        }).style("margin-top",function(d){
+            return (150 - d.bookHeight) + "px";
+        }).select("span").text(function(d){
+            return d.title;
         });
     }
 

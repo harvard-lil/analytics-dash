@@ -27,13 +27,14 @@ body, html {
     font-size: 12px;
 }
 #carrel-box {
-    width: 300px;
-    height: 100px;
+    width: 450px;
+    height: 180px;
     background-color: #eee;
     border: 1px solid #808080;
+    margin-bottom: 25px;
 }
 #carrel-box ul {
-    margin: 0;
+    margin: 20px 0 0 0;
     padding: 0;
     list-style-type: none;
 }
@@ -43,6 +44,16 @@ body, html {
     display: inline-block;
     margin: 5px 0 0 5px;
     cursor: pointer;
+    float: left;
+    overflow: hidden;
+}
+#carrel-box span {
+    -webkit-transform:rotate(-90deg);
+    -moz-transform:rotate(-90deg);
+    -o-transform: rotate(-90deg);
+    white-space:nowrap;
+    display: block;
+    margin-top: 110px;
 }
 #export-carrel {
     position: absolute;
@@ -120,8 +131,8 @@ body, html {
 	font-family:akkurat, univers, arial, sans-serif;
     width: 420px;
     position: fixed;
-    left: 950px;
-    top: 140px;
+    right: 20px;
+    top: 250px;
     font-size: 16px;
     padding:16px;
     display: none;
@@ -133,24 +144,25 @@ body, html {
     font-family: courier, monospace;
     text-transform: uppercase;
     position: absolute;
-    right: 0;
+    top: 5px;
+    right: 5px;
     cursor: pointer;
 }
 #add-to-carrel:hover {
     text-decoration: underline;
 }
 
-.infoLabel {
+#info .infoLabel {
     font-family: courier, monospace;
     font-size: 12px;
     line-height: 12px;
-    margin-bottom: 0px;
+    margin: 15px 0 3px;
     color: gray;
     text-transform:uppercase;
 }
-
-p {
-    margin-bottom: 2px;
+#info p {
+    margin: 0;
+    font-size: 14px;
 }
 
 #letter {
@@ -163,6 +175,7 @@ p {
 	font-weight: normal;
   	font-size: 24px;
   	text-transform: capitalize;
+    margin: 0;
 }
 
 #creator, #lcsh {
@@ -181,17 +194,18 @@ p {
 }
 #show-list {
     position: absolute;
-    top: 20px;
-    right: 400px;
-    border: 1px solid
-    black;
+    top: 30px;
+    right: 500px;
+    border: 1px solid #808080;
+    color: #808080;
     padding: 3px 5px;
     width: 83px;
     text-align: center;
     cursor: pointer;
 }
 #show-list:hover {
-    background-color: #eee;
+    border-color: black;
+    color: black;
 }
 #list {
     width: 600px;

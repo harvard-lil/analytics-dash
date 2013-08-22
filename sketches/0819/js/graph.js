@@ -223,34 +223,45 @@ lc.graph = function() {
         if (data.creator)
             info.select("#creator").html("<li class='c'>" + data.creator.join("</li><li>") + "</li>");
 
-        info.select("#pub_date_numeric span").text(data.pub_date_numeric);
-        // info.select("#shelfrank span").text(data.shelfrank);
-        info.select("#subject").text(data.loc_call_num_subject);
         if (data.call_num)
-           info.select("#lc span").text(data.call_num.join("or "));
-        if (data.lcsh)
+           info.select("#lc").text(data.call_num.join("or "));
+
+        info.select("#pub_date_numeric").text(data.pub_date_numeric);
+
+        if (data.pages_numeric)
+        	info.select("#pages_numeric").text(data.pages_numeric);
+        else
+        	info.select("#pages_numeric").text("Format: "+data.format);
+
+        if (data.language)
+			info.select("#language").text(data.language);
+
+		if (data.lcsh)
             info.select("#lcsh").html("<li class='c'>" + data.lcsh.join("</li><li>") + "</li>");
-		info.select("#publisher span").text(data.publisher);
-		info.select("#pub_location span").text(data.pub_location);
+
+        // info.select("#shelfrank span").text(data.shelfrank);
+        // info.select("#subject").text(data.loc_call_num_subject);
+		// info.select("#publisher span").text(data.publisher);
+		// info.select("#pub_location span").text(data.pub_location);
         // info.select("#fac_score span").text(data.score_checkouts_fac);
         // info.select("#grad_score span").text(data.score_checkouts_grad);
         // info.select("#undergrad_score span").text(data.score_checkouts_undergrad);
         // info.select("#reserve_score span").text(data.score_reserves);
-        info.select("#format span").text(data.format);
-        info.select("#letter span").text(function(d){
-        	if (data.call_num) {
-        		var firstHalf = data.call_num[0].substr(0,1);
-	            var secondHalf = lcObjectArray[firstHalf].subject;
-	            return firstHalf + " -- " + secondHalf;
-        	}
-        });
+        // info.select("#format span").text(data.format);
+        // info.select("#letter span").text(function(d){
+        // 	if (data.call_num) {
+        // 		var firstHalf = data.call_num[0].substr(0,1);
+	       //      var secondHalf = lcObjectArray[firstHalf].subject;
+	       //      return firstHalf + " -- " + secondHalf;
+        // 	}
+        // });
+        // info.select("#letter")
+        // 	.style("border-bottom-color", function(d){
+      		//     if (data.call_num){
+        //    			return lcObjectArray[data.call_num[0].substr(0,1)].color;
+        //     	}
+  		    // });
 
-        info.select("#letter")
-        	.style("border-bottom-color", function(d){
-      		    if (data.call_num){
-           			return lcObjectArray[data.call_num[0].substr(0,1)].color;
-            	}
-  		    });
   		if (inBox) {
   			info.select("#add-to-carrel").text("Add To Carrel").on("click",function(){
 	            lc.carrel.sendToCarrel(data);
