@@ -2,9 +2,9 @@ var lc = lc || {};
 
 lc.histogram = function() {
 
-    var gWidth = 800,
-        gHeight = 75;
-    var histoGroup = d3.select("#histogram").select("svg").attr("width",gWidth).attr("height",gHeight).append("g");
+    var gHeight = 75;
+    var histoGroup = d3.select("#histogram").select("svg").attr("width","100%").attr("height",gHeight).append("g");
+    var gWidth = $("#histogram").width();
 
     self.appendHistogram = function(data) {
 
@@ -19,6 +19,7 @@ lc.histogram = function() {
             maxYear = parseInt(d3.max(booksByYear,function(d){ if (d.key != "undefined") return d.key; })),
             maxBooks = d3.max(booksByYear,function(d){ return d.values.length; });
 
+            console.log("w",gWidth)
         var yearScale = d3.scale.linear().domain([minYear,maxYear]).range([0,gWidth-(gWidth/(maxYear-minYear))]),
             bookScale = d3.scale.linear().domain([0,maxBooks]).range([0,gHeight]);
 

@@ -15,6 +15,10 @@ lc.graph = function() {
 
 	var formatAsYear= d3.format("04d");
 
+	var svg = d3.select("#graph").append("svg").attr("height",height).attr("width","100%");
+    width = $("#graph").width(),
+    gWidth = width - 150;
+
     yearEnd = 2013;
 	var timescale = d3.scale.linear().domain([1850,yearEnd]).range([0,gWidth]);
 
@@ -22,8 +26,6 @@ lc.graph = function() {
 
 	var yscale = d3.scale.linear().domain([0,16000000]).range([gHeight, 0]);
 
-
-    var svg = d3.select("#graph").append("svg").attr("height",height).attr("width",width);
     svg.append("clipPath").attr("id","graph-box")
     	.append("rect").attr("width",gWidth).attr("height",gHeight);
 

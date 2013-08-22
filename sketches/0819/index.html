@@ -50,64 +50,66 @@
             </div>
         </div>
 
-        <svg id="nav"></svg>
-        <div id="carrel">
-            <p style="opacity: .2">Drag items into the carrel for safekeeping</p>
-            <div id="carrel-box">
-                <ul></ul>
+        <div class="half">
+            <svg id="nav"></svg>
+            <div id="graph"></div>
+            <div id="histogram">
+                <svg></svg>
+                <div id="slider-range"></div>
             </div>
-            <a id="export-carrel">Export as spreadsheet</a>
+            <div id="bookCounts">
+                <p id="countsOfBooks"><span></span></p>
+            </div>
+            <div id="list">
+                <ul>
+                </ul>
+            </div>
+        </div>
+        <div class="half">
+            <div id="carrel">
+                <p style="opacity: .2">Drag items into the carrel for safekeeping</p>
+                <div id="carrel-box">
+                    <ul></ul>
+                </div>
+                <a id="export-carrel">Export as spreadsheet</a>
+            </div>
+            <div id="info">
+                <a id="add-to-carrel">Add to carrel</a>
+                <p class="infoLabel">Title</p>
+                <h2 id="title"></h2>
+                <!-- <p class="infoLabel">Subject:</p> -->
+                <!-- <p id="letter">
+                    <span></span>
+                    <div id="subject"></div>
+                </p> -->
+                <p class="infoLabel">Authors</p>
+                <ul id="creator"></ul>
+
+                <p class="infoLabel">Library of Congress Call #</p>
+                <p id="lc"><span></span></p>
+
+                <p class="infoLabel">Publishing Data</p>
+                <p id="pub_date_numeric"></p>
+
+                <p class="infoLabel">Page Count</p>
+                <p id="pages_numeric"><span></span></p>
+
+                <p class="infoLabel">Language</p>
+                <p id="language"><span></span></p>
+
+                <p class="infoLabel">Library of Congress Subject Headers</p>
+                <ul id="lcsh"></ul>
+
+                <!-- <p id="publisher">
+                    <span></span>
+                    <div id="pub_location"><span></span></div>
+                </p> -->
+                <!-- <div id="subject"></div>
+                <p class="infoLabel">Format: </p>
+                <p id="format"><span></span></p> -->
+            </div>
         </div>
 
-        <div id="graph"></div>
-
-        <div id="histogram">
-            <svg></svg>
-            <div id="slider-range"></div>
-        </div>
-
-        <div id="info">
-            <a id="add-to-carrel">Add to carrel</a>
-            <p class="infoLabel">Title</p>
-            <h2 id="title"></h2>
-            <!-- <p class="infoLabel">Subject:</p> -->
-  			<!-- <p id="letter">
-  				<span></span>
-  				<div id="subject"></div>
-  			</p> -->
-            <p class="infoLabel">Authors</p>
-            <ul id="creator"></ul>
-
-            <p class="infoLabel">Library of Congress Call #</p>
-            <p id="lc"><span></span></p>
-
-            <p class="infoLabel">Publishing Data</p>
-            <p id="pub_date_numeric"><span></span></p>
-
-            <p class="infoLabel">Page Count</p>
-            <p id="pages_numeric"><span></span></p>
-
-            <p class="infoLabel">Language</p>
-            <p id="language"><span></span></p>
-
-            <p class="infoLabel">Library of Congress Subject Headers</p>
-            <ul id="lcsh"></ul>
-
-            <!-- <p id="publisher">
-            	<span></span>
-            	<div id="pub_location"><span></span></div>
-            </p> -->
-         	<!-- <div id="subject"></div>
-        	<p class="infoLabel">Format: </p>
-         	<p id="format"><span></span></p> -->
-        </div>
-        <div id="bookCounts">
-			<p id="countsOfBooks"><span></span></p>
-        </div>
-        <div id="list">
-            <ul>
-            </ul>
-        </div>
     </body>
     <script type="text/javascript" src="lib/jquery-ui-1.10.3.custom.min.js"></script>
     <script type="text/javascript" src="js/stalactites.js"></script>
