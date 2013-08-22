@@ -143,17 +143,17 @@ body, html {
     text-decoration: underline;
 }
 
-.infoLabel {
+#info .infoLabel {
     font-family: courier, monospace;
     font-size: 12px;
     line-height: 12px;
-    margin-bottom: 0px;
+    margin: 15px 0 3px;
     color: gray;
     text-transform:uppercase;
 }
-
-p {
-    margin-bottom: 2px;
+#info p {
+    margin: 0;
+    font-size: 14px;
 }
 
 #letter {
@@ -166,6 +166,7 @@ p {
 	font-weight: normal;
   	font-size: 24px;
   	text-transform: capitalize;
+    margin: 0;
 }
 
 #creator, #lcsh {
@@ -184,17 +185,18 @@ p {
 }
 #show-list {
     position: absolute;
-    top: 20px;
-    right: 400px;
-    border: 1px solid 
-    black;
+    top: 30px;
+    right: 500px;
+    border: 1px solid #808080;
+    color: #808080;
     padding: 3px 5px;
     width: 83px;
     text-align: center;
     cursor: pointer;
 }
 #show-list:hover {
-    background-color: #eee;
+    border-color: black;
+    color: black;
 }
 #list {
     width: 600px;
