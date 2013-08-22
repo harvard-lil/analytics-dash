@@ -73,12 +73,21 @@ body, html {
     text-decoration: underline;
 }
 #nav {
-    height: 500px; 
-    width: 20px; 
+    height: 500px;
+    width: 20px;
     position: absolute;
     left: 30px;
-    top: 140px;
+    top: 35px;
 }
+#graph-subjects {
+    height: 500px;
+    width: 800px;
+    position: absolute;
+    z-index: 0;
+    left: 130px;
+    top: 150px;
+}
+
 #histogram {
     width: 100%;
     position: absolute;
@@ -96,7 +105,7 @@ body, html {
 }
 .ui-slider-handle {
     background-color: black;
-    left: 100%; 
+    left: 100%;
     line-height: 60px;
     text-align: center;
     text-indent: -8px;
@@ -234,16 +243,6 @@ body, html {
     padding-right: 120px;
 }
 
-
-#graph rect{
-    fill: none;
-    stroke: #ccc;
-}
-
-    #graph rect:hover{
-    fill: yellow;
-}
-
 circle {
     opacity: .5;
 }
@@ -280,4 +279,25 @@ circle:hover {
     font-size: 12px;
     fill: gray;
     z-index: -1;
+}
+
+
+#tooltip {
+    width: auto;
+    height: auto;
+    position: absolute;
+    margin-top: 20px;
+    margin-left: 20px;
+    z-index: 100;
+    padding: 15px;
+    font-family: sans-serif;
+    font-size: 14px;
+    font-weight: bold;
+    color: white;
+    background-color: black;
+    background-color: rgba(0, 0, 0, 0.8);
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    display: none;
 }

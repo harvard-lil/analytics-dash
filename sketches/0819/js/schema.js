@@ -29,7 +29,6 @@ var schema = function() {
 				allData[a] = makeEmptyRollup(d, 0);
 				depthData[0].push(allData[a]);
 			} else {
-
 				if (!allData[a].sublevels[aa]) {
 					rollup = makeEmptyRollup(d, 1);
 					allData[a].sublevels[aa] = rollup;
@@ -48,24 +47,6 @@ var schema = function() {
 					// recurse regardless of aa length because sometimes we have single letter categories with sublevels [ie 'B', 'E', and 'F']
 					recurse(allData[a], allData[a].sublevels[aa], d, '');
 				}
-
-				// if (!allData[a].sublevels[aa]) {
-				// 	rollup = makeEmptyRollup(d, 1);
-				// 	allData[a].sublevels[aa] = rollup;
-				// 	rollup.parent = allData[a];
-				// 	depthData[1].push(rollup);
-				// } else if (aaa.length == 3 && !allData[a].sublevels[aaa]) {
-				// 	rollup = makeEmptyRollup(d, 1);
-				// 	allData[a].sublevels[aaa] = rollup;
-				// 	rollup.parent = allData[a];
-				// 	depthData[1].push(rollup);
-				// }
-
-				// if (aaa.length == 3) {
-				// 	recurse(allData[a], allData[a].sublevels[aaa], d, '');
-				// } else {
-				// 	recurse(allData[a], allData[a].sublevels[aa], d, '');
-				// }
 			}
 		});
 
