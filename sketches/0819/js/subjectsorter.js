@@ -85,8 +85,6 @@ lc.subjectsorter = function() {
 	function update(data, target) {
 		target = target || graphSubjects;
 
-		console.log('updating', target);
-
 		calculateSelectionStats(target, data);
 		var total = target.currentTotal;
 		var divs = target.selectAll("rect.schema")
@@ -108,28 +106,6 @@ lc.subjectsorter = function() {
 				// divided by the total number of books
 				var percent = num / total;
 				var percentHeight = (percent * height);
-
-				/*
-				// don't need this anymore because we're doing the rects full bleed
-
-				// if we have a parent, the percent is number of books that year divided by
-				// the number of books that year in the parent
-				if (d.parent && d.parent.books) {
-					percent = num / d.parent.books[year];
-
-					percentHeight = (percent * d.parent.divWidth);
-				}
-
-				// set the divWidth of our rect, so that the children of that rect know how big to be
-				d.divWidth = percentHeight;
-
-				// and if this parent isn't the same as the last one, update our cx
-				// so we're always locked to the right widths and cx positions
-				if (d.parent && d.parent != lastParent) {
-					cy = d.parent.cy;
-					lastParent = d.parent;
-				}
-				*/
 
 				d.cy = cy;
 				cy += percentHeight;
@@ -200,50 +176,6 @@ lc.subjectsorter = function() {
 		divs.exit().remove();
 	}
 
-	function updateSelectedBorder(parent) {
-
-		selectedStack = [];
-		var getSelectedStack = function(parent) {
-			selectedStack.unshift(parent);
-			if (parent.parent)
-				getSelectedStack(parent.parent);
-		}
-		getSelectedStack(parent);
-
-		var lpts = [];
-		var rpts = [];
-		for (var i = 0; i < selectedStack.length; i++) {
-			var box = $("#" + getID(selectedStack[i])),
-				nav = $("#nav"),
-				pos = box.offset(),
-				navpos = nav.offset(),
-				left = (pos.left - navpos.left),
-				right = (pos.left - navpos.left) + (box.attr("width") * scale),
-				top = (pos.top - navpos.top);
-
-			lpts.push([left / scale, top]);
-			lpts.push([left / scale, top + 18]);
-			rpts.push([right / scale, top]);
-			rpts.push([right / scale, top + 18]);
-		}
-
-		rpts.reverse();
-
-		var both = lpts.concat(rpts);
-		var path = selectedBorder.selectAll("path").data([both]);
-
-		path.enter()
-			.append("svg:path")
-			.attr("stroke", "black")
-			.attr("fill", "none");
-
-		// need to break these up in to different paths, alter the stroke based on scale
-		path
-			.attr("d", 'M' + lpts.join('L') + 'L' + rpts.join('L'));
-
-		path.exit().remove();
-	}
-
 	function calculateSelectionStats(stripe, data) {
 		if (!stripe)	return;
 
@@ -265,13 +197,6 @@ lc.subjectsorter = function() {
 		return id.replace(/[^a-z0-9 -]/g, '') // remove invalid chars
 				    .replace(/\s+/g, '-') // collapse whitespace and replace by -
 				    .replace(/-+/g, '-'); // collapse dashes
-	}
-
-	function getTransform(stripe) {
-		var scaleString = "scale(" + stripe.scale + ",1)";
-		var translateString = " translate(" + stripe.offset + "," + (stripe.depth * 18) + ")";
-
-		return scaleString + translateString;
 	}
 
 	return self;
