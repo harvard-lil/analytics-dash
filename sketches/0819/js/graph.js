@@ -29,6 +29,8 @@ lc.graph = function() {
     svg.append("clipPath").attr("id","graph-box")
     	.append("rect").attr("width",gWidth).attr("height",gHeight);
 
+    svg.append("g").attr("id","graph-subjects").attr("transform","translate(120,40)").attr("clip-path","url(#graph-box)");
+
 	var barCharts = svg.append("g").attr("class","barchart").attr("transform","translate(120,40)").attr("clip-path","url(#graph-box)");
 
     var circleGroup = svg.append("g").attr("class","circles").attr("transform","translate(120,40)").attr("clip-path","url(#graph-box)");

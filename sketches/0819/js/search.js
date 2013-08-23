@@ -54,7 +54,7 @@ lc.search = function() {
 
                 graphTitle.text(filter+": "+keyword);
 
-             	lc.graph.drawArea(response.facets);
+             	// lc.graph.drawArea(response.facets);
             	lc.graph.appendCircles(response.docs);
                 
                 lc.histogram.appendHistogram(response.docs);

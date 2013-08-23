@@ -3,7 +3,8 @@ var lc = lc || {};
 lc.list = function() {
 
     var documents;
-    var list = d3.select("#list ul");
+    var listWrapper = d3.select("#list-wrapper")
+        list = d3.select("#list");
 
     $("#show-list").click(function(){
         self.showList();
@@ -14,7 +15,7 @@ lc.list = function() {
     };
 
     self.showList = function() {
-        list.style("display","block");
+        listWrapper.style("display","block");
 
         var items = list.selectAll("li").data(documents);
         var entering = items.enter().append("li");
@@ -45,9 +46,21 @@ lc.list = function() {
             lc.graph.showInfo(d);
         });
     };
-    
+
     self.hideList = function() {
-        list.style("display","none");
+        listWrapper.style("display","none");
+    };
+
+    $("#list-sort-by li").click(function(){
+        self.sortList($(this).attr("class"));
+    });
+
+    self.sortList = function(sorter) {
+        console.log(sorter)
+        list.selectAll("li").sort(function(a,b){
+            // console.log(a[sorter] - b[sorter])
+            return d3.ascending(a[sorter], b[sorter]);
+        });
     };
 
     return self;

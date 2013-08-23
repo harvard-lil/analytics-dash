@@ -21,6 +21,7 @@ lc.subjectsorter = function() {
 
 	self.initialData = function(d) {
 		self.data(d, sidebar);
+		graphSubjects = d3.select("#graph-subjects");
 		return self;
 	};
 
@@ -137,11 +138,11 @@ lc.subjectsorter = function() {
 
 	function updateDivsEnterExit(divs, style) {
 		// alter whether we're drawing onto the sidebar or behind the graph
-		var width = style == 'sidebar' ? $("#nav").width() : $("#graph-subjects").width();
+		var width = style == 'sidebar' ? $("#nav").width() : $("#graph").width();
 
 		// if we have new data, make new rects, call them .schema
 		divs.enter()
-		    .append("svg:rect")
+		    .append("rect")
 		    .attr("class", "schema");
 
 		divs.attr("id", function(d) { return getID(d); })

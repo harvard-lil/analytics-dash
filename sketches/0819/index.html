@@ -10,24 +10,35 @@
         <div id="search-form">
             <div class="form-column">
                 <div class="form-row">
-                    <label>Search Keyword</label><input id="search-lcsh_keyword" type="text" value=""></input>
+                    <label>Subject Keyword</label><input id="search-lcsh_keyword" type="text" value=""></input>
                 </div>
                 <div class="form-row">
                     <label>Title</label><input id="search-title" type="text" value=""></input>
                 </div>
                 <div class="form-row">
-                    <label>Author Name</label><input id="search-creator" type="text" value=""></input>
+                    <label>Format</label><input id="search-format" type="text" value=""></input>
                 </div>
             </div>
             <div class="form-column">
                 <div class="form-row">
-                    <label>LCSH Heading</label><input id="search-lcsh" type="text" value=""></input>
+                    <label>Author Name</label><input id="search-creator" type="text" value=""></input>
                 </div>
                 <div class="form-row">
-                    <label>Subject</label><input id="search-subject" type="text" value=""></input>
+                    <label>Country</label><input id="search-country" type="text" value=""></input>
+                </div>
+                <div class="form-row">
+                    <label>Language</label><input id="search-language" type="text" value=""></input>
                 </div>
             </div>
-            <input id="search" type="submit"/></br>
+            <div class="form-column">
+                <div class="form-row">
+                    <label>Year Range</label><input id="search-year" type="text" value=""></input>
+                </div>
+                <div class="form-row">
+                    <label>Call # Range</label><input id="search-range" type="text" value=""></input>
+                </div>
+                <input id="search" type="submit"/></br>
+            </div>
         </div>
         <div id="show-list">Show Items As A List</div>
         <div id="sort">
@@ -53,7 +64,7 @@
         <div class="half">
             <svg id="nav"></svg>
             <div id="graph">
-                <svg id="graph-subjects"></svg>
+                <!-- <svg id="graph-subjects"></svg> -->
             </div>
             <div id="tooltip">
             <div id="currentSelection">
@@ -67,8 +78,14 @@
             <div id="bookCounts">
                 <p id="countsOfBooks"><span></span></p>
             </div>
-            <div id="list">
-                <ul>
+            <div id="list-wrapper">
+                <ul id="list-sort-by">
+                    <li>Sort By:</li>
+                    <li class="title">Title</li>
+                    <li class="pub_date_numeric">Date</li>
+                    <li class="call_num">Call Number</li>
+                </ul>
+                <ul id="list">
                 </ul>
             </div>
         </div>
