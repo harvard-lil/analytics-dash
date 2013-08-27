@@ -5,9 +5,9 @@ lc.tooltip = function() {
 		hover = $("#tooltip"),
 		hoverTitle = $("#currentSelection");
 
-	$(document).mousemove(function(e) {
+	$("#graph").mousemove(function(e) {
 		hover.css({
-			top: e.pageY,
+			top: e.offsetY,
 			left: e.pageX
 		});
 	});

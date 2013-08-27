@@ -49,12 +49,18 @@ lc.carrel = function() {
                     d.bookHeight = Math.max(120,heightScale(m[0]/2.5));
                 else
                     d.bookHeight = Math.max(120,heightScale(m[0]));
-                return d.bookHeight + "px";
-            } else return "50px";
+            } else 
+                d.bookHeight = 120;
+
+            return d.bookHeight + "px";
         }).style("margin-top",function(d){
             return (150 - d.bookHeight) + "px";
         }).select("span").text(function(d){
             return d.title;
+        }).style("margin-top",function(d){
+            var w = $(this).parent().width();
+            console.log(w)
+            return (d.bookHeight - 20) + "px";
         });
     }
 

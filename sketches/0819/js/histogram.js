@@ -19,7 +19,6 @@ lc.histogram = function() {
             maxYear = parseInt(d3.max(booksByYear,function(d){ if (d.key != "undefined") return d.key; })),
             maxBooks = d3.max(booksByYear,function(d){ return d.values.length; });
 
-            console.log("w",gWidth)
         var yearScale = d3.scale.linear().domain([minYear,maxYear]).range([0,gWidth-(gWidth/(maxYear-minYear))]),
             bookScale = d3.scale.linear().domain([0,maxBooks]).range([0,gHeight]);
 
