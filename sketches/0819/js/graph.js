@@ -98,7 +98,6 @@ lc.graph = function() {
 
 		var LCClow = d3.min(data,function(d){ if (d.loc_call_num_sort_order) return d.loc_call_num_sort_order[0]; });
 		var LCChigh = d3.max(data,function(d){ if (d.loc_call_num_sort_order) return d.loc_call_num_sort_order[0]; });
-		console.log(LCClow, LCChigh)
 		self.updateLCCRange(LCClow, LCChigh);
 	};
 
@@ -290,6 +289,23 @@ lc.graph = function() {
 	        });
   		}
     };
+
+    $("#stack-circles").click(function(){
+    	stackCircles();
+    });
+
+    function stackCircles() {
+    	var circles = circleGroup.selectAll("circle");
+    	var yearObj = {};
+    	circles.attr("r",3).each(function(d){
+    		if (d.pub_date_numeric in yearObj) {
+    			yearObj[d.pub_date_numeric]++;
+    		} else {
+    			yearObj[d.pub_date_numeric] = 0;
+    		}
+    		d3.select(this).attr("cy",gHeight-5-(yearObj[d.pub_date_numeric]*7));
+    	});
+    }
 
     /*
 

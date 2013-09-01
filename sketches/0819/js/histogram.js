@@ -5,10 +5,11 @@ lc.histogram = function() {
     var gHeight = 75;
     var histoGroup = d3.select("#histogram").select("svg").attr("width","100%").attr("height",gHeight).append("g");
     var gWidth = $("#histogram").width();
+    var booksByYear;
 
     self.appendHistogram = function(data) {
 
-        var booksByYear = d3.nest().key(function(d){
+        booksByYear = d3.nest().key(function(d){
             if (d["pub_date_numeric"])
                 return d["pub_date_numeric"];
         }).entries(data).sort(function(a,b){
@@ -61,6 +62,10 @@ lc.histogram = function() {
         });
         $(".ui-slider-handle:first").text(minYear);
         $(".ui-slider-handle:last").text(maxYear);
+    };
+
+    self.getBooksByYear = function() {
+        return booksByYear;
     };
 
     return self;

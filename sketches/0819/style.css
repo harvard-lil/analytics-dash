@@ -24,7 +24,7 @@ body, html {
     width: 50%;
     position: relative;
 }
-.half:nth-child(even) {
+.half:nth-child(odd) {
     width: 40%;
     position: fixed;
     top: 100px;
@@ -200,8 +200,19 @@ body, html {
 #creator li:hover, #lcsh li:hover {
 	text-decoration: underline;
 }
+#stack-circles {
+    position: fixed;
+    top: 30px;
+    right: 200px;
+    border: 1px solid #808080;
+    color: #808080;
+    padding: 3px 5px;
+    width: 83px;
+    text-align: center;
+    cursor: pointer;
+}
 #show-list {
-    position: absolute;
+    position: fixed;
     top: 30px;
     right: 300px;
     border: 1px solid #808080;
