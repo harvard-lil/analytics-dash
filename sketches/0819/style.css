@@ -39,7 +39,7 @@ body, html {
     height: 180px;
     background-color: #eee;
     border: 1px solid #808080;
-    margin-bottom: 25px;
+    margin-bottom: 5px;
 }
 #carrel-box ul {
     margin: 20px 0 0 0;
@@ -64,11 +64,14 @@ body, html {
 }
 #export-carrel {
     position: absolute;
-    bottom: 5px;
     right: 5px;
     cursor: pointer;
 }
-#export-carrel:hover {
+#table-carrel {
+    cursor: pointer;
+}
+#export-carrel:hover,
+#table-carrel:hover {
     text-decoration: underline;
 }
 #nav {

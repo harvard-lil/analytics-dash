@@ -8,6 +8,9 @@ lc.carrel = function() {
     $("#export-carrel").click(function(){
         exportCarrel();
     });
+    $("#table-carrel").click(function(){
+        tableCarrel();
+    });
     
     self.sendToCarrel = function(bookData) {
         carrel.push(bookData);
@@ -78,6 +81,20 @@ lc.carrel = function() {
 
         download(csv, "dowload.csv", "text/csv");
     };
+
+    function tableCarrel() {
+        var headings = ["title", "creator", "publisher", "call_num", "holding_libs", "lcsh", "score_holding_libs", "id_isbn", "id",  "title_sort", "score_checkouts_undergrad", "height", "title_link_friendly", "score_checkouts_grad", "pub_date", "loc_call_num_subject", "pub_location", "ut_id", "pages", "loc_call_num_sort_order", "score_checkouts_fac", "data_source", "dataset_tag", "score_recalls", "shelfrank",  "language", "id_inst", "ut_count", "id_oclc", "note", "format",  "pub_date_numeric", "source_record"];
+        var csv = headings.join("~~~");
+
+        carrel.forEach(function(item,i){
+            var book = "|||";
+            headings.forEach(function(d){
+                book = book.concat(item[d]+"~~~");
+            });
+            csv = csv.concat(book);
+        });
+        window.open("table.html#"+csv)
+    }
 
     /*
         outline of how to download csv, it will auto-download in chrome, firefox, and IE
