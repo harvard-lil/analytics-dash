@@ -2,11 +2,10 @@ var lc = lc || {};
 
 lc.tooltip = function() {
 	var self = d3.dispatch("click", "mouseover", "mouseout", "search"),
-		hover = $("#tooltip"),
-		hoverTitle = $("#currentSelection");
+		tooltip = $("#tooltip");
 
 	$("#graph").mousemove(function(e) {
-		hover.css({
+		tooltip.css({
 			top: e.offsetY,
 			left: e.pageX
 		});
@@ -14,7 +13,7 @@ lc.tooltip = function() {
 
 	self.show = function(row) {
 		if (row.className) {
-			hoverTitle.html( row.ClassLetters + ' ' + row.ClassNumBegin + '-'+row.ClassNumEnd+': ' + row.ClassSubject);
+			tooltip.html( row.ClassLetters + ' ' + row.ClassNumBegin + '-'+row.ClassNumEnd+': ' + row.ClassSubject);
 
 		//	ClassNumBegin: d.ClassNumBegin,
 		//	ClassNumEnd: d.ClassNumEnd,
@@ -22,14 +21,14 @@ lc.tooltip = function() {
 
 
 		} else {
-			hoverTitle.html(row);
+			tooltip.html(row);
 		}
 
-		hover.show();
+		tooltip.show();
 	};
 
 	self.hide = function() {
-		hover.hide();
+		tooltip.hide();
 	}
 
 	return self;

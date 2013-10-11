@@ -21,18 +21,22 @@ body, html {
     width: 150px;
 }
 .half {
-    width: 50%;
+    width: 66%;
     position: relative;
+    float: right;
+    height: 100%;
 }
-.half:nth-child(odd) {
-    width: 40%;
+.half:nth-child(even) {
+    width: 33%;
     position: fixed;
-    top: 100px;
-    right: 10%;
+    top: 0px;
 }
 #carrel {
     font-size: 12px;
     width: 100%;
+    position: absolute;
+    bottom: 0;
+    height: 250px;
 }
 #carrel-box {
     width: 100%;
@@ -126,8 +130,10 @@ body, html {
     color: #808080;
 }
 #sort {
-    position: absolute;
-    top: 820px;
+    position: fixed;
+    top: 150px;
+    right: 0px;
+    width: 13%;
 }
 #sort span {
 	cursor: pointer;
@@ -142,13 +148,12 @@ body, html {
 	font-family:akkurat, univers, arial, sans-serif;
     width: 100%;
     position: absolute;
-    top: 250px;
+    top: 140px;
     font-size: 16px;
     padding: 0 20px;
     box-sizing: border-box;
-    display: none;
     border: 1px solid #000;
-    max-height: 450px;
+    height: 350px;
     overflow: scroll;
 }
 #add-to-carrel {
@@ -204,9 +209,6 @@ body, html {
 	text-decoration: underline;
 }
 #stack-circles {
-    position: fixed;
-    top: 30px;
-    right: 200px;
     border: 1px solid #808080;
     color: #808080;
     padding: 3px 5px;
@@ -215,9 +217,6 @@ body, html {
     cursor: pointer;
 }
 #show-list {
-    position: fixed;
-    top: 30px;
-    right: 300px;
     border: 1px solid #808080;
     color: #808080;
     padding: 3px 5px;
@@ -230,12 +229,15 @@ body, html {
     color: black;
 }
 #list-wrapper {
-    width: 600px;
-    position: absolute;
-    top: 900px;
+    width: 80%;
 }
 #list, #list-sort-by {
     list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+#list-sort-by {
+    margin-bottom: 15px;
 }
 #list-sort-by li {
     display: inline-block;
@@ -249,23 +251,20 @@ body, html {
     cursor: default;
     background-color: transparent !important;
 }
+#list {
+    border: 1px solid #000;
+    padding: 10px;
+    box-sizing: border-box;
+}
 #list li {
     position: relative;
-    margin-bottom: 50px;
-}
-#list li a {
-    position: absolute;
-    top: 3px;
-    right: 0;
-    color: #808080;
-    text-transform: uppercase;
-    font-size: 12px;
+    margin-bottom: 8px;
     cursor: pointer;
 }
 #list .title {
-    border-bottom: 4px solid black;
+    border-bottom: 2px solid black;
     font-weight: normal;
-    padding-right: 120px;
+    margin: 0;
 }
 
 circle {

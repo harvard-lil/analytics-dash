@@ -3,7 +3,8 @@ var lc = lc || {};
 lc.list = function() {
 
     var documents;
-    var listWrapper = d3.select("#list-wrapper")
+    var listWrapper = d3.select("#list-wrapper"),
+        graphWrapper = d3.select("#graph-wrapper"),
         list = d3.select("#list");
 
     $("#show-list").click(function(){
@@ -15,32 +16,25 @@ lc.list = function() {
     };
 
     self.showList = function() {
+
         listWrapper.style("display","block");
+        graphWrapper.style("display","none");
 
         var items = list.selectAll("li").data(documents);
         var entering = items.enter().append("li");
-        entering.append("h2").attr("class","title");
-        entering.append("a");
-        entering.append("p");
+        entering.append("p").attr("class","title");
 
         items.exit().remove();
 
-        items.select("h2")
+        items.select("p")
             .text(function(d){
-                return d.title;
+                return d.title + ", " + d.pub_date_numeric;
             }).style("border-bottom-color", function(d){
                 if (d.call_num){
                     return lcObjectArray[d.call_num[0].substr(0,1)].color;
                 }
-            });
-        items.select("a").text("Add To Carrel")
-            .on("click",function(d){
+            }).on("click",function(d){
                 lc.carrel.sendToCarrel(d);
-            });
-        items.select("p")
-            .text(function(d){
-                if (d.loc_call_num_subject)
-                    return d.loc_call_num_subject;
             });
         items.on("mouseover",function(d){
             lc.graph.showInfo(d);
@@ -49,6 +43,7 @@ lc.list = function() {
 
     self.hideList = function() {
         listWrapper.style("display","none");
+        graphWrapper.style("display","block");
     };
 
     $("#list-sort-by li").click(function(){
@@ -56,9 +51,7 @@ lc.list = function() {
     });
 
     self.sortList = function(sorter) {
-        console.log(sorter)
         list.selectAll("li").sort(function(a,b){
-            // console.log(a[sorter] - b[sorter])
             return d3.ascending(a[sorter], b[sorter]);
         });
     };

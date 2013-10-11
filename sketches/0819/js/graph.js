@@ -15,7 +15,7 @@ lc.graph = function() {
 
 	var formatAsYear= d3.format("04d");
 
-	var svg = d3.select("#graph").append("svg").attr("height",height).attr("width","100%");
+	var svg = d3.select("#graph").append("svg").attr("height",height).attr("width","80%");
     width = $("#graph").width(),
     gWidth = width - 150;
 
@@ -232,7 +232,6 @@ lc.graph = function() {
     var info = d3.select("#info");
 
     self.showInfo = function(data, inBox) {
-    	info.style("display","block");
         info.select("#title").text(data.title);
         if (data.creator)
             info.select("#creator").html("<li class='c'>" + data.creator.join("</li><li>") + "</li>");

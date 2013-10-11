@@ -42,72 +42,10 @@
         </div>
 
         <div class="half">
-            <svg id="nav"></svg>
-            <div id="graph">
-                <!-- <svg id="graph-subjects"></svg> -->
-            </div>
-            <div id="tooltip">
-            <div id="currentSelection">
-                    Currently selected:
-                </div>
-            </div>
-            <div id="histogram">
-                <svg></svg>
-                <div id="slider-range"></div>
-            </div>
-            <div id="bookCounts">
-                <p id="countsOfBooks"><span></span></p>
-            </div>
-                    <div id="sort">
-            <div class="y_toggle">
-                y-sort by: <span id="grads" name="grads">grads</span> /
-                <span id="undergrads" name="undergrads">undergrads</span>  /
-                <span id="faculty" name="faculty">faculty</span>  /
-                <span id="popularity_y" name="Shelf_Rank">popularity</span>  /
-                <span id="date_y" name="Date_of_Publish">publication date</span>  /
-                <span id="call_number_sort_order_y" name="LOC_Sort_Order" class="selected">subject</span>
-            </div>
-            <!-- <div class="x_toggle">
-               x-sort by:   <span id="chronological_x" name="x_chronological" class="selected">publication date</span>  /
-                <span id="call_number_sort_order_x" name="call-number-sort-order">call-number</span>
-            </div> -->
-            <div class="scale_toggle">
-                   scale by:   <span id="pages" name="pages">pages</span>  /
-                   <span id="same" name="same">same</span>  /
-                   <span id="shelfrank" name="popularity" class="selected">popularity</span>
-            </div>
-        </div>
-            <div id="list-wrapper">
-                <ul id="list-sort-by">
-                    <li>Sort By:</li>
-                    <li class="title">Title</li>
-                    <li class="pub_date_numeric">Date</li>
-                    <li class="call_num">Call Number</li>
-                </ul>
-                <ul id="list">
-                </ul>
-            </div>
-        </div>
-        <div class="half">
-            <div id="show-list">Show Items As A List</div>
-            <div id="stack-circles">Stack Circles</div>
-            <div id="carrel">
-                <p style="opacity: .2">Drag items into the carrel for safekeeping</p>
-                <div id="carrel-box">
-                    <ul></ul>
-                </div>
-                <a id="table-carrel">Export as table</a>
-                <a id="export-carrel">Export as spreadsheet</a>
-            </div>
             <div id="info">
                 <a id="add-to-carrel">Add to carrel</a>
                 <p class="infoLabel">Title</p>
                 <h2 id="title"></h2>
-                <!-- <p class="infoLabel">Subject:</p> -->
-                <!-- <p id="letter">
-                    <span></span>
-                    <div id="subject"></div>
-                </p> -->
                 <p class="infoLabel">Authors</p>
                 <ul id="creator"></ul>
 
@@ -125,14 +63,59 @@
 
                 <p class="infoLabel">Library of Congress Subject Headers</p>
                 <ul id="lcsh"></ul>
-
-                <!-- <p id="publisher">
-                    <span></span>
-                    <div id="pub_location"><span></span></div>
-                </p> -->
-                <!-- <div id="subject"></div>
-                <p class="infoLabel">Format: </p>
-                <p id="format"><span></span></p> -->
+            </div>
+            <div id="carrel">
+                <p style="opacity: .2">Drag items into the carrel for safekeeping</p>
+                <div id="carrel-box">
+                    <ul></ul>
+                </div>
+                <a id="table-carrel">Export as table</a>
+                <a id="export-carrel">Export as spreadsheet</a>
+            </div>
+        </div>
+        <div class="half">
+            <div id="graph-wrapper">
+                <svg id="nav"></svg>
+                <div id="graph"></div>
+                <div id="tooltip">Currently selected:</div>
+                <div id="histogram">
+                    <svg></svg>
+                    <div id="slider-range"></div>
+                </div>
+                <div id="bookCounts">
+                    <p id="countsOfBooks"><span></span></p>
+                </div>
+            </div>
+            <div id="sort">
+                <div class="y_toggle">
+                    y-sort by: <span id="grads" name="grads">grads</span> /
+                    <span id="undergrads" name="undergrads">undergrads</span>  /
+                    <span id="faculty" name="faculty">faculty</span>  /
+                    <span id="popularity_y" name="Shelf_Rank">popularity</span>  /
+                    <span id="date_y" name="Date_of_Publish">publication date</span>  /
+                    <span id="call_number_sort_order_y" name="LOC_Sort_Order" class="selected">subject</span>
+                </div>
+                <!-- <div class="x_toggle">
+                   x-sort by:   <span id="chronological_x" name="x_chronological" class="selected">publication date</span>  /
+                    <span id="call_number_sort_order_x" name="call-number-sort-order">call-number</span>
+                </div> -->
+                <div class="scale_toggle">
+                       scale by:   <span id="pages" name="pages">pages</span>  /
+                       <span id="same" name="same">same</span>  /
+                       <span id="shelfrank" name="popularity" class="selected">popularity</span>
+                </div>
+                <div id="show-list">Show Items As A List</div>
+                <div id="stack-circles">Stack Circles</div>
+            </div>
+            <div id="list-wrapper">
+                <ul id="list-sort-by">
+                    <li>Sort By:</li>
+                    <li class="title">Title</li>
+                    <li class="pub_date_numeric">Date</li>
+                    <li class="call_num">Call Number</li>
+                </ul>
+                <ul id="list">
+                </ul>
             </div>
         </div>
     </body>
