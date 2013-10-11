@@ -1,9 +1,36 @@
 body, html {
     font-family:akkurat, univers, arial, sans-serif;
 }
-#search-form {
+#title-wrapper {
+    position: fixed;
+    background: white;
     width: 100%;
-    height: 100px;
+    z-index: 1;
+    top: 0;
+    left: 0;
+}
+h1 {
+    font-size: 40px;
+    margin: 5px 0 10px 5px;
+}
+#nav-bar {
+    background: black;
+    width: 100%;
+    padding: 5px 10px;
+    color: white;
+}
+#nav-bar div {
+    cursor: pointer;
+    margin-right: 50px;
+    display: inline-block;
+    text-decoration: underline;
+}
+#search-form {
+    width: 33%;
+    height: 400px;
+    background-color: white;
+    border: 1px solid #808080;
+    display: none;
 }
 .form-column {
     width: 300px;
@@ -25,17 +52,17 @@ body, html {
     position: relative;
     float: right;
     height: 100%;
+    margin-top: 100px;
 }
-.half:nth-child(even) {
+.half:nth-child(odd) {
     width: 33%;
     position: fixed;
-    top: 0px;
 }
 #carrel {
     font-size: 12px;
     width: 100%;
     position: absolute;
-    bottom: 0;
+    bottom: 100px;
     height: 250px;
 }
 #carrel-box {
@@ -95,7 +122,7 @@ body, html {
 }
 
 #histogram {
-    width: 100%;
+    width: 80%;
     position: absolute;
     top: 600px;
     margin-bottom: 100px;
@@ -148,7 +175,7 @@ body, html {
 	font-family:akkurat, univers, arial, sans-serif;
     width: 100%;
     position: absolute;
-    top: 140px;
+    top: 40px;
     font-size: 16px;
     padding: 0 20px;
     box-sizing: border-box;

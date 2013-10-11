@@ -2,6 +2,11 @@ var lc = lc || {};
 
 lc.search = function() {
 
+    $("#show-search").click(function(){
+        console.log("click")
+        $("#search-form").toggle();
+    })
+
 	var getQueryVariable = function(variable) {
         var query = window.location.search.substring(1);
         var vars = query.split("&");
