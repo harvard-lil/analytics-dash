@@ -117,6 +117,9 @@ h1 {
     left: 30px;
     top: 35px;
 }
+#graph {
+    width: 80%;
+}
 #graph-subjects {
     height: 500px;
     width: 100%;
@@ -131,7 +134,7 @@ h1 {
     position: absolute;
     top: 600px;
     margin-bottom: 100px;
-    padding: 0 50px 0 120px;
+    padding: 0 40px 0 130px;
     box-sizing: border-box;
     height: 150px;
 }
@@ -151,8 +154,17 @@ h1 {
     color: black;
     outline: none;
 }
+.ui-slider-horizontal .ui-slider-handle {
+    width: 15px;
+    height: 20px;
+    top: -5px;
+    font-size: 12px;
+    line-height: 60px;
+    margin-left: -6px;
+    text-indent: -7px;
+}
 #histogram rect {
-    stroke: #808080;
+    stroke: #fff;
 }
 #bookCounts {
     position: absolute;
@@ -179,7 +191,7 @@ h1 {
 	cursor: pointer;
 }
 #sort li:hover {
-	text-decoration: underline;
+	background: #ddd;
 }
 #sort li.selected {
 	background: yellow;
@@ -187,7 +199,7 @@ h1 {
 #sort li:first-child {
     font-weight: bold;
     cursor: default !important;
-    text-decoration: none !important;
+    background: white !important;
 }
 #info {
 	font-family:akkurat, univers, arial, sans-serif;

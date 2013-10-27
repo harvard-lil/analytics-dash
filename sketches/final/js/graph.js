@@ -15,7 +15,7 @@ lc.graph = function() {
 
 	var formatAsYear= d3.format("04d");
 
-	var svg = d3.select("#graph").append("svg").attr("height",height).attr("width","80%");
+	var svg = d3.select("#graph").append("svg").attr("height",height).attr("width","100%");
     width = $("#graph").width(),
     gWidth = width - 150;
 
