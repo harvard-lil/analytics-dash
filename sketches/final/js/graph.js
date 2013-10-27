@@ -2,9 +2,9 @@ var lc = lc || {};
 
 lc.graph = function() {
 	var width = 1000,
-        height = 600,
+        height = 550,
         gWidth = 800,
-        gHeight = 500;
+        gHeight = 490;
 
     var circleColor = "blue";
 
@@ -53,7 +53,7 @@ lc.graph = function() {
     	axes.append("g")
     		.attr("class", "axis")
     		.attr("id","xAxis")
-    		.attr("transform","translate(120," +(height-60) +")");
+    		.attr("transform","translate(120," +(height-20) +")");
 
     	axes.append("g")
     		.attr("class", "axis")
@@ -66,12 +66,12 @@ lc.graph = function() {
 	        .attr("text-anchor","middle")
 	        .attr("transform","translate("+width/2+",20)");
 
-        axes.append("text")
-	        .attr("id","x_axis")
-    	    .attr("class","axis_labels")
-	        .text("Publication Date")
-	        .attr("text-anchor","middle")
-	        .attr("transform","translate("+width/2+","+(height-20)+")")
+        // axes.append("text")
+	       //  .attr("id","x_axis")
+    	   //  .attr("class","axis_labels")
+	       //  .text("Publication Date")
+	       //  .attr("text-anchor","middle")
+	       //  .attr("transform","translate("+width/2+","+(height-20)+")")
 
         axes.append("text")
   	        .attr("class","axis_labels")
@@ -449,15 +449,15 @@ lc.graph = function() {
 					return 0;
 				}
 				break;
-			case 'date_y':
-				yscale.domain([minYear,maxYear]);
-				if (d.pub_date_numeric){
-	                return yscale(d.pub_date_numeric);
-				}
-				else {
-					return yscale(0);
-				}
-				break;
+			// case 'date_y':
+			// 	yscale.domain([minYear,maxYear]);
+			// 	if (d.pub_date_numeric){
+	  //               return yscale(d.pub_date_numeric);
+			// 	}
+			// 	else {
+			// 		return yscale(0);
+			// 	}
+			// 	break;
 			case 'call_number_sort_order_y':
 				// yscale.domain([0,16000000]);
 				if (d.loc_call_num_sort_order){

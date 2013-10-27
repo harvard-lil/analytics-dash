@@ -11,7 +11,8 @@ body, html {
 }
 h1 {
     font-size: 40px;
-    margin: 5px 0 10px 5px;
+    margin: 5px;
+    text-transform: uppercase;
 }
 #nav-bar {
     background: black;
@@ -57,7 +58,7 @@ h1 {
     position: relative;
     float: right;
     height: 100%;
-    margin-top: 100px;
+    margin-top: 90px;
 }
 .half:nth-child(odd) {
     width: 25%;
@@ -67,7 +68,7 @@ h1 {
     font-size: 12px;
     width: 100%;
     position: absolute;
-    bottom: 120px;
+    bottom: 100px;
     height: 200px;
 }
 #carrel-box {
@@ -98,17 +99,11 @@ h1 {
     white-space:nowrap;
     display: block;
 }
-#export-carrel {
-    position: absolute;
-    right: 5px;
+.carrel-action {
     cursor: pointer;
-}
-#table-carrel {
-    cursor: pointer;
-}
-#export-carrel:hover,
-#table-carrel:hover {
-    text-decoration: underline;
+    text-align: right;
+    display: block;
+    margin-bottom: 3px;
 }
 #nav {
     height: 500px;
@@ -132,11 +127,15 @@ h1 {
 #histogram {
     width: 80%;
     position: absolute;
-    top: 600px;
+    top: 560px;
     margin-bottom: 100px;
     padding: 0 40px 0 130px;
     box-sizing: border-box;
-    height: 150px;
+    height: 125px;
+}
+#histogram .axis_labels {
+    text-align: center;
+    margin-top: 30px;
 }
 #slider-range {
     border: 1px solid #808080;
@@ -162,6 +161,7 @@ h1 {
     line-height: 60px;
     margin-left: -6px;
     text-indent: -7px;
+    cursor: pointer;
 }
 #histogram rect {
     stroke: #fff;
@@ -225,6 +225,14 @@ h1 {
     font-weight: normal;
     margin: 8px 20px;
 }
+#info-wrapper .notch {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100px;
+    height: 30px;
+    background-color: white;
+}
 #info {
 	position: absolute;
     top: 40px;
@@ -237,8 +245,8 @@ h1 {
     font-family: courier, monospace;
     text-transform: uppercase;
     position: absolute;
-    top: 5px;
-    right: 5px;
+    top: 460px;
+    z-index: 100;
     cursor: pointer;
 }
 #add-to-carrel:hover {
@@ -390,6 +398,8 @@ circle:hover {
 .axis_labels {
     font-family:akkurat, univers, arial, sans-serif;
     font-size: 16px;
+    text-transform: uppercase;
+    font-weight: bold;
 }
 
 .barchart {
