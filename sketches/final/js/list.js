@@ -10,6 +10,9 @@ lc.list = function() {
     $("#show-list").click(function(){
         self.showList();
     });
+    $("#show-graph").click(function(){
+        self.hideList();
+    });
 
     self.saveDocs = function(docs) {
         documents = docs;

@@ -44,27 +44,30 @@
         </div>
 
         <div class="half">
-            <div id="info">
-                <a id="add-to-carrel">Add to carrel</a>
-                <p class="infoLabel">Title</p>
-                <h2 id="title"></h2>
-                <p class="infoLabel">Authors</p>
-                <ul id="creator"></ul>
+            <div id="info-wrapper">
+                <h3>Book Inspector</h3>
+                <div id="info">
+                    <a id="add-to-carrel">Add to carrel</a>
+                    <p class="infoLabel">Title</p>
+                    <h2 id="title"></h2>
+                    <p class="infoLabel">Authors</p>
+                    <ul id="creator"></ul>
 
-                <p class="infoLabel">Library of Congress Call #</p>
-                <p id="lc"><span></span></p>
+                    <p class="infoLabel">Library of Congress Call #</p>
+                    <p id="lc"><span></span></p>
 
-                <p class="infoLabel">Publishing Data</p>
-                <p id="pub_date_numeric"></p>
+                    <p class="infoLabel">Publishing Data</p>
+                    <p id="pub_date_numeric"></p>
 
-                <p class="infoLabel">Page Count</p>
-                <p id="pages_numeric"><span></span></p>
+                    <p class="infoLabel">Page Count</p>
+                    <p id="pages_numeric"><span></span></p>
 
-                <p class="infoLabel">Language</p>
-                <p id="language"><span></span></p>
+                    <p class="infoLabel">Language</p>
+                    <p id="language"><span></span></p>
 
-                <p class="infoLabel">Library of Congress Subject Headers</p>
-                <ul id="lcsh"></ul>
+                    <p class="infoLabel">Library of Congress Subject Headers</p>
+                    <ul id="lcsh"></ul>
+                </div>
             </div>
             <div id="carrel">
                 <p style="opacity: .2">Drag items into the carrel for safekeeping</p>
@@ -89,6 +92,9 @@
                 </div>
             </div>
             <div id="sort">
+                <div id="show-list">Show Items As A List</div>
+                <div id="show-graph">Show Items As A Graph</div>
+                <!-- <div id="stack-circles">Stack Circles</div> -->
                 <ul class="y_toggle">
                     <li>y-sort by:</li> 
                     <li id="grads" name="grads">grads</li>
@@ -108,8 +114,6 @@
                        <li id="same" name="same">same</li>
                        <li id="shelfrank" name="popularity" class="selected">popularity</li>
                 </ul>
-                <div id="show-list">Show Items As A List</div>
-                <div id="stack-circles">Stack Circles</div>
             </div>
             <div id="list-wrapper">
                 <ul id="list-sort-by">

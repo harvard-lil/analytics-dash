@@ -53,26 +53,26 @@ h1 {
     width: 250px;
 }
 .half {
-    width: 66%;
+    width: 73%;
     position: relative;
     float: right;
     height: 100%;
     margin-top: 100px;
 }
 .half:nth-child(odd) {
-    width: 33%;
+    width: 25%;
     position: fixed;
 }
 #carrel {
     font-size: 12px;
     width: 100%;
     position: absolute;
-    bottom: 100px;
-    height: 250px;
+    bottom: 120px;
+    height: 200px;
 }
 #carrel-box {
     width: 100%;
-    height: 180px;
+    height: 150px;
     background-color: #eee;
     border: 1px solid #808080;
     margin-bottom: 5px;
@@ -201,16 +201,36 @@ h1 {
     cursor: default !important;
     background: white !important;
 }
-#info {
-	font-family:akkurat, univers, arial, sans-serif;
+::-webkit-scrollbar {
+    -webkit-appearance: none;
+    width: 7px;
+}
+::-webkit-scrollbar-thumb {
+    border-radius: 4px;
+    background-color: rgba(0,0,0,.5);
+    -webkit-box-shadow: 0 0 1px rgba(255,255,255,.5);
+}
+#info-wrapper {
+    font-family:akkurat, univers, arial, sans-serif;
     width: 100%;
     position: absolute;
-    top: 40px;
+    top: 0px;
     font-size: 16px;
-    padding: 0 20px;
     box-sizing: border-box;
-    border: 1px solid #000;
-    height: 350px;
+    height: 450px;
+    background: #ddd;
+}
+#info-wrapper h3 {
+    text-transform: uppercase;
+    font-weight: normal;
+    margin: 8px 20px;
+}
+#info {
+	position: absolute;
+    top: 40px;
+    bottom: 20px;
+    left: 20px;
+    right: 20px;
     overflow: scroll;
 }
 #add-to-carrel {
@@ -265,7 +285,7 @@ h1 {
 #creator li:hover, #lcsh li:hover {
 	text-decoration: underline;
 }
-#stack-circles {
+#show-graph {
     border: 1px solid #808080;
     color: #808080;
     padding: 3px 5px;
