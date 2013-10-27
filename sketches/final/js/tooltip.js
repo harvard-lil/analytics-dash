@@ -8,7 +8,7 @@ lc.tooltip = function() {
 		$("#graph-wrapper").mousemove(function(e) {
 			tooltip.css({
 				top: e.offsetY,
-				left: e.offsetX + 50
+				left: e.offsetX + 70
 			});
 		});
 	};
@@ -18,6 +18,8 @@ lc.tooltip = function() {
 			tooltip.html( row.ClassLetters + ' ' + row.ClassNumBegin + '-'+row.ClassNumEnd+': ' + row.ClassSubject);
 		} else if (row.class) {
 			tooltip.html(row.name + ' ' + row.start + '-' + row.end);
+		} else if (row.creator) {
+			tooltip.html(row.title + ' ' + row.loc_call_num_sort_order[0]);
 		} else {
 			tooltip.html(row)
 		}

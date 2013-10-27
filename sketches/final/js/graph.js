@@ -87,6 +87,14 @@ lc.graph = function() {
     function updateAxes() {
 		axes.select("#xAxis").call(xAxis);
 		axes.select("#yAxis").call(yAxis);
+
+		if (y_axis_type == 'call_number_sort_order_y') {
+			$("#yAxis").hide();
+			lc.subjectgraph.show();
+		} else {
+			$("#yAxis").show();
+			lc.subjectgraph.hide();
+		}
 	}
 
 	var minYear, maxYear;
@@ -125,9 +133,13 @@ lc.graph = function() {
 
         //runs the showInfo on mouseover
         circles.on("mouseover",function(d){
+            lc.tooltip.show(d);
+
         	if (svg.attr("class") == "frozen") return;
   			this.parentNode.appendChild(this);
             self.showInfo(d, true);
+        }).on("mouseout", function(d) {
+        	lc.tooltip.hide();
         }).on("click",function(d){
         	if (svg.attr("class") == "frozen") {
         		this.parentNode.appendChild(this);
@@ -373,27 +385,15 @@ lc.graph = function() {
 	// }
 
 	function calculateX(d) {
-		// switch(x_axis_type) {
-		// 	case 'chronological_x':
-				xscale.domain([minYear,maxYear]);
-    			if (d.pub_date_numeric){
-						return (xscale(d.pub_date_numeric));
-				}
-				else {
-					return xscale(0);
-				}
-		// 		break;
-		// 	case 'call_number_sort_order_x':
-		// 		xscale.domain([0,16000000]);
-		// 		if (d.loc_call_num_sort_order){
-		// 	        return xscale(d.loc_call_num_sort_order[0]);
-		// 		}
-		// 		else {
-		// 			return xscale(0);
-		// 		}
-		// 		break;
-		// }
+		xscale.domain([minYear,maxYear]);
+		return xscale(d.pub_date_numeric || 0);
 	}
+
+	lc.subjectgraph.on("selected", function() {
+		console.log("updating y axis");
+		if (y_axis_type == 'call_number_sort_order_y')
+			set_y_axis();
+	});
 
 	function set_y_axis(){
 		var circles = circleGroup.selectAll("circle");
@@ -412,40 +412,17 @@ lc.graph = function() {
 		switch(y_axis_type) {
 			case 'grads':
 				yscale.domain([0,300]);
-    			if (d.score_checkouts_grad){
-    				return  yscale(d.score_checkouts_grad);
-				}
-				else{
-					return yscale(0);
-				}
-				break;
+				return  yscale(d.score_checkouts_grad || 0);
 			case 'undergrads':
 				yscale.domain([0,300]);
-				if (d.score_checkouts_undergrad){
-  					return  yscale(d.score_checkouts_undergrad);
-				}
-				else {
-					return yscale(0);
-				}
-				break;
+				return  yscale(d.score_checkouts_undergrad || 0);
 			case 'faculty':
 				yscale.domain([0,300]);
-				if (d.score_checkouts_fac){
-  					return  yscale(d.score_checkouts_fac);
-				}
-				else{
-					return yscale(0);
-				}
-				break;
+				return  yscale(d.score_checkouts_fac || 0);
 			case 'popularity_y':
 				yscale.domain([0,100]);
-				if (d.shelfrank){
-		            return yscale(d.shelfrank);
-				}
-				else {
-					return 0;
-				}
-				break;
+	            return yscale(d.shelfrank || 0);
+
 			// case 'date_y':
 			// 	yscale.domain([minYear,maxYear]);
 			// 	if (d.pub_date_numeric){
@@ -458,7 +435,8 @@ lc.graph = function() {
 			case 'call_number_sort_order_y':
 				// yscale.domain([0,16000000]);
 				if (d.loc_call_num_sort_order){
-		            return (yscale(d.loc_call_num_sort_order[0]));
+		            // return (yscale(d.loc_call_num_sort_order[0]));
+		            return lc.subjectgraph.calculateY(d.loc_call_num_sort_order[0]);
 				}
 				else {
 					return yscale(0);

@@ -1,3 +1,10 @@
+/*
+
+	Here's where we'll ping the LC Class api, get the appropriate children at each level
+	and update the Y Axis of graph.js if necessary. This is replacing subjectsorter.js
+	and stalactites.js, but using some similar ideas
+
+*/
 var lc = lc || {};
 
 lc.subjectgraph = function() {
@@ -57,8 +64,6 @@ lc.subjectgraph = function() {
 			}
 		}
 
-		console.log(total, response);
-
 		if (!self.initialized) {
 			self.rootChildren = processedChildren;
 			self.rootTotal = total;
@@ -69,6 +74,8 @@ lc.subjectgraph = function() {
 			self.currentTotal = total;
 			self.update(sideBar, processedChildren, total);
 		}
+
+		self.selected();
 	};
 
 	self.update = function(parent, data, total) {
@@ -107,7 +114,7 @@ lc.subjectgraph = function() {
 
 		rects.transition()
 			.duration(500)
-			.attr("width", 20);
+			.attr("width", 30);
 
 		rects.on("click", function(d) {
 			console.log('clicked', d.name, d.id);
@@ -145,14 +152,43 @@ lc.subjectgraph = function() {
 		}
 		bound.attr("y", matchedPosition)
 			.attr("height", matchedHeight)
-			.attr("width", 20)
+			.attr("width", 30)
 			.attr("stroke", "black")
 			.attr("stroke-weight", 4)
 			.attr("fill", "none");
 	};
 
+	self.calculateY = function(sort_number) {
+		var cy = 0,
+			matchedPosition = 0,
+			matchedHeight = 0,
+			children = self.currentChildren || self.rootChildren,
+			total = self.currentTotal || self.rootTotal;
+
+		for (var i = 0; i < children.length; i++) {
+			var currentClass = children[i];
+			if (currentClass.start <= sort_number && currentClass.end >= sort_number) {
+				matchedPosition = cy;
+				matchedPosition += ((sort_number - currentClass.start) / currentClass.count) * rootHeight;
+				return matchedPosition;
+			}
+			var rootHeight = percentHeight = (currentClass.count / total) * height;
+			cy += percentHeight;
+		}
+
+		return cy;
+	};
+
 	self.reset = function() {
 		self.getChildren("top-level class");
+	};
+	self.hide = function() {
+		$("#nav").hide();
+		$("#nav-context").hide();
+	};
+	self.show = function() {
+		$("#nav").show();
+		$("#nav-context").show();
 	};
 
 	self.getChildren("top-level class");
