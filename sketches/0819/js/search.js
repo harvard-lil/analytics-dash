@@ -5,7 +5,7 @@ lc.search = function() {
     $("#show-search").click(function(){
         console.log("click")
         $("#search-form").toggle();
-    })
+    });
 
 	var getQueryVariable = function(variable) {
         var query = window.location.search.substring(1);
@@ -61,7 +61,7 @@ lc.search = function() {
 
              	// lc.graph.drawArea(response.facets);
             	lc.graph.appendCircles(response.docs);
-                
+
                 lc.histogram.appendHistogram(response.docs);
 
                 lc.list.saveDocs(response.docs);

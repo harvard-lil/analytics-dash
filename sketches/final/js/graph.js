@@ -317,13 +317,19 @@ lc.graph = function() {
 
 	// Searching by results
 	$("#creator li").live("click",function(){
-		lc.search.runSearch("creator",$(this).text());
+		lc.search.runSearch({
+			"creator": $(this).text()
+		});
 	});
 	$("#lcsh li").live("click",function(){
-		lc.search.runSearch("lcsh",$(this).text());
+		lc.search.runSearch({
+			"lcsh_keyword": $(this).text()
+		});
 	});
 	$("#subject").live("click",function(){
-		lc.search.runSearch("subject",$(this).text());
+		lc.search.runSearch({
+			"subject": $(this).text()
+		});
 	});
 
 
