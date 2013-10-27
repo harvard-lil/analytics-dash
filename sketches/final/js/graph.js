@@ -238,7 +238,7 @@ lc.graph = function() {
             info.select("#creator").html("<li class='c'>" + data.creator.join("</li><li>") + "</li>");
 
         if (data.call_num)
-           info.select("#lc").text(data.call_num.join("or "));
+           info.select("#lc").html("<span class='box' style='background-color:"+lcObjectArray[data.call_num[0].substr(0,1)].color+";'></span>"+data.call_num.join("or "));
 
         info.select("#pub_date_numeric").text(data.pub_date_numeric);
 

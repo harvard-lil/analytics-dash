@@ -31,7 +31,7 @@ lc.carrel = function() {
         carrelBoxes.enter().append("li")
             .on("click",function(d){
                 lc.graph.showInfo(d, false);
-            }).append("span");
+            })//.append("span");
         carrelBoxes.exit().remove();
 
         carrelBoxes.style("background-color",function(d){
@@ -49,22 +49,23 @@ lc.carrel = function() {
             if (d.height) {
                 var m = d.height.split(" ");
                 if (m[m.length-1] == "cm")
-                    d.bookHeight = Math.max(120,heightScale(m[0]/2.5));
+                    d.bookHeight = Math.max(120,heightScale(parseFloat(m[0])/2.5));
                 else
-                    d.bookHeight = Math.max(120,heightScale(m[0]));
-            } else 
+                    d.bookHeight = Math.max(120,heightScale(parseFloat(m[0])));
+            } else {
                 d.bookHeight = 120;
+            }
 
-            return d.bookHeight + "px";
+            return Math.min(160,d.bookHeight) + "px";
         }).style("margin-top",function(d){
             return (150 - d.bookHeight) + "px";
-        }).select("span").text(function(d){
-            return d.title;
-        }).style("margin-top",function(d){
-            var w = $(this).parent().width();
-            console.log(w)
-            return (d.bookHeight - 20) + "px";
         });
+        // .select("span").text(function(d){
+        //     return d.title;
+        // }).style("margin-top",function(d){
+        //     var w = $(this).parent().width();
+        //     return (d.bookHeight - 20) + "px";
+        // });
     }
 
     self.exportCarrel = function() {
