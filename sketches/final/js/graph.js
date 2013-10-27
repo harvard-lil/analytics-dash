@@ -213,7 +213,8 @@ lc.graph = function() {
      	bookCounts.select("#countsOfBooks span").text(" In " + data.year + ", " + data.count + " books meeting your criteria were published, for a grand total of  "+data.total+" books" );
     }
 
-
+    /*
+    // superceded by subjectgraph.js?
     d3.csv('lc_class_schema_extended_20120223_parsed.csv', function(csv) {
         schema.parseCSV(csv);
 
@@ -226,6 +227,7 @@ lc.graph = function() {
         	});
         // lc.subjectsorter.data(schema.data);
     });
+    */
 
 
     var info = d3.select("#info");
@@ -324,11 +326,6 @@ lc.graph = function() {
 	$("#lcsh li").live("click",function(){
 		lc.search.runSearch({
 			"lcsh_keyword": $(this).text()
-		});
-	});
-	$("#subject").live("click",function(){
-		lc.search.runSearch({
-			"subject": $(this).text()
 		});
 	});
 

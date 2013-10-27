@@ -82,6 +82,7 @@
         <div class="half">
             <div id="graph-wrapper">
                 <svg id="nav"></svg>
+                <svg id="nav-context"></svg>
                 <div id="graph"></div>
                 <div id="tooltip">Currently selected:</div>
                 <div id="histogram">
@@ -130,7 +131,8 @@
         </div>
     </body>
     <script type="text/javascript" src="lib/jquery-ui-1.10.3.custom.min.js"></script>
-    <script type="text/javascript" src="js/subjectsorter.js"></script>
+    <!-- <script type="text/javascript" src="js/subjectsorter.js"></script> -->
+    <script type="text/javascript" src="js/subjectgraph.js"></script>
     <script type="text/javascript" src="js/schema.js"></script>
     <script type="text/javascript" src="js/carrel.js"></script>
     <script type="text/javascript" src="js/histogram.js"></script>
@@ -139,101 +141,22 @@
     <script type="text/javascript" src="js/search.js"></script>
     <script type="text/javascript" src="js/tooltip.js"></script>
     <script type="text/javascript">
+        lc.tooltip.initialize();
 
-	var lcObjectArray = {
-		"A":{
-    		color: "#ff0000",
-    		subject: "General Works"
-		},
-		"B":{
-    		color: "#ff3800",
-    		subject: "Philosophy, Psychology, Religion"
-		},
-		"C":{
-    		color: "#ff7000",
-    		subject: "Auxillary Sciences of History"
-		},
-		"D":{
-    		color: "#ffa800",
-    		subject: "History: General & Outside the Americas"
-		},
-		"E":{
-    		color: "#ffe000",
-    		subject: "History: United States"
-		},
-		"F":{
-    		color: "#e6ff00",
-    		subject:  "History: United States Local & America"
-		},
-		"G":{
-    		color: "#adff00",
-    		subject:  "Geography, Anthropology, Recreation"
-		},
-		"H":{
-    		color: "#75ff00",
-    		subject:  "Social Sciences"
-		},
-		"J":{
-    		color: "#05ff00",
-    		subject:  "Political Science"
-		},
-		"K":{
-    		color: "#00ff33",
-    		subject:  "Law"
-		},
-		"L":{
-    		color: "#00ff6b",
-    		subject:  "Education"
-		},
-		"M":{
-    		color: "#00ffa3",
-    		subject:  "Music"
-		},
-		"N":{
-    		color: "#00ffdb",
-    		subject:  "Fine Arts"
-		},
-		"P":{
-    		color: "#00b3ff",
-    		subject:  "Language and Literature"
-		},
-		"Q":{
-    		color: "#007aff",
-    		subject:  "Science"
-		},
-		"R":{
-    		color: "#00b3ff",
-    		subject:  "Medicine"
-		},
-		"S":{
-    		color: "#0042ff",
-    		subject:  "Science"
-		},
-		"T":{
-    		color: "#000aff",
-    		subject:  "Agriculture"
-		},
-		"U":{
-    		color: "#6600ff",
-    		subject:  "Military Science"
-		},
-		"V":{
-    		color: "#9e00ff",
-    		subject:  "Naval Science"
-		},
-		"Z":{
-    		color: "#ff0080",
-    		subject:  "Library Science & Information Resources"
-		}
-	};
-    </script>
-    <script type="text/javascript">
-        lc.subjectsorter
+        lc.subjectgraph
             .on("mouseover", function(d) {
                 lc.tooltip.show(d);
             })
             .on("mouseout", function() {
                 lc.tooltip.hide();
             });
+
+        // lc.subjectsorter
+        //     .on("mouseover", function(d) {
+        //         lc.tooltip.show(d);
+        //     })
+        //     .on("mouseout", function() {
+        //         lc.tooltip.hide();
+        //     });
     </script>
 </html>
