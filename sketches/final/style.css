@@ -167,14 +167,27 @@ h1 {
     right: 0px;
     width: 13%;
 }
-#sort span {
+#sort ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    font-size: 12px;
+    width: 100px;
+    margin-bottom: 15px;
+}
+#sort li {
 	cursor: pointer;
 }
-#sort span:hover {
+#sort li:hover {
 	text-decoration: underline;
 }
-#sort span.selected {
+#sort li.selected {
 	background: yellow;
+}
+#sort li:first-child {
+    font-weight: bold;
+    cursor: default !important;
+    text-decoration: none !important;
 }
 #info {
 	font-family:akkurat, univers, arial, sans-serif;
@@ -293,10 +306,26 @@ h1 {
     margin-bottom: 8px;
     cursor: pointer;
 }
-#list .title {
+#list .item {
     border-bottom: 2px solid black;
     font-weight: normal;
-    margin: 0;
+    margin: 0 0 8px 0;
+    height: 20px;
+}
+#list .item:hover {
+    color: #808080;
+}
+#list .title {
+    font-weight: bold;
+}
+#list .left {
+    float: left;
+    max-width: 60%;
+    overflow: hidden;
+    white-space: nowrap;
+}
+#list .right {
+    float: right;
 }
 
 circle {
