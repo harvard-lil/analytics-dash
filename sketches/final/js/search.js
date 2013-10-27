@@ -19,24 +19,20 @@ lc.search = function() {
     };
 
     var baseurl = 'http://librarycloud.law.harvard.edu/v1/api/item/',
-        defaultFilters = {
-            'limit': 250,
-            'facet': 'pub_date_numeric',
-            'key': '5239997b68e033fbf2854d77c6295310'
-        },
         defaultParams = '&limit=250&facet=pub_date_numeric&key=5239997b68e033fbf2854d77c6295310&filter:collection:hollis_catalog',
         search = getQueryVariable('search') || 'los angeles';
 
     var graphTitle = d3.select("#searchTerm")
 
     // dewey_call_nu
-    // pub_date_numeric
     $("#search").click(function() {
-        console.log("searching...");
         var searchTerms = {};
-        $("#search-form input").each(function(){
+
+        // grabbing all fields entered in in the form
+        $("#search-form input").each(function() {
             var t = $(this);
             if (t.val()) {
+                // grabbing #search-year -> 'year'
                 var key = t.attr("id").split("-")[1];
                 searchTerms[key] = t.val();
             }
@@ -46,33 +42,47 @@ lc.search = function() {
 
         self.runSearch(searchTerms);
 
-        graphTitle.text("Searching for... '" + searchTerms + "'");
+        graphTitle.text("Searching... '");
     });
 
+    /*
+        build out a query string of Solr filters for the Item API
+        http://www.librarycloud.org/api-item
+    */
     self.buildSearchQuery = function(terms) {
         var query = [];
         for (var term in terms) {
             switch (term) {
+                // parsing '2001-2004' to 'filter=pub_date_numeric:[2001 TO 2004]'
                 case 'year':
-                    var range = terms[term].split('-');
+                    var range = terms[term].split(' ').join('').split('-');
                     query.push('filter=pub_date_numeric:[' + range[0] + ' TO ' + range[1] + ']');
                     console.log('year range', range);
                     break;
+
+                // using loc_call_num_sort_order until told otherwise
                 case 'range':
-                    // loc_call_num_sort_order
                     var range = terms[term].split('-');
                     query.push('filter=loc_call_num_sort_order:[' + range[0] + ' TO ' + range[1] + ']');
                     console.log('call number range', range);
                     break;
 
+                // upper case the first letter, sigh
+                case 'format':
+                    var format = terms[term];
+                    var uppercased = format.charAt(0).toUpperCase() + format.slice(1);
+                    query.push('filter=' + term + ':' + uppercased);
+                    break;
+
+                // doing fuzzy keyword search on these
                 case 'title':
                 case 'creator':
                 case 'subject':
                     query.push('filter=' + term + '_keyword:' + terms[term]);
                     break;
 
+                // 'collection': 'hollis_catalog' -> 'filter=collection:hollis_catalog'
                 default:
-                    // filter=collection:hollis_catalog
                     query.push('filter=' + term + ':' + terms[term]);
                     break;
             }
