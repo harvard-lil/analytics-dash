@@ -118,9 +118,12 @@ h1 {
     margin-bottom: 5px;
 }
 #carrel-box ul {
-    margin: 20px 0 0 0;
+    margin: 0;
     padding: 0;
     list-style-type: none;
+    overflow-x: scroll;
+    height: 170px;
+    white-space: nowrap;
 }
 #carrel-box li {
     width: 15px;
@@ -128,8 +131,6 @@ h1 {
     display: inline-block;
     margin: 5px 0 0 5px;
     cursor: pointer;
-    float: left;
-    overflow: hidden;
 }
 #carrel-box span {
     -webkit-transform:rotate(-90deg);
