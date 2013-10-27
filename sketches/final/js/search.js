@@ -3,8 +3,12 @@ var lc = lc || {};
 lc.search = function() {
 
     $("#show-search").click(function(){
-        $("#search-form").toggle();
+        $("#search-form").slideToggle();
     });
+
+    $("#search-form label").click(function(){
+        $(this).parent().toggleClass("locked");
+    })
 
     var getQueryVariable = function(variable) {
         var query = window.location.search.substring(1);
@@ -35,12 +39,15 @@ lc.search = function() {
                 // grabbing #search-year -> 'year'
                 var key = t.attr("id").split("-")[1];
                 searchTerms[key] = t.val();
+                if (!t.parent().hasClass("locked")) t.val("");
             }
         });
 
         console.log('searching ', searchTerms);
 
         self.runSearch(searchTerms);
+
+        $("#search-form").slideUp();
 
         graphTitle.text("Searching... '");
     });
