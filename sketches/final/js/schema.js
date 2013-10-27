@@ -175,6 +175,15 @@ var schema = function() {
 		}
 	};
 
+	self.colorClass = function(classID) {
+   		var firstChar = classID.charCodeAt(0);
+   		// interpolate between start and end color
+		var percent = ((firstChar - 65) / 25);
+
+		// go from 0 to 330 hue
+   		return d3.hsl(percent * (endColor.h - startColor.h), 1, .5);
+	};
+
 	self.color = function(row, modifier) {
    		var firstChar = row.ClassLetters.charCodeAt(0);
    		// interpolate between start and end color
@@ -225,6 +234,92 @@ var schema = function() {
 }();
 
 
+var lcObjectArray = {
+	"A":{
+		color: "#ff0000",
+		subject: "General Works"
+	},
+	"B":{
+		color: "#ff3800",
+		subject: "Philosophy, Psychology, Religion"
+	},
+	"C":{
+		color: "#ff7000",
+		subject: "Auxillary Sciences of History"
+	},
+	"D":{
+		color: "#ffa800",
+		subject: "History: General & Outside the Americas"
+	},
+	"E":{
+		color: "#ffe000",
+		subject: "History: United States"
+	},
+	"F":{
+		color: "#e6ff00",
+		subject:  "History: United States Local & America"
+	},
+	"G":{
+		color: "#adff00",
+		subject:  "Geography, Anthropology, Recreation"
+	},
+	"H":{
+		color: "#75ff00",
+		subject:  "Social Sciences"
+	},
+	"J":{
+		color: "#05ff00",
+		subject:  "Political Science"
+	},
+	"K":{
+		color: "#00ff33",
+		subject:  "Law"
+	},
+	"L":{
+		color: "#00ff6b",
+		subject:  "Education"
+	},
+	"M":{
+		color: "#00ffa3",
+		subject:  "Music"
+	},
+	"N":{
+		color: "#00ffdb",
+		subject:  "Fine Arts"
+	},
+	"P":{
+		color: "#00b3ff",
+		subject:  "Language and Literature"
+	},
+	"Q":{
+		color: "#007aff",
+		subject:  "Science"
+	},
+	"R":{
+		color: "#00b3ff",
+		subject:  "Medicine"
+	},
+	"S":{
+		color: "#0042ff",
+		subject:  "Science"
+	},
+	"T":{
+		color: "#000aff",
+		subject:  "Agriculture"
+	},
+	"U":{
+		color: "#6600ff",
+		subject:  "Military Science"
+	},
+	"V":{
+		color: "#9e00ff",
+		subject:  "Naval Science"
+	},
+	"Z":{
+		color: "#ff0080",
+		subject:  "Library Science & Information Resources"
+	}
+};
 
 /*
 	For reference ----
