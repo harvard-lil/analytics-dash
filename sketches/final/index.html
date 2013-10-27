@@ -46,8 +46,8 @@
         <div class="half">
             <div id="info-wrapper">
                 <h3>Book Inspector</h3>
+                <div class="notch"></div>
                 <div id="info">
-                    <a id="add-to-carrel">Add to carrel</a>
                     <p class="infoLabel">Title</p>
                     <h2 id="title"></h2>
                     <p class="infoLabel">Authors</p>
@@ -69,13 +69,13 @@
                     <ul id="lcsh"></ul>
                 </div>
             </div>
+            <a id="add-to-carrel">Add to carrel</a>
             <div id="carrel">
-                <p style="opacity: .2">Drag items into the carrel for safekeeping</p>
                 <div id="carrel-box">
                     <ul></ul>
                 </div>
-                <a id="table-carrel">Export as table</a>
-                <a id="export-carrel">Export as spreadsheet</a>
+                <a id="table-carrel" class="carrel-action">Look at your carrel as a table =></a>
+                <a id="export-carrel" class="carrel-action">Export your carrel as a spreadsheet =></a>
             </div>
         </div>
         <div class="half">
@@ -86,10 +86,11 @@
                 <div id="histogram">
                     <svg></svg>
                     <div id="slider-range"></div>
+                    <div class="axis_labels">Publication Date</div>
                 </div>
-                <div id="bookCounts">
+                <!-- <div id="bookCounts">
                     <p id="countsOfBooks"><span></span></p>
-                </div>
+                </div> -->
             </div>
             <div id="sort">
                 <div id="show-list">Show Items As A List</div>
@@ -101,7 +102,7 @@
                     <li id="undergrads" name="undergrads">undergrads</li>
                     <li id="faculty" name="faculty">faculty</li>
                     <li id="popularity_y" name="Shelf_Rank">popularity</li>
-                    <li id="date_y" name="Date_of_Publish">publication date</li>
+                    <!-- <li id="date_y" name="Date_of_Publish">publication date</li> -->
                     <li id="call_number_sort_order_y" name="LOC_Sort_Order" class="selected">subject</li>
                 </ul>
                 <!-- <div class="x_toggle">
