@@ -13,6 +13,7 @@ h1 {
     font-size: 40px;
     margin: 5px;
     text-transform: uppercase;
+    letter-spacing: 1px;
 }
 #nav-bar {
     background: black;
@@ -260,6 +261,14 @@ h1 {
     margin: 15px 0 3px;
     color: gray;
     text-transform:uppercase;
+    text-decoration: underline;
+}
+#info .box {
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+    margin-right: 5px;
+    float: left;
 }
 #info p {
     margin: 0;
