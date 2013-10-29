@@ -270,7 +270,7 @@ h1 {
 #info-wrapper h3 {
     text-transform: uppercase;
     font-weight: normal;
-    margin: 8px 20px;
+    margin: 8px 10px;
 }
 #info-wrapper .notch {
     position: absolute;
@@ -280,13 +280,18 @@ h1 {
     height: 30px;
     background-color: white;
 }
+#info-wrapper .book-sort {
+    cursor: pointer;
+    -webkit-user-select: none;
+}
 #info {
 	position: absolute;
     top: 40px;
     bottom: 20px;
-    left: 20px;
+    left: 10px;
     right: 20px;
     overflow: scroll;
+    padding-left: 20px;
 }
 #add-to-carrel {
     font-family: courier, monospace;
@@ -308,6 +313,19 @@ h1 {
     color: gray;
     text-transform:uppercase;
     text-decoration: underline;
+    cursor: pointer;
+}
+#info .infoLabel.clicked .tick {
+    background-color: #808080;
+}
+#info .tick {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    border-radius: 8px;
+    background-color: white;
+    margin: 0 5px 0 -18px;
+    float: left;
 }
 #info .box {
     display: inline-block;
@@ -321,31 +339,24 @@ h1 {
     font-size: 14px;
 }
 
-#letter {
-    border-bottom-style:solid;
-    border-bottom-width: 4px;
-    border-bottom-color: black;
-}
-
-#title {
+#info .title {
 	font-weight: normal;
   	font-size: 24px;
   	text-transform: capitalize;
     margin: 0;
 }
 
-#creator, #lcsh {
+#info ul    {
 	list-style-type: none;
 	padding: 0;
 	margin: 0;
-	font-weight: bold;
 	font-size: 12px;
 }
 
-#creator li, #lcsh li {
+#info .field li, {
 	cursor: pointer;
 }
-#creator li:hover, #lcsh li:hover {
+#info .field li:hover{
 	text-decoration: underline;
 }
 #show-graph {

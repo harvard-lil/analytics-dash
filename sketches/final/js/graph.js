@@ -4,7 +4,9 @@ lc.graph = function() {
 	var width = 1000,
         height = 550,
         gWidth = 800,
-        gHeight = 490;
+        gHeight = 490,
+        bookData,
+        currentBook;
 
     var circleColor = "blue";
 
@@ -126,6 +128,8 @@ lc.graph = function() {
 
 	self.appendCircles = function(data) {
 
+		bookData = data;
+
         var circles = circleGroup.selectAll("circle").data(data);
         //binds data to circles
         circles.enter().append("circle").attr("class","c");
@@ -242,28 +246,51 @@ lc.graph = function() {
     */
 
 
-    var info = d3.select("#info");
+    var info = d3.select("#info"),
+    	labels = $("#info .infoLabel");
+
+    info.selectAll(".infoLabel").on("click",function(){
+    	labels.removeClass("clicked");
+    	$(this).addClass("clicked");
+    });
+
+    $(".book-sort").click(function(){
+    	if (!$(".infoLabel.clicked").length) return;
+    	var sortBy = $(".infoLabel.clicked").parent().attr("class"),
+    		dir = $(this).hasClass("next");
+    	sortBooks(sortBy, dir);
+    })
+
+    function sortBooks(sortBy, dir) {
+    	bookData.sort(function(a,b){
+  			if (a[sortBy] < b[sortBy])
+  				return -1;
+  			if ((a[sortBy] > b[sortBy]))
+  				return 1;
+  			return 0;
+    	});
+    	showInfo(bookData[bookData.indexOf(currentBook) + (dir ? 1 : -1)]);
+    }
 
     self.showInfo = function(data, inBox) {
-        info.select("#title").text(data.title);
+    	currentBook = data;
+
+        info.select(".title .field").text(data.title);
         if (data.creator)
-            info.select("#creator").html("<li class='c'>" + data.creator.join("</li><li>") + "</li>");
+            info.select(".creator .field").html("<li class='c'>" + data.creator.join("</li><li>") + "</li>");
 
         if (data.call_num)
-           info.select("#lc").html("<span class='box' style='background-color:"+lcObjectArray[data.call_num[0].substr(0,1)].color+";'></span>"+data.call_num.join("or "));
+           info.select(".lc .field").html("<span class='box' style='background-color:"+lcObjectArray[data.call_num[0].substr(0,1)].color+";'></span>"+data.call_num.join("or "));
 
-        info.select("#pub_date_numeric").text(data.pub_date_numeric);
+        info.select(".pub_date_numeric .field").text(data.pub_date_numeric);
 
-        if (data.pages_numeric)
-        	info.select("#pages_numeric").text(data.pages_numeric);
-        else
-        	info.select("#pages_numeric").text("Format: "+data.format);
+        info.select(".pages_numeric .field").text(data.pages_numeric ? data.pages_numeric : "Format: "+data.format);
 
         if (data.language)
-			info.select("#language").text(data.language);
+			info.select(".language .field").text(data.language);
 
 		if (data.lcsh)
-            info.select("#lcsh").html("<li class='c'>" + data.lcsh.join("</li><li>") + "</li>");
+            info.select(".lcsh .field").html("<li class='c'>" + data.lcsh.join("</li><li>") + "</li>");
 
         // info.select("#shelfrank span").text(data.shelfrank);
         // info.select("#subject").text(data.loc_call_num_subject);
@@ -302,22 +329,22 @@ lc.graph = function() {
   		}
     };
 
-    $("#stack-circles").click(function(){
-    	stackCircles();
-    });
+    // $("#stack-circles").click(function(){
+    // 	stackCircles();
+    // });
 
-    function stackCircles() {
-    	var circles = circleGroup.selectAll("circle");
-    	var yearObj = {};
-    	circles.attr("r",3).each(function(d){
-    		if (d.pub_date_numeric in yearObj) {
-    			yearObj[d.pub_date_numeric]++;
-    		} else {
-    			yearObj[d.pub_date_numeric] = 0;
-    		}
-    		d3.select(this).attr("cy",gHeight-5-(yearObj[d.pub_date_numeric]*7));
-    	});
-    }
+    // function stackCircles() {
+    // 	var circles = circleGroup.selectAll("circle");
+    // 	var yearObj = {};
+    // 	circles.attr("r",3).each(function(d){
+    // 		if (d.pub_date_numeric in yearObj) {
+    // 			yearObj[d.pub_date_numeric]++;
+    // 		} else {
+    // 			yearObj[d.pub_date_numeric] = 0;
+    // 		}
+    // 		d3.select(this).attr("cy",gHeight-5-(yearObj[d.pub_date_numeric]*7));
+    // 	});
+    // }
 
     /*
 
@@ -390,7 +417,6 @@ lc.graph = function() {
 	}
 
 	lc.subjectgraph.on("selected", function() {
-		console.log("updating y axis");
 		if (y_axis_type == 'call_number_sort_order_y')
 			set_y_axis();
 	});
