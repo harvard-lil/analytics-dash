@@ -317,6 +317,7 @@ lc.graph = function() {
 
   		if (inBox) {
   			info.select("#add-to-carrel").text("Add To Carrel").on("click",function(){
+  				console.log("ok")
 	            lc.carrel.sendToCarrel(data);
 	        });
   		} else {
