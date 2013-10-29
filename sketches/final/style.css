@@ -29,7 +29,7 @@ h1 {
 }
 #search-form {
     width: 33%;
-    height: 280px;
+    height: 310px;
     background-color: white;
     display: none;
     position: fixed;
@@ -45,7 +45,7 @@ h1 {
     text-transform: uppercase;
     color: #808080;
     position: absolute;
-    top: 240px;
+    top: 270px;
     right: 20px;
     cursor: pointer;
 }
@@ -354,10 +354,10 @@ h1 {
 	font-size: 12px;
 }
 
-#info .field li, {
+#info .field li {
 	cursor: pointer;
 }
-#info .field li:hover{
+#info .field li:hover {
 	text-decoration: underline;
 }
 #show-graph {
@@ -433,6 +433,9 @@ h1 {
 }
 #list .right {
     float: right;
+    max-width: 30%;
+    white-space: nowrap;
+    overflow: hidden;
 }
 
 circle {

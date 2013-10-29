@@ -271,8 +271,13 @@ lc.graph = function() {
     	currentBook = data;
 
         info.select(".title .field").text(data.title);
-        if (data.creator)
+        if (data.creator) {
             info.select(".creator .field").html("<li class='c'>" + data.creator.join("</li><li>") + "</li>");
+            info.select(".creator li").on("click",function(){
+            	var creator = $(this).text();
+            	$("#search-creator").val(creator);
+            });
+        }
 
         if (data.call_num)
            info.select(".lc .field").html("<span class='box' style='background-color:"+lcObjectArray[data.call_num[0].substr(0,1)].color+";'></span>"+data.call_num.join("or "));
@@ -284,8 +289,13 @@ lc.graph = function() {
         if (data.language)
 			info.select(".language .field").text(data.language);
 
-		if (data.lcsh)
+		if (data.lcsh) {
             info.select(".lcsh .field").html("<li class='c'>" + data.lcsh.join("</li><li>") + "</li>");
+            info.select(".lcsh li").on("click",function(){
+            	var lcsh = $(this).text();
+            	$("#search-lcsh").val(lcsh);
+            });
+		}
 
         // info.select("#shelfrank span").text(data.shelfrank);
         // info.select("#subject").text(data.loc_call_num_subject);

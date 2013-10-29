@@ -32,7 +32,7 @@ lc.list = function() {
                 return "<span class='left'><span class='title'>" + d.title + "</span> | " + (d.creator ? d.creator.join(", ") : "") +
                     "</span><span class='right'>"+ (d.loc_call_num_subject ? d.loc_call_num_subject.split("--")[0] : "") +"</span>";
             }).style("border-bottom-color", function(d){
-                if (d.call_num){
+                if (d.call_num && lcObjectArray[d.call_num[0].substr(0,1)]){
                     return lcObjectArray[d.call_num[0].substr(0,1)].color;
                 }
             }).on("click",function(d){
