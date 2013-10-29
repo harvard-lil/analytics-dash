@@ -102,6 +102,8 @@ h1 {
 .left-half{
     width: 25%;
     position: fixed;
+    height: 100%;
+    margin-top: 90px;
 }
 #carrel {
     font-size: 12px;
