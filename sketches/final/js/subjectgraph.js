@@ -25,25 +25,28 @@ lc.subjectgraph = function() {
 	self.getChildren = function(parent) {
 		self.search('filter=parent_class:' + parent);
 	};
-
 	self.getChildrenID = function(parentID) {
 		self.search('filter=parent_class_id:' + parentID);
 	};
 
 	var processChild = function(childString) {
 		var values = childString.split('%%');
+		var nameparts = values[3].split('--');
+		var parts = nameparts.length-1;
+		var lastname = nameparts[parts];
 		return {
 			'class': values[0],
 			'start': +values[1],
 			'end'  : +values[2],
 			'count': values[2] - values[1],
 			'name' : values[3],
-			'id'   : values[4]
+			'id'   : values[4],
+			'lastname' : nameparts[parts]
 		};
 	};
 
 	var getID = function(d) {
-		var id = d.name.toLowerCase();
+		var id = d.lastname.toLowerCase();
 		return id.replace(/[^a-z0-9 -]/g, '') // remove invalid chars
 				    .replace(/\s+/g, '-') // collapse whitespace and replace by -
 				    .replace(/-+/g, '-'); // collapse dashes
@@ -79,19 +82,24 @@ lc.subjectgraph = function() {
 	};
 
 	self.update = function(parent, data, total) {
+	
 		var rects = parent.selectAll("rect.schema")
 			.data(data);
 
-		rects.enter()
-		    .append("rect")
-		    .attr("class", "schema");
-
+		var grouping = rects.enter()
+			.append("g")
+			.attr("class", "schema");		
+		
+		var rectangles = grouping		
+		    .append("rect");
+		    
+		var yoffset = -6;
 		var cy = 0;
-		rects.attr("id", function(d) { return getID(d); })
-		    .attr("fill-opacity", ".5")
+		rectangles.attr("id", function(d) { return getID(d); })
+		    .attr("fill-opacity", "1")
 		    .attr("stroke-weight", "1")
 		    .attr("stroke", "white")
-		    .attr("width", 0)
+		    .attr("width", 30)
 			.attr("fill", function(d) {
 		 	 	return schema.colorClass(d.class);
 		    })
@@ -103,7 +111,25 @@ lc.subjectgraph = function() {
 			})
 			.attr("y", function(d) {
 				return d.cy;
-			});
+			})
+			.attr("position","absolute");
+
+
+		var text = rects.append("text")
+		.text(function(d){
+			return d.lastname;
+		}).attr("y",function (d){
+				return d.cy + yoffset;
+			})
+		.attr("x", function(d){
+		return 34;
+		})
+		.attr("font-family", "sans-serif")
+		.attr("font-size", "12px")
+		.attr("fill", function(d) {
+		 	 	return schema.colorClass(d.class);
+		    })		
+		    .attr("position","absolute");
 
 		rects.on("mouseover", function(d) {
 				self.mouseover(d);
@@ -111,6 +137,7 @@ lc.subjectgraph = function() {
 			.on("mouseout", function(d) {
 				self.mouseout(d);
 			});
+			
 
 		rects.transition()
 			.duration(500)
