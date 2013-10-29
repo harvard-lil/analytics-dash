@@ -147,14 +147,14 @@ h1 {
 }
 #nav {
     height: 500px;
-    width: 30px;
+    width: 300px;
     position: absolute;
     left: 80px;
     top: 35px;
 }
 #nav-context {
     height: 500px;
-    width: 30px;
+    width: 300px;
     position: absolute;
     left: 50px;
     top: 35px;
