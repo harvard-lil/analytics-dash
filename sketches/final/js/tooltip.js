@@ -5,7 +5,7 @@ lc.tooltip = function() {
 		tooltip = $("#tooltip");
 
 	self.initialize = function() {
-		$("#graph-wrapper").mousemove(function(e) {
+		$("#graph").mousemove(function(e) {
 			tooltip.css({
 				top: e.offsetY,
 				left: e.offsetX + 70

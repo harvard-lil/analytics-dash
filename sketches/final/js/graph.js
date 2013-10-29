@@ -176,58 +176,52 @@ lc.graph = function() {
     // use the API facet response to draw data
     // this means we have to turn the data into something d3 will like
     // and then use d3.area
-    var areaScale;
+ //    var areaScale;
 
-    self.drawArea = function(facets) {
-		var data = [];
-    	var total = 0;
-    	for (var i = 0; i < (maxYear - minYear); i++) {
-    		var year = i + minYear;
-    		var count = facets.pub_date_numeric[+year];
-			total = total + (count || 0 );
-			data[i] = {
-    			year: year,
-    			count: count || 0,
-    			total:total
-    		};
-    	}
+ //    self.drawArea = function(facets) {
+	// 	var data = [];
+ //    	var total = 0;
+ //    	for (var i = 0; i < (maxYear - minYear); i++) {
+ //    		var year = i + minYear;
+ //    		var count = facets.pub_date_numeric[+year];
+	// 		total = total + (count || 0 );
+	// 		data[i] = {
+ //    			year: year,
+ //    			count: count || 0,
+ //    			total:total
+ //    		};
+ //    	}
 
-    	areaScale = d3.scale.linear().range([gHeight, 0])
-		    .domain([0, d3.max(data, function(d) { return d.total; })]);
+ //    	areaScale = d3.scale.linear().range([gHeight, 0])
+	// 	    .domain([0, d3.max(data, function(d) { return d.total; })]);
 
-		var bars = barCharts.selectAll("rect").data(data);
-		bars.enter().append("rect");
-		bars.exit().remove();
+	// 	var bars = barCharts.selectAll("rect").data(data);
+	// 	bars.enter().append("rect");
+	// 	bars.exit().remove();
 
-		updateBars();
+	// 	updateBars();
 
-        bars.on("mouseover",function(d){
-  			showCounts(d);
-    	});
-    };
+ //        bars.on("mouseover",function(d){
+ //  			showCounts(d);
+ //    	});
+ //    };
 
-    function updateBars() {
-		barCharts.selectAll("rect")
-			.transition()
-			.ease("linear")
-			.delay(function(d,i){
-				return i*5;
-			}).duration(100)
-			.attr("x", function(d, i) {
-	   			return timescale(d.year);
-	   		}).attr("y", function(d) {
-				return areaScale(d.total);
-			}).attr("width", gWidth / (maxYear - minYear))
-			.attr("height", function(d) {
-				return (gHeight-areaScale(d.total));
-			});
-	}
-
-    var bookCounts = d3.select("#bookCounts");
-
-    function showCounts(data) {
-     	bookCounts.select("#countsOfBooks span").text(" In " + data.year + ", " + data.count + " books meeting your criteria were published, for a grand total of  "+data.total+" books" );
-    }
+ //    function updateBars() {
+	// 	barCharts.selectAll("rect")
+	// 		.transition()
+	// 		.ease("linear")
+	// 		.delay(function(d,i){
+	// 			return i*5;
+	// 		}).duration(100)
+	// 		.attr("x", function(d, i) {
+	//    			return timescale(d.year);
+	//    		}).attr("y", function(d) {
+	// 			return areaScale(d.total);
+	// 		}).attr("width", gWidth / (maxYear - minYear))
+	// 		.attr("height", function(d) {
+	// 			return (gHeight-areaScale(d.total));
+	// 		});
+	// }
 
     /*
     // superceded by subjectgraph.js?

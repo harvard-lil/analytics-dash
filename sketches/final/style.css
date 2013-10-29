@@ -215,10 +215,11 @@ h1 {
 }
 #bookCounts {
     position: absolute;
-    top: 800px;
-    left: 650px;
-    width: 300px;
+    top: 580px;
+    left: 80%;
     color: #808080;
+    font-size: 12px;
+    width: 15%;
 }
 #sort {
     position: fixed;
