@@ -17,7 +17,7 @@ lc.tooltip = function() {
 		if (row.className) {
 			tooltip.html( row.ClassLetters + ' ' + row.ClassNumBegin + '-'+row.ClassNumEnd+': ' + row.ClassSubject);
 		} else if (row.class) {
-			tooltip.html(row.lastname + ': ' + row.start + '-' + row.end);
+			tooltip.html(row.name + ': ' + row.start + '-' + row.end);
 		} else if (row.creator) {
 			tooltip.html(row.title + ': ' + row.loc_call_num_sort_order[0]);
 		} else {

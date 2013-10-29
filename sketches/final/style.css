@@ -42,8 +42,19 @@ h1 {
     -moz-appearance: none;
     background-color: transparent;
     border: 1px solid #808080;
-    text-transform: uppercase;
     color: #808080;
+    position: absolute;
+    top: 270px;
+    right: 20px;
+    cursor: pointer;
+}
+
+#searchTerm {
+    fill: black;
+	font-size: 10px;
+	text-transform:capitalize;
+	text-align: left;
+	font-weight: normal;
     position: absolute;
     top: 270px;
     right: 20px;
@@ -238,13 +249,13 @@ h1 {
     margin-bottom: 15px;
 }
 #sort li {
-	cursor: pointer;
+        cursor: pointer;
 }
 #sort li:hover {
-	background: #ddd;
+        background: #ddd;
 }
 #sort li.selected {
-	background: yellow;
+        background: yellow;
 }
 #sort li:first-child {
     font-weight: bold;
@@ -293,24 +304,9 @@ h1 {
 #info-wrapper .book-sort {
     cursor: pointer;
     -webkit-user-select: none;
-    height: 0;
-    border-top: 10px solid transparent;
-    border-bottom: 10px solid transparent;
-    border-right: 13px solid #808080;
-    display: inline-block;
-    float: left;
-    margin-right: 5px;
-}
-#info-wrapper .book-sort.next {
-    cursor: pointer;
-    -webkit-user-select: none;
-    border-top: 10px solid transparent;
-    border-bottom: 10px solid transparent;
-    border-right: none;
-    border-left: 13px solid #808080;
 }
 #info {
-	position: absolute;
+        position: absolute;
     top: 40px;
     bottom: 20px;
     left: 10px;
@@ -365,24 +361,24 @@ h1 {
 }
 
 #info .title {
-	font-weight: normal;
-  	font-size: 24px;
-  	text-transform: capitalize;
+        font-weight: normal;
+          font-size: 24px;
+          text-transform: capitalize;
     margin: 0;
 }
 
 #info ul    {
-	list-style-type: none;
-	padding: 0;
-	margin: 0;
-	font-size: 12px;
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+        font-size: 12px;
 }
 
 #info .field li {
-	cursor: pointer;
+        cursor: pointer;
 }
 #info .field li:hover {
-	text-decoration: underline;
+        text-decoration: underline;
 }
 #show-graph {
     border: 1px solid #808080;
@@ -481,14 +477,14 @@ circle:hover {
 
 
 .area {
-	opacity: .15;
+        opacity: .15;
 }
 
 .axis path,
 .axis line{
-	fill:none;
-	stroke:black;
-	shape-rendering:crispEdges;
+        fill:none;
+        stroke:black;
+        shape-rendering:crispEdges;
 }
 
 .axis text {
