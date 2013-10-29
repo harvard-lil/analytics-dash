@@ -247,7 +247,8 @@ lc.graph = function() {
 
 
     var info = d3.select("#info"),
-    	labels = $("#info .infoLabel");
+    	labels = $("#info .infoLabel"),
+    	addToCarrel = d3.select("#add-to-carrel");
 
     info.selectAll(".infoLabel").on("click",function(){
     	labels.removeClass("clicked");
@@ -316,12 +317,12 @@ lc.graph = function() {
   		    // });
 
   		if (inBox) {
-  			info.select("#add-to-carrel").text("Add To Carrel").on("click",function(){
+  			addToCarrel.text("Add To Carrel").on("click",function(){
   				console.log("ok")
 	            lc.carrel.sendToCarrel(data);
 	        });
   		} else {
-  			info.select("#add-to-carrel").text("Remove From Carrel").on("click",function(){
+  			addToCarrel.text("Remove From Carrel").on("click",function(){
 	            lc.carrel.removeFromCarrel(data);
 	            info.select("#add-to-carrel").text("Add To Carrel").on("click",function(){
 		            lc.carrel.sendToCarrel(data);
