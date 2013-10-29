@@ -4,7 +4,9 @@ lc.graph = function() {
 	var width = 1000,
         height = 550,
         gWidth = 800,
-        gHeight = 490;
+        gHeight = 490,
+        bookData,
+        currentBook;
 
     var circleColor = "blue";
 
@@ -126,6 +128,8 @@ lc.graph = function() {
 
 	self.appendCircles = function(data) {
 
+		bookData = data;
+
         var circles = circleGroup.selectAll("circle").data(data);
         //binds data to circles
         circles.enter().append("circle").attr("class","c");
@@ -172,58 +176,52 @@ lc.graph = function() {
     // use the API facet response to draw data
     // this means we have to turn the data into something d3 will like
     // and then use d3.area
-    var areaScale;
+ //    var areaScale;
 
-    self.drawArea = function(facets) {
-		var data = [];
-    	var total = 0;
-    	for (var i = 0; i < (maxYear - minYear); i++) {
-    		var year = i + minYear;
-    		var count = facets.pub_date_numeric[+year];
-			total = total + (count || 0 );
-			data[i] = {
-    			year: year,
-    			count: count || 0,
-    			total:total
-    		};
-    	}
+ //    self.drawArea = function(facets) {
+	// 	var data = [];
+ //    	var total = 0;
+ //    	for (var i = 0; i < (maxYear - minYear); i++) {
+ //    		var year = i + minYear;
+ //    		var count = facets.pub_date_numeric[+year];
+	// 		total = total + (count || 0 );
+	// 		data[i] = {
+ //    			year: year,
+ //    			count: count || 0,
+ //    			total:total
+ //    		};
+ //    	}
 
-    	areaScale = d3.scale.linear().range([gHeight, 0])
-		    .domain([0, d3.max(data, function(d) { return d.total; })]);
+ //    	areaScale = d3.scale.linear().range([gHeight, 0])
+	// 	    .domain([0, d3.max(data, function(d) { return d.total; })]);
 
-		var bars = barCharts.selectAll("rect").data(data);
-		bars.enter().append("rect");
-		bars.exit().remove();
+	// 	var bars = barCharts.selectAll("rect").data(data);
+	// 	bars.enter().append("rect");
+	// 	bars.exit().remove();
 
-		updateBars();
+	// 	updateBars();
 
-        bars.on("mouseover",function(d){
-  			showCounts(d);
-    	});
-    };
+ //        bars.on("mouseover",function(d){
+ //  			showCounts(d);
+ //    	});
+ //    };
 
-    function updateBars() {
-		barCharts.selectAll("rect")
-			.transition()
-			.ease("linear")
-			.delay(function(d,i){
-				return i*5;
-			}).duration(100)
-			.attr("x", function(d, i) {
-	   			return timescale(d.year);
-	   		}).attr("y", function(d) {
-				return areaScale(d.total);
-			}).attr("width", gWidth / (maxYear - minYear))
-			.attr("height", function(d) {
-				return (gHeight-areaScale(d.total));
-			});
-	}
-
-    var bookCounts = d3.select("#bookCounts");
-
-    function showCounts(data) {
-     	bookCounts.select("#countsOfBooks span").text(" In " + data.year + ", " + data.count + " books meeting your criteria were published, for a grand total of  "+data.total+" books" );
-    }
+ //    function updateBars() {
+	// 	barCharts.selectAll("rect")
+	// 		.transition()
+	// 		.ease("linear")
+	// 		.delay(function(d,i){
+	// 			return i*5;
+	// 		}).duration(100)
+	// 		.attr("x", function(d, i) {
+	//    			return timescale(d.year);
+	//    		}).attr("y", function(d) {
+	// 			return areaScale(d.total);
+	// 		}).attr("width", gWidth / (maxYear - minYear))
+	// 		.attr("height", function(d) {
+	// 			return (gHeight-areaScale(d.total));
+	// 		});
+	// }
 
     /*
     // superceded by subjectgraph.js?
@@ -242,28 +240,62 @@ lc.graph = function() {
     */
 
 
-    var info = d3.select("#info");
+    var info = d3.select("#info"),
+    	labels = $("#info .infoLabel"),
+    	addToCarrel = d3.select("#add-to-carrel");
+
+    info.selectAll(".infoLabel").on("click",function(){
+    	labels.removeClass("clicked");
+    	$(this).addClass("clicked");
+    });
+
+    $(".book-sort").click(function(){
+    	if (!$(".infoLabel.clicked").length) return;
+    	var sortBy = $(".infoLabel.clicked").parent().attr("class"),
+    		dir = $(this).hasClass("next");
+    	sortBooks(sortBy, dir);
+    })
+
+    function sortBooks(sortBy, dir) {
+    	bookData.sort(function(a,b){
+  			if (a[sortBy] < b[sortBy])
+  				return -1;
+  			if ((a[sortBy] > b[sortBy]))
+  				return 1;
+  			return 0;
+    	});
+    	showInfo(bookData[bookData.indexOf(currentBook) + (dir ? 1 : -1)]);
+    }
 
     self.showInfo = function(data, inBox) {
-        info.select("#title").text(data.title);
-        if (data.creator)
-            info.select("#creator").html("<li class='c'>" + data.creator.join("</li><li>") + "</li>");
+    	currentBook = data;
+
+        info.select(".title .field").text(data.title);
+        if (data.creator) {
+            info.select(".creator .field").html("<li>" + data.creator.join("</li><li>") + "</li>");
+            info.selectAll(".creator li").on("click",function(){
+            	var creator = $(this).text();
+            	$("#search-creator").val(creator);
+            });
+        }
 
         if (data.call_num)
-           info.select("#lc").html("<span class='box' style='background-color:"+lcObjectArray[data.call_num[0].substr(0,1)].color+";'></span>"+data.call_num.join("or "));
+           info.select(".lc .field").html("<span class='box' style='background-color:"+lcObjectArray[data.call_num[0].substr(0,1)].color+";'></span>"+data.call_num.join("or "));
 
-        info.select("#pub_date_numeric").text(data.pub_date_numeric);
+        info.select(".pub_date_numeric .field").text(data.pub_date_numeric);
 
-        if (data.pages_numeric)
-        	info.select("#pages_numeric").text(data.pages_numeric);
-        else
-        	info.select("#pages_numeric").text("Format: "+data.format);
+        info.select(".pages_numeric .field").text(data.pages_numeric ? data.pages_numeric : "Format: "+data.format);
 
         if (data.language)
-			info.select("#language").text(data.language);
+			info.select(".language .field").text(data.language);
 
-		if (data.lcsh)
-            info.select("#lcsh").html("<li class='c'>" + data.lcsh.join("</li><li>") + "</li>");
+		if (data.lcsh) {
+            info.select(".lcsh .field").html("<li class='c'>" + data.lcsh.join("</li><li>") + "</li>");
+            info.selectAll(".lcsh li").on("click",function(){
+            	var lcsh = $(this).text();
+            	$("#search-lcsh").val(lcsh);
+            });
+		}
 
         // info.select("#shelfrank span").text(data.shelfrank);
         // info.select("#subject").text(data.loc_call_num_subject);
@@ -289,11 +321,12 @@ lc.graph = function() {
   		    // });
 
   		if (inBox) {
-  			info.select("#add-to-carrel").text("Add To Carrel").on("click",function(){
+  			addToCarrel.text("Add To Carrel").on("click",function(){
+  				console.log("ok")
 	            lc.carrel.sendToCarrel(data);
 	        });
   		} else {
-  			info.select("#add-to-carrel").text("Remove From Carrel").on("click",function(){
+  			addToCarrel.text("Remove From Carrel").on("click",function(){
 	            lc.carrel.removeFromCarrel(data);
 	            info.select("#add-to-carrel").text("Add To Carrel").on("click",function(){
 		            lc.carrel.sendToCarrel(data);
@@ -302,22 +335,22 @@ lc.graph = function() {
   		}
     };
 
-    $("#stack-circles").click(function(){
-    	stackCircles();
-    });
+    // $("#stack-circles").click(function(){
+    // 	stackCircles();
+    // });
 
-    function stackCircles() {
-    	var circles = circleGroup.selectAll("circle");
-    	var yearObj = {};
-    	circles.attr("r",3).each(function(d){
-    		if (d.pub_date_numeric in yearObj) {
-    			yearObj[d.pub_date_numeric]++;
-    		} else {
-    			yearObj[d.pub_date_numeric] = 0;
-    		}
-    		d3.select(this).attr("cy",gHeight-5-(yearObj[d.pub_date_numeric]*7));
-    	});
-    }
+    // function stackCircles() {
+    // 	var circles = circleGroup.selectAll("circle");
+    // 	var yearObj = {};
+    // 	circles.attr("r",3).each(function(d){
+    // 		if (d.pub_date_numeric in yearObj) {
+    // 			yearObj[d.pub_date_numeric]++;
+    // 		} else {
+    // 			yearObj[d.pub_date_numeric] = 0;
+    // 		}
+    // 		d3.select(this).attr("cy",gHeight-5-(yearObj[d.pub_date_numeric]*7));
+    // 	});
+    // }
 
     /*
 
@@ -353,7 +386,7 @@ lc.graph = function() {
 	// }
 
 	function y_axis_button(e){
-		y_axis_type = e.target.id;
+		y_axis_type = $(e.target).attr("name");
 
 		$(".y_toggle li").removeClass("selected");
 		$(this).addClass("selected");
@@ -363,7 +396,7 @@ lc.graph = function() {
 	}
 
 	function radius_button(e){
-		radius_type = e.target.id;
+		radius_type = $(e.target).attr("name");
 
 		$(".scale_toggle li").removeClass("selected");
 		$(this).addClass("selected");
@@ -390,7 +423,6 @@ lc.graph = function() {
 	}
 
 	lc.subjectgraph.on("selected", function() {
-		console.log("updating y axis");
 		if (y_axis_type == 'call_number_sort_order_y')
 			set_y_axis();
 	});
@@ -409,6 +441,7 @@ lc.graph = function() {
 	}
 
 	function calculateY(d) {
+		console.log(y_axis_type)
 		switch(y_axis_type) {
 			case 'grads':
 				yscale.domain([0,300]);

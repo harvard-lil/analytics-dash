@@ -6,6 +6,9 @@
             td {
                 border: 1px solid #ddd;
             }
+            tr {
+                min-width: 150px;
+            }
         </style>
     </head>
     <body>
@@ -23,16 +26,6 @@
                 tr.append($("<td>").text(w));
             });
             tr.appendTo(table)
-        })
-        // d3.select("table")
-        //     .data(tableData)
-        //     .enter().append("tr")
-        //     .each(function(d){
-        //         var rows = d.split(",");
-        //         var row = d3.select(this);
-        //         rows.forEach(function(v){
-        //             d3.append("td").text(v)
-        //         })
-        //     })
+        });
     </script>
 </html>

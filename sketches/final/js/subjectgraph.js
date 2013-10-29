@@ -113,9 +113,11 @@ lc.subjectgraph = function() {
 				return d.cy;
 			})
 			.attr("position","absolute");
+	
+		var texts = grouping.selectAll("text");
+		texts.exit().remove();
 
-
-		var text = rects.append("text")
+		var text = grouping.append("text")
 		.text(function(d){
 			return d.lastname;
 		}).attr("y",function (d){

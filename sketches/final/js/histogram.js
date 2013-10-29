@@ -41,6 +41,8 @@ lc.histogram = function() {
             }).attr("opacity",function(d){
                 if (d.key == "undefined")
                     return 0;
+            }).on("mouseover",function(d){
+                showCounts(d);
             });
 
         $("#slider-range").slider({
@@ -67,6 +69,12 @@ lc.histogram = function() {
     self.getBooksByYear = function() {
         return booksByYear;
     };
+
+    var bookCounts = d3.select("#bookCounts");
+
+    function showCounts(data) {
+        bookCounts.text("We hold "+data.values.length + " items that meet your criteria that were published in "+ data.key );
+    }
 
     return self;
 }();

@@ -38,36 +38,49 @@
             <div class="form-row">
                 <label><div class="box"></div>Language</label><input id="search-language" type="text" value=""></input>
             </div>
-            <!-- <div class="form-row">
-                <label><div class="box"></div>Country</label><input id="search-country" type="text" value=""></input>
-            </div> -->
+            <div class="form-row">
+                <label><div class="box"></div>LCSH Subject</label><input id="search-lcsh" type="text" value=""></input>
+            </div>
             <input id="search" type="submit"/></br>
         </div>
 
-        <div class="half">
+        <div class="left-half">
             <div id="info-wrapper">
+<<<<<<< HEAD
                 <h3>ITEM INFO</h3>
+=======
+                <h3><span class="book-sort"></span> <span class="book-sort next"></span> Book Inspector</h3>
+>>>>>>> 36837b4628c977111c7b3258bbc3e82c31a28bb5
                 <div class="notch"></div>
                 <div id="info">
-                    <p class="infoLabel">Title</p>
-                    <h2 id="title"></h2>
-                    <p class="infoLabel">Authors</p>
-                    <ul id="creator"></ul>
-
-                    <p class="infoLabel">Library of Congress Call #</p>
-                    <p id="lc"><span></span></p>
-
-                    <p class="infoLabel">Publishing Data</p>
-                    <p id="pub_date_numeric"></p>
-
-                    <p class="infoLabel">Page Count</p>
-                    <p id="pages_numeric"><span></span></p>
-
-                    <p class="infoLabel">Language</p>
-                    <p id="language"><span></span></p>
-
-                    <p class="infoLabel">Library of Congress Subject Headers</p>
-                    <ul id="lcsh"></ul>
+                    <div class="title">
+                        <p class="infoLabel"><span class="tick"></span>Title</p>
+                        <p class="field"></p>
+                    </div>
+                    <div class="creator">
+                        <p class="infoLabel"><span class="tick"></span>Authors</p>
+                        <ul class="field"></ul>
+                    </div>
+                    <div class="lc">
+                        <p class="infoLabel"><span class="tick"></span>Library of Congress Call #</p>
+                        <p class="field"><span></span></p>
+                    </div>
+                    <div class="pub_date_numeric">
+                        <p class="infoLabel"><span class="tick"></span>Publishing Data</p>
+                        <p class="field"></p>
+                    </div>
+                    <div class="pages_numeric">
+                        <p class="infoLabel"><span class="tick"></span>Page Count</p>
+                        <p class="field"><span></span></p>
+                    </div>
+                    <div class="language">
+                        <p class="infoLabel">Language</p>
+                        <p class="field"><span></span></p>
+                    </div>
+                    <div class="lcsh">
+                        <p class="infoLabel">Library of Congress Subject Headers</p>
+                        <ul class="field"></ul>
+                    </div>
                 </div>
             </div>
             <a id="add-to-carrel">Add to carrel</a>
@@ -79,7 +92,7 @@
                 <a id="export-carrel" class="carrel-action">Export your carrel as a spreadsheet =></a>
             </div>
         </div>
-        <div class="half">
+        <div class="right-half">
             <div id="graph-wrapper">
                 <div id="tooltip">Currently selected:</div>
                 <svg id="nav"></svg>
@@ -90,43 +103,40 @@
                     <div id="slider-range"></div>
                     <div class="axis_labels">Publication Date</div>
                 </div>
-                <!-- <div id="bookCounts">
-                    <p id="countsOfBooks"><span></span></p>
-                </div> -->
+                <div id="bookCounts"></div>
             </div>
             <div id="sort">
                 <div id="show-list">Show Items As A List</div>
                 <div id="show-graph">Show Items As A Graph</div>
                 <!-- <div id="stack-circles">Stack Circles</div> -->
-                <ul class="y_toggle">
+                <ul class="y_toggle graph">
                     <li>y-sort by:</li>
-                    <li id="grads" name="grads">grads</li>
-                    <li id="undergrads" name="undergrads">undergrads</li>
-                    <li id="faculty" name="faculty">faculty</li>
-                    <li id="popularity_y" name="Shelf_Rank">popularity</li>
+                    <li name="grads">grads</li>
+                    <li name="undergrads">undergrads</li>
+                    <li name="faculty">faculty</li>
+                    <li name="popularity_y">popularity</li>
                     <!-- <li id="date_y" name="Date_of_Publish">publication date</li> -->
-                    <li id="call_number_sort_order_y" name="LOC_Sort_Order" class="selected">subject</li>
+                    <li name="call_number_sort_order_y" class="selected">subject</li>
                 </ul>
-                <!-- <div class="x_toggle">
-                   x-sort by:   <span id="chronological_x" name="x_chronological" class="selected">publication date</span>  /
-                    <span id="call_number_sort_order_x" name="call-number-sort-order">call-number</span>
-                </div> -->
-                <ul class="scale_toggle">
-                       <li>scale by:</li>
-                       <li id="pages" name="pages">pages</li>
-                       <li id="same" name="same">same</li>
-                       <li id="shelfrank" name="popularity" class="selected">popularity</li>
+                <ul class="scale_toggle graph">
+                    <li>scale by:</li>
+                    <li name="pages">pages</li>
+                    <li name="same">same</li>
+                    <li name="shelfrank" class="selected">popularity</li>
+                </ul>
+                <ul class="list-sort-by list">
+                    <li>sort by:</li>
+                    <li name="shelfrank" class="selected">popularity</li>
+                    <li name="pub_date_numeric">publication date</li>
+                    <li name="loc_call_num_sort_order">subject</li>
+                    <li name="creator">author</li>
+                    <li name="title">title</li>
+                    <li name="format">format</li>
+                    <li name="pages_numeric">pages</li>
                 </ul>
             </div>
             <div id="list-wrapper">
-                <ul id="list-sort-by">
-                    <li>Sort By:</li>
-                    <li class="title">Title</li>
-                    <li class="pub_date_numeric">Date</li>
-                    <li class="call_num">Call Number</li>
-                </ul>
-                <ul id="list">
-                </ul>
+                <ul id="list"></ul>
             </div>
         </div>
     </body>
