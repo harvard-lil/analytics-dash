@@ -92,14 +92,14 @@ h1 {
     float: left;
     width: 250px;
 }
-.half {
+.right-half {
     width: 73%;
     position: relative;
     float: right;
     height: 100%;
     margin-top: 90px;
 }
-.half:nth-child(odd) {
+.left-half{
     width: 25%;
     position: fixed;
 }
@@ -249,6 +249,13 @@ h1 {
     cursor: default !important;
     background: white !important;
 }
+#sort .list,
+.list #sort .graph {
+    display: none;
+}
+.list #sort .list {
+    display: block;
+}
 ::-webkit-scrollbar {
     -webkit-appearance: none;
     width: 7px;
@@ -382,6 +389,13 @@ h1 {
 }
 #list-wrapper {
     width: 80%;
+    display: none;
+}
+.list #list-wrapper {
+    display: block;
+}
+.list #graph-wrapper {
+    display: none;
 }
 #list, #list-sort-by {
     list-style-type: none;

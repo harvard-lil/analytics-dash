@@ -3,8 +3,7 @@ var lc = lc || {};
 lc.list = function() {
 
     var documents;
-    var listWrapper = d3.select("#list-wrapper"),
-        graphWrapper = d3.select("#graph-wrapper"),
+    var visWrapper = $(".right-half"),
         list = d3.select("#list");
 
     $("#show-list").click(function(){
@@ -20,8 +19,7 @@ lc.list = function() {
 
     self.showList = function() {
 
-        listWrapper.style("display","block");
-        graphWrapper.style("display","none");
+        visWrapper.addClass("list");
 
         var items = list.selectAll("li").data(documents);
         var entering = items.enter().append("li").attr("class","item");
@@ -43,12 +41,11 @@ lc.list = function() {
     };
 
     self.hideList = function() {
-        listWrapper.style("display","none");
-        graphWrapper.style("display","block");
+        visWrapper.removeClass("list");
     };
 
-    $("#list-sort-by li").click(function(){
-        self.sortList($(this).attr("class"));
+    $(".list-sort-by li").click(function(){
+        self.sortList($(this).attr("name"));
     });
 
     self.sortList = function(sorter) {

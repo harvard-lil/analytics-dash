@@ -272,8 +272,8 @@ lc.graph = function() {
 
         info.select(".title .field").text(data.title);
         if (data.creator) {
-            info.select(".creator .field").html("<li class='c'>" + data.creator.join("</li><li>") + "</li>");
-            info.select(".creator li").on("click",function(){
+            info.select(".creator .field").html("<li>" + data.creator.join("</li><li>") + "</li>");
+            info.selectAll(".creator li").on("click",function(){
             	var creator = $(this).text();
             	$("#search-creator").val(creator);
             });
@@ -291,7 +291,7 @@ lc.graph = function() {
 
 		if (data.lcsh) {
             info.select(".lcsh .field").html("<li class='c'>" + data.lcsh.join("</li><li>") + "</li>");
-            info.select(".lcsh li").on("click",function(){
+            info.selectAll(".lcsh li").on("click",function(){
             	var lcsh = $(this).text();
             	$("#search-lcsh").val(lcsh);
             });
@@ -386,7 +386,7 @@ lc.graph = function() {
 	// }
 
 	function y_axis_button(e){
-		y_axis_type = e.target.id;
+		y_axis_type = $(e.target).attr("name");
 
 		$(".y_toggle li").removeClass("selected");
 		$(this).addClass("selected");
@@ -396,7 +396,7 @@ lc.graph = function() {
 	}
 
 	function radius_button(e){
-		radius_type = e.target.id;
+		radius_type = $(e.target).attr("name");
 
 		$(".scale_toggle li").removeClass("selected");
 		$(this).addClass("selected");
@@ -441,6 +441,7 @@ lc.graph = function() {
 	}
 
 	function calculateY(d) {
+		console.log(y_axis_type)
 		switch(y_axis_type) {
 			case 'grads':
 				yscale.domain([0,300]);
