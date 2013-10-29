@@ -293,6 +293,21 @@ h1 {
 #info-wrapper .book-sort {
     cursor: pointer;
     -webkit-user-select: none;
+    height: 0;
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    border-right: 13px solid #808080;
+    display: inline-block;
+    float: left;
+    margin-right: 5px;
+}
+#info-wrapper .book-sort.next {
+    cursor: pointer;
+    -webkit-user-select: none;
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    border-right: none;
+    border-left: 13px solid #808080;
 }
 #info {
 	position: absolute;
