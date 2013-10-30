@@ -31,6 +31,7 @@ lc.search = function() {
     // dewey_call_nu
     $("#search").click(function() {
         var searchTerms = {};
+        searchTerms["year"] = [];
 
         // grabbing all fields entered in in the form
         $("#search-form input").each(function() {
@@ -38,8 +39,20 @@ lc.search = function() {
             if (t.val()) {
                 // grabbing #search-year -> 'year'
                 var key = t.attr("id").split("-")[1];
-                searchTerms[key] = t.val();
+                if (key == "year_0" || key == "year_1")
+                    searchTerms["year"][key.split("_")[1]] = t.val();
+                else
+                    searchTerms[key] = t.val();
                 if (!t.parent().hasClass("locked")) t.val("");
+            }
+        });
+
+        $("#search-form select").each(function() {
+            var t = $(this);
+            if (t.find(":selected") && t.prop('selectedIndex') != 0) {
+                var key = t.attr("id").split("-")[1];
+                searchTerms[key] = t.find(":selected").text();
+                if (!t.parent().hasClass("locked")) t.prop('selectedIndex',0);;
             }
         });
 
@@ -62,7 +75,7 @@ lc.search = function() {
             switch (term) {
                 // parsing '2001-2004' to 'filter=pub_date_numeric:[2001 TO 2004]'
                 case 'year':
-                    var range = terms[term].split(' ').join('').split('-');
+                    var range = terms[term];
                     query.push('filter=pub_date_numeric:[' + range[0] + ' TO ' + range[1] + ']');
                     console.log('year range', range);
                     break;

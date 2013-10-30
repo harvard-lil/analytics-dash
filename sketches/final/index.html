@@ -24,7 +24,10 @@
                 <label><div class="box"></div>Author Name</label><input id="search-creator" type="text" value=""></input>
             </div>
             <div class="form-row">
-                <label><div class="box"></div>Year Range</label><input id="search-year" type="text" value=""></input>
+                <label><div class="box"></div>Year Range</label>
+                <input id="search-year_0" type="text" value="" style="width:40px;"></input>
+                <span style="float:left; width:20px; text-align:center;"> - </span>
+                <input id="search-year_1" type="text" value="" style="width:40px;"></input>
             </div>
             <div class="form-row">
                 <label><div class="box"></div>Title</label><input id="search-title" type="text" value=""></input>
@@ -34,7 +37,8 @@
             </div>
             <div class="form-row">
                 <label><div class="box"></div>Format</label>
-                <select>
+                <select id="search-format">
+                    <option>All</option>
                     <option>Book</option>
                     <option>Serial</option>
                     <option>Map</option>
@@ -46,7 +50,6 @@
                     <option>Other</option>
                     <option>Collection</option>
                 </select>
-                <input id="search-format" type="text" value=""></input>
             </div>
             <div class="form-row">
                 <label><div class="box"></div>Language</label><input id="search-language" type="text" value=""></input>
