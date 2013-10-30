@@ -13,13 +13,17 @@ lc.tooltip = function() {
 		});
 	};
 
+	var commas = function(x) {
+	    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+	}
+
 	self.show = function(row) {
 		if (row.className) {
 			tooltip.html( row.ClassLetters + ' ' + row.ClassNumBegin + '-'+row.ClassNumEnd+': ' + row.ClassSubject);
 		} else if (row.class) {
-			tooltip.html(row.name + ': ' + row.start + '-' + row.end);
+			tooltip.html(row.name + ': ' + commas(row.start) + '-' + commas(row.end));
 		} else if (row.creator) {
-			tooltip.html(row.title + ': ' + row.loc_call_num_sort_order[0]);
+			tooltip.html(row.title + ': ' + commas(row.loc_call_num_sort_order[0]));
 		} else {
 			tooltip.html(row)
 		}
