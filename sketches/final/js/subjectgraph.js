@@ -87,22 +87,23 @@ lc.subjectgraph = function() {
     };
 
     self.update = function(parent, data, total) {
+        if (parent.node().id == "nav")
+            d3.select("#nav-context").classed("child",true);
+        var groups = parent.selectAll(".schema")
+            .data(data);
+            
+        var entering = groups.enter()
+            .append("g")
+            .attr("class", "schema");
 
-        var rects = parent.selectAll(".schema").data(data);
+        var rectangles = entering.append("rect");
 
-        var grouping = rects.enter()
-                .append("g")
-                .attr("class", "schema");
-
-        var rectangles = grouping.append("rect")
-            .attr("width",0);
-
-        var texts = grouping.append("text").attr("x", 34);
+        var texts = entering.append("text").attr("x", 34);
 
         var yoffset = -6;
         var cy = 0;
 
-        grouping.attr("id", function(d) { return getID(d); })
+        groups.attr("id", function(d) { return getID(d); })
             .attr("transform",function(d){
                 d.height = (d.count / total) * height;
                 d.cy = cy;
@@ -111,13 +112,14 @@ lc.subjectgraph = function() {
                 return "translate(0,"+d.cy+")";
             });
 
-        rectangles.attr("fill", function(d) {
+        groups.select("rect").attr("width",0)
+            .attr("fill", function(d) {
                 return schema.colorClass(d.class);
             }).attr("height", function(d) {
                 return d.height;
             });
 
-        texts.text(function(d){
+        groups.select("text").text(function(d){
                 return d.lastname;
             }).attr("fill", function(d) {
                 return schema.colorClass(d.class);
@@ -130,11 +132,11 @@ lc.subjectgraph = function() {
         //     self.mouseout(d);
         // });
 
-        rectangles.transition()
-            .duration(500)
+        groups.select("rect")
+            .transition()
             .attr("width", 30);
 
-        rects.on("click", function(d) {
+        groups.on("click", function(d) {
             console.log('clicked', d.name, d.id);
             self.getChildrenID(d.id);
             self.updateBounds(d);
@@ -145,7 +147,7 @@ lc.subjectgraph = function() {
         });
 
         // remove divs when they leave
-        rects.exit().remove();
+        groups.exit().remove();
     };
 
     self.updateBounds = function(selected) {
