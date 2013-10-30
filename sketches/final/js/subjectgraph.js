@@ -80,7 +80,6 @@ lc.subjectgraph = function() {
             } else {
                     self.currentChildren = processedChildren;
                     self.currentTotal = total;
-                    d3.select("#"+context).attr("class","child");
                     self.update(sideBar, processedChildren, total);
             }
 
