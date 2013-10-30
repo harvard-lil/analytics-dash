@@ -62,12 +62,6 @@ lc.graph = function() {
     		.attr("id","yAxis")
     		.attr("transform","translate(120,40)");
 
-        axes.append("text")
-	        .attr("id","searchTerm")
-	        .attr("class","axis_labels")
-	        .attr("text-anchor","middle")
-	        .attr("transform","translate("+width/2+",20)");
-
         // axes.append("text")
 	       //  .attr("id","x_axis")
     	   //  .attr("class","axis_labels")
