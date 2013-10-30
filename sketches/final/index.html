@@ -33,7 +33,20 @@
                 <label><div class="box"></div>Call # Range</label><input id="search-range" type="text" value=""></input>
             </div>
             <div class="form-row">
-                <label><div class="box"></div>Format</label><input id="search-format" type="text" value=""></input>
+                <label><div class="box"></div>Format</label>
+                <select>
+                    <option>Book</option>
+                    <option>Serial</option>
+                    <option>Map</option>
+                    <option>Notated Music</option>
+                    <option>Sound Recording</option>
+                    <option>Manuscript</option>
+                    <option>Video/Film</option>
+                    <option>Book Part</option>
+                    <option>Other</option>
+                    <option>Collection</option>
+                </select>
+                <input id="search-format" type="text" value=""></input>
             </div>
             <div class="form-row">
                 <label><div class="box"></div>Language</label><input id="search-language" type="text" value=""></input>
@@ -46,9 +59,7 @@
 
         <div class="left-half">
             <div id="info-wrapper">
-                <h3>ITEM INFO</h3>
-=======
-                <h3><span class="book-sort"></span> <span class="book-sort next"></span> Book Inspector</h3>
+                <h3><span class="book-sort"></span> <span class="book-sort next"></span> Item Info</h3>
                 <div class="notch"></div>
                 <div id="info">
                     <div class="title">
@@ -97,6 +108,7 @@
                 <svg id="nav-context"></svg>
                 <div id="graph"></div>
                 <div id="histogram">
+                    <div class="reset">reset</div>
                     <svg></svg>
                     <div id="slider-range"></div>
                     <div class="axis_labels">Publication Date</div>

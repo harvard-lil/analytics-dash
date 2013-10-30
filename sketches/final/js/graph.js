@@ -112,7 +112,7 @@ lc.graph = function() {
 	};
 
 	self.updateDateRange = function(min, max) {
-		minYear = min, maxYear = max;
+		minYear = min - .5, maxYear = max + .5;
 		timescale.domain([minYear,maxYear]);
 		xscale.domain([minYear,maxYear]);
 		updateAxes();
@@ -441,7 +441,6 @@ lc.graph = function() {
 	}
 
 	function calculateY(d) {
-		console.log(y_axis_type)
 		switch(y_axis_type) {
 			case 'grads':
 				yscale.domain([0,300]);

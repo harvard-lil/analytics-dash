@@ -45,26 +45,34 @@ lc.histogram = function() {
                 showCounts(d);
             });
 
+        $("#histogram .reset").click(function(){
+            setSlider(minYear, maxYear)
+        });
+
         $("#slider-range").slider({
             range: true,
             min: minYear,
             max: maxYear,
             values: [ minYear, maxYear ],
             slide: function( event, ui ) {
-                $(".ui-slider-handle:first").text(ui.values[0]);
-                $(".ui-slider-handle:last").text(ui.values[1]);
-                histoGroup.selectAll("rect").attr("fill",function(d){
-                    if ((d.key >= ui.values[0]) && (d.key <= ui.values[1]))
-                        return "#808080";
-                    else
-                        return "#ddd";
-                });
-                lc.graph.updateDateRange(ui.values[0],ui.values[1]);
+                setSlider(ui.values[0], ui.values[1]);
             }
         });
+        setSlider(minYear, maxYear);
+    };
+
+    function setSlider(minYear, maxYear) {
+        $("#slider-range").slider("values",[minYear, maxYear]);
         $(".ui-slider-handle:first").text(minYear);
         $(".ui-slider-handle:last").text(maxYear);
-    };
+        histoGroup.selectAll("rect").attr("fill",function(d){
+            if ((d.key >= minYear) && (d.key <= maxYear))
+                return "#808080";
+            else
+                return "#ddd";
+        });
+        lc.graph.updateDateRange(minYear,maxYear);
+    }
 
     self.getBooksByYear = function() {
         return booksByYear;
