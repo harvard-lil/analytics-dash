@@ -65,7 +65,7 @@ lc.subjectgraph = function() {
                 var parent = response.docs[j];
                 var child_classes = parent.child_classes;
                 for (var i = 0; i < child_classes.length; i++) {
-                    var next = i+1 == child_classes.length ? null : processChild(child_classes[i+1]);
+                    var next = self.initialized || i+1 == child_classes.length ? null : processChild(child_classes[i+1]);
                     var child = processChild(child_classes[i], next);
                     total += child.count;
                     processedChildren.push(child);
