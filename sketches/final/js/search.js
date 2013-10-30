@@ -26,7 +26,7 @@ lc.search = function() {
         defaultParams = '&limit=250&facet=pub_date_numeric&key=5239997b68e033fbf2854d77c6295310&filter:collection:hollis_catalog',
         search = getQueryVariable('search') || 'los angeles';
 
-    var graphTitle = d3.select("#searchTerm")
+    var graphTitle = $("#searchTerm")
 
     // dewey_call_nu
     $("#search").click(function() {
@@ -35,6 +35,7 @@ lc.search = function() {
         // grabbing all fields entered in in the form
         $("#search-form input").each(function() {
             var t = $(this);
+            console.log(t);
             if (t.val()) {
                 // grabbing #search-year -> 'year'
                 var key = t.attr("id").split("-")[1];
@@ -49,7 +50,7 @@ lc.search = function() {
 
         $("#search-form").slideUp();
 
-        graphTitle.text("Searching... '");
+        graphTitle.html("Searching... ");
     });
 
     /*
@@ -97,6 +98,66 @@ lc.search = function() {
         return encodeURI('&' + query.join('&'));
     };
 
+    self.buildSearchExplanation = function(docs, terms) {
+        var prefix = 'The <b>' + docs.length + ' most popular</b> items ';
+        if (terms['collection']) {
+            var catalog = terms['collection'].split('_').join(' ');
+            prefix += ' in the ' + catalog;
+        }
+
+        var explanation = [];
+        for (var term in terms) {
+            switch (term) {
+                // parsing '2001-2004' to 'filter=pub_date_numeric:[2001 TO 2004]'
+                case 'year':
+                    var range = terms[term].split(' ').join('').split('-');
+                    explanation.push('published <b>between ' + range[0] + ' and ' + range[1] + '</b>');
+                    break;
+
+                // using loc_call_num_sort_order until told otherwise
+                case 'range':
+                    var range = terms[term].split('-');
+                    explanation.push('a Library of Congress Call Number <b>between ' + range[0] + ' and ' + range[1] + '</b>');
+                    break;
+
+                case 'format':
+                    var format = terms[term];
+                    if (format == 'Notated Music') {
+                        format = 'piece of music';
+                    } else if (format == 'Book Part') {
+                        format = 'book parts';
+                    } else if (format == 'Other') {
+                        format = 'other items';
+                    } else {
+                        format = format.split(' ').pop().split('/').pop().toLowerCase() + 's';
+                    }
+                    prefix.replace('items', format);
+                    break;
+
+                // doing fuzzy keyword search on these
+                case 'title':
+                    explanation.push('whose title contains ' + terms[term]);
+                    break;
+                case 'creator':
+                    explanation.push('created by ' + terms[term]);
+                    break;
+                case 'lcsh_keyword':
+                case 'subject':
+                    explanation.push('about <b>' + terms[term] + '</b>');
+                    break;
+
+                case 'collection':
+                    break;
+
+                default:
+                    explanation.push('with ' + term + ' matching ' + terms[term]);
+                    break;
+            }
+        }
+
+        return prefix + explanation.join(', ') + '.';
+    };
+
     self.getSearchTerm = function() {
         return search;
     };
@@ -117,14 +178,15 @@ lc.search = function() {
                     return;
                 }
 
-		
+
                 lc.graph.dataPrep(response.docs);
 
+                /*
 				var graphLabel = "The graph below displays the in our";
 				var queries = query.split('&filter=');
-				var secondhalf = queries[1];	
+				var secondhalf = queries[1];
 				var thingToPrint = "";
-				
+
   				for (var i=1;i<queries.length;i++) {
 					console.log(queries[i]);
 					var typeAndTerm = queries[i];
@@ -139,11 +201,11 @@ lc.search = function() {
 					thingToPrint = thingToPrint.replace(/creator/gi, "author is ");
 					thingToPrint = thingToPrint.replace(/collection/gi, "publication date is ");
 					fixedThingToPrint= unescape(thingToPrint);
-            		}
-        	
-        	
-        		
+        		}
                 graphTitle.text('The graph below displays the 250 most popular items in our collection that meet your criteria: ' + fixedThingToPrint); // for now
+                */
+
+                graphTitle.html(self.buildSearchExplanation(response.docs, parameters));
 
                 // lc.graph.drawArea(response.facets);
 

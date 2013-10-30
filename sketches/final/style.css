@@ -51,14 +51,13 @@ h1 {
 }
 
 #searchTerm {
-    fill: black;
-	font-size: 10px;
-	text-transform:capitalize;
+	font-size: 20px;
+	/*text-transform:capitalize;*/
 	text-align: left;
 	font-weight: normal;
     position: absolute;
-    top: 270px;
-    right: 20px;
+    top: 0;
+    left: 90px;
     cursor: pointer;
 }
 #search:hover {
