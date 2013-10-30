@@ -40,7 +40,7 @@ lc.search = function() {
         // grabbing all fields entered in in the form
         $("#search-form input").each(function() {
             var t = $(this);
-            console.log(t);
+            console.log(t, t.val());
             if (t.val()) {
                 // grabbing #search-year -> 'year'
                 var key = t.attr("id").split("-")[1];
@@ -81,8 +81,10 @@ lc.search = function() {
                 // parsing '2001-2004' to 'filter=pub_date_numeric:[2001 TO 2004]'
                 case 'year':
                     var range = terms[term];
-                    query.push('filter=pub_date_numeric:[' + range[0] + ' TO ' + range[1] + ']');
-                    console.log('year range', range);
+                    if (range.length == 2) {
+                        query.push('filter=pub_date_numeric:[' + range[0] + ' TO ' + range[1] + ']');
+                        console.log('year range', range);
+                    }
                     break;
 
                 // using loc_call_num_sort_order until told otherwise
@@ -122,13 +124,17 @@ lc.search = function() {
             prefix += ' in the ' + catalog;
         }
 
+        console.log('making explanation', terms);
         var explanation = [];
         for (var term in terms) {
             switch (term) {
                 // parsing '2001-2004' to 'filter=pub_date_numeric:[2001 TO 2004]'
                 case 'year':
-                    var range = terms[term].split(' ').join('').split('-');
-                    explanation.push('published <b>between ' + range[0] + ' and ' + range[1] + '</b>');
+                    var range = terms[term];
+                    if (range.length == 2) {
+                        explanation.push('published <b>between ' + range[0] + ' and ' + range[1] + '</b>');
+                        console.log('year range', range);
+                    }
                     break;
 
                 // using loc_call_num_sort_order until told otherwise
@@ -148,7 +154,7 @@ lc.search = function() {
                     } else {
                         format = format.split(' ').pop().split('/').pop().toLowerCase() + 's';
                     }
-                    prefix.replace('items', format);
+                    prefix = prefix.replace('</b> items ', ' ' + format + '</b> ');
                     break;
 
                 // doing fuzzy keyword search on these
@@ -156,9 +162,13 @@ lc.search = function() {
                     explanation.push('whose title contains ' + terms[term]);
                     break;
                 case 'creator':
-                    explanation.push('created by ' + terms[term]);
+                    explanation.push('created by <b>' + terms[term] + '</b>');
+                    break;
+                case 'language':
+                    explanation.push('in <b>' + terms[term] + '</b>');
                     break;
                 case 'lcsh_keyword':
+                case 'lcsh':
                 case 'subject':
                     explanation.push('about <b>' + terms[term] + '</b>');
                     break;

@@ -71,6 +71,7 @@ h1 {
 
 #searchTerm {
 	font-size: 20px;
+    width: 700px;
 	/*text-transform:capitalize;*/
 	text-align: left;
 	font-weight: normal;
