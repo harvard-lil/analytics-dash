@@ -80,6 +80,7 @@ lc.subjectgraph = function() {
             } else {
                     self.currentChildren = processedChildren;
                     self.currentTotal = total;
+                    d3.select("#"+context).attr("class","child");
                     self.update(sideBar, processedChildren, total);
             }
 
@@ -104,7 +105,6 @@ lc.subjectgraph = function() {
 
         grouping.attr("id", function(d) { return getID(d); })
             .attr("transform",function(d){
-                console.log(d, d.count, total, height)
                 d.height = (d.count / total) * height;
                 d.cy = cy;
                 cy += d.height;
