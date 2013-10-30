@@ -50,6 +50,25 @@ h1 {
     text-transform: uppercase;
 }
 
+.result-sort {
+    float: left;
+    margin-right: 10px;
+    cursor: pointer;
+}
+.result-sort .sort-box {
+    width: 15px;
+    height: 15px;
+    display: inline-block;
+    margin-right: 5px;
+    background-color: #808080;
+}
+.result-sort.selected {
+    color: black;
+}
+.result-sort.selected .sort-box {
+    background-color: #000;
+}
+
 #searchTerm {
 	font-size: 20px;
 	/*text-transform:capitalize;*/
@@ -449,6 +468,7 @@ h1 {
 }
 #list-wrapper {
     width: 80%;
+    margin-top: 90px;
     display: none;
 }
 .list #list-wrapper {

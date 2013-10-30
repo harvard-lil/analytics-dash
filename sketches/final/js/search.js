@@ -8,7 +8,11 @@ lc.search = function() {
 
     $("#search-form label").click(function(){
         $(this).parent().toggleClass("locked");
-    })
+    });
+    $("#search-form .result-sort").click(function(){
+        $("#search-form .result-sort").removeClass("selected");
+        $(this).addClass("selected");
+    });
 
     var getQueryVariable = function(variable) {
         var query = window.location.search.substring(1);
