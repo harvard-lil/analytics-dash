@@ -15,18 +15,22 @@ lc.subjectgraph = function() {
             sideBar = d3.select("#nav"),
             context = d3.select("#nav-context");
 
+    $("#graph-reset").click(function(){
+        self.reset();
+    });
+
     self.search = function(query) {
-            $.ajax({
-                    url: baseurl + '?' + encodeURI(query),
-                    success: self.searchCompleted
-            });
+        $.ajax({
+                url: baseurl + '?' + encodeURI(query),
+                success: self.searchCompleted
+        });
     };
 
     self.getChildren = function(parent) {
-            self.search('filter=parent_class:' + parent);
+        self.search('filter=parent_class:' + parent);
     };
     self.getChildrenID = function(parentID) {
-            self.search('filter=parent_class_id:' + parentID);
+        self.search('filter=parent_class_id:' + parentID);
     };
 
     /*
@@ -88,7 +92,7 @@ lc.subjectgraph = function() {
 
     self.update = function(parent, data, total) {
         if (parent.node().id == "nav")
-            d3.select("#nav-context").classed("child",true);
+            d3.select("#graph-wrapper").classed("child",true);
         var groups = parent.selectAll(".schema")
             .data(data);
             
@@ -112,7 +116,7 @@ lc.subjectgraph = function() {
                 return "translate(0,"+d.cy+")";
             });
 
-        groups.select("rect").attr("width",0)
+        groups.select("rect").attr("width",30)
             .attr("fill", function(d) {
                 return schema.colorClass(d.class);
             }).attr("height", function(d) {
@@ -132,9 +136,9 @@ lc.subjectgraph = function() {
         //     self.mouseout(d);
         // });
 
-        groups.select("rect")
-            .transition()
-            .attr("width", 30);
+        // groups.select("rect")
+        //     .transition()
+        //     .attr("width", 30);
 
         groups.on("click", function(d) {
             console.log('clicked', d.name, d.id);
@@ -191,6 +195,12 @@ lc.subjectgraph = function() {
     };
 
     self.reset = function() {
+            self.currentChildren = null;
+            self.currentTotal = null;
+            self.initialized = false;
+            self.update(sideBar, []);
+            d3.select("#graph-wrapper").classed("child",false);
+            d3.selectAll(".schema").classed("selected",false);
             self.getChildren("top-level class");
     };
     self.hide = function() {

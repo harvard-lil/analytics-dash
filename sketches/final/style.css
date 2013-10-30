@@ -196,8 +196,13 @@ h1 {
     left: 50px;
     top: 35px;
 }
-#nav-context.child text {
+#graph-wrapper #graph-reset,
+#graph-wrapper.child #nav-context text {
     display: none;
+}
+#graph-wrapper.child #graph-reset {
+    display: inline-block;
+    position: absolute;
 }
 .schema rect {
     stroke: white;
@@ -224,13 +229,14 @@ h1 {
 #histogram {
     width: 80%;
     position: absolute;
-    top: 560px;
+    top: 580px;
     margin-bottom: 100px;
     padding: 0 40px 0 130px;
     box-sizing: border-box;
     height: 125px;
 }
-#histogram .reset {
+#histogram .reset,
+#graph-reset {
     border: 1px solid #808080;
     color: #808080;
     cursor: pointer;
@@ -240,7 +246,8 @@ h1 {
     display: inline-block;
     margin-left: -8px;
 }
-#histogram .reset:hover {
+#histogram .reset:hover,
+#graph-reset:hover {
     border-color: #000;
     color: #000;
 }
