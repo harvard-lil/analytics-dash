@@ -88,61 +88,50 @@ lc.subjectgraph = function() {
 
     self.update = function(parent, data, total) {
 
-        var rects = parent.selectAll("rect.schema")
-                .data(data);
+        var rects = parent.selectAll(".schema").data(data);
 
         var grouping = rects.enter()
                 .append("g")
                 .attr("class", "schema");
 
-        var rectangles = grouping
-            .append("rect");
+        var rectangles = grouping.append("rect")
+            .attr("width",0);
+
+        var texts = grouping.append("text").attr("x", 34);
 
         var yoffset = -6;
         var cy = 0;
-        rectangles.attr("id", function(d) { return getID(d); })
-            .attr("fill-opacity", "1")
-            .attr("stroke-weight", "1")
-            .attr("stroke", "white")
-            .attr("width", 30)
-            .attr("fill", function(d) {
-                return schema.colorClass(d.class);
-            })
-            .attr("height", function(d) {
-                var percentHeight = (d.count / total) * height;
+
+        grouping.attr("id", function(d) { return getID(d); })
+            .attr("transform",function(d){
+                console.log(d, d.count, total, height)
+                d.height = (d.count / total) * height;
                 d.cy = cy;
-                cy += percentHeight;
-                return percentHeight;
-            })
-            .attr("y", function(d) {
-                return d.cy;
-            })
-            .attr("position","absolute");
+                cy += d.height;
 
-        var texts = grouping.append("text")
-        .text(function(d){
-            return d.lastname;
-        }).attr("y",function (d){
-            return d.cy + yoffset;
-        })
-        .attr("x", function(d){
-            return 34;
-        })
-        .attr("font-family", "sans-serif")
-        .attr("font-size", "12px")
-        .attr("fill", function(d) {
-            return schema.colorClass(d.class);
-        })
-        .attr("position","absolute");
+                return "translate(0,"+d.cy+")";
+            });
 
-        rects.on("mouseover", function(d) {
-            self.mouseover(d);
-        })
-        .on("mouseout", function(d) {
-            self.mouseout(d);
-        });
+        rectangles.attr("fill", function(d) {
+                return schema.colorClass(d.class);
+            }).attr("height", function(d) {
+                return d.height;
+            });
 
-        rects.transition()
+        texts.text(function(d){
+                return d.lastname;
+            }).attr("fill", function(d) {
+                return schema.colorClass(d.class);
+            });
+
+        // rectangles.on("mouseover", function(d) {
+        //     self.mouseover(d);
+        // })
+        // .on("mouseout", function(d) {
+        //     self.mouseout(d);
+        // });
+
+        rectangles.transition()
             .duration(500)
             .attr("width", 30);
 
@@ -150,6 +139,10 @@ lc.subjectgraph = function() {
             console.log('clicked', d.name, d.id);
             self.getChildrenID(d.id);
             self.updateBounds(d);
+
+            d3.selectAll(".schema").classed("selected",false);
+            d3.select(this).classed("selected",true);
+            this.parentNode.appendChild(this);
         });
 
         // remove divs when they leave
@@ -157,35 +150,22 @@ lc.subjectgraph = function() {
     };
 
     self.updateBounds = function(selected) {
-            var bound = context.selectAll("rect.selection").data([selected]);
 
-            bound.enter()
-                .append("rect")
-                .attr("class", "selection");
+        console.log(selected);
+        var cy = 0,
+        matchedPosition = 0,
+        matchedHeight = 0;
 
-            bound.exit().remove();
-
-            console.log(selected);
-            var cy = 0,
-                    matchedPosition = 0,
-                    matchedHeight = 0;
-
-            for (var i = 0; i < self.rootChildren.length; i++) {
-                    var rootClass = self.rootChildren[i];
-                    var rootHeight = percentHeight = (rootClass.count / self.rootTotal) * height;
-                    if (rootClass.start <= selected.start && rootClass.end >= selected.end) {
-                            matchedPosition = cy;
-                            matchedPosition += ((selected.start - rootClass.start) / rootClass.count) * rootHeight;
-                            matchedHeight = (selected.count / rootClass.count) * rootHeight;
-                    }
-                    cy += percentHeight;
+        for (var i = 0; i < self.rootChildren.length; i++) {
+            var rootClass = self.rootChildren[i];
+            var rootHeight = percentHeight = (rootClass.count / self.rootTotal) * height;
+            if (rootClass.start <= selected.start && rootClass.end >= selected.end) {
+                    matchedPosition = cy;
+                    matchedPosition += ((selected.start - rootClass.start) / rootClass.count) * rootHeight;
+                    matchedHeight = (selected.count / rootClass.count) * rootHeight;
             }
-            bound.attr("y", matchedPosition)
-                    .attr("height", matchedHeight)
-                    .attr("width", 30)
-                    .attr("stroke", "black")
-                    .attr("stroke-weight", 4)
-                    .attr("fill", "none");
+            cy += percentHeight;
+        }
     };
 
     self.calculateY = function(sort_number) {

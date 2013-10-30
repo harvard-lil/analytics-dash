@@ -108,13 +108,16 @@ h1 {
     position: relative;
     float: right;
     height: 100%;
-    margin-top: 90px;
 }
 .left-half{
     width: 25%;
     position: fixed;
     height: 100%;
     margin-top: 90px;
+}
+#graph-wrapper {
+    position: absolute;
+    top: 90px;
 }
 #carrel {
     font-size: 12px;
@@ -163,14 +166,22 @@ h1 {
     width: 300px;
     position: absolute;
     left: 80px;
-    top: 35px;
 }
 #nav-context {
     height: 500px;
     width: 300px;
     position: absolute;
     left: 50px;
-    top: 35px;
+}
+.schema rect {
+    stroke: white;
+}
+.schema.selected rect {
+    stroke: black;
+}
+.schema text {
+    font-family: sans-serif;
+    font-size: 12px;
 }
 #graph {
     width: 80%;
