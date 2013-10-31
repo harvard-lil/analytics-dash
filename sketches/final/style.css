@@ -203,6 +203,7 @@ h1 {
 #graph-wrapper.child #graph-reset {
     display: inline-block;
     position: absolute;
+    top: 35px;
 }
 .schema rect {
     stroke: white;

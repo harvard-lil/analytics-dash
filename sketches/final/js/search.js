@@ -145,7 +145,9 @@ lc.search = function() {
                 // using loc_call_num_sort_order until told otherwise
                 case 'range':
                     var range = terms[term];
-                    explanation.push('a Library of Congress Call Number <b>between ' + range[0] + ' and ' + range[1] + '</b>');
+                    if (range.length == 2) {
+                        explanation.push('a Library of Congress Call Number <b>between ' + range[0] + ' and ' + range[1] + '</b>');
+                    }
                     break;
 
                 case 'format':

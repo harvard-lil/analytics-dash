@@ -84,7 +84,6 @@ lc.subjectgraph = function() {
             } else {
                     self.currentChildren = processedChildren;
                     self.currentTotal = total;
-                    lc.graph.updateLabels(1);
                     self.update(sideBar, processedChildren, total);
             }
 
@@ -103,9 +102,8 @@ lc.subjectgraph = function() {
 
         var rectangles = entering.append("rect");
 
-        // var texts = entering.append("text").attr("x", 34);
+        var texts = entering.append("text").attr("x", 34);
 
-        var yoffset = -6;
         var cy = 0;
 
         groups.attr("id", function(d) { return getID(d); })
@@ -124,7 +122,11 @@ lc.subjectgraph = function() {
                 return d.height;
             });
 
+        var yOffset = 0;
+
         groups.select("text").text(function(d){
+                if (d.cy - yOffset < 12) return;
+                yOffset = d.cy;
                 return d.lastname;
             }).attr("fill", function(d) {
                 return schema.colorClass(d.class);
