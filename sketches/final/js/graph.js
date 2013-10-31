@@ -462,10 +462,10 @@ lc.graph = function() {
 		circles
 		.transition()
 		// .ease("linear")
-		.delay(function(d,i){
-			return i*5;
-		})
 		.duration(500)
+		.delay(function(d,i){
+			return i*2;
+		})
 		.attr("cy", calculateY);
 		updateAxes();
 	}
@@ -484,18 +484,7 @@ lc.graph = function() {
 			case 'popularity_y':
 				yscale.domain([0,100]);
 	            return yscale(d.shelfrank || 0);
-
-			// case 'date_y':
-			// 	yscale.domain([minYear,maxYear]);
-			// 	if (d.pub_date_numeric){
-	  //               return yscale(d.pub_date_numeric);
-			// 	}
-			// 	else {
-			// 		return yscale(0);
-			// 	}
-			// 	break;
 			case 'call_number_sort_order_y':
-				// yscale.domain([0,16000000]);
 				if (d.loc_call_num_sort_order){
 		            // return (yscale(d.loc_call_num_sort_order[0]));
 		            return lc.subjectgraph.calculateY(d.loc_call_num_sort_order[0]);
@@ -509,8 +498,7 @@ lc.graph = function() {
 
 	function set_radius(){
 		var circles = circleGroup.selectAll("circle");
-			circles
-				.transition()
+			circles.transition()
 				.duration(500)
 				.attr("r", calculateRadius);
 	}
@@ -518,28 +506,19 @@ lc.graph = function() {
 	function calculateRadius(d) {
 		switch(radius_type) {
 			case 'pages':
-    			if (d.pages_numeric){
-				 return (d.pages_numeric / 50);
-				}
-				else{
-				return 6;
-				}
+    			if (d.pages_numeric)
+					return Math.max(2,d.pages_numeric / 50);
+				else
+					return 2;
 				break;
 			case 'shelfrank':
-				if (d.shelfrank){
-				return (d.shelfrank / 5);
-				}
-				else{
-				return 6;
-				}
+				if (d.shelfrank)
+					return Math.max(2,d.shelfrank / 5);
+				else
+					return 2;
 				break;
 			case 'same':
-				if (d.shelfrank){
-				return 4;
-				}
-				else{
-				return 7;
-				}
+				return 5;
 				break;
 		}
 	}

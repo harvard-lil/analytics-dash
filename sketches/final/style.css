@@ -252,7 +252,13 @@ h1 {
     text-transform: uppercase;
     font-size: 12px;
     display: inline-block;
-    margin-left: -8px;
+    position: absolute;
+}
+#histogram .reset {
+    left: 70px;
+}
+#histogram svg {
+    float: left;
 }
 #histogram .reset:hover,
 #graph-reset:hover {
@@ -261,13 +267,15 @@ h1 {
 }
 #histogram .axis_labels {
     text-align: center;
-    margin-top: 30px;
+    margin-top: 20px;
 }
 #slider-range {
     border: 1px solid #808080;
+    height: 70px;
+    box-sizing: border-box;
 }
 .ui-slider-range {
-    background-color: #ddd;
+    background-color: rgba(0,0,0,.1);
 }
 .ui-slider-handle {
     background-color: black;
@@ -280,12 +288,12 @@ h1 {
     outline: none;
 }
 .ui-slider-horizontal .ui-slider-handle {
-    width: 15px;
-    height: 20px;
-    top: -5px;
+    width: 10px;
+    height: 70px;
+    top: -1px;
     font-size: 12px;
-    line-height: 60px;
-    margin-left: -6px;
+    line-height: 160px;
+    margin-left: -5px;
     text-indent: -7px;
     cursor: pointer;
 }
