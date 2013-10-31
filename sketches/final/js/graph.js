@@ -304,10 +304,8 @@ lc.graph = function() {
         if (data.call_num && lcObjectArray[data.call_num[0].substr(0,1)]) {
         	var c = lcObjectArray[data.call_num[0].substr(0,1)].color
         	$("#info").css("border-left-color",c);
-        	$("#add-to-carrel").css("color",c);
         } else {
         	$("#info").css("border-left-color","#808080");
-        	$("#add-to-carrel").css("color","#808080");
         }
 
         if (data.call_num)

@@ -237,7 +237,7 @@ h1 {
 #histogram {
     width: 80%;
     position: absolute;
-    top: 580px;
+    top: 565px;
     margin-bottom: 100px;
     padding: 0 40px 0 130px;
     box-sizing: border-box;
@@ -507,7 +507,7 @@ h1 {
     left: 20px;
     z-index: 100;
     cursor: pointer;
-    font-size: 18px;
+    font-size: 16px;
     text-decoration: underline;
 }
 #add-to-carrel:hover {
