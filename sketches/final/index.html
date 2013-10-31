@@ -475,9 +475,9 @@
                         <div class="tri"></div>
                         <div class="note">prev</div>
                     </div>
-                    <div class="middle">
+                    <div class="sort-heading">
                         <h3>1 of 200</h3>
-                        <p>Sorted by <span>title</span></p>
+                        <p>Sorted by <span class="sorter">title</span></p>
                     </div>
                     <div class="book-sort next">
                         <div class="tri"></div>
@@ -486,23 +486,27 @@
                 </div>
                 <!-- <div class="notch"></div> -->
                 <div id="info">
-                    <div class="title">
-                        <p class="infoLabel"><span class="tick"></span>Title</p>
+                    <div class="title" name="title">
+                        <p class="infoLabel clicked"><span class="tick"></span>Title</p>
                         <p class="field"></p>
                     </div>
-                    <div class="creator">
+                    <div class="creator" name="author">
                         <p class="infoLabel"><span class="tick"></span>Authors</p>
                         <ul class="field"></ul>
                     </div>
-                    <div class="lc">
+                    <div class="pub_date_numeric" name="publishing date">
+                        <p class="infoLabel"><span class="tick"></span>Publishing Date</p>
+                        <p class="field"></p>
+                    </div>
+                    <div class="lcsh">
+                        <p class="infoLabel">Library of Congress Subject Headers</p>
+                        <ul class="field"></ul>
+                    </div>
+                    <div class="lc" name="call number">
                         <p class="infoLabel"><span class="tick"></span>Library of Congress Call #</p>
                         <p class="field"><span></span></p>
                     </div>
-                    <div class="pub_date_numeric">
-                        <p class="infoLabel"><span class="tick"></span>Publishing Data</p>
-                        <p class="field"></p>
-                    </div>
-                    <div class="pages_numeric">
+                    <div class="pages_numeric" name="page count">
                         <p class="infoLabel"><span class="tick"></span>Page Count</p>
                         <p class="field"><span></span></p>
                     </div>
@@ -510,12 +514,8 @@
                         <p class="infoLabel">Language</p>
                         <p class="field"><span></span></p>
                     </div>
-                    <div class="lcsh">
-                        <p class="infoLabel">Library of Congress Subject Headers</p>
-                        <ul class="field"></ul>
-                    </div>
                 </div>
-                <a id="add-to-carrel">Add to carrel</a>
+                <a id="add-to-carrel">Add this item to the carrel</a>
             </div>
             <div id="carrel">
                 <div id="carrel-box">

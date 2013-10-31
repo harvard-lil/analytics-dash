@@ -262,11 +262,13 @@ lc.graph = function() {
 
     var info = d3.select("#info"),
     	labels = $("#info .infoLabel"),
+    	sortHeading = $(".sort-heading"),
     	addToCarrel = d3.select("#add-to-carrel");
 
     info.selectAll(".infoLabel").on("click",function(){
     	labels.removeClass("clicked");
     	$(this).addClass("clicked");
+    	sortHeading.find(".sorter").text($(this).parent().attr("name"));
     });
 
     $(".book-sort").click(function(){
@@ -299,8 +301,17 @@ lc.graph = function() {
             });
         }
 
+        if (data.call_num && lcObjectArray[data.call_num[0].substr(0,1)]) {
+        	var c = lcObjectArray[data.call_num[0].substr(0,1)].color
+        	$("#info").css("border-left-color",c);
+        	$("#add-to-carrel").css("color",c);
+        } else {
+        	$("#info").css("border-left-color","#808080");
+        	$("#add-to-carrel").css("color","#808080");
+        }
+
         if (data.call_num)
-           info.select(".lc .field").html("<span class='box' style='background-color:"+lcObjectArray[data.call_num[0].substr(0,1)].color+";'></span>"+data.call_num.join("or "));
+           info.select(".lc .field").html(data.call_num.join("or "));
 
         info.select(".pub_date_numeric .field").text(data.pub_date_numeric);
 
@@ -341,13 +352,13 @@ lc.graph = function() {
   		    // });
 
   		if (inBox) {
-  			addToCarrel.text("Add To Carrel").on("click",function(){
+  			addToCarrel.text("Add This Item To The Carrel").on("click",function(){
 	            lc.carrel.sendToCarrel(data);
 	        });
   		} else {
-  			addToCarrel.text("Remove From Carrel").on("click",function(){
+  			addToCarrel.text("Remove This Item From The Carrel").on("click",function(){
 	            lc.carrel.removeFromCarrel(data);
-	            info.select("#add-to-carrel").text("Add To Carrel").on("click",function(){
+	            info.select("#add-to-carrel").text("Add This Item To The Carrel").on("click",function(){
 		            lc.carrel.sendToCarrel(data);
 		        });
 	        });

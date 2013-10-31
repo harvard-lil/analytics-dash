@@ -397,7 +397,7 @@ h1 {
     top: 0px;
     font-size: 16px;
     box-sizing: border-box;
-    height: 450px;
+    height: 500px;
     background: #eee;
     border: 1px solid #ccc;
 }
@@ -420,13 +420,13 @@ h1 {
     margin-top: 10px;
     color: #808080;
 }
-#info-wrapper .middle {
+#info-wrapper .sort-heading {
     float: left;
     width: 200px;
     text-align: center;
     width: 60%;
 }
-#info-wrapper .middle p {
+#info-wrapper .sort-heading p {
     font-family: courier, monospace;
     text-transform: uppercase;
     margin: 2px;
@@ -484,20 +484,23 @@ h1 {
 #info {
     position: absolute;
     top: 70px;
-    bottom: 20px;
-    left: 10px;
+    bottom: 40px;
     right: 20px;
+    left: 0;
     overflow: scroll;
-    padding-left: 20px;
+    padding-left: 30px;
+    border-left: 5px solid #eee;
 }
 #add-to-carrel {
     font-family: courier, monospace;
     text-transform: uppercase;
     position: absolute;
-    top: 420px;
+    top: 460px;
     left: 20px;
     z-index: 100;
     cursor: pointer;
+    font-size: 18px;
+    text-decoration: underline;
 }
 #add-to-carrel:hover {
     text-decoration: underline;
@@ -510,8 +513,10 @@ h1 {
     margin: 15px 0 3px;
     color: gray;
     text-transform:uppercase;
-    text-decoration: underline;
     cursor: pointer;
+}
+#info .title .infoLabel {
+    margin-top: 5px;
 }
 #info .infoLabel.clicked .tick {
     background-color: #808080;
@@ -537,9 +542,9 @@ h1 {
     font-size: 14px;
 }
 
-#info .title {
-    font-weight: normal;
-    font-size: 24px;
+#info .title .field {
+    font-weight: bold;
+    font-size: 18px;
     text-transform: capitalize;
     margin: 0;
 }
