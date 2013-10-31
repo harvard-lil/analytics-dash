@@ -529,33 +529,34 @@
                 <div id="bookCounts"></div>
             </div>
             <div id="sort">
-                <div id="show-list">Show Items As A List</div>
-                <div id="show-graph">Show Items As A Graph</div>
+                <h2>Display</h2>
+                <div id="show-list" class="graph-toggle"><span></span> List</div>
+                <div id="show-graph" class="graph-toggle"><span></span> Scatter</div>
                 <!-- <div id="stack-circles">Stack Circles</div> -->
                 <ul class="y_toggle graph">
-                    <li>y-sort by:</li>
-                    <li name="grads">grads</li>
-                    <li name="undergrads">undergrads</li>
-                    <li name="faculty">faculty</li>
-                    <li name="popularity_y">popularity</li>
-                    <!-- <li id="date_y" name="Date_of_Publish">publication date</li> -->
-                    <li name="call_number_sort_order_y" class="selected">subject</li>
+                    <li>Y-Position By:</li>
+                    <li name="call_number_sort_order_y" class="selected"><span class="disc"></span>Call Number</li>
+                    <li name="call_number_sort_order_y" class="disabled"></span>Popularity with:</li>
+                    <li name="grads" class="indent"><span class="disc"></span>Graduates</li>
+                    <li name="undergrads" class="indent"><span class="disc"></span>Undergraduents</li>
+                    <li name="faculty" class="indent"><span class="disc"></span>Faculty</li>
+                    <li name="popularity_y" class="indent"><span class="disc"></span>Overall</li>
                 </ul>
                 <ul class="scale_toggle graph">
-                    <li>scale by:</li>
-                    <li name="pages">pages</li>
-                    <li name="same">same</li>
-                    <li name="shelfrank" class="selected">popularity</li>
+                    <li>Scale By:</li>
+                    <li name="shelfrank" class="selected"><span class="disc"></span>Overall Popularity</li>
+                    <li name="pages"><span class="disc"></span>Number of Pages</li>
+                    <li name="same"><span class="disc"></span>Same Scale For All</li>
                 </ul>
                 <ul class="list-sort-by list">
                     <li>sort by:</li>
-                    <li name="shelfrank" class="selected">popularity</li>
-                    <li name="pub_date_numeric">publication date</li>
-                    <li name="loc_call_num_sort_order">subject</li>
-                    <li name="creator">author</li>
-                    <li name="title">title</li>
-                    <li name="format">format</li>
-                    <li name="pages_numeric">pages</li>
+                    <li name="shelfrank" class="selected"><span class="disc"></span>popularity</li>
+                    <li name="pub_date_numeric"><span class="disc"></span>publication date</li>
+                    <li name="loc_call_num_sort_order"><span class="disc"></span>subject</li>
+                    <li name="creator"><span class="disc"></span>author</li>
+                    <li name="title"><span class="disc"></span>title</li>
+                    <li name="format"><span class="disc"></span>format</li>
+                    <li name="pages_numeric"><span class="disc"></span>pages</li>
                 </ul>
             </div>
             <div id="list-wrapper">

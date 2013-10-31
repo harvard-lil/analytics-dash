@@ -294,32 +294,78 @@ h1 {
     width: 15%;
 }
 #sort {
-    position: fixed;
-    top: 150px;
-    right: 0px;
-    width: 13%;
+    position: absolute;
+    top: 125px;
+    right: 1%;
+    width: 12%;
+    border: 1px solid #808080;
+    padding: 10px;
+}
+#sort h2 {
+    text-transform: uppercase;
+    border-bottom: 1px solid #ddd;
+    margin: 0;
+    font-size: 16px;
+    text-align: center;
+    margin-bottom: 10px;
+    padding-bottom: 5px;
+    font-weight: normal;
+}
+#sort .graph-toggle {
+    cursor: pointer;
+    margin: 10px auto 20px;
+    display: block;
+    width: 80px;
+    font-size: 14px;
+    line-height: 30px;
+}
+#sort .graph-toggle span {
+    width: 30px;
+    height: 30px;
+    background: #808080;
+    border-radius: 2px;
+    display: inline-block;
+    margin-right: 5px;
+    float: left;
 }
 #sort ul {
     list-style-type: none;
     margin: 0;
     padding: 0;
     font-size: 12px;
-    width: 100px;
     margin-bottom: 15px;
 }
 #sort li {
     cursor: pointer;
+    text-transform: capitalize;
 }
-#sort li:hover {
-    background: #ddd;
+#sort .disabled {
+    cursor: default;
+    margin-left: 14px;
+    color: #808080;
 }
-#sort li.selected {
-    background: yellow;
+#sort .indent .disc {
+    margin-right: 19px;
 }
-#sort li:first-child {
+#sort .disc {
+    width: 8px;
+    height: 8px;
+    display: inline-block;
+    border-radius: 5px;
+    background-color: white;
+    margin-right: 5px;
+}
+#sort li:hover .disc {
+    background-color: #ddd;
+}
+#sort li.selected .disc {
+    background: #000;
+}
+#sort li:first-child{
     font-weight: bold;
     cursor: default !important;
-    background: white !important;
+    text-decoration: underline;
+    text-transform: uppercase;
 }
 #sort .list,
 .list #sort .graph {
@@ -457,26 +503,6 @@ h1 {
 }
 #info .field li:hover {
     text-decoration: underline;
-}
-#show-graph {
-    border: 1px solid #808080;
-    color: #808080;
-    padding: 3px 5px;
-    width: 83px;
-    text-align: center;
-    cursor: pointer;
-}
-#show-list {
-    border: 1px solid #808080;
-    color: #808080;
-    padding: 3px 5px;
-    width: 83px;
-    text-align: center;
-    cursor: pointer;
-}
-#show-list:hover {
-    border-color: black;
-    color: black;
 }
 #list-wrapper {
     width: 80%;

@@ -46,6 +46,8 @@ lc.list = function() {
 
     $(".list-sort-by li").click(function(){
         self.sortList($(this).attr("name"));
+        $(".list-sort-by li").removeClass("selected");
+        $(this).addClass("selected");
     });
 
     self.sortList = function(sorter) {
