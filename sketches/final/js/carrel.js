@@ -22,9 +22,9 @@ lc.carrel = function() {
         carrel.splice(index,1);
         updateCarrelBoxes();
     }
-
+    var carrelHeight = 120;
     var widthScale = d3.scale.linear().domain([0,600]).range([10,40]);
-    var heightScale = d3.scale.linear().domain([0,14]).range([120,150]);
+    var heightScale = d3.scale.linear().domain([0,14]).range([carrelHeight-30,carrelHeight]);
 
     function updateCarrelBoxes() {
         var carrelBoxes = carrelBox.selectAll("li").data(carrel);
@@ -49,16 +49,16 @@ lc.carrel = function() {
             if (d.height) {
                 var m = d.height.split(" ");
                 if (m[m.length-1] == "cm")
-                    d.bookHeight = Math.max(120,heightScale(parseFloat(m[0])/2.5));
+                    d.bookHeight = Math.max(carrelHeight-30,heightScale(parseFloat(m[0])/2.5));
                 else
-                    d.bookHeight = Math.max(120,heightScale(parseFloat(m[0])));
+                    d.bookHeight = Math.max(carrelHeight-30,heightScale(parseFloat(m[0])));
             } else {
-                d.bookHeight = 120;
+                d.bookHeight = carrelHeight-30;
             }
 
-            return Math.min(160,d.bookHeight) + "px";
+            return Math.min(carrelHeight,d.bookHeight) + "px";
         }).style("margin-top",function(d){
-            return (150 - d.bookHeight) + "px";
+            return (carrelHeight - d.bookHeight) + "px";
         });
         // .select("span").text(function(d){
         //     return d.title;

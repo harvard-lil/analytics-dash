@@ -144,13 +144,12 @@ h1 {
     font-size: 12px;
     width: 100%;
     position: absolute;
-    bottom: 100px;
+    bottom: 60px;
     height: 200px;
 }
 #carrel-box {
     width: 100%;
-    height: 150px;
-    background-color: #eee;
+    height: 120px;
     border: 1px solid #808080;
     margin-bottom: 5px;
 }
@@ -159,7 +158,7 @@ h1 {
     padding: 0;
     list-style-type: none;
     overflow-x: scroll;
-    height: 170px;
+    height: 140px;
     white-space: nowrap;
 }
 #carrel-box li {
@@ -177,10 +176,18 @@ h1 {
     display: block;
 }
 .carrel-action {
+    font-family: courier, monospace;
     cursor: pointer;
-    text-align: right;
-    display: block;
     margin-bottom: 3px;
+    float: left;
+    text-transform: uppercase;
+    font-size: 14px;
+}
+.carrel-action:nth-child(2) {
+    float: right;
+}
+.carrel-action:hover {
+    text-decoration: underline;
 }
 #nav {
     height: 500px;
@@ -298,7 +305,7 @@ h1 {
     top: 125px;
     right: 1%;
     width: 12%;
-    border: 1px solid #808080;
+    border: 1px solid #ddd;
     padding: 10px;
 }
 #sort h2 {
@@ -395,9 +402,9 @@ h1 {
     border: 1px solid #ccc;
 }
 #info-wrapper h3 {
-    text-transform: uppercase;
     font-weight: normal;
-    margin: 8px 10px;
+    margin: 0;
+    font-size: 20px;
 }
 #info-wrapper .notch {
     position: absolute;
@@ -409,29 +416,74 @@ h1 {
     border-bottom: 1px solid #ccc;
     border-left: 1px solid #ccc;
 }
+#info-wrapper .info-title {
+    margin-top: 10px;
+    color: #808080;
+}
+#info-wrapper .middle {
+    float: left;
+    width: 200px;
+    text-align: center;
+    width: 60%;
+}
+#info-wrapper .middle p {
+    font-family: courier, monospace;
+    text-transform: uppercase;
+    margin: 2px;
+    font-size: 14px;
+}
 #info-wrapper .book-sort {
     cursor: pointer;
     -webkit-user-select: none;
+    float: left;
+    width: 20%;
+ }
+ #info-wrapper .book-sort:hover {
+    color: #000;
+ }
+ #info-wrapper .book-sort:hover .tri {
+    border-right-color: #000;
+ }
+ #info-wrapper .book-sort.next:hover .tri {
+    border-right-color: transparent;
+    border-left-color: #000;
+ }
+ #info-wrapper .book-sort .tri {
     height: 0;
     border-top: 10px solid transparent;
     border-bottom: 10px solid transparent;
     border-right: 13px solid #808080;
-    display: inline-block;
+    display: block;
     float: left;
-    margin-right: 5px;
+    padding: 0 0 0 20px;
+    margin-bottom: 5px;
  }
  #info-wrapper .book-sort.next {
-    cursor: pointer;
-    -webkit-user-select: none;
+    float: right;
+ }
+ #info-wrapper .book-sort.next .tri {
     border-top: 10px solid transparent;
     border-bottom: 10px solid transparent;
     border-right: none;
     border-left: 13px solid #808080;
+    float: right;
+    padding: 0 20px 0 0;
+}
+#info-wrapper .book-sort .note {
+    clear: both;
+    text-transform: uppercase;
+    padding: 0 0 0 10px;
+    font-family: courier, monospace;
+    font-size: 14px;
+}
+#info-wrapper .book-sort.next .note {
+    text-align: right;
+    padding: 0 10px 0 0;
 }
 
 #info {
     position: absolute;
-    top: 40px;
+    top: 70px;
     bottom: 20px;
     left: 10px;
     right: 20px;
@@ -442,7 +494,8 @@ h1 {
     font-family: courier, monospace;
     text-transform: uppercase;
     position: absolute;
-    top: 460px;
+    top: 420px;
+    left: 20px;
     z-index: 100;
     cursor: pointer;
 }
