@@ -22,9 +22,9 @@ lc.carrel = function() {
         carrel.splice(index,1);
         updateCarrelBoxes();
     }
-
+    var carrelHeight = 120;
     var widthScale = d3.scale.linear().domain([0,600]).range([10,40]);
-    var heightScale = d3.scale.linear().domain([0,14]).range([120,150]);
+    var heightScale = d3.scale.linear().domain([0,14]).range([carrelHeight-30,carrelHeight]);
 
     function updateCarrelBoxes() {
         var carrelBoxes = carrelBox.selectAll("li").data(carrel);
@@ -49,16 +49,16 @@ lc.carrel = function() {
             if (d.height) {
                 var m = d.height.split(" ");
                 if (m[m.length-1] == "cm")
-                    d.bookHeight = Math.max(120,heightScale(parseFloat(m[0])/2.5));
+                    d.bookHeight = Math.max(carrelHeight-30,heightScale(parseFloat(m[0])/2.5));
                 else
-                    d.bookHeight = Math.max(120,heightScale(parseFloat(m[0])));
+                    d.bookHeight = Math.max(carrelHeight-30,heightScale(parseFloat(m[0])));
             } else {
-                d.bookHeight = 120;
+                d.bookHeight = carrelHeight-30;
             }
 
-            return Math.min(160,d.bookHeight) + "px";
+            return Math.min(carrelHeight,d.bookHeight) + "px";
         }).style("margin-top",function(d){
-            return (150 - d.bookHeight) + "px";
+            return (carrelHeight - d.bookHeight) + "px";
         });
         // .select("span").text(function(d){
         //     return d.title;
@@ -82,15 +82,22 @@ lc.carrel = function() {
 
         download(csv, "dowload.csv", "text/csv");
     };
-
+    var headings = ["title", "creator", "publisher", "call_num", "holding_libs", "lcsh", "id_isbn", "pub_date", "pub_location", "shelfrank", "language", "id_oclc", "note", "format"];
+    var displayHeadings = ["title", "creator", "publisher", "call number", "holding Libraries", "LCSH", "ISBN ID", "date of publication", "publishing location", "shelfrank", "language", "OCLC ID", "note", "format"];
     function tableCarrel() {
-        var headings = ["title", "creator", "publisher", "call_num", "holding_libs", "lcsh", "score_holding_libs", "id_isbn", "id",  "title_sort", "score_checkouts_undergrad", "height", "title_link_friendly", "score_checkouts_grad", "pub_date", "loc_call_num_subject", "pub_location", "ut_id", "pages", "loc_call_num_sort_order", "score_checkouts_fac", "data_source", "dataset_tag", "score_recalls", "shelfrank",  "language", "id_inst", "ut_count", "id_oclc", "note", "format",  "pub_date_numeric", "source_record"];
-        var csv = headings.join("~~~");
+        // var headings = ["title", "creator", "publisher", "call_num", "holding_libs", "lcsh", "score_holding_libs", "id_isbn", "id",  "title_sort", "score_checkouts_undergrad", "height", "title_link_friendly", "score_checkouts_grad", "pub_date", "loc_call_num_subject", "pub_location", "ut_id", "pages", "loc_call_num_sort_order", "score_checkouts_fac", "data_source", "dataset_tag", "score_recalls", "shelfrank",  "language", "id_inst", "ut_count", "id_oclc", "note", "format",  "pub_date_numeric", "source_record"];
+
+        var csv = displayHeadings.join("~~~");
 
         carrel.forEach(function(item,i){
             var book = "|||";
             headings.forEach(function(d){
-                book = book.concat(item[d]+"~~~");
+                var t = item[d];
+                console.log(t, t instanceof Array)
+                if (t instanceof Array) {
+                    t = t.join("%%%");
+                } 
+                book = book.concat(t+"~~~");
             });
             csv = csv.concat(book);
         });

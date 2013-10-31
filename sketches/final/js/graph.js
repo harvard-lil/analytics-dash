@@ -37,6 +37,8 @@ lc.graph = function() {
 
     var circleGroup = svg.append("g").attr("class","circles").attr("transform","translate(120,40)").attr("clip-path","url(#graph-box)");
 
+    // var labelGroup = svg.append("g").attr("class","labels").attr("transform","translate(120,40)");
+
     var axes = svg.append("g").attr("class","axes");
     // creates the axes
 
@@ -72,7 +74,7 @@ lc.graph = function() {
         axes.append("text")
   	        .attr("class","axis_labels")
 	        .attr("id","y_axis")
-	        .text("LCSH Subject Heading Sort Order")
+	        .text("Subject")
 	        .attr("text-anchor","middle")
 	        .attr("transform","translate(20,"+(height/2)+") rotate(-90)")
     }
@@ -147,6 +149,7 @@ lc.graph = function() {
         });
 
         updateCircles();
+        // self.updateLabels(0);
     }
     function updateCircles() {
     	var circles = circleGroup.selectAll("circle");
@@ -165,7 +168,30 @@ lc.graph = function() {
 		.attr("cx", calculateX)
 		.attr("cy", calculateY)
 		.attr("r", calculateRadius);
+
     }
+
+  //   self.updateLabels = function(level) {
+  //   	var titles = [];
+		// circleGroup.selectAll("circle").each(function(d){
+		// 	// console.log(d.loc_call_num_subject)
+		// 	if (d.loc_call_num_subject) {
+		// 		var title = d.loc_call_num_subject.split("--")[level];
+		// 		var foundYet = false;
+		// 		titles.forEach(function(t){
+		// 			if (t.title == title) foundYet = true;
+		// 		})
+		// 		if (!foundYet) {
+		// 			var titleObj = {"title":title,"y":calculateY(d)};	
+		// 			titles.push(titleObj);
+		// 		}					
+		// 	} 
+		// })
+		// var ts = labelGroup.selectAll(".label").data(titles);
+		// ts.enter().append("text").attr("x",0).attr("class","label");
+		// ts.exit().remove();
+		// ts.text(function(d){ return d.title; }).attr("y",function(d){ return d.y; });
+  //   };
 
     // use the API facet response to draw data
     // this means we have to turn the data into something d3 will like
@@ -236,11 +262,13 @@ lc.graph = function() {
 
     var info = d3.select("#info"),
     	labels = $("#info .infoLabel"),
+    	sortHeading = $(".sort-heading"),
     	addToCarrel = d3.select("#add-to-carrel");
 
     info.selectAll(".infoLabel").on("click",function(){
     	labels.removeClass("clicked");
     	$(this).addClass("clicked");
+    	sortHeading.find(".sorter").text($(this).parent().attr("name"));
     });
 
     $(".book-sort").click(function(){
@@ -273,8 +301,15 @@ lc.graph = function() {
             });
         }
 
+        if (data.call_num && lcObjectArray[data.call_num[0].substr(0,1)]) {
+        	var c = lcObjectArray[data.call_num[0].substr(0,1)].color
+        	$("#info").css("border-left-color",c);
+        } else {
+        	$("#info").css("border-left-color","#808080");
+        }
+
         if (data.call_num)
-           info.select(".lc .field").html("<span class='box' style='background-color:"+lcObjectArray[data.call_num[0].substr(0,1)].color+";'></span>"+data.call_num.join("or "));
+           info.select(".lc .field").html(data.call_num.join("or "));
 
         info.select(".pub_date_numeric .field").text(data.pub_date_numeric);
 
@@ -290,7 +325,10 @@ lc.graph = function() {
             	$("#search-lcsh").val(lcsh);
             });
 		}
-
+	
+		if (data.loc_call_num_subject)
+            info.select(".loc_call_num_subject .field").text(data.loc_call_num_subject);
+           
         // info.select("#shelfrank span").text(data.shelfrank);
         // info.select("#subject").text(data.loc_call_num_subject);
 		// info.select("#publisher span").text(data.publisher);
@@ -315,14 +353,13 @@ lc.graph = function() {
   		    // });
 
   		if (inBox) {
-  			addToCarrel.text("Add To Carrel").on("click",function(){
-  				console.log("ok")
+  			addToCarrel.text("Add This Item To The Carrel").on("click",function(){
 	            lc.carrel.sendToCarrel(data);
 	        });
   		} else {
-  			addToCarrel.text("Remove From Carrel").on("click",function(){
+  			addToCarrel.text("Remove This Item From The Carrel").on("click",function(){
 	            lc.carrel.removeFromCarrel(data);
-	            info.select("#add-to-carrel").text("Add To Carrel").on("click",function(){
+	            info.select("#add-to-carrel").text("Add This Item To The Carrel").on("click",function(){
 		            lc.carrel.sendToCarrel(data);
 		        });
 	        });
@@ -426,10 +463,10 @@ lc.graph = function() {
 		circles
 		.transition()
 		// .ease("linear")
-		.delay(function(d,i){
-			return i*5;
-		})
 		.duration(500)
+		.delay(function(d,i){
+			return i*2;
+		})
 		.attr("cy", calculateY);
 		updateAxes();
 	}
@@ -448,18 +485,7 @@ lc.graph = function() {
 			case 'popularity_y':
 				yscale.domain([0,100]);
 	            return yscale(d.shelfrank || 0);
-
-			// case 'date_y':
-			// 	yscale.domain([minYear,maxYear]);
-			// 	if (d.pub_date_numeric){
-	  //               return yscale(d.pub_date_numeric);
-			// 	}
-			// 	else {
-			// 		return yscale(0);
-			// 	}
-			// 	break;
 			case 'call_number_sort_order_y':
-				// yscale.domain([0,16000000]);
 				if (d.loc_call_num_sort_order){
 		            // return (yscale(d.loc_call_num_sort_order[0]));
 		            return lc.subjectgraph.calculateY(d.loc_call_num_sort_order[0]);
@@ -473,8 +499,7 @@ lc.graph = function() {
 
 	function set_radius(){
 		var circles = circleGroup.selectAll("circle");
-			circles
-				.transition()
+			circles.transition()
 				.duration(500)
 				.attr("r", calculateRadius);
 	}
@@ -482,28 +507,19 @@ lc.graph = function() {
 	function calculateRadius(d) {
 		switch(radius_type) {
 			case 'pages':
-    			if (d.pages_numeric){
-				 return (d.pages_numeric / 50);
-				}
-				else{
-				return 6;
-				}
+    			if (d.pages_numeric)
+					return Math.max(2,d.pages_numeric / 50);
+				else
+					return 2;
 				break;
 			case 'shelfrank':
-				if (d.shelfrank){
-				return (d.shelfrank / 5);
-				}
-				else{
-				return 6;
-				}
+				if (d.shelfrank)
+					return Math.max(2,d.shelfrank / 5);
+				else
+					return 2;
 				break;
 			case 'same':
-				if (d.shelfrank){
-				return 4;
-				}
-				else{
-				return 7;
-				}
+				return 5;
 				break;
 		}
 	}

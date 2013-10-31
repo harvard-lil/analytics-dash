@@ -29,7 +29,7 @@ h1 {
 }
 #search-form {
     width: 33%;
-    height: 310px;
+    height: 330px;
     background-color: white;
     display: none;
     position: fixed;
@@ -44,7 +44,7 @@ h1 {
     border: 1px solid #808080;
     color: #808080;
     position: absolute;
-    top: 270px;
+    top: 290px;
     right: 20px;
     cursor: pointer;
     text-transform: uppercase;
@@ -121,7 +121,7 @@ h1 {
     border: none;
     border-bottom: 1px solid black;
     float: left;
-    width: 250px;
+    width: 200px;
 }
 .right-half {
     width: 73%;
@@ -144,13 +144,12 @@ h1 {
     font-size: 12px;
     width: 100%;
     position: absolute;
-    bottom: 100px;
+    bottom: 60px;
     height: 200px;
 }
 #carrel-box {
     width: 100%;
-    height: 150px;
-    background-color: #eee;
+    height: 120px;
     border: 1px solid #808080;
     margin-bottom: 5px;
 }
@@ -159,7 +158,7 @@ h1 {
     padding: 0;
     list-style-type: none;
     overflow-x: scroll;
-    height: 170px;
+    height: 140px;
     white-space: nowrap;
 }
 #carrel-box li {
@@ -177,10 +176,18 @@ h1 {
     display: block;
 }
 .carrel-action {
+    font-family: courier, monospace;
     cursor: pointer;
-    text-align: right;
-    display: block;
     margin-bottom: 3px;
+    float: left;
+    text-transform: uppercase;
+    font-size: 14px;
+}
+.carrel-action:nth-child(2) {
+    float: right;
+}
+.carrel-action:hover {
+    text-decoration: underline;
 }
 #nav {
     height: 500px;
@@ -203,6 +210,7 @@ h1 {
 #graph-wrapper.child #graph-reset {
     display: inline-block;
     position: absolute;
+    top: 35px;
 }
 .schema rect {
     stroke: white;
@@ -229,7 +237,7 @@ h1 {
 #histogram {
     width: 80%;
     position: absolute;
-    top: 580px;
+    top: 565px;
     margin-bottom: 100px;
     padding: 0 40px 0 130px;
     box-sizing: border-box;
@@ -244,7 +252,13 @@ h1 {
     text-transform: uppercase;
     font-size: 12px;
     display: inline-block;
-    margin-left: -8px;
+    position: absolute;
+}
+#histogram .reset {
+    left: 70px;
+}
+#histogram svg {
+    float: left;
 }
 #histogram .reset:hover,
 #graph-reset:hover {
@@ -253,13 +267,15 @@ h1 {
 }
 #histogram .axis_labels {
     text-align: center;
-    margin-top: 30px;
+    margin-top: 20px;
 }
 #slider-range {
     border: 1px solid #808080;
+    height: 70px;
+    box-sizing: border-box;
 }
 .ui-slider-range {
-    background-color: yellow;
+    background-color: rgba(0,0,0,.1);
 }
 .ui-slider-handle {
     background-color: black;
@@ -272,12 +288,12 @@ h1 {
     outline: none;
 }
 .ui-slider-horizontal .ui-slider-handle {
-    width: 15px;
-    height: 20px;
-    top: -5px;
+    width: 10px;
+    height: 70px;
+    top: -1px;
     font-size: 12px;
-    line-height: 60px;
-    margin-left: -6px;
+    line-height: 160px;
+    margin-left: -5px;
     text-indent: -7px;
     cursor: pointer;
 }
@@ -293,32 +309,78 @@ h1 {
     width: 15%;
 }
 #sort {
-    position: fixed;
-    top: 150px;
-    right: 0px;
-    width: 13%;
+    position: absolute;
+    top: 125px;
+    right: 1%;
+    width: 12%;
+    border: 1px solid #ddd;
+    padding: 10px;
+}
+#sort h2 {
+    text-transform: uppercase;
+    border-bottom: 1px solid #ddd;
+    margin: 0;
+    font-size: 16px;
+    text-align: center;
+    margin-bottom: 10px;
+    padding-bottom: 5px;
+    font-weight: normal;
+}
+#sort .graph-toggle {
+    cursor: pointer;
+    margin: 10px auto 20px;
+    display: block;
+    width: 80px;
+    font-size: 14px;
+    line-height: 30px;
+}
+#sort .graph-toggle span {
+    width: 30px;
+    height: 30px;
+    background: #808080;
+    border-radius: 2px;
+    display: inline-block;
+    margin-right: 5px;
+    float: left;
 }
 #sort ul {
     list-style-type: none;
     margin: 0;
     padding: 0;
     font-size: 12px;
-    width: 100px;
     margin-bottom: 15px;
 }
 #sort li {
     cursor: pointer;
+    text-transform: capitalize;
 }
-#sort li:hover {
-    background: #ddd;
+#sort .disabled {
+    cursor: default;
+    margin-left: 14px;
+    color: #808080;
 }
-#sort li.selected {
-    background: yellow;
+#sort .indent .disc {
+    margin-right: 19px;
 }
-#sort li:first-child {
+#sort .disc {
+    width: 8px;
+    height: 8px;
+    display: inline-block;
+    border-radius: 5px;
+    background-color: white;
+    margin-right: 5px;
+}
+#sort li:hover .disc {
+    background-color: #ddd;
+}
+#sort li.selected .disc {
+    background: #000;
+}
+#sort li:first-child{
     font-weight: bold;
     cursor: default !important;
-    background: white !important;
+    text-decoration: underline;
+    text-transform: uppercase;
 }
 #sort .list,
 .list #sort .graph {
@@ -343,58 +405,110 @@ h1 {
     top: 0px;
     font-size: 16px;
     box-sizing: border-box;
-    height: 450px;
-    background: #ddd;
+    height: 500px;
+    background: #eee;
+    border: 1px solid #ccc;
 }
 #info-wrapper h3 {
-    text-transform: uppercase;
     font-weight: normal;
-    margin: 8px 10px;
+    margin: 0;
+    font-size: 20px;
 }
 #info-wrapper .notch {
     position: absolute;
-    top: 0;
-    right: 0;
+    top: -1px;
+    right: -1px;
     width: 100px;
     height: 30px;
     background-color: white;
+    border-bottom: 1px solid #ccc;
+    border-left: 1px solid #ccc;
+}
+#info-wrapper .info-title {
+    margin-top: 10px;
+    color: #808080;
+}
+#info-wrapper .sort-heading {
+    float: left;
+    width: 200px;
+    text-align: center;
+    width: 60%;
+}
+#info-wrapper .sort-heading p {
+    font-family: courier, monospace;
+    text-transform: uppercase;
+    margin: 2px;
+    font-size: 14px;
 }
 #info-wrapper .book-sort {
     cursor: pointer;
     -webkit-user-select: none;
+    float: left;
+    width: 20%;
+ }
+ #info-wrapper .book-sort:hover {
+    color: #000;
+ }
+ #info-wrapper .book-sort:hover .tri {
+    border-right-color: #000;
+ }
+ #info-wrapper .book-sort.next:hover .tri {
+    border-right-color: transparent;
+    border-left-color: #000;
+ }
+ #info-wrapper .book-sort .tri {
     height: 0;
     border-top: 10px solid transparent;
     border-bottom: 10px solid transparent;
     border-right: 13px solid #808080;
-    display: inline-block;
+    display: block;
     float: left;
-    margin-right: 5px;
+    padding: 0 0 0 20px;
+    margin-bottom: 5px;
  }
  #info-wrapper .book-sort.next {
-    cursor: pointer;
-    -webkit-user-select: none;
+    float: right;
+ }
+ #info-wrapper .book-sort.next .tri {
     border-top: 10px solid transparent;
     border-bottom: 10px solid transparent;
     border-right: none;
     border-left: 13px solid #808080;
+    float: right;
+    padding: 0 20px 0 0;
+}
+#info-wrapper .book-sort .note {
+    clear: both;
+    text-transform: uppercase;
+    padding: 0 0 0 10px;
+    font-family: courier, monospace;
+    font-size: 14px;
+}
+#info-wrapper .book-sort.next .note {
+    text-align: right;
+    padding: 0 10px 0 0;
 }
 
 #info {
     position: absolute;
-    top: 40px;
-    bottom: 20px;
-    left: 10px;
+    top: 70px;
+    bottom: 40px;
     right: 20px;
+    left: 0;
     overflow: scroll;
-    padding-left: 20px;
+    padding-left: 30px;
+    border-left: 5px solid #eee;
 }
 #add-to-carrel {
     font-family: courier, monospace;
     text-transform: uppercase;
     position: absolute;
     top: 460px;
+    left: 20px;
     z-index: 100;
     cursor: pointer;
+    font-size: 16px;
+    text-decoration: underline;
 }
 #add-to-carrel:hover {
     text-decoration: underline;
@@ -407,8 +521,10 @@ h1 {
     margin: 15px 0 3px;
     color: gray;
     text-transform:uppercase;
-    text-decoration: underline;
     cursor: pointer;
+}
+#info .title .infoLabel {
+    margin-top: 5px;
 }
 #info .infoLabel.clicked .tick {
     background-color: #808080;
@@ -434,9 +550,9 @@ h1 {
     font-size: 14px;
 }
 
-#info .title {
-    font-weight: normal;
-    font-size: 24px;
+#info .title .field {
+    font-weight: bold;
+    font-size: 18px;
     text-transform: capitalize;
     margin: 0;
 }
@@ -453,26 +569,6 @@ h1 {
 }
 #info .field li:hover {
     text-decoration: underline;
-}
-#show-graph {
-    border: 1px solid #808080;
-    color: #808080;
-    padding: 3px 5px;
-    width: 83px;
-    text-align: center;
-    cursor: pointer;
-}
-#show-list {
-    border: 1px solid #808080;
-    color: #808080;
-    padding: 3px 5px;
-    width: 83px;
-    text-align: center;
-    cursor: pointer;
-}
-#show-list:hover {
-    border-color: black;
-    color: black;
 }
 #list-wrapper {
     width: 80%;
@@ -532,12 +628,14 @@ h1 {
     max-width: 60%;
     overflow: hidden;
     white-space: nowrap;
+    text-overflow: ellipses;
 }
 #list .right {
     float: right;
     max-width: 30%;
     white-space: nowrap;
     overflow: hidden;
+    text-overflow: ellipses;
 }
 
 circle {

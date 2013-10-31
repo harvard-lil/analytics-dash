@@ -27,8 +27,8 @@ lc.list = function() {
         items.exit().remove();
 
         items.html(function(d){
-                return "<span class='left'><span class='title'>" + d.title + "</span> | " + (d.creator ? d.creator.join(", ") : "") +
-                    "</span><span class='right'>"+ (d.loc_call_num_subject ? d.loc_call_num_subject.split("--")[0] : "") +"</span>";
+                return "<span class='left'><span class='title'>" + d.title + "</span>, " + (d.creator ? d.creator.join(", ") : "") +
+                    "</span><span class='right'>"+ (d.loc_call_num_subject ? d.loc_call_num_subject.split("--")[0] : "") +" | " + d.pub_date_numeric + "</span>";
             }).style("border-bottom-color", function(d){
                 if (d.call_num && lcObjectArray[d.call_num[0].substr(0,1)]){
                     return lcObjectArray[d.call_num[0].substr(0,1)].color;
@@ -46,6 +46,8 @@ lc.list = function() {
 
     $(".list-sort-by li").click(function(){
         self.sortList($(this).attr("name"));
+        $(".list-sort-by li").removeClass("selected");
+        $(this).addClass("selected");
     });
 
     self.sortList = function(sorter) {

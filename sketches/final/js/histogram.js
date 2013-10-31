@@ -2,7 +2,7 @@ var lc = lc || {};
 
 lc.histogram = function() {
 
-    var gHeight = 50;
+    var gHeight = 70;
     var histoGroup = d3.select("#histogram").select("svg").attr("width","100%").attr("height",gHeight).append("g");
     var gWidth = $("#histogram").width();
     var booksByYear;

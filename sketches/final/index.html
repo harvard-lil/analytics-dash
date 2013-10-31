@@ -24,16 +24,22 @@
                 <label><div class="box"></div>Author Name</label><input id="search-creator" type="text" value=""></input>
             </div>
             <div class="form-row">
+                <label><div class="box"></div>Title</label><input id="search-title" type="text" value=""></input>
+            </div>
+            <div class="form-row">
                 <label><div class="box"></div>Year Range</label>
                 <input id="search-year_0" type="text" value="" style="width:40px;"></input>
                 <span style="float:left; width:20px; text-align:center;"> - </span>
                 <input id="search-year_1" type="text" value="" style="width:40px;"></input>
             </div>
             <div class="form-row">
-                <label><div class="box"></div>Title</label><input id="search-title" type="text" value=""></input>
+                <label><div class="box"></div>Call Number Range</label>
+                <input id="search-range_0" type="text" value="" style="width:100px;"></input>
+                <span style="float:left; width:20px; text-align:center;"> - </span>
+                <input id="search-range_1" type="text" value="" style="width:100px;"></input>
             </div>
             <div class="form-row">
-                <label><div class="box"></div>Call # Range</label><input id="search-range" type="text" value=""></input>
+                <label><div class="box"></div>Call Number Subject</label><input id="search-lcsh" type="text" value=""></input>
             </div>
             <div class="form-row">
                 <label><div class="box"></div>Format</label>
@@ -337,14 +343,126 @@
                 </select>
             </div>
             <div class="form-row">
-                <label><div class="box"></div>LCSH Subject</label><input id="search-lcsh" type="text" value=""></input>
+                <label><div class="box"></div>Library</label>
+                <select id="search-library">
+                    <option>AFR - Afro-American Studies          </option>
+                    <option>AJP - Botany Arboretum               </option>
+                    <option>ANT - Andover Newton Theol           </option>
+                    <option>ARG - Botany Gray/Arnold             </option>
+                    <option>ARN - Botany Arnold (Cambr.)         </option>
+                    <option>ART - Harvard Art Museums            </option>
+                    <option>BAK - Baker Business                 </option>
+                    <option>BER - Biblioteca Berenson            </option>
+                    <option>BIO - Biological Labs                </option>
+                    <option>BIR - Birkhoff Math                  </option>
+                    <option>BKO - Baker Business                 </option>
+                    <option>BLH - Blue Hill                      </option>
+                    <option>BRM - Busch-Reisinger Mus            </option>
+                    <option>BUT - BU School of Theol             </option>
+                    <option>CAB - Cabot Science                  </option>
+                    <option>CAR - Carpenter Center               </option>
+                    <option>CEA - East Asian Res Ctr             </option>
+                    <option>CEL - Robinson Celtic                </option>
+                    <option>CFI - Ctr Intl Affairs               </option>
+                    <option>CHE - Chemistry                      </option>
+                    <option>CHI - Child Memorial                 </option>
+                    <option>CRL - CRL (Ctr for Research Libs)    </option>
+                    <option>DAN - Derek Bok Center               </option>
+                    <option>DCJ - Doc Ctr Japan                  </option>
+                    <option>DDO - Dumbarton Oaks                 </option>
+                    <option>DES - Loeb Design                    </option>
+                    <option>DEV - Development Office             </option>
+                    <option>DIV - Andover-Harv. Theol            </option>
+                    <option>DOC - Documents (Lamont)             </option>
+                    <option>ECB - Botany Econ. Botany            </option>
+                    <option>EDS - EDS/Weston                     </option>
+                    <option>ENV - Environmental Information Ctr  </option>
+                    <option>ERR - R Unknown Library              </option>
+                    <option>EUR - Ctr Eur Studies                </option>
+                    <option>FAL - Fine Arts                      </option>
+                    <option>FAR - Botany Farlow Library          </option>
+                    <option>FIG - Networked Resource             </option>
+                    <option>FOG - Fogg Museum                    </option>
+                    <option>FOR - Harvard Forest                 </option>
+                    <option>FUN - Fung Library                   </option>
+                    <option>GCT - Gordon-Conwell                 </option>
+                    <option>GDC - Harvard Data Center            </option>
+                    <option>GEO - Kummel Geological Sci          </option>
+                    <option>GIB - Gibb Islamic                   </option>
+                    <option>GRA - Botany Gray Herbarium          </option>
+                    <option>GRO - Grossman                       </option>
+                    <option>GUT - Gutman Education               </option>
+                    <option>HCR - Holy Cross Orthodox            </option>
+                    <option>HEL - Ctr Hellen Studies             </option>
+                    <option>HFA - Harvard Film Archive           </option>
+                    <option>HIL - Hilles                         </option>
+                    <option>HIS - History Dept                   </option>
+                    <option>HOU - Houghton                       </option>
+                    <option>HPO - Harvard Planning & Real Estate </option>
+                    <option>HSI - Sci Instruments                </option>
+                    <option>HSL - History of Science             </option>
+                    <option>HUA - Harvard University Archives    </option>
+                    <option>HUL - Harvard University Library     </option>
+                    <option>HYL - Harvard-Yenching               </option>
+                    <option>KIR - Kirkland House                 </option>
+                    <option>KSG - Kennedy Sch of Gov             </option>
+                    <option>LAM - Lamont                         </option>
+                    <option>LAW - Law School                     </option>
+                    <option>LIN - Linguistics                    </option>
+                    <option>LIT - Littauer                       </option>
+                    <option>MAP - Map Coll (Pusey)               </option>
+                    <option>MCK - McKay Applied Sci              </option>
+                    <option>MCZ - Museum Comp Zoology            </option>
+                    <option>MED - Countway Medicine              </option>
+                    <option>MIC - Microforms (Lamont)            </option>
+                    <option>MMF - Master Microforms              </option>
+                    <option>MUR - Murray Research Ctr            </option>
+                    <option>MUS - Loeb Music                     </option>
+                    <option>NEL - Near Eastern Lib               </option>
+                    <option>NET - Networked Resource             </option>
+                    <option>NMM - National master micro          </option>
+                    <option>OPH - Ophthalmology                  </option>
+                    <option>ORC - Botany Ames Orchid             </option>
+                    <option>PAL - Medieval Studies Lib           </option>
+                    <option>PEA - Peabody Museum                 </option>
+                    <option>PHI - Robbins Philosophy             </option>
+                    <option>PHY - Physics Research               </option>
+                    <option>POE - Poetry Room (Lamont)           </option>
+                    <option>PRI - Primate Center Lib             </option>
+                    <option>PSY - Psychology Research            </option>
+                    <option>PUS - Pusey                          </option>
+                    <option>QUA - Quad Library                   </option>
+                    <option>RCA - Radcliffe Archives             </option>
+                    <option>RRC - Russian Res Ctr                </option>
+                    <option>RUB - Rubel (Fine Arts)              </option>
+                    <option>SAN - Sanskrit Library               </option>
+                    <option>SBC - Solidarity Bibl Center         </option>
+                    <option>SCC - Straus Conservation            </option>
+                    <option>SCH - Schlesinger                    </option>
+                    <option>SFL - Schering Health Care           </option>
+                    <option>SIA - Sci & Intl Affairs             </option>
+                    <option>SMY - Smyth Classical                </option>
+                    <option>SOC - Social Rel-Sociol              </option>
+                    <option>STA - Statistics                     </option>
+                    <option>STJ - St John's Seminary             </option>
+                    <option>TBC - Boston College                 </option>
+                    <option>THE - Theatre Collection             </option>
+                    <option>TOZ - Tozzer                         </option>
+                    <option>URI - Ukrainian Res Inst             </option>
+                    <option>WAM - Warren Anatomical              </option>
+                    <option>WAR - Charles Warren Ctr Lib         </option>
+                    <option>WEI - Weissman Preservation Ctr      </option>
+                    <option>WES - EDS/Weston                     </option>
+                    <option>WID - Widener                        </option>
+                    <option>WOL - Wolbach Library                </option>
+                </select>
             </div>
             <div class="form-row">
                 <div class="result-sort selected">
-                    <div class="sort-box"></div>200 Most Popular
+                    <div class="sort-box"></div>Most Popular
                 </div>
                 <div class="result-sort">
-                    <div class="sort-box"></div>200 Most Recent
+                    <div class="sort-box"></div>Most Recent
                 </div>
             </div>
             <input id="search" type="submit"/></br>
@@ -352,26 +470,47 @@
 
         <div class="left-half">
             <div id="info-wrapper">
-                <h3><span class="book-sort"></span> <span class="book-sort next"></span> Item Info</h3>
-                <div class="notch"></div>
+                <div class="info-title">
+                    <div class="book-sort">
+                        <div class="tri"></div>
+                        <div class="note">prev</div>
+                    </div>
+                    <div class="sort-heading">
+                        <h3>1 of 200</h3>
+                        <p>Sorted by <span class="sorter">title</span></p>
+                    </div>
+                    <div class="book-sort next">
+                        <div class="tri"></div>
+                        <div class="note">next</div>
+                    </div>
+                </div>
+                <!-- <div class="notch"></div> -->
                 <div id="info">
-                    <div class="title">
-                        <p class="infoLabel"><span class="tick"></span>Title</p>
+                    <div class="title" name="title">
+                        <p class="infoLabel clicked"><span class="tick"></span>Title</p>
                         <p class="field"></p>
                     </div>
-                    <div class="creator">
+                    <div class="creator" name="author">
                         <p class="infoLabel"><span class="tick"></span>Authors</p>
                         <ul class="field"></ul>
                     </div>
-                    <div class="lc">
+                    <div class="pub_date_numeric" name="publishing date">
+                        <p class="infoLabel"><span class="tick"></span>Publishing Date</p>
+                        <p class="field"></p>
+                    </div>
+                    <div class="loc_call_num_subject">
+                        <p class="infoLabel">Call Number Subject</p>
+                        <ul class="field"></ul>
+                    </div>
+                    <div class="lcsh">
+                        <p class="infoLabel">Library of Congress Subject Headers</p>
+                        <ul class="field"></ul>
+                    </div>
+                    <div class="lc" name="call number">
                         <p class="infoLabel"><span class="tick"></span>Library of Congress Call #</p>
                         <p class="field"><span></span></p>
                     </div>
-                    <div class="pub_date_numeric">
-                        <p class="infoLabel"><span class="tick"></span>Publishing Data</p>
-                        <p class="field"></p>
-                    </div>
-                    <div class="pages_numeric">
+                    <div class="pages_numeric" name="page count">
                         <p class="infoLabel"><span class="tick"></span>Page Count</p>
                         <p class="field"><span></span></p>
                     </div>
@@ -379,19 +518,15 @@
                         <p class="infoLabel">Language</p>
                         <p class="field"><span></span></p>
                     </div>
-                    <div class="lcsh">
-                        <p class="infoLabel">Library of Congress Subject Headers</p>
-                        <ul class="field"></ul>
-                    </div>
                 </div>
+                <a id="add-to-carrel">Add this item to the carrel</a>
             </div>
-            <a id="add-to-carrel">Add to carrel</a>
             <div id="carrel">
                 <div id="carrel-box">
                     <ul></ul>
                 </div>
-                <a id="table-carrel" class="carrel-action">Look at your carrel as a table =></a>
-                <a id="export-carrel" class="carrel-action">Export your carrel as a spreadsheet =></a>
+                <a id="table-carrel" class="carrel-action">View as Table</a>
+                <a id="export-carrel" class="carrel-action">Export as spreadsheet</a>
             </div>
         </div>
         <div class="right-half">
@@ -411,33 +546,34 @@
                 <div id="bookCounts"></div>
             </div>
             <div id="sort">
-                <div id="show-list">Show Items As A List</div>
-                <div id="show-graph">Show Items As A Graph</div>
+                <h2>Display</h2>
+                <div id="show-list" class="graph-toggle"><span></span> List</div>
+                <div id="show-graph" class="graph-toggle"><span></span> Scatter</div>
                 <!-- <div id="stack-circles">Stack Circles</div> -->
                 <ul class="y_toggle graph">
-                    <li>y-sort by:</li>
-                    <li name="grads">grads</li>
-                    <li name="undergrads">undergrads</li>
-                    <li name="faculty">faculty</li>
-                    <li name="popularity_y">popularity</li>
-                    <!-- <li id="date_y" name="Date_of_Publish">publication date</li> -->
-                    <li name="call_number_sort_order_y" class="selected">subject</li>
+                    <li>Y-Position By:</li>
+                    <li name="call_number_sort_order_y" class="selected"><span class="disc"></span>Call Number</li>
+                    <li name="call_number_sort_order_y" class="disabled"></span>Popularity with:</li>
+                    <li name="grads" class="indent"><span class="disc"></span>Graduates</li>
+                    <li name="undergrads" class="indent"><span class="disc"></span>Undergraduents</li>
+                    <li name="faculty" class="indent"><span class="disc"></span>Faculty</li>
+                    <li name="popularity_y" class="indent"><span class="disc"></span>Overall</li>
                 </ul>
                 <ul class="scale_toggle graph">
-                    <li>scale by:</li>
-                    <li name="pages">pages</li>
-                    <li name="same">same</li>
-                    <li name="shelfrank" class="selected">popularity</li>
+                    <li>Scale By:</li>
+                    <li name="shelfrank" class="selected"><span class="disc"></span>Overall Popularity</li>
+                    <li name="pages"><span class="disc"></span>Number of Pages</li>
+                    <li name="same"><span class="disc"></span>Same Scale For All</li>
                 </ul>
                 <ul class="list-sort-by list">
                     <li>sort by:</li>
-                    <li name="shelfrank" class="selected">popularity</li>
-                    <li name="pub_date_numeric">publication date</li>
-                    <li name="loc_call_num_sort_order">subject</li>
-                    <li name="creator">author</li>
-                    <li name="title">title</li>
-                    <li name="format">format</li>
-                    <li name="pages_numeric">pages</li>
+                    <li name="shelfrank" class="selected"><span class="disc"></span>popularity</li>
+                    <li name="pub_date_numeric"><span class="disc"></span>publication date</li>
+                    <li name="loc_call_num_sort_order"><span class="disc"></span>subject</li>
+                    <li name="creator"><span class="disc"></span>author</li>
+                    <li name="title"><span class="disc"></span>title</li>
+                    <li name="format"><span class="disc"></span>format</li>
+                    <li name="pages_numeric"><span class="disc"></span>pages</li>
                 </ul>
             </div>
             <div id="list-wrapper">
