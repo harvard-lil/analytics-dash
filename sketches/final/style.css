@@ -259,7 +259,7 @@ h1 {
     border: 1px solid #808080;
 }
 .ui-slider-range {
-    background-color: yellow;
+    background-color: #ddd;
 }
 .ui-slider-handle {
     background-color: black;
@@ -344,7 +344,8 @@ h1 {
     font-size: 16px;
     box-sizing: border-box;
     height: 450px;
-    background: #ddd;
+    background: #eee;
+    border: 1px solid #ccc;
 }
 #info-wrapper h3 {
     text-transform: uppercase;
@@ -353,11 +354,13 @@ h1 {
 }
 #info-wrapper .notch {
     position: absolute;
-    top: 0;
-    right: 0;
+    top: -1px;
+    right: -1px;
     width: 100px;
     height: 30px;
     background-color: white;
+    border-bottom: 1px solid #ccc;
+    border-left: 1px solid #ccc;
 }
 #info-wrapper .book-sort {
     cursor: pointer;

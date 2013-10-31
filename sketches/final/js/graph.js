@@ -316,7 +316,6 @@ lc.graph = function() {
 
   		if (inBox) {
   			addToCarrel.text("Add To Carrel").on("click",function(){
-  				console.log("ok")
 	            lc.carrel.sendToCarrel(data);
 	        });
   		} else {
