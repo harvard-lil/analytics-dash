@@ -35,7 +35,8 @@ lc.search = function() {
     // dewey_call_nu
     $("#search").click(function() {
         var searchTerms = {};
-        searchTerms["year"] = [];
+        searchTerms["year"] = [],
+        searchTerms["range"] = [];
 
         // grabbing all fields entered in in the form
         $("#search-form input").each(function() {
@@ -46,6 +47,8 @@ lc.search = function() {
                 var key = t.attr("id").split("-")[1];
                 if (key == "year_0" || key == "year_1")
                     searchTerms["year"][key.split("_")[1]] = t.val();
+                else if (key == "range_0" || key == "range_1")
+                    searchTerms["range"][key.split("_")[1]] = t.val();
                 else
                     searchTerms[key] = t.val();
                 if (!t.parent().hasClass("locked")) t.val("");
@@ -89,9 +92,11 @@ lc.search = function() {
 
                 // using loc_call_num_sort_order until told otherwise
                 case 'range':
-                    var range = terms[term].split('-');
-                    query.push('filter=loc_call_num_sort_order:[' + range[0] + ' TO ' + range[1] + ']');
-                    console.log('call number range', range);
+                    var range = terms[term];
+                    if (range.length == 2) {
+                        query.push('filter=loc_call_num_sort_order:[' + range[0] + ' TO ' + range[1] + ']');
+                        console.log('call number range', range);
+                    }
                     break;
 
                 // upper case the first letter, sigh
@@ -139,7 +144,7 @@ lc.search = function() {
 
                 // using loc_call_num_sort_order until told otherwise
                 case 'range':
-                    var range = terms[term].split('-');
+                    var range = terms[term];
                     explanation.push('a Library of Congress Call Number <b>between ' + range[0] + ' and ' + range[1] + '</b>');
                     break;
 

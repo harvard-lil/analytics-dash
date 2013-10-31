@@ -24,16 +24,22 @@
                 <label><div class="box"></div>Author Name</label><input id="search-creator" type="text" value=""></input>
             </div>
             <div class="form-row">
+                <label><div class="box"></div>Title</label><input id="search-title" type="text" value=""></input>
+            </div>
+            <div class="form-row">
                 <label><div class="box"></div>Year Range</label>
                 <input id="search-year_0" type="text" value="" style="width:40px;"></input>
                 <span style="float:left; width:20px; text-align:center;"> - </span>
                 <input id="search-year_1" type="text" value="" style="width:40px;"></input>
             </div>
             <div class="form-row">
-                <label><div class="box"></div>Title</label><input id="search-title" type="text" value=""></input>
+                <label><div class="box"></div>Call Number Range</label>
+                <input id="search-range_0" type="text" value="" style="width:100px;"></input>
+                <span style="float:left; width:20px; text-align:center;"> - </span>
+                <input id="search-range_1" type="text" value="" style="width:100px;"></input>
             </div>
             <div class="form-row">
-                <label><div class="box"></div>Call # Range</label><input id="search-range" type="text" value=""></input>
+                <label><div class="box"></div>Call Number Subject</label><input id="search-lcsh" type="text" value=""></input>
             </div>
             <div class="form-row">
                 <label><div class="box"></div>Format</label>
@@ -337,14 +343,126 @@
                 </select>
             </div>
             <div class="form-row">
-                <label><div class="box"></div>LCSH Subject</label><input id="search-lcsh" type="text" value=""></input>
+                <label><div class="box"></div>Library</label>
+                <select id="search-library">
+                    <option>AFR - Afro-American Studies          </option>
+                    <option>AJP - Botany Arboretum               </option>
+                    <option>ANT - Andover Newton Theol           </option>
+                    <option>ARG - Botany Gray/Arnold             </option>
+                    <option>ARN - Botany Arnold (Cambr.)         </option>
+                    <option>ART - Harvard Art Museums            </option>
+                    <option>BAK - Baker Business                 </option>
+                    <option>BER - Biblioteca Berenson            </option>
+                    <option>BIO - Biological Labs                </option>
+                    <option>BIR - Birkhoff Math                  </option>
+                    <option>BKO - Baker Business                 </option>
+                    <option>BLH - Blue Hill                      </option>
+                    <option>BRM - Busch-Reisinger Mus            </option>
+                    <option>BUT - BU School of Theol             </option>
+                    <option>CAB - Cabot Science                  </option>
+                    <option>CAR - Carpenter Center               </option>
+                    <option>CEA - East Asian Res Ctr             </option>
+                    <option>CEL - Robinson Celtic                </option>
+                    <option>CFI - Ctr Intl Affairs               </option>
+                    <option>CHE - Chemistry                      </option>
+                    <option>CHI - Child Memorial                 </option>
+                    <option>CRL - CRL (Ctr for Research Libs)    </option>
+                    <option>DAN - Derek Bok Center               </option>
+                    <option>DCJ - Doc Ctr Japan                  </option>
+                    <option>DDO - Dumbarton Oaks                 </option>
+                    <option>DES - Loeb Design                    </option>
+                    <option>DEV - Development Office             </option>
+                    <option>DIV - Andover-Harv. Theol            </option>
+                    <option>DOC - Documents (Lamont)             </option>
+                    <option>ECB - Botany Econ. Botany            </option>
+                    <option>EDS - EDS/Weston                     </option>
+                    <option>ENV - Environmental Information Ctr  </option>
+                    <option>ERR - R Unknown Library              </option>
+                    <option>EUR - Ctr Eur Studies                </option>
+                    <option>FAL - Fine Arts                      </option>
+                    <option>FAR - Botany Farlow Library          </option>
+                    <option>FIG - Networked Resource             </option>
+                    <option>FOG - Fogg Museum                    </option>
+                    <option>FOR - Harvard Forest                 </option>
+                    <option>FUN - Fung Library                   </option>
+                    <option>GCT - Gordon-Conwell                 </option>
+                    <option>GDC - Harvard Data Center            </option>
+                    <option>GEO - Kummel Geological Sci          </option>
+                    <option>GIB - Gibb Islamic                   </option>
+                    <option>GRA - Botany Gray Herbarium          </option>
+                    <option>GRO - Grossman                       </option>
+                    <option>GUT - Gutman Education               </option>
+                    <option>HCR - Holy Cross Orthodox            </option>
+                    <option>HEL - Ctr Hellen Studies             </option>
+                    <option>HFA - Harvard Film Archive           </option>
+                    <option>HIL - Hilles                         </option>
+                    <option>HIS - History Dept                   </option>
+                    <option>HOU - Houghton                       </option>
+                    <option>HPO - Harvard Planning & Real Estate </option>
+                    <option>HSI - Sci Instruments                </option>
+                    <option>HSL - History of Science             </option>
+                    <option>HUA - Harvard University Archives    </option>
+                    <option>HUL - Harvard University Library     </option>
+                    <option>HYL - Harvard-Yenching               </option>
+                    <option>KIR - Kirkland House                 </option>
+                    <option>KSG - Kennedy Sch of Gov             </option>
+                    <option>LAM - Lamont                         </option>
+                    <option>LAW - Law School                     </option>
+                    <option>LIN - Linguistics                    </option>
+                    <option>LIT - Littauer                       </option>
+                    <option>MAP - Map Coll (Pusey)               </option>
+                    <option>MCK - McKay Applied Sci              </option>
+                    <option>MCZ - Museum Comp Zoology            </option>
+                    <option>MED - Countway Medicine              </option>
+                    <option>MIC - Microforms (Lamont)            </option>
+                    <option>MMF - Master Microforms              </option>
+                    <option>MUR - Murray Research Ctr            </option>
+                    <option>MUS - Loeb Music                     </option>
+                    <option>NEL - Near Eastern Lib               </option>
+                    <option>NET - Networked Resource             </option>
+                    <option>NMM - National master micro          </option>
+                    <option>OPH - Ophthalmology                  </option>
+                    <option>ORC - Botany Ames Orchid             </option>
+                    <option>PAL - Medieval Studies Lib           </option>
+                    <option>PEA - Peabody Museum                 </option>
+                    <option>PHI - Robbins Philosophy             </option>
+                    <option>PHY - Physics Research               </option>
+                    <option>POE - Poetry Room (Lamont)           </option>
+                    <option>PRI - Primate Center Lib             </option>
+                    <option>PSY - Psychology Research            </option>
+                    <option>PUS - Pusey                          </option>
+                    <option>QUA - Quad Library                   </option>
+                    <option>RCA - Radcliffe Archives             </option>
+                    <option>RRC - Russian Res Ctr                </option>
+                    <option>RUB - Rubel (Fine Arts)              </option>
+                    <option>SAN - Sanskrit Library               </option>
+                    <option>SBC - Solidarity Bibl Center         </option>
+                    <option>SCC - Straus Conservation            </option>
+                    <option>SCH - Schlesinger                    </option>
+                    <option>SFL - Schering Health Care           </option>
+                    <option>SIA - Sci & Intl Affairs             </option>
+                    <option>SMY - Smyth Classical                </option>
+                    <option>SOC - Social Rel-Sociol              </option>
+                    <option>STA - Statistics                     </option>
+                    <option>STJ - St John's Seminary             </option>
+                    <option>TBC - Boston College                 </option>
+                    <option>THE - Theatre Collection             </option>
+                    <option>TOZ - Tozzer                         </option>
+                    <option>URI - Ukrainian Res Inst             </option>
+                    <option>WAM - Warren Anatomical              </option>
+                    <option>WAR - Charles Warren Ctr Lib         </option>
+                    <option>WEI - Weissman Preservation Ctr      </option>
+                    <option>WES - EDS/Weston                     </option>
+                    <option>WID - Widener                        </option>
+                    <option>WOL - Wolbach Library                </option>
+                </select>
             </div>
             <div class="form-row">
                 <div class="result-sort selected">
-                    <div class="sort-box"></div>200 Most Popular
+                    <div class="sort-box"></div>Most Popular
                 </div>
                 <div class="result-sort">
-                    <div class="sort-box"></div>200 Most Recent
+                    <div class="sort-box"></div>Most Recent
                 </div>
             </div>
             <input id="search" type="submit"/></br>

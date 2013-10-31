@@ -84,6 +84,7 @@ lc.subjectgraph = function() {
             } else {
                     self.currentChildren = processedChildren;
                     self.currentTotal = total;
+                    lc.graph.updateLabels(1);
                     self.update(sideBar, processedChildren, total);
             }
 
@@ -102,7 +103,7 @@ lc.subjectgraph = function() {
 
         var rectangles = entering.append("rect");
 
-        var texts = entering.append("text").attr("x", 34);
+        // var texts = entering.append("text").attr("x", 34);
 
         var yoffset = -6;
         var cy = 0;

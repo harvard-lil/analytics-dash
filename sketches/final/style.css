@@ -29,7 +29,7 @@ h1 {
 }
 #search-form {
     width: 33%;
-    height: 310px;
+    height: 330px;
     background-color: white;
     display: none;
     position: fixed;
@@ -44,7 +44,7 @@ h1 {
     border: 1px solid #808080;
     color: #808080;
     position: absolute;
-    top: 270px;
+    top: 290px;
     right: 20px;
     cursor: pointer;
     text-transform: uppercase;
@@ -121,7 +121,7 @@ h1 {
     border: none;
     border-bottom: 1px solid black;
     float: left;
-    width: 250px;
+    width: 200px;
 }
 .right-half {
     width: 73%;
@@ -535,12 +535,14 @@ h1 {
     max-width: 60%;
     overflow: hidden;
     white-space: nowrap;
+    text-overflow: ellipses;
 }
 #list .right {
     float: right;
     max-width: 30%;
     white-space: nowrap;
     overflow: hidden;
+    text-overflow: ellipses;
 }
 
 circle {
