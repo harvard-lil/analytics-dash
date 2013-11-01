@@ -13,7 +13,8 @@ lc.subjectgraph = function() {
             height = $("#nav").height(),
             selected = null,
             sideBar = d3.select("#nav"),
-            context = d3.select("#nav-context");
+            context = d3.select("#nav-context"),
+            breadcrumb = $("#breadcrumb");
 
     $("#graph-reset").click(function(){
         self.reset();
@@ -52,6 +53,7 @@ lc.subjectgraph = function() {
                     'count': next ? (next.start - 1) - values[1] : values[2] - values[1],
                     'name' : values[3],
                     'id'   : values[4],
+                    'depth' : parts,
                     'lastname' : nameparts[parts]
             };
     };
@@ -167,6 +169,8 @@ lc.subjectgraph = function() {
             self.getChildrenID(d.id);
             self.updateBounds(d);
 
+            crumbize(d);
+
             d3.selectAll(".schema").classed("selected",false);
             d3.select(this).classed("selected",true);
             this.parentNode.appendChild(this);
@@ -175,6 +179,26 @@ lc.subjectgraph = function() {
         // remove divs when they leave
         groups.exit().remove();
     };
+
+    function crumbize(d) {
+        var breadDepth = breadcrumb.find(".link") ? breadcrumb.find(".link").length : 0;
+        var l = $("<span>").attr("class","link")
+                .html((d.depth == 0 ? "" : "<span class='tick'>></span>")+"<span class='item'>"+d.lastname+"</span>")
+                .click(function(){
+                    self.getChildrenID(d.id);
+                    self.updateBounds(d);
+                    breadcrumb.find(".link").each(function(i,e){
+                        if (i > d.depth) $(this).remove();
+                    });
+                });
+
+        if (d.depth + 1 < breadDepth) breadcrumb.empty();
+        else if (d.depth + 1 == breadDepth) breadcrumb.find(".link").eq(d.depth).remove();
+
+        if (d.depth == 0) l.css("color",schema.colorClass(d.class));
+
+        breadcrumb.append(l);
+    }
 
     function classNameify(name) {
         return name.toLowerCase().replace(/^\s+|\s+$/g,'').replace(/[^\w\s]/gi, '').split(" ").join("-");

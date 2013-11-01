@@ -45,13 +45,15 @@ lc.list = function() {
     };
 
     $(".list-sort-by li").click(function(){
-        self.sortList($(this).attr("name"));
+        var dir = $(this).hasClass("down");
+        self.sortList($(this).attr("name"), dir);
         $(".list-sort-by li").removeClass("selected");
-        $(this).addClass("selected");
+        $(this).addClass("selected").toggleClass("down");
     });
 
-    self.sortList = function(sorter) {
+    self.sortList = function(sorter, dir) {
         list.selectAll("li").sort(function(a,b){
+            if (dir) return d3.descending(a[sorter], b[sorter]);
             return d3.ascending(a[sorter], b[sorter]);
         });
     };
