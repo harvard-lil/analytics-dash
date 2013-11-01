@@ -148,6 +148,11 @@ lc.graph = function() {
         	svg.attr("class","frozen");
         });
 
+        //fill the info box with a random circle
+        circleGroup.select("circle").each(function(d){
+        	self.showInfo(d, true);
+        })
+
         updateCircles();
         self.updateLabels(0);
     }
@@ -305,6 +310,7 @@ lc.graph = function() {
             info.selectAll(".creator li").on("click",function(){
             	var creator = $(this).text();
             	$("#search-creator").val(creator);
+            	lc.search.submitSearch();
             });
         }
 
@@ -330,6 +336,7 @@ lc.graph = function() {
             info.selectAll(".lcsh li").on("click",function(){
             	var lcsh = $(this).text();
             	$("#search-lcsh").val(lcsh);
+            	lc.search.submitSearch();
             });
 		}
 
@@ -420,6 +427,14 @@ lc.graph = function() {
 	// 	axes.select("#x_axis").text(x_axis_type);
 	// }
 
+	var sortTitles = {
+		"call_number_sort_order_y" : "subject",
+		"grads" : "Graduate Students",
+		"undergrads" : "Undergraduate Students",
+		"faculty" : "faculty",
+		"popularity_y" : "overall popularity"
+	}
+
 	function y_axis_button(e){
 		y_axis_type = $(e.target).attr("name");
 
@@ -427,7 +442,7 @@ lc.graph = function() {
 		$(this).addClass("selected");
 
 		set_y_axis();
-		axes.select("#y_axis").text(y_axis_type);
+		axes.select("#y_axis").text(sortTitles[y_axis_type]);
 	}
 
 	function radius_button(e){

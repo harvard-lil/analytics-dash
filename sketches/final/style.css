@@ -84,10 +84,6 @@ h1 {
     border-color: #000;
     color: #000;
 }
-.search-label {
-    margin: 5px 23px;
-    font-size: 10px;
-}
 .form-row {
     width: 90%;
     margin: 0 5%;
@@ -98,21 +94,27 @@ h1 {
 .form-row:first-child {
     margin-top: 20px;
 }
-.form-row .box {
+.form-row .clear {
     height: 15px;
     width: 15px;
-    display: inline-block;
     background-color: #aaa;
-    float: left;
+    float: right;
     margin-right: 7px;
     cursor: pointer;
+    display: none;
 }
-.form-row.locked .box {
+.form-row.filled .clear {
+    display: inline-block;
+}
+.form-row.filled .clear:hover {
+    background-color: #000;
+}
+/*.form-row.locked .box {
     background-color: #000;
 }
 .form-row.locked {
     color: #000;
-}
+}*/
 .form-row label {
     float: left;
     margin-right: 10px;
@@ -152,6 +154,7 @@ h1 {
     height: 125px;
     border: 1px solid #808080;
     margin-bottom: 7px;
+    box-sizing: border-box;
 }
 #carrel-box ul {
     margin: 0;
@@ -226,6 +229,7 @@ h1 {
     display: inline-block;
     position: absolute;
     top: 35px;
+    left: -10px;
 }
 .schema rect {
     stroke: white;

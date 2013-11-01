@@ -6,8 +6,9 @@ lc.search = function() {
         $("#search-form").slideToggle();
     });
 
-    $("#search-form label").click(function(){
-        $(this).parent().toggleClass("locked");
+    $("#search-form .clear").click(function(){
+        // $(this).parent().toggleClass("locked");
+        $(this).parent().removeClass("filled").find("input").val("");
     });
     $("#search-form .result-sort").click(function(){
         $("#search-form .result-sort").removeClass("selected");
@@ -30,10 +31,13 @@ lc.search = function() {
         defaultParams = '&limit=250&facet=pub_date_numeric&key=5239997b68e033fbf2854d77c6295310&filter:collection:hollis_catalog',
         search = getQueryVariable('search') || 'los angeles';
 
-    var graphTitle = $("#searchTerm")
+    var graphTitle = $("#searchTerm");
 
-    // dewey_call_nu
     $("#search").click(function() {
+        self.submitSearch(); 
+    });
+
+    self.submitSearch = function() {
         var searchTerms = {};
         searchTerms["year"] = [],
         searchTerms["range"] = [];
@@ -51,7 +55,9 @@ lc.search = function() {
                     searchTerms["range"][key.split("_")[1]] = t.val();
                 else
                     searchTerms[key] = t.val();
-                if (!t.parent().hasClass("locked")) t.val("");
+                t.parent().addClass("filled");
+            } else {
+                t.parent().removeClass("filled");
             }
         });
 
@@ -60,7 +66,7 @@ lc.search = function() {
             if (t.find(":selected") && t.prop('selectedIndex') != 0) {
                 var key = t.attr("id").split("-")[1];
                 searchTerms[key] = t.find(":selected").text();
-                if (!t.parent().hasClass("locked")) t.prop('selectedIndex',0);;
+                // if (!t.parent().hasClass("locked")) t.prop('selectedIndex',0);;
             }
         });
 
@@ -71,7 +77,7 @@ lc.search = function() {
         $("#search-form").slideUp();
 
         graphTitle.html("Searching... ");
-    });
+    };
 
     /*
         build out a query string of Solr filters for the Item API

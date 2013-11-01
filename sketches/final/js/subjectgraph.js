@@ -96,8 +96,10 @@ lc.subjectgraph = function() {
 
     self.update = function(parent, data, total) {
         var child = false;
-        if (parent.node().id == "nav")
+        if (parent.node().id == "nav") {
+            d3.select("#graph-wrapper").classed("child",true);
             child = true;
+        }
         var groups = parent.selectAll(".schema")
             .data(data);
 
@@ -231,10 +233,12 @@ lc.subjectgraph = function() {
     self.hide = function() {
             $("#nav").hide();
             $("#nav-context").hide();
+            $("#labels").hide();
     };
     self.show = function() {
             $("#nav").show();
             $("#nav-context").show();
+            $("#labels").show();
     };
 
     self.getChildren("top-level class");
