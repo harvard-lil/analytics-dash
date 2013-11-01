@@ -37,8 +37,6 @@ lc.graph = function() {
 
     var circleGroup = svg.append("g").attr("class","circles").attr("transform","translate(120,40)").attr("clip-path","url(#graph-box)");
 
-    // var labelGroup = svg.append("g").attr("class","labels").attr("transform","translate(120,40)");
-
     var axes = svg.append("g").attr("class","axes");
     // creates the axes
 
@@ -63,13 +61,6 @@ lc.graph = function() {
     		.attr("class", "axis")
     		.attr("id","yAxis")
     		.attr("transform","translate(120,40)");
-
-        // axes.append("text")
-	       //  .attr("id","x_axis")
-    	   //  .attr("class","axis_labels")
-	       //  .text("Publication Date")
-	       //  .attr("text-anchor","middle")
-	       //  .attr("transform","translate("+width/2+","+(height-20)+")")
 
         axes.append("text")
   	        .attr("class","axis_labels")
@@ -148,13 +139,9 @@ lc.graph = function() {
         	svg.attr("class","frozen");
         });
 
-        //fill the info box with a random circle
-        circleGroup.select("circle").each(function(d){
-        	self.showInfo(d, true);
-        })
-
         updateCircles();
         self.updateLabels(0);
+        sortBooks("title", true);
     }
     function updateCircles() {
     	var circles = circleGroup.selectAll("circle");
@@ -188,88 +175,9 @@ lc.graph = function() {
 			if (!d.loc_call_num_subject) return;
 			var title = d.loc_call_num_subject.split("--")[level];
 			if (title)
-				d3.selectAll("text."+classNameify(title)).classed("b",true);
-
-				// var foundYet = false;
-				// titles.forEach(function(t){
-				// 	if (t.title == title) foundYet = true;
-				// })
-				// if (!foundYet) {
-				// 	var titleObj = {"title":title,"y":calculateY(d)};	
-				// 	titles.push(titleObj);
-				// }					
+				d3.selectAll("text."+classNameify(title)).classed("b",true);				
 		})
-		// var ts = labelGroup.selectAll(".label").data(titles);
-		// ts.enter().append("text").attr("x",0).attr("class","label");
-		// ts.exit().remove();
-		// ts.text(function(d){ return d.title; }).attr("y",function(d){ return d.y; });
     };
-
-    // use the API facet response to draw data
-    // this means we have to turn the data into something d3 will like
-    // and then use d3.area
- //    var areaScale;
-
- //    self.drawArea = function(facets) {
-	// 	var data = [];
- //    	var total = 0;
- //    	for (var i = 0; i < (maxYear - minYear); i++) {
- //    		var year = i + minYear;
- //    		var count = facets.pub_date_numeric[+year];
-	// 		total = total + (count || 0 );
-	// 		data[i] = {
- //    			year: year,
- //    			count: count || 0,
- //    			total:total
- //    		};
- //    	}
-
- //    	areaScale = d3.scale.linear().range([gHeight, 0])
-	// 	    .domain([0, d3.max(data, function(d) { return d.total; })]);
-
-	// 	var bars = barCharts.selectAll("rect").data(data);
-	// 	bars.enter().append("rect");
-	// 	bars.exit().remove();
-
-	// 	updateBars();
-
- //        bars.on("mouseover",function(d){
- //  			showCounts(d);
- //    	});
- //    };
-
- //    function updateBars() {
-	// 	barCharts.selectAll("rect")
-	// 		.transition()
-	// 		.ease("linear")
-	// 		.delay(function(d,i){
-	// 			return i*5;
-	// 		}).duration(100)
-	// 		.attr("x", function(d, i) {
-	//    			return timescale(d.year);
-	//    		}).attr("y", function(d) {
-	// 			return areaScale(d.total);
-	// 		}).attr("width", gWidth / (maxYear - minYear))
-	// 		.attr("height", function(d) {
-	// 			return (gHeight-areaScale(d.total));
-	// 		});
-	// }
-
-    /*
-    // superceded by subjectgraph.js?
-    d3.csv('lc_class_schema_extended_20120223_parsed.csv', function(csv) {
-        schema.parseCSV(csv);
-
-        // set initial data for the navigator
-        // initially we go two levels deep
-        lc.subjectsorter
-        	.initialData(schema.data)
-        	.on("click", function(d) {
-        		console.log(d);
-        	});
-        // lc.subjectsorter.data(schema.data);
-    });
-    */
 
 
     var info = d3.select("#info"),
@@ -288,7 +196,7 @@ lc.graph = function() {
     	var sortBy = $(".infoLabel.clicked").parent().attr("class"),
     		dir = $(this).hasClass("next");
     	sortBooks(sortBy, dir);
-    })
+    });
 
     function sortBooks(sortBy, dir) {
     	bookData.sort(function(a,b){
@@ -303,6 +211,8 @@ lc.graph = function() {
 
     self.showInfo = function(data, inBox) {
     	currentBook = data;
+
+    	$(".sort-heading").find(".index").text(bookData.indexOf(currentBook) + 1);
 
         info.select(".title .field").text(data.title);
         if (data.creator) {
@@ -339,29 +249,6 @@ lc.graph = function() {
             	lc.search.submitSearch();
             });
 		}
-
-        // info.select("#shelfrank span").text(data.shelfrank);
-        // info.select("#subject").text(data.loc_call_num_subject);
-		// info.select("#publisher span").text(data.publisher);
-		// info.select("#pub_location span").text(data.pub_location);
-        // info.select("#fac_score span").text(data.score_checkouts_fac);
-        // info.select("#grad_score span").text(data.score_checkouts_grad);
-        // info.select("#undergrad_score span").text(data.score_checkouts_undergrad);
-        // info.select("#reserve_score span").text(data.score_reserves);
-        // info.select("#format span").text(data.format);
-        // info.select("#letter span").text(function(d){
-        // 	if (data.call_num) {
-        // 		var firstHalf = data.call_num[0].substr(0,1);
-	       //      var secondHalf = lcObjectArray[firstHalf].subject;
-	       //      return firstHalf + " -- " + secondHalf;
-        // 	}
-        // });
-        // info.select("#letter")
-        // 	.style("border-bottom-color", function(d){
-      		//     if (data.call_num){
-        //    			return lcObjectArray[data.call_num[0].substr(0,1)].color;
-        //     	}
-  		    // });
 
   		if (inBox) {
   			addToCarrel.text("Add This Item To The Carrel").on("click",function(){
@@ -416,17 +303,6 @@ lc.graph = function() {
 		});
 	});
 
-
-	// function x_axis_button(e){
-	// 	x_axis_type = e.target.id;
-
-	// 	$(".x_toggle span").removeClass("selected");
-	// 	$(this).addClass("selected");
-
-	// 	set_x_axis();
-	// 	axes.select("#x_axis").text(x_axis_type);
-	// }
-
 	var sortTitles = {
 		"call_number_sort_order_y" : "subject",
 		"grads" : "Graduate Students",
@@ -453,19 +329,6 @@ lc.graph = function() {
 
 		set_radius();
 	}
-
-	// function set_x_axis(){
-	// 	var circles = circleGroup.selectAll("circle");
-	// 	circles
-	// 		.transition()
-	// 		// .ease("linear")
-	// 		.delay(function(d,i){
-	// 			return i*5;
-	// 		})
-	// 		.duration(500)
-	// 		.attr("cx", calculateX);
-	// 	updateAxes();
-	// }
 
 	function calculateX(d) {
 		xscale.domain([minYear,maxYear]);

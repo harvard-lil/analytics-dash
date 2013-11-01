@@ -250,6 +250,7 @@ lc.subjectgraph = function() {
             self.initialized = false;
             globalDepth = 0;
             self.update(sideBar, []);
+            breadcrumb.empty();
             d3.select("#graph-wrapper").classed("child",false);
             d3.selectAll(".schema").classed("selected",false);
             self.getChildren("top-level class");

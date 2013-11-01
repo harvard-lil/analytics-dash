@@ -246,6 +246,8 @@ lc.search = function() {
                 graphTitle.text('The graph below displays the 250 most popular items in our collection that meet your criteria: ' + fixedThingToPrint); // for now
                 */
 
+                $(".sort-heading").find(".total").text(response.docs.length);
+
                 graphTitle.html(self.buildSearchExplanation(response.docs, parameters));
 
                 // lc.graph.drawArea(response.facets);
