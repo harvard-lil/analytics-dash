@@ -128,7 +128,7 @@ lc.graph = function() {
 
         var circles = circleGroup.selectAll("circle").data(data);
         //binds data to circles
-        circles.enter().append("circle").attr("class","c");
+        circles.enter().append("circle");
         circles.exit().remove();
 
         //runs the showInfo on mouseover
@@ -149,7 +149,7 @@ lc.graph = function() {
         });
 
         updateCircles();
-        // self.updateLabels(0);
+        self.updateLabels(0);
     }
     function updateCircles() {
     	var circles = circleGroup.selectAll("circle");
@@ -171,27 +171,27 @@ lc.graph = function() {
 
     }
 
-  //   self.updateLabels = function(level) {
-  //   	var titles = [];
-		// circleGroup.selectAll("circle").each(function(d){
-		// 	// console.log(d.loc_call_num_subject)
-		// 	if (d.loc_call_num_subject) {
-		// 		var title = d.loc_call_num_subject.split("--")[level];
-		// 		var foundYet = false;
-		// 		titles.forEach(function(t){
-		// 			if (t.title == title) foundYet = true;
-		// 		})
-		// 		if (!foundYet) {
-		// 			var titleObj = {"title":title,"y":calculateY(d)};	
-		// 			titles.push(titleObj);
-		// 		}					
-		// 	} 
-		// })
-		// var ts = labelGroup.selectAll(".label").data(titles);
-		// ts.enter().append("text").attr("x",0).attr("class","label");
-		// ts.exit().remove();
-		// ts.text(function(d){ return d.title; }).attr("y",function(d){ return d.y; });
-  //   };
+    self.updateLabels = function(level) {
+    	var titles = [];
+		circleGroup.selectAll("circle").each(function(d){
+			// console.log(d.loc_call_num_subject)
+			if (d.loc_call_num_subject) {
+				var title = d.loc_call_num_subject.split("--")[level];
+				var foundYet = false;
+				titles.forEach(function(t){
+					if (t.title == title) foundYet = true;
+				})
+				if (!foundYet) {
+					var titleObj = {"title":title,"y":calculateY(d)};	
+					titles.push(titleObj);
+				}					
+			} 
+		})
+		var ts = labelGroup.selectAll(".label").data(titles);
+		ts.enter().append("text").attr("x",0).attr("class","label");
+		ts.exit().remove();
+		ts.text(function(d){ return d.title; }).attr("y",function(d){ return d.y; });
+    };
 
     // use the API facet response to draw data
     // this means we have to turn the data into something d3 will like
