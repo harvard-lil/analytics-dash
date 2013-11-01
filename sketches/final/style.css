@@ -347,8 +347,9 @@ h1 {
     list-style-type: none;
     margin: 0;
     padding: 0;
-    font-size: 12px;
-    margin-bottom: 15px;
+    font-size: 10px;
+    margin-bottom: 16px;
+    line-height: 16px;
 }
 #sort li {
     cursor: pointer;
@@ -605,6 +606,7 @@ h1 {
     border: 1px solid #000;
     padding: 10px;
     box-sizing: border-box;
+    font-size: 12px;
 }
 #list li {
     position: relative;

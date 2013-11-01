@@ -128,9 +128,7 @@ lc.subjectgraph = function() {
                 if (d.cy - yOffset < 12) return;
                 yOffset = d.cy;
                 return d.lastname;
-            }).attr("fill", function(d) {
-                return schema.colorClass(d.class);
-            });
+            }).attr("fill", "black");
 
         // rectangles.on("mouseover", function(d) {
         //     self.mouseover(d);
