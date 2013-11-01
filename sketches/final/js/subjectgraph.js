@@ -84,7 +84,7 @@ lc.subjectgraph = function() {
             } else {
                     self.currentChildren = processedChildren;
                     self.currentTotal = total;
-                    self.updateLabels(1);
+                    lc.graph.updateLabels(1);
                     self.update(sideBar, processedChildren, total);
             }
 
