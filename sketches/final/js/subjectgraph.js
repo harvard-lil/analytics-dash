@@ -165,7 +165,6 @@ lc.subjectgraph = function() {
         //     .attr("width", 30);
 
         groups.on("click", function(d) {
-            console.log('clicked', d.name, d.id);
             self.getChildrenID(d.id);
             self.updateBounds(d);
 
@@ -175,6 +174,8 @@ lc.subjectgraph = function() {
             d3.select(this).classed("selected",true);
             this.parentNode.appendChild(this);
         });
+
+        lc.graph.updateLabels(globalDepth);
 
         // remove divs when they leave
         groups.exit().remove();
@@ -205,8 +206,6 @@ lc.subjectgraph = function() {
     }
 
     self.updateBounds = function(selected) {
-
-        console.log(selected);
         var cy = 0,
         matchedPosition = 0,
         matchedHeight = 0;
@@ -225,10 +224,10 @@ lc.subjectgraph = function() {
 
     self.calculateY = function(sort_number) {
             var cy = 0,
-                    matchedPosition = 0,
-                    matchedHeight = 0,
-                    children = self.currentChildren || self.rootChildren,
-                    total = self.currentTotal || self.rootTotal;
+            matchedPosition = 0,
+            matchedHeight = 0,
+            children = self.currentChildren || self.rootChildren,
+            total = self.currentTotal || self.rootTotal;
 
             for (var i = 0; i < children.length; i++) {
                     var currentClass = children[i];

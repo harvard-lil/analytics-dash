@@ -97,7 +97,7 @@ h1 {
 	font-weight: normal;
     position: absolute;
     top: 0;
-    left: 90px;
+    left: 50px;
     cursor: pointer;
 }
 #search:hover {
@@ -730,5 +730,6 @@ circle:hover {
     -moz-border-radius: 5px;
     -webkit-border-radius: 5px;
     border-radius: 5px;
+    text-transform: capitalize;
     display: none;
 }

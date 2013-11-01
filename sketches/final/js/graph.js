@@ -164,18 +164,16 @@ lc.graph = function() {
     }
 
     function classNameify(name) {
-        // return name.toLowerCase().replace(/^\s+|\s+$/g,'').replace(/\W/g, '').split(" ").join("-");
-        return name.toLowerCase().replace(/^\s+|\s+$/g,'').replace(/[^\w\s]/gi, '').split(" ").join("-");
+        return String(name).replace(/^\s+|\s+$/g,'').toLowerCase().replace(/[^\w\s]/gi, '').split(" ").join("-");
     }
 
     self.updateLabels = function(level) {
-    	// var titles = [];
     	d3.select(".schema text").classed("b",false);
 		circleGroup.selectAll("circle").each(function(d){
 			if (!d.loc_call_num_subject) return;
 			var title = d.loc_call_num_subject.split("--")[level];
-			if (title)
-				d3.selectAll("text."+classNameify(title)).classed("b",true);				
+			if (title && title.substr(0,1).match(/^\d+$/))
+				d3.selectAll("text."+classNameify(title)).classed("b",true);
 		})
     };
 
@@ -391,18 +389,18 @@ lc.graph = function() {
 		switch(radius_type) {
 			case 'pages':
     			if (d.pages_numeric)
-					return Math.max(2,d.pages_numeric / 50);
+					return Math.max(3,d.pages_numeric / 50);
 				else
-					return 2;
+					return 3;
 				break;
 			case 'shelfrank':
 				if (d.shelfrank)
-					return Math.max(2,d.shelfrank / 5);
+					return Math.max(3,d.shelfrank / 5);
 				else
-					return 2;
+					return 3;
 				break;
 			case 'same':
-				return 5;
+				return 6;
 				break;
 		}
 	}
