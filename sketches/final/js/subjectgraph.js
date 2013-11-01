@@ -37,11 +37,14 @@ lc.subjectgraph = function() {
         very hacky code to patch holes because some categories say their end
         is in the 8 millions, screwing up the structure
     */
+    var globalDepth = 0;
+
     var processChild = function(childString, next) {
             var values = childString.split('%%');
             var nameparts = values[3].split('--');
             var parts = nameparts.length-1;
             var lastname = nameparts[parts];
+            globalDepth = parts;
             return {
                     'class': values[0],
                     'start': +values[1],
@@ -84,26 +87,29 @@ lc.subjectgraph = function() {
             } else {
                     self.currentChildren = processedChildren;
                     self.currentTotal = total;
-                    lc.graph.updateLabels(1);
                     self.update(sideBar, processedChildren, total);
+                    lc.graph.updateLabels(globalDepth);
             }
 
             self.selected();
     };
 
     self.update = function(parent, data, total) {
+        var child = false;
         if (parent.node().id == "nav")
-            d3.select("#graph-wrapper").classed("child",true);
+            child = true;
         var groups = parent.selectAll(".schema")
             .data(data);
+
+        var texts = d3.select("#labels").selectAll("text").data(data);
+        texts.enter().append("text");
+        texts.exit().remove();
             
         var entering = groups.enter()
             .append("g")
             .attr("class", "schema");
 
         var rectangles = entering.append("rect");
-
-        // var texts = entering.append("text").attr("x", 34);
 
         var cy = 0;
 
@@ -123,15 +129,25 @@ lc.subjectgraph = function() {
                 return d.height;
             });
 
-        var yOffset = 0;
+        var yOffset = 0,
+            ty = 0;
 
-        groups.select("text").text(function(d){
-                if (d.cy - yOffset < 12) return;
+        texts.attr("x", child ? 34 : 0)
+            .attr("y",function(d){
+                d.height = (d.count / total) * height;
+                d.cy = ty;
+                ty += d.height;
+                return d.cy + 10;
+            }).text(function(d){
+                if (d.cy - yOffset < 15) return;
                 yOffset = d.cy;
                 return d.lastname;
-            }).attr("fill", function(d) {
-                return schema.colorClass(d.class);
+            }).attr("class",function(d){
+                return classNameify(d.lastname);
             });
+            // .attr("fill", function(d) {
+            //     return schema.colorClass(d.class);
+            // });
 
         // rectangles.on("mouseover", function(d) {
         //     self.mouseover(d);
@@ -157,6 +173,10 @@ lc.subjectgraph = function() {
         // remove divs when they leave
         groups.exit().remove();
     };
+
+    function classNameify(name) {
+        return name.toLowerCase().replace(/^\s+|\s+$/g,'').replace(/[^\w\s]/gi, '').split(" ").join("-");
+    }
 
     self.updateBounds = function(selected) {
 
@@ -202,6 +222,7 @@ lc.subjectgraph = function() {
             self.currentChildren = null;
             self.currentTotal = null;
             self.initialized = false;
+            globalDepth = 0;
             self.update(sideBar, []);
             d3.select("#graph-wrapper").classed("child",false);
             d3.selectAll(".schema").classed("selected",false);

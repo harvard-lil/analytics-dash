@@ -28,8 +28,8 @@ h1 {
     text-decoration: underline;
 }
 #search-form {
-    width: 33%;
-    height: 330px;
+    width: 450px;
+    height: 300px;
     background-color: white;
     display: none;
     position: fixed;
@@ -44,7 +44,7 @@ h1 {
     border: 1px solid #808080;
     color: #808080;
     position: absolute;
-    top: 290px;
+    top: 260px;
     right: 20px;
     cursor: pointer;
     text-transform: uppercase;
@@ -189,9 +189,24 @@ h1 {
 .carrel-action:hover {
     text-decoration: underline;
 }
+#labels {
+    width: 300px;
+    height: 500px;
+    position: absolute;
+    left: 85px;
+    top: 35px;
+    z-index: -1;
+}
+#labels text {
+    font-family: sans-serif;
+    font-size: 12px;
+}
+#labels .b{
+    font-weight: bold;
+}
 #nav {
     height: 500px;
-    width: 300px;
+    width: 30px;
     position: absolute;
     left: 80px;
     top: 35px;
@@ -217,10 +232,6 @@ h1 {
 }
 .schema.selected rect {
     stroke: black;
-}
-.schema text {
-    font-family: sans-serif;
-    font-size: 12px;
 }
 #graph {
     width: 80%;

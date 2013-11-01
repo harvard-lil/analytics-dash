@@ -180,8 +180,9 @@ var schema = function() {
    		// interpolate between start and end color
 		var percent = ((firstChar - 65) / 25);
 
-		// go from 0 to 330 hue
+		// // go from 0 to 330 hue
    		return d3.hsl(percent * (endColor.h - startColor.h), 1, .5);
+   		// return lcObjectArray[classID.substr(0,1)].color;
 	};
 
 	self.color = function(row, modifier) {
@@ -320,6 +321,92 @@ var lcObjectArray = {
 		subject:  "Library Science & Information Resources"
 	}
 };
+// var lcObjectArray = {
+// 	"A":{
+// 		color: "#6C6C79",
+// 		subject: "General Works"
+// 	},
+// 	"B":{
+// 		color: "#006582",
+// 		subject: "Philosophy, Psychology, Religion"
+// 	},
+// 	"C":{
+// 		color: "#77BDAE",
+// 		subject: "Auxillary Sciences of History"
+// 	},
+// 	"D":{
+// 		color: "#0000FF",
+// 		subject: "History: General & Outside the Americas"
+// 	},
+// 	"E":{
+// 		color: "#FF2D21",
+// 		subject: "History: United States"
+// 	},
+// 	"F":{
+// 		color: "#FF2D21",
+// 		subject:  "History: United States Local & America"
+// 	},
+// 	"G":{
+// 		color: "#97441B",
+// 		subject:  "Geography, Anthropology, Recreation"
+// 	},
+// 	"H":{
+// 		color: "#00B55E",
+// 		subject:  "Social Sciences"
+// 	},
+// 	"J":{
+// 		color: "#FFB092",
+// 		subject:  "Political Science"
+// 	},
+// 	"K":{
+// 		color: "#6D57D8",
+// 		subject:  "Law"
+// 	},
+// 	"L":{
+// 		color: "#8DCEFC",
+// 		subject:  "Education"
+// 	},
+// 	"M":{
+// 		color: "#FF69B4",
+// 		subject:  "Music"
+// 	},
+// 	"N":{
+// 		color: "#00ffdb",
+// 		subject:  "Fine Arts"
+// 	},
+// 	"P":{
+// 		color: "#00b3ff",
+// 		subject:  "Language and Literature"
+// 	},
+// 	"Q":{
+// 		color: "#FFC536",
+// 		subject:  "Science"
+// 	},
+// 	"R":{
+// 		color: "#00FF40",
+// 		subject:  "Medicine"
+// 	},
+// 	"S":{
+// 		color: "#FFC536",
+// 		subject:  "Science"
+// 	},
+// 	"T":{
+// 		color: "#536928",
+// 		subject:  "Agriculture"
+// 	},
+// 	"U":{
+// 		color: "#B5937C",
+// 		subject:  "Military Science"
+// 	},
+// 	"V":{
+// 		color: "#000563",
+// 		subject:  "Naval Science"
+// 	},
+// 	"Z":{
+// 		color: "#DBFF00",
+// 		subject:  "Library Science & Information Resources"
+// 	}
+// };
 
 /*
 	For reference ----
