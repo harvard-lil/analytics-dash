@@ -172,7 +172,7 @@ lc.graph = function() {
 		circleGroup.selectAll("circle").each(function(d){
 			if (!d.loc_call_num_subject) return;
 			var title = d.loc_call_num_subject.split("--")[level];
-			if (title && title.substr(0,1).match(/^\d+$/))
+			if (title)
 				d3.selectAll("text."+classNameify(title)).classed("b",true);
 		})
     };
