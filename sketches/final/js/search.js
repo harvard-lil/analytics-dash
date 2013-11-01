@@ -112,6 +112,11 @@ lc.search = function() {
                     query.push('filter=' + term + ':' + uppercased);
                     break;
 
+                case 'holding_libs':
+                    var lib = terms[term].split(" - ")[0];
+                    query.push('filter=' + term + ':' + lib);
+                    break;
+
                 // doing fuzzy keyword search on these
                 case 'title':
                 case 'creator':
@@ -170,6 +175,11 @@ lc.search = function() {
                     prefix = prefix.replace('</b> items ', ' ' + format + '</b> ');
                     break;
 
+                case 'holding_libs':
+                    var lib = terms[term].split(" - ")[1];
+                    explanation.push('found in the ' + lib + ' collection');
+                    break;
+
                 // doing fuzzy keyword search on these
                 case 'title':
                     explanation.push('whose title contains ' + terms[term]);
@@ -184,9 +194,6 @@ lc.search = function() {
                 case 'lcsh':
                 case 'subject':
                     explanation.push('about <b>' + terms[term] + '</b>');
-                    break;
-
-                case 'collection':
                     break;
 
                 default:

@@ -206,7 +206,8 @@ lc.graph = function() {
   				return 1;
   			return 0;
     	});
-    	showInfo(bookData[bookData.indexOf(currentBook) + (dir ? 1 : -1)]);
+    	var index = (bookData.indexOf(currentBook) + (dir ? 1 : -1) + bookData.length)%bookData.length;
+    	showInfo(bookData[index],true);
     }
 
     self.showInfo = function(data, inBox) {
