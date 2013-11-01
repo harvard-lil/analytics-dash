@@ -103,7 +103,7 @@ lc.subjectgraph = function() {
 
         var rectangles = entering.append("rect");
 
-        var texts = entering.append("text").attr("x", 34);
+        // var texts = entering.append("text").attr("x", 34);
 
         var cy = 0;
 
