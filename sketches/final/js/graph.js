@@ -37,7 +37,7 @@ lc.graph = function() {
 
     var circleGroup = svg.append("g").attr("class","circles").attr("transform","translate(120,40)").attr("clip-path","url(#graph-box)");
 
-    // var labelGroup = svg.append("g").attr("class","labels").attr("transform","translate(120,40)");
+    var labelGroup = svg.append("g").attr("class","labels").attr("transform","translate(120,40)");
 
     var axes = svg.append("g").attr("class","axes");
     // creates the axes
