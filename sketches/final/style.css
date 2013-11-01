@@ -516,9 +516,9 @@ h1 {
     font-family: courier, monospace;
     text-transform: uppercase;
     position: absolute;
-    top: 460px;
-    left: 20px;
-    z-index: 100;
+    top: 470px;
+    width: 100%;
+    text-align: center;
     cursor: pointer;
     font-size: 16px;
     text-decoration: underline;
@@ -641,14 +641,14 @@ h1 {
     max-width: 60%;
     overflow: hidden;
     white-space: nowrap;
-    text-overflow: ellipses;
+    text-overflow: ellipsis;
 }
 #list .right {
     float: right;
     max-width: 30%;
     white-space: nowrap;
     overflow: hidden;
-    text-overflow: ellipses;
+    text-overflow: ellipsis;
 }
 
 circle {
