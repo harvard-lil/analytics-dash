@@ -281,6 +281,16 @@ lc.graph = function() {
     // }
 
     /*
+		Rollover listener
+    */
+    $("#graph").mousemove(function(e) {
+    	lc.subjectgraph.rollover(e.offsetY - 35);
+    }).click(function(e) {
+    	console.log(e);
+    	lc.subjectgraph.graphClick(e.offsetY - 35);
+    });
+
+    /*
 
 		Axes toggle and Scale toggle buttons
 

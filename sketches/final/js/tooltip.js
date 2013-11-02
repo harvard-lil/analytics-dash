@@ -27,7 +27,7 @@ lc.tooltip = function() {
 		// } else {
 		// 	tooltip.html(row)
 		// }
-		tooltip.html(row.title);
+		tooltip.html(row.title + ' - ' + row.loc_call_num_subject.split("--")[0]);
 
 		tooltip.show();
 	};
