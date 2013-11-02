@@ -2,9 +2,9 @@ var lc = lc || {};
 
 lc.graph = function() {
 	var width = 1000,
-        height = 540,
+        height = 530,
         gWidth = 800,
-        gHeight = 520,
+        gHeight = 510,
         bookData,
         currentBook;
 
@@ -63,7 +63,7 @@ lc.graph = function() {
 	        .attr("id","y_axis")
 	        .text("Subject")
 	        .attr("text-anchor","middle")
-	        .attr("transform","translate(20,"+(height/2)+") rotate(-90)")
+	        .attr("transform","translate(35,"+(height/2)+") rotate(-90)")
     }
     //defines function that ads labels to the axes
 
@@ -277,6 +277,16 @@ lc.graph = function() {
     // 		d3.select(this).attr("cy",gHeight-5-(yearObj[d.pub_date_numeric]*7));
     // 	});
     // }
+
+    /*
+		Rollover listener
+    */
+    $("#graph").mousemove(function(e) {
+    	lc.subjectgraph.rollover(e.offsetY);
+    }).click(function(e) {
+    	console.log(e);
+    	lc.subjectgraph.graphClick(e.offsetY);
+    });
 
     /*
 

@@ -108,7 +108,7 @@ lc.subjectgraph = function() {
         var texts = d3.select("#labels").selectAll("text").data(data);
         texts.enter().append("text");
         texts.exit().remove();
-            
+
         var entering = groups.enter()
             .append("g")
             .attr("class", "schema");
@@ -176,6 +176,8 @@ lc.subjectgraph = function() {
         });
 
         lc.graph.updateLabels(globalDepth);
+        d3.select("#rollover")
+            .attr("width", 0)
 
         // remove divs when they leave
         groups.exit().remove();
@@ -220,6 +222,58 @@ lc.subjectgraph = function() {
             }
             cy += percentHeight;
         }
+    };
+
+    // caching this highlighted object so we're not creating new ones on mousemove
+    var highlighted = {};
+    self.rollover = function(cy) {
+        var currentClass = self.getChildY(cy);
+
+        d3.select("#rollover")
+            .attr("fill", "black")
+            .attr("fill-opacity", .1)
+            .attr("x", 0)
+            .attr("y", currentClass.y)
+            .attr("height", currentClass.height)
+            .attr("width", 718);
+    };
+
+    // dive into the subject classes based on a click on the graph
+    self.graphClick = function(cy) {
+        var currentClass = self.getChildY(cy);
+        self.getChildrenID(currentClass.class.id);
+    };
+
+    self.getChildY = function(cy) {
+        var currentPosition = 0,
+            matchedPosition = 0,
+            matchedHeight = 0,
+            children = self.currentChildren || self.rootChildren,
+            total = self.currentTotal || self.rootTotal;
+
+        highlighted.class = null;
+        highlighted.height = null;
+        highlighted.y = cy;
+
+        if (!children || !children.length) {
+            // nothing to look for yet
+            return highlighted;
+        }
+
+        for (var i = 0; i < children.length; i++) {
+            var currentClass = children[i];
+            var rootHeight = percentHeight = (currentClass.count / total) * height;
+            if (currentPosition <= cy && currentPosition + rootHeight >= cy) {
+                highlighted.class = currentClass;
+                highlighted.height = rootHeight
+                highlighted.y = currentPosition;
+
+                return highlighted;
+            }
+            currentPosition += percentHeight;
+        }
+
+        return highlighted;
     };
 
     self.calculateY = function(sort_number) {

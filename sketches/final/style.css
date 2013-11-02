@@ -1,24 +1,24 @@
 body, html {
-    font-family:akkurat, univers, arial, sans-serif;
+    font-family: akkurat, univers, helvetica, arial, sans-serif;
+    margin: 0;
 }
 #title-wrapper {
     position: fixed;
     background: white;
-    width: 100%;
     z-index: 1;
     top: 0;
-    left: 0;
+    left: 40px;
+    right: 40px;
 }
 h1 {
     font-size: 40px;
-    margin: 5px;
+    margin: 10px 4px 4px 0px;
     text-transform: uppercase;
     letter-spacing: 1px;
 }
 #nav-bar {
     background: black;
-    width: 100%;
-    padding: 5px 10px;
+    padding: 8px;
     color: white;
 }
 #nav-bar div {
@@ -37,7 +37,8 @@ h1 {
     background-color: white;
     display: none;
     position: fixed;
-    top: 83px;
+    top: 94px;
+    left: 40px;
     z-index: 2;
     box-shadow: 5px 5px 10px #808080;
 }
@@ -75,9 +76,9 @@ h1 {
 
 #breadcrumb {
     position: absolute;
-    top: 680px;
+    top: 635px;
     left: 55px;
-    height: 50px;
+    height: 30px;
     width: 750px;
 }
 #breadcrumb .link {
@@ -95,14 +96,16 @@ h1 {
 
 #searchTerm {
 	font-size: 20px;
-    width: 700px;
-	/*text-transform:capitalize;*/
+    width: 85%;
 	text-align: left;
 	font-weight: normal;
-    position: absolute;
-    top: 0;
-    left: 50px;
+    position: fixed;
+    top: 94px;
+    left: 40px;
+    padding: 10px;
     cursor: pointer;
+    background: white;
+    z-index: 1;
 }
 #search:hover {
     border-color: #000;
@@ -155,28 +158,30 @@ h1 {
     position: relative;
     float: right;
     height: 100%;
+    margin-top: 140px;
 }
 .left-half{
-    width: 25%;
+    width: 24%;
     position: fixed;
     height: 100%;
-    margin-top: 90px;
+    margin-top: 140px;
+    margin-left: 40px;
 }
 #graph-wrapper {
     position: absolute;
-    top: 80px;
+    top: 0px;
     width: 100%;
 }
 #carrel {
     font-size: 12px;
     width: 100%;
     position: absolute;
-    bottom: 60px;
+    bottom: 90px;
     height: 200px;
 }
 #carrel-box {
     width: 100%;
-    height: 125px;
+    height: 122px;
     border: 1px solid #808080;
     margin-bottom: 7px;
     box-sizing: border-box;
@@ -186,7 +191,7 @@ h1 {
     padding: 0;
     list-style-type: none;
     overflow-x: scroll;
-    height: 132px;
+    height: 128px;
     white-space: nowrap;
 }
 #carrel-box li {
@@ -218,11 +223,11 @@ h1 {
     text-decoration: underline;
 }
 #labels {
-    width: 300px;
+    width: 718px;
     height: 530px;
     position: absolute;
     left: 85px;
-    top: 40px;
+    top: 0px;
     z-index: -1;
 }
 #labels text {
@@ -233,18 +238,18 @@ h1 {
     font-weight: bold;
 }
 #nav {
-    height: 520px;
+    height: 510px;
     width: 30px;
     position: absolute;
     left: 80px;
-    top: 40px;
+    top: 0px;
 }
 #nav-context {
-    height: 520px;
+    height: 510px;
     width: 30px;
     position: absolute;
     left: 50px;
-    top: 40px;
+    top: 0px;
 }
 #graph-wrapper #graph-reset,
 #graph-wrapper.child #nav-context text {
@@ -253,8 +258,9 @@ h1 {
 #graph-wrapper.child #graph-reset {
     display: inline-block;
     position: absolute;
-    top: 35px;
-    left: -10px;
+    top: 0px;
+    left: 0;
+    padding: 2px;
 }
 .schema rect {
     stroke: white;
@@ -265,26 +271,23 @@ h1 {
 #graph {
     width: 80%;
 }
-#graph svg {
-    margin-top: 35px;
-}
 #graph-subjects {
     height: 500px;
     width: 100%;
     position: absolute;
     z-index: 0;
     left: 130px;
-    top: 40px;
+    top: 5px;
 }
 
 #histogram {
     width: 80%;
     position: absolute;
-    top: 565px;
-    margin-bottom: 100px;
+    top: 540px;
+    margin-bottom: 0px;
     padding: 0 40px 0 130px;
     box-sizing: border-box;
-    height: 125px;
+    height: 100px;
 }
 #histogram .reset,
 #graph-reset {
@@ -349,10 +352,10 @@ h1 {
     width: 15%;
 }
 #sort {
-    position: absolute;
-    top: 125px;
-    right: 1%;
-    width: 12%;
+    position: fixed;
+    top: 140px;
+    right: 40px;
+    width: 130px;
     border: 1px solid #ddd;
     padding: 10px;
 }
@@ -412,11 +415,12 @@ h1 {
     margin: 0;
     padding: 0;
     font-size: 12px;
-    margin-bottom: 15px;
+    margin-top: 15px;
 }
 #sort li {
     cursor: pointer;
     text-transform: capitalize;
+    margin-bottom: 5px;
 }
 #sort .disabled {
     cursor: default;
@@ -637,7 +641,6 @@ h1 {
 }
 #list-wrapper {
     width: 80%;
-    margin-top: 90px;
     display: none;
 }
 .list #list-wrapper {
