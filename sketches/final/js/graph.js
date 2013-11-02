@@ -2,9 +2,9 @@ var lc = lc || {};
 
 lc.graph = function() {
 	var width = 1000,
-        height = 550,
+        height = 540,
         gWidth = 800,
-        gHeight = 490,
+        gHeight = 520,
         bookData,
         currentBook;
 
@@ -31,11 +31,7 @@ lc.graph = function() {
     svg.append("clipPath").attr("id","graph-box")
     	.append("rect").attr("width",gWidth).attr("height",gHeight);
 
-    svg.append("g").attr("id","graph-subjects").attr("transform","translate(120,40)").attr("clip-path","url(#graph-box)");
-
-	var barCharts = svg.append("g").attr("class","barchart").attr("transform","translate(120,40)").attr("clip-path","url(#graph-box)");
-
-    var circleGroup = svg.append("g").attr("class","circles").attr("transform","translate(120,40)").attr("clip-path","url(#graph-box)");
+    var circleGroup = svg.append("g").attr("class","circles").attr("transform","translate(120,0)").attr("clip-path","url(#graph-box)");
 
     var axes = svg.append("g").attr("class","axes");
     // creates the axes
@@ -55,12 +51,12 @@ lc.graph = function() {
     	axes.append("g")
     		.attr("class", "axis")
     		.attr("id","xAxis")
-    		.attr("transform","translate(120," +(height-20) +")");
+    		.attr("transform","translate(120," + gHeight +")");
 
     	axes.append("g")
     		.attr("class", "axis")
     		.attr("id","yAxis")
-    		.attr("transform","translate(120,40)");
+    		.attr("transform","translate(120,0)");
 
         axes.append("text")
   	        .attr("class","axis_labels")
@@ -165,7 +161,7 @@ lc.graph = function() {
     }
 
     function classNameify(name) {
-        return String(name).replace(/^\s+|\s+$/g,'').toLowerCase().replace(/[^\w\s]/gi, '').split(" ").join("-");
+        return "t-"+String(name).replace(/^\s+|\s+$/g,'').toLowerCase().replace(/[^\w\s]/gi, '').split(" ").join("-");
     }
 
     self.updateLabels = function(level) {
@@ -173,8 +169,9 @@ lc.graph = function() {
 		circleGroup.selectAll("circle").each(function(d){
 			if (!d.loc_call_num_subject) return;
 			var title = d.loc_call_num_subject.split("--")[level];
-			if (title)
+			if (title) {
 				d3.selectAll("text."+classNameify(title)).classed("b",true);
+			}
 		})
     };
 

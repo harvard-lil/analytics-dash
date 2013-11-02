@@ -219,10 +219,10 @@ h1 {
 }
 #labels {
     width: 300px;
-    height: 500px;
+    height: 530px;
     position: absolute;
     left: 85px;
-    top: 35px;
+    top: 40px;
     z-index: -1;
 }
 #labels text {
@@ -233,18 +233,18 @@ h1 {
     font-weight: bold;
 }
 #nav {
-    height: 500px;
+    height: 520px;
     width: 30px;
     position: absolute;
     left: 80px;
-    top: 35px;
+    top: 40px;
 }
 #nav-context {
-    height: 500px;
+    height: 520px;
     width: 30px;
     position: absolute;
     left: 50px;
-    top: 35px;
+    top: 40px;
 }
 #graph-wrapper #graph-reset,
 #graph-wrapper.child #nav-context text {
@@ -264,6 +264,9 @@ h1 {
 }
 #graph {
     width: 80%;
+}
+#graph svg {
+    margin-top: 35px;
 }
 #graph-subjects {
     height: 500px;

@@ -10,7 +10,7 @@ var lc = lc || {};
 lc.subjectgraph = function() {
     var self = d3.dispatch("click", "mouseover", "mouseout", "selected"),
             baseurl = 'http://hlslwebtest.law.harvard.edu/v1/api/lc_class/',
-            height = $("#nav").height(),
+            height = $("#nav").height()-10,
             selected = null,
             sideBar = d3.select("#nav"),
             context = d3.select("#nav-context"),
@@ -202,7 +202,7 @@ lc.subjectgraph = function() {
     }
 
     function classNameify(name) {
-        return name.toLowerCase().replace(/^\s+|\s+$/g,'').replace(/[^\w\s]/gi, '').split(" ").join("-");
+        return "t-"+String(name).replace(/^\s+|\s+$/g,'').toLowerCase().replace(/[^\w\s]/gi, '').split(" ").join("-");name.toLowerCase().replace(/^\s+|\s+$/g,'').replace(/[^\w\s]/gi, '').split(" ").join("-");
     }
 
     self.updateBounds = function(selected) {
@@ -223,7 +223,7 @@ lc.subjectgraph = function() {
     };
 
     self.calculateY = function(sort_number) {
-            var cy = 0,
+            var cy = 10,
             matchedPosition = 0,
             matchedHeight = 0,
             children = self.currentChildren || self.rootChildren,
@@ -240,7 +240,7 @@ lc.subjectgraph = function() {
                     cy += percentHeight;
             }
 
-            return cy;
+            return cy+100;
     };
 
     self.reset = function() {
