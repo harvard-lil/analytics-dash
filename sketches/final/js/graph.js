@@ -2,7 +2,7 @@ var lc = lc || {};
 
 lc.graph = function() {
 	var width = 1000,
-        height = 550,
+        height = 520,
         gWidth = 800,
         gHeight = 490,
         bookData,
@@ -67,7 +67,7 @@ lc.graph = function() {
 	        .attr("id","y_axis")
 	        .text("Subject")
 	        .attr("text-anchor","middle")
-	        .attr("transform","translate(20,"+(height/2)+") rotate(-90)")
+	        .attr("transform","translate(35,"+(height/2)+") rotate(-90)")
     }
     //defines function that ads labels to the axes
 
@@ -284,10 +284,10 @@ lc.graph = function() {
 		Rollover listener
     */
     $("#graph").mousemove(function(e) {
-    	lc.subjectgraph.rollover(e.offsetY - 35);
+    	lc.subjectgraph.rollover(e.offsetY);
     }).click(function(e) {
     	console.log(e);
-    	lc.subjectgraph.graphClick(e.offsetY - 35);
+    	lc.subjectgraph.graphClick(e.offsetY);
     });
 
     /*
