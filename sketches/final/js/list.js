@@ -7,9 +7,13 @@ lc.list = function() {
         list = d3.select("#list");
 
     $("#show-list").click(function(){
+        $(".graph-toggle").removeClass("selected");
+        $(this).addClass("selected");
         self.showList();
     });
     $("#show-graph").click(function(){
+        $(".graph-toggle").removeClass("selected");
+        $(this).addClass("selected");
         self.hideList();
     });
 
