@@ -38,7 +38,7 @@ lc.list = function() {
                     return lcObjectArray[d.call_num[0].substr(0,1)].color;
                 }
             }).on("click",function(d){
-                lc.graph.showInfo(d);
+                lc.graph.showInfo(d, true);
             }).on("dblclick",function(d){
                 lc.carrel.sendToCarrel(d);
             });

@@ -132,11 +132,12 @@ lc.graph = function() {
         }).on("mouseout", function(d) {
         	lc.tooltip.hide();
         }).on("click",function(d){
-        	if (svg.attr("class") == "frozen") {
-        		this.parentNode.appendChild(this);
-            	self.showInfo(d, true);
-        	}
-        	svg.attr("class","frozen");
+        	lc.carrel.sendToCarrel(d);
+        	// if (svg.attr("class") == "frozen") {
+        	// 	this.parentNode.appendChild(this);
+         //    	self.showInfo(d, true);
+        	// }
+        	// svg.attr("class","frozen");
         });
 
         updateCircles();
