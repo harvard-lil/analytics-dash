@@ -72,9 +72,9 @@ h1 {
 
 #breadcrumb {
     position: absolute;
-    top: 680px;
+    top: 630px;
     left: 55px;
-    height: 50px;
+    height: 30px;
     width: 750px;
 }
 #breadcrumb .link {
@@ -92,14 +92,16 @@ h1 {
 
 #searchTerm {
 	font-size: 20px;
-    width: 700px;
-	/*text-transform:capitalize;*/
+    width: 85%;
 	text-align: left;
 	font-weight: normal;
-    position: absolute;
-    top: 130px;
-    left: 50px;
+    position: fixed;
+    top: 116px;
+    left: 40px;
+    padding: 12px;
     cursor: pointer;
+    background: white;
+    z-index: 1;
 }
 #search:hover {
     border-color: #000;
@@ -276,10 +278,10 @@ h1 {
     width: 80%;
     position: absolute;
     top: 530px;
-    margin-bottom: 100px;
+    margin-bottom: 0px;
     padding: 0 40px 0 130px;
     box-sizing: border-box;
-    height: 125px;
+    height: 100px;
 }
 #histogram .reset,
 #graph-reset {
@@ -344,10 +346,10 @@ h1 {
     width: 15%;
 }
 #sort {
-    position: absolute;
-    top: 0px;
+    position: fixed;
+    top: 160px;
     right: 40px;
-    width: 12%;
+    width: 130px;
     border: 1px solid #ddd;
     padding: 10px;
 }
@@ -609,7 +611,6 @@ h1 {
 }
 #list-wrapper {
     width: 80%;
-    margin-top: 90px;
     display: none;
 }
 .list #list-wrapper {
