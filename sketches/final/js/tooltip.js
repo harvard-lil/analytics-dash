@@ -18,16 +18,16 @@ lc.tooltip = function() {
 	}
 
 	self.show = function(row) {
-		// if (row.className) {
-		// 	tooltip.html( row.ClassLetters + ' ' + row.ClassNumBegin + '-'+row.ClassNumEnd+': ' + row.ClassSubject);
-		// } else if (row.class) {
-		// 	tooltip.html(row.name + ': ' + commas(row.start) + '-' + commas(row.end));
-		// } else if (row.creator) {
-		// 	tooltip.html(row.title + ': ' + commas(row.loc_call_num_sort_order[0]));
-		// } else {
-		// 	tooltip.html(row)
-		// }
-		tooltip.html(row.title + ' - ' + row.loc_call_num_subject.split("--")[0]);
+		 if (row.class) {
+		 	tooltip.html( row.ClassLetters + ' ' + row.ClassNumBegin + '-'+row.ClassNumEnd+': ' + row.ClassSubject);
+		 } else if (row.class) {
+		 	tooltip.html(row.name + ': ' + commas(row.start) + '-' + commas(row.end));
+		 } else if (row.creator) {
+		 	tooltip.html(row.title + ': ' + commas(row.loc_call_num_sort_order[0]));
+		 } else {
+		 	tooltip.html(row)
+		 }
+	//	tooltip.html(row.title + ' - ' + row.loc_call_num_subject.split("--")[0]);
 
 		tooltip.show();
 	};

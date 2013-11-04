@@ -480,7 +480,64 @@
 
         <div id="searchTerm"></div>
         <div class="left-half">
-            <div id="info-wrapper">
+         <div id="sort">
+                <h2>Display</h2>
+                <div id="show-graph" class="graph-toggle selected"><span></span> Scatter</div>
+                <div id="show-list" class="graph-toggle"><span></span> List</div>
+                <!-- <div id="stack-circles">Stack Circles</div> -->
+                <ul class="y_toggle graph">
+                    <li>Y-Position By:</li>
+                    <li name="call_number_sort_order_y" class="selected"><span class="disc"></span>Call Number</li>
+                    <li name="call_number_sort_order_y" class="disabled"></span>Popularity with:</li>
+                    <li name="grads" class="indent"><span class="disc"></span>Graduates</li>
+                    <li name="undergrads" class="indent"><span class="disc"></span>Undergraduents</li>
+                    <li name="faculty" class="indent"><span class="disc"></span>Faculty</li>
+                    <li name="popularity_y" class="indent"><span class="disc"></span>Overall</li>
+                </ul>
+                <ul class="scale_toggle graph">
+                    <li>Scale By:</li>
+                    <li name="shelfrank" class="selected"><span class="disc"></span>Overall Popularity</li>
+                    <li name="pages"><span class="disc"></span>Number of Pages</li>
+                    <li name="same"><span class="disc"></span>Same Scale For All</li>
+                </ul>
+                <ul class="list-sort-by list">
+                    <li>sort by:</li>
+                    <li name="shelfrank" class="selected"><span class="disc"></span>popularity</li>
+                    <li name="pub_date_numeric"><span class="disc"></span>publication date</li>
+                    <li name="loc_call_num_sort_order"><span class="disc"></span>subject</li>
+                    <li name="creator"><span class="disc"></span>author</li>
+                    <li name="title"><span class="disc"></span>title</li>
+                    <li name="format"><span class="disc"></span>format</li>
+                    <li name="pages_numeric"><span class="disc"></span>pages</li>
+                </ul>
+            </div>
+            <div id="list-wrapper">
+                <ul id="list"></ul>
+            </div>
+            <div id="graph-wrapper">
+                <div id="graph-reset">back</div>
+                <div id="breadcrumb"></div>
+                <div id="tooltip">Currently selected:</div>
+                <svg id="nav"></svg>
+                <svg id="nav-context"></svg>
+                <svg id="labels">
+                    <rect id="rollover"></rect>
+                </svg>
+                <div id="graph"></div>
+                <div id="histogram">
+                    <!-- <div class="reset">reset</div> -->
+                    <svg></svg>
+                    <div id="slider-range"></div>
+                    <div class="axis_labels">Publication Date</div>
+                </div>
+                <div id="bookCounts"></div>
+            </div>
+        
+        
+        </div>
+        <div class="right-half">
+          <a id="add-to-carrel">Add this item to your carrel</a>
+                   <div id="info-wrapper">
                 <div class="info-title">
                     <div class="book-sort">
                         <div class="tri"></div>
@@ -525,70 +582,18 @@
                         <p class="infoLabel">Language</p>
                         <p class="field"><span></span></p>
                     </div>
+                    
                 </div>
-                <a id="add-to-carrel">Add this item to the carrel</a>
+              
             </div>
             <div id="carrel">
                 <div id="carrel-box">
                     <ul></ul>
                 </div>
-                <a id="table-carrel" class="carrel-action">View as Table</a>
-                <a id="export-carrel" class="carrel-action">Export as spreadsheet</a>
+                <a id="table-carrel" class="carrel-action">View your carrel as a Table -></a>
+                <a id="export-carrel" class="carrel-action">Export it as a spreadsheet -></a>
             </div>
-        </div>
-        <div class="right-half">
-            <div id="graph-wrapper">
-                <div id="graph-reset">reset</div>
-                <div id="breadcrumb"></div>
-                <div id="tooltip">Currently selected:</div>
-                <svg id="nav"></svg>
-                <svg id="nav-context"></svg>
-                <svg id="labels">
-                    <rect id="rollover"></rect>
-                </svg>
-                <div id="graph"></div>
-                <div id="histogram">
-                    <!-- <div class="reset">reset</div> -->
-                    <svg></svg>
-                    <div id="slider-range"></div>
-                    <div class="axis_labels">Publication Date</div>
-                </div>
-                <div id="bookCounts"></div>
-            </div>
-            <div id="sort">
-                <h2>Display</h2>
-                <div id="show-graph" class="graph-toggle selected"><span></span> Scatter</div>
-                <div id="show-list" class="graph-toggle"><span></span> List</div>
-                <!-- <div id="stack-circles">Stack Circles</div> -->
-                <ul class="y_toggle graph">
-                    <li>Y-Position By:</li>
-                    <li name="call_number_sort_order_y" class="selected"><span class="disc"></span>Call Number</li>
-                    <li name="call_number_sort_order_y" class="disabled"></span>Popularity with:</li>
-                    <li name="grads" class="indent"><span class="disc"></span>Graduates</li>
-                    <li name="undergrads" class="indent"><span class="disc"></span>Undergraduents</li>
-                    <li name="faculty" class="indent"><span class="disc"></span>Faculty</li>
-                    <li name="popularity_y" class="indent"><span class="disc"></span>Overall</li>
-                </ul>
-                <ul class="scale_toggle graph">
-                    <li>Scale By:</li>
-                    <li name="shelfrank" class="selected"><span class="disc"></span>Overall Popularity</li>
-                    <li name="pages"><span class="disc"></span>Number of Pages</li>
-                    <li name="same"><span class="disc"></span>Same Scale For All</li>
-                </ul>
-                <ul class="list-sort-by list">
-                    <li>sort by:</li>
-                    <li name="shelfrank" class="selected"><span class="disc"></span>popularity</li>
-                    <li name="pub_date_numeric"><span class="disc"></span>publication date</li>
-                    <li name="loc_call_num_sort_order"><span class="disc"></span>subject</li>
-                    <li name="creator"><span class="disc"></span>author</li>
-                    <li name="title"><span class="disc"></span>title</li>
-                    <li name="format"><span class="disc"></span>format</li>
-                    <li name="pages_numeric"><span class="disc"></span>pages</li>
-                </ul>
-            </div>
-            <div id="list-wrapper">
-                <ul id="list"></ul>
-            </div>
+
         </div>
     </body>
     <script type="text/javascript" src="lib/jquery-ui-1.10.3.custom.min.js"></script>

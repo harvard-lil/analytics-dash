@@ -2,9 +2,9 @@ var lc = lc || {};
 
 lc.graph = function() {
 	var width = 1000,
-        height = 530,
+        height = 500,
         gWidth = 800,
-        gHeight = 510,
+        gHeight = 480,
         bookData,
         currentBook;
 
@@ -223,9 +223,9 @@ lc.graph = function() {
 
         if (data.call_num && lcObjectArray[data.call_num[0].substr(0,1)]) {
         	var c = lcObjectArray[data.call_num[0].substr(0,1)].color
-        	$("#info").css("border-left-color",c);
+        	$("#info").css("border-top-color",c);
         } else {
-        	$("#info").css("border-left-color","#808080");
+        	$("#info").css("border-top-color","#808080");
         }
 
         if (data.call_num)

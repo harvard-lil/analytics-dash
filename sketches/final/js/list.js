@@ -3,7 +3,7 @@ var lc = lc || {};
 lc.list = function() {
 
     var documents;
-    var visWrapper = $(".right-half"),
+    var visWrapper = $(".left-half"),
         list = d3.select("#list");
 
     $("#show-list").click(function(){

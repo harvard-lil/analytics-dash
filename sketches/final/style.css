@@ -76,8 +76,8 @@ h1 {
 
 #breadcrumb {
     position: absolute;
-    top: 635px;
-    left: 55px;
+    top: 515px;
+    left: 50px;
     height: 30px;
     width: 750px;
 }
@@ -96,7 +96,7 @@ h1 {
 
 #searchTerm {
 	font-size: 20px;
-    width: 85%;
+    width: 60%;
 	text-align: left;
 	font-weight: normal;
     position: fixed;
@@ -154,15 +154,17 @@ h1 {
     width: 200px;
 }
 .right-half {
-    width: 73%;
-    position: relative;
-    float: right;
-    height: 100%;
-    margin-top: 140px;
-}
-.left-half{
     width: 24%;
     position: fixed;
+    height: 100%;
+    margin-top: 100px;
+    right: 20px;
+}
+
+.left-half{
+    width: 73%;
+    position: relative;
+    float:left;
     height: 100%;
     margin-top: 140px;
     margin-left: 40px;
@@ -170,28 +172,31 @@ h1 {
 #graph-wrapper {
     position: absolute;
     top: 0px;
+    left:140px;
     width: 100%;
 }
+
 #carrel {
-    font-size: 12px;
+    font-size: 10px;
     width: 100%;
     position: absolute;
-    bottom: 90px;
-    height: 200px;
+    bottom: 170px;
+    height: 120px;
 }
 #carrel-box {
     width: 100%;
-    height: 122px;
+    height: 76px;
     border: 1px solid #808080;
     margin-bottom: 7px;
     box-sizing: border-box;
 }
+
 #carrel-box ul {
     margin: 0;
     padding: 0;
     list-style-type: none;
     overflow-x: scroll;
-    height: 128px;
+    height: 84px;
     white-space: nowrap;
 }
 #carrel-box li {
@@ -212,7 +217,7 @@ h1 {
     font-family: courier, monospace;
     cursor: pointer;
     margin-bottom: 3px;
-    float: left;
+    float: right;
     text-transform: uppercase;
     font-size: 14px;
 }
@@ -238,7 +243,7 @@ h1 {
     font-weight: bold;
 }
 #nav {
-    height: 510px;
+    height: 490px;
     width: 30px;
     position: absolute;
     left: 80px;
@@ -269,6 +274,7 @@ h1 {
     stroke: black;
 }
 #graph {
+	left: 140px;
     width: 80%;
 }
 #graph-subjects {
@@ -284,21 +290,22 @@ h1 {
     width: 80%;
     position: absolute;
     top: 540px;
-    margin-bottom: 0px;
+    margin-bottom: 16px;
     padding: 0 40px 0 130px;
     box-sizing: border-box;
-    height: 100px;
+    height: 80px;
 }
-#histogram .reset,
+
 #graph-reset {
     border: 1px solid #808080;
     color: #808080;
     cursor: pointer;
-    padding: 2px 6px;
+    padding: 3px 6px;
     text-transform: uppercase;
     font-size: 12px;
-    display: inline-block;
     position: absolute;
+    margin-top: 492px;
+    margin-left: 50px;
 }
 #histogram .reset {
     left: 70px;
@@ -354,7 +361,7 @@ h1 {
 #sort {
     position: fixed;
     top: 140px;
-    right: 40px;
+    left: 40px;
     width: 130px;
     border: 1px solid #ddd;
     padding: 10px;
@@ -371,11 +378,12 @@ h1 {
 }
 #sort .graph-toggle {
     cursor: pointer;
-    margin: 10px auto 20px;
+    margin: 10px 0px;
     display: block;
-    width: 80px;
+    width: 100px;
     font-size: 14px;
     line-height: 30px;
+    left: 0px;
     color: #A6A6A6;
 }
 #sort .graph-toggle:hover {
@@ -471,10 +479,10 @@ h1 {
     font-family:akkurat, univers, arial, sans-serif;
     width: 100%;
     position: absolute;
-    top: 0px;
+    top: 30px;
     font-size: 16px;
     box-sizing: border-box;
-    height: 500px;
+    height: 50%;
     background: #eee;
     border: 1px solid #ccc;
 }
@@ -487,11 +495,12 @@ h1 {
     position: absolute;
     top: -1px;
     right: -1px;
-    width: 100px;
-    height: 30px;
+    width: 20px;
+    height: 0px;
     background-color: white;
     border-bottom: 1px solid #ccc;
     border-left: 1px solid #ccc;
+    
 }
 #info-wrapper .info-title {
     margin-top: 10px;
@@ -532,7 +541,7 @@ h1 {
     border-right: 13px solid #808080;
     display: block;
     float: left;
-    padding: 0 0 0 20px;
+    padding: 0 5px 0 0;
     margin-bottom: 5px;
  }
  #info-wrapper .book-sort.next {
@@ -566,17 +575,18 @@ h1 {
     left: 0;
     overflow: scroll;
     padding-left: 30px;
-    border-left: 5px solid #eee;
+    border-top: 5px solid #eee;
 }
 #add-to-carrel {
     font-family: courier, monospace;
     text-transform: uppercase;
-    position: absolute;
-    top: 470px;
+    position: relative;
+    top: 0px;
     width: 100%;
-    text-align: center;
+    text-align: left;
     cursor: pointer;
-    font-size: 16px;
+    font-size: 12px;
+    color:red;
     text-decoration: underline;
 }
 #add-to-carrel:hover {
@@ -642,6 +652,7 @@ h1 {
 #list-wrapper {
     width: 80%;
     display: none;
+    margin-left: 150px;
 }
 .list #list-wrapper {
     display: block;

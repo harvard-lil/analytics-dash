@@ -235,15 +235,15 @@ lc.subjectgraph = function() {
             .attr("x", 0)
             .attr("y", currentClass.y)
             .attr("height", currentClass.height)
-            .attr("width", 718);
+            .attr("width",620);
     };
 
     // dive into the subject classes based on a click on the graph
-    self.graphClick = function(cy) {
+  /*  self.graphClick = function(cy) {
         var currentClass = self.getChildY(cy);
         self.getChildrenID(currentClass.class.id);
     };
-
+*/
     self.getChildY = function(cy) {
         var currentPosition = 0,
             matchedPosition = 0,
