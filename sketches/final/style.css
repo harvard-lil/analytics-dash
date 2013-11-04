@@ -1,24 +1,24 @@
 body, html {
-    font-family:akkurat, univers, arial, sans-serif;
+    font-family: akkurat, univers, helvetica, arial, sans-serif;
+    margin: 0;
 }
 #title-wrapper {
     position: fixed;
     background: white;
-    width: 100%;
     z-index: 1;
     top: 0;
-    left: 0;
+    left: 40px;
+    right: 40px;
 }
 h1 {
     font-size: 40px;
-    margin: 5px;
+    margin: 10px 4px 4px 0px;
     text-transform: uppercase;
     letter-spacing: 1px;
 }
 #nav-bar {
     background: black;
-    width: 100%;
-    padding: 5px 10px;
+    padding: 8px;
     color: white;
 }
 #nav-bar div {
@@ -27,13 +27,18 @@ h1 {
     display: inline-block;
     text-decoration: underline;
 }
+#show-search img {
+    margin: 1px 5px 0 0;
+    float: left;
+}
 #search-form {
-    width: 33%;
-    height: 330px;
+    width: 450px;
+    height: 300px;
     background-color: white;
     display: none;
     position: fixed;
-    top: 83px;
+    top: 94px;
+    left: 40px;
     z-index: 2;
     box-shadow: 5px 5px 10px #808080;
 }
@@ -44,7 +49,7 @@ h1 {
     border: 1px solid #808080;
     color: #808080;
     position: absolute;
-    top: 290px;
+    top: 260px;
     right: 20px;
     cursor: pointer;
     text-transform: uppercase;
@@ -69,24 +74,42 @@ h1 {
     background-color: #000;
 }
 
+#breadcrumb {
+    position: absolute;
+    top: 635px;
+    left: 55px;
+    height: 30px;
+    width: 750px;
+}
+#breadcrumb .link {
+    font-size: 12px;
+}
+#breadcrumb .tick {
+    margin: 0 10px;
+}
+#breadcrumb .item {
+    cursor: pointer;
+}
+#breadcrumb .item:hover {
+    text-decoration: underline;
+}
+
 #searchTerm {
 	font-size: 20px;
-    width: 700px;
-	/*text-transform:capitalize;*/
+    width: 85%;
 	text-align: left;
 	font-weight: normal;
-    position: absolute;
-    top: 0;
-    left: 90px;
+    position: fixed;
+    top: 94px;
+    left: 40px;
+    padding: 10px;
     cursor: pointer;
+    background: white;
+    z-index: 1;
 }
 #search:hover {
     border-color: #000;
     color: #000;
-}
-.search-label {
-    margin: 5px 23px;
-    font-size: 10px;
 }
 .form-row {
     width: 90%;
@@ -98,21 +121,28 @@ h1 {
 .form-row:first-child {
     margin-top: 20px;
 }
-.form-row .box {
+.form-row .clear {
     height: 15px;
     width: 15px;
-    display: inline-block;
-    background-color: #aaa;
-    float: left;
+    background-image: url(img/clear-box.png);
+    background-position: 0 -15px;
+    float: right;
     margin-right: 7px;
     cursor: pointer;
+    display: none;
 }
-.form-row.locked .box {
+.form-row.filled .clear {
+    display: inline-block;
+}
+.form-row.filled .clear:hover {
+    background-position: 0 0;
+}
+/*.form-row.locked .box {
     background-color: #000;
 }
 .form-row.locked {
     color: #000;
-}
+}*/
 .form-row label {
     float: left;
     margin-right: 10px;
@@ -128,37 +158,40 @@ h1 {
     position: relative;
     float: right;
     height: 100%;
+    margin-top: 140px;
 }
 .left-half{
-    width: 25%;
+    width: 24%;
     position: fixed;
     height: 100%;
-    margin-top: 90px;
+    margin-top: 140px;
+    margin-left: 40px;
 }
 #graph-wrapper {
     position: absolute;
-    top: 80px;
+    top: 0px;
     width: 100%;
 }
 #carrel {
     font-size: 12px;
     width: 100%;
     position: absolute;
-    bottom: 60px;
+    bottom: 90px;
     height: 200px;
 }
 #carrel-box {
     width: 100%;
-    height: 120px;
+    height: 122px;
     border: 1px solid #808080;
-    margin-bottom: 5px;
+    margin-bottom: 7px;
+    box-sizing: border-box;
 }
 #carrel-box ul {
     margin: 0;
     padding: 0;
     list-style-type: none;
     overflow-x: scroll;
-    height: 140px;
+    height: 128px;
     white-space: nowrap;
 }
 #carrel-box li {
@@ -189,19 +222,34 @@ h1 {
 .carrel-action:hover {
     text-decoration: underline;
 }
+#labels {
+    width: 718px;
+    height: 530px;
+    position: absolute;
+    left: 85px;
+    top: 0px;
+    z-index: -1;
+}
+#labels text {
+    font-family: sans-serif;
+    font-size: 12px;
+}
+#labels .b{
+    font-weight: bold;
+}
 #nav {
-    height: 500px;
-    width: 300px;
+    height: 510px;
+    width: 30px;
     position: absolute;
     left: 80px;
-    top: 35px;
+    top: 0px;
 }
 #nav-context {
-    height: 500px;
-    width: 300px;
+    height: 510px;
+    width: 30px;
     position: absolute;
     left: 50px;
-    top: 35px;
+    top: 0px;
 }
 #graph-wrapper #graph-reset,
 #graph-wrapper.child #nav-context text {
@@ -210,17 +258,15 @@ h1 {
 #graph-wrapper.child #graph-reset {
     display: inline-block;
     position: absolute;
-    top: 35px;
+    top: 0px;
+    left: 0;
+    padding: 2px;
 }
 .schema rect {
     stroke: white;
 }
 .schema.selected rect {
     stroke: black;
-}
-.schema text {
-    font-family: sans-serif;
-    font-size: 12px;
 }
 #graph {
     width: 80%;
@@ -231,17 +277,17 @@ h1 {
     position: absolute;
     z-index: 0;
     left: 130px;
-    top: 40px;
+    top: 5px;
 }
 
 #histogram {
     width: 80%;
     position: absolute;
-    top: 565px;
-    margin-bottom: 100px;
+    top: 540px;
+    margin-bottom: 0px;
     padding: 0 40px 0 130px;
     box-sizing: border-box;
-    height: 125px;
+    height: 100px;
 }
 #histogram .reset,
 #graph-reset {
@@ -257,9 +303,6 @@ h1 {
 #histogram .reset {
     left: 70px;
 }
-#histogram svg {
-    float: left;
-}
 #histogram .reset:hover,
 #graph-reset:hover {
     border-color: #000;
@@ -271,7 +314,7 @@ h1 {
 }
 #slider-range {
     border: 1px solid #808080;
-    height: 70px;
+    height: 10px;
     box-sizing: border-box;
 }
 .ui-slider-range {
@@ -289,12 +332,12 @@ h1 {
 }
 .ui-slider-horizontal .ui-slider-handle {
     width: 10px;
-    height: 70px;
-    top: -1px;
+    height: 16px;
+    top: -4px;
     font-size: 12px;
-    line-height: 160px;
+    line-height: 53px;
     margin-left: -5px;
-    text-indent: -7px;
+    text-indent: -8px;
     cursor: pointer;
 }
 #histogram rect {
@@ -309,10 +352,10 @@ h1 {
     width: 15%;
 }
 #sort {
-    position: absolute;
-    top: 125px;
-    right: 1%;
-    width: 12%;
+    position: fixed;
+    top: 140px;
+    right: 40px;
+    width: 130px;
     border: 1px solid #ddd;
     padding: 10px;
 }
@@ -333,27 +376,51 @@ h1 {
     width: 80px;
     font-size: 14px;
     line-height: 30px;
+    color: #A6A6A6;
+}
+#sort .graph-toggle:hover {
+    color: #808080;
+}
+#sort .graph-toggle.selected {
+    color: #000;
 }
 #sort .graph-toggle span {
     width: 30px;
     height: 30px;
-    background: #808080;
-    border-radius: 2px;
     display: inline-block;
     margin-right: 5px;
     float: left;
+    background-image: url(img/sort-sprite.png);
+}
+#sort #show-graph span {
+    background-position: -30px -60px;
+}
+#sort #show-graph:hover span {
+    background-position: -30px -30px;
+}
+#sort #show-graph.selected span {
+    background-position: -30px 0px;
+}
+#sort #show-list span {
+    background-position: 0 -60px;
+}
+#sort #show-list:hover span {
+    background-position: 0 -30px;
+}
+#sort #show-list.selected span {
+    background-position: 0 0;
 }
 #sort ul {
     list-style-type: none;
     margin: 0;
     padding: 0;
-    font-size: 10px;
-    margin-bottom: 16px;
-    line-height: 16px;
+    font-size: 12px;
+    margin-top: 15px;
 }
 #sort li {
     cursor: pointer;
     text-transform: capitalize;
+    margin-bottom: 5px;
 }
 #sort .disabled {
     cursor: default;
@@ -393,6 +460,7 @@ h1 {
 ::-webkit-scrollbar {
     -webkit-appearance: none;
     width: 7px;
+    height: 5px;
 }
 ::-webkit-scrollbar-thumb {
     border-radius: 4px;
@@ -504,9 +572,9 @@ h1 {
     font-family: courier, monospace;
     text-transform: uppercase;
     position: absolute;
-    top: 460px;
-    left: 20px;
-    z-index: 100;
+    top: 470px;
+    width: 100%;
+    text-align: center;
     cursor: pointer;
     font-size: 16px;
     text-decoration: underline;
@@ -573,7 +641,6 @@ h1 {
 }
 #list-wrapper {
     width: 80%;
-    margin-top: 90px;
     display: none;
 }
 .list #list-wrapper {
@@ -604,9 +671,9 @@ h1 {
 }
 #list {
     border: 1px solid #000;
-    padding: 10px;
+    padding: 10px 10px 0 10px;
     box-sizing: border-box;
-    font-size: 12px;
+    margin-bottom: 20px;
 }
 #list li {
     position: relative;
@@ -630,14 +697,14 @@ h1 {
     max-width: 60%;
     overflow: hidden;
     white-space: nowrap;
-    text-overflow: ellipses;
+    text-overflow: ellipsis;
 }
 #list .right {
     float: right;
     max-width: 30%;
     white-space: nowrap;
     overflow: hidden;
-    text-overflow: ellipses;
+    text-overflow: ellipsis;
 }
 
 circle {
@@ -698,5 +765,6 @@ circle:hover {
     -moz-border-radius: 5px;
     -webkit-border-radius: 5px;
     border-radius: 5px;
+    text-transform: capitalize;
     display: none;
 }

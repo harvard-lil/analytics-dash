@@ -10,10 +10,11 @@ var lc = lc || {};
 lc.subjectgraph = function() {
     var self = d3.dispatch("click", "mouseover", "mouseout", "selected"),
             baseurl = 'http://hlslwebtest.law.harvard.edu/v1/api/lc_class/',
-            height = $("#nav").height(),
+            height = $("#nav").height()-10,
             selected = null,
             sideBar = d3.select("#nav"),
-            context = d3.select("#nav-context");
+            context = d3.select("#nav-context"),
+            breadcrumb = $("#breadcrumb");
 
     $("#graph-reset").click(function(){
         self.reset();
@@ -37,11 +38,14 @@ lc.subjectgraph = function() {
         very hacky code to patch holes because some categories say their end
         is in the 8 millions, screwing up the structure
     */
+    var globalDepth = 0;
+
     var processChild = function(childString, next) {
             var values = childString.split('%%');
             var nameparts = values[3].split('--');
             var parts = nameparts.length-1;
             var lastname = nameparts[parts];
+            globalDepth = parts;
             return {
                     'class': values[0],
                     'start': +values[1],
@@ -49,6 +53,7 @@ lc.subjectgraph = function() {
                     'count': next ? (next.start - 1) - values[1] : values[2] - values[1],
                     'name' : values[3],
                     'id'   : values[4],
+                    'depth' : parts,
                     'lastname' : nameparts[parts]
             };
     };
@@ -85,24 +90,30 @@ lc.subjectgraph = function() {
                     self.currentChildren = processedChildren;
                     self.currentTotal = total;
                     self.update(sideBar, processedChildren, total);
+                    lc.graph.updateLabels(globalDepth);
             }
 
             self.selected();
     };
 
     self.update = function(parent, data, total) {
-        if (parent.node().id == "nav")
+        var child = false;
+        if (parent.node().id == "nav") {
             d3.select("#graph-wrapper").classed("child",true);
+            child = true;
+        }
         var groups = parent.selectAll(".schema")
             .data(data);
-            
+
+        var texts = d3.select("#labels").selectAll("text").data(data);
+        texts.enter().append("text");
+        texts.exit().remove();
+
         var entering = groups.enter()
             .append("g")
             .attr("class", "schema");
 
         var rectangles = entering.append("rect");
-
-        var texts = entering.append("text").attr("x", 34);
 
         var cy = 0;
 
@@ -122,13 +133,25 @@ lc.subjectgraph = function() {
                 return d.height;
             });
 
-        var yOffset = 0;
+        var yOffset = 0,
+            ty = 0;
 
-        groups.select("text").text(function(d){
-                if (d.cy - yOffset < 12) return;
+        texts.attr("x", child ? 34 : 0)
+            .attr("y",function(d){
+                d.height = (d.count / total) * height;
+                d.cy = ty;
+                ty += d.height;
+                return d.cy + 10;
+            }).text(function(d){
+                if (d.cy - yOffset < 15) return;
                 yOffset = d.cy;
                 return d.lastname;
-            }).attr("fill", "black");
+            }).attr("class",function(d){
+                return classNameify(d.lastname);
+            });
+            // .attr("fill", function(d) {
+            //     return schema.colorClass(d.class);
+            // });
 
         // rectangles.on("mouseover", function(d) {
         //     self.mouseover(d);
@@ -142,22 +165,49 @@ lc.subjectgraph = function() {
         //     .attr("width", 30);
 
         groups.on("click", function(d) {
-            console.log('clicked', d.name, d.id);
             self.getChildrenID(d.id);
             self.updateBounds(d);
+
+            crumbize(d);
 
             d3.selectAll(".schema").classed("selected",false);
             d3.select(this).classed("selected",true);
             this.parentNode.appendChild(this);
         });
 
+        lc.graph.updateLabels(globalDepth);
+        d3.select("#rollover")
+            .attr("width", 0)
+
         // remove divs when they leave
         groups.exit().remove();
     };
 
-    self.updateBounds = function(selected) {
+    function crumbize(d) {
+        var breadDepth = breadcrumb.find(".link") ? breadcrumb.find(".link").length : 0;
+        var l = $("<span>").attr("class","link")
+                .html((d.depth == 0 ? "" : "<span class='tick'>></span>")+"<span class='item'>"+d.lastname+"</span>")
+                .click(function(){
+                    self.getChildrenID(d.id);
+                    self.updateBounds(d);
+                    breadcrumb.find(".link").each(function(i,e){
+                        if (i > d.depth) $(this).remove();
+                    });
+                });
 
-        console.log(selected);
+        if (d.depth + 1 < breadDepth) breadcrumb.empty();
+        else if (d.depth + 1 == breadDepth) breadcrumb.find(".link").eq(d.depth).remove();
+
+        if (d.depth == 0) l.css("color",schema.colorClass(d.class));
+
+        breadcrumb.append(l);
+    }
+
+    function classNameify(name) {
+        return "t-"+String(name).replace(/^\s+|\s+$/g,'').toLowerCase().replace(/[^\w\s]/gi, '').split(" ").join("-");name.toLowerCase().replace(/^\s+|\s+$/g,'').replace(/[^\w\s]/gi, '').split(" ").join("-");
+    }
+
+    self.updateBounds = function(selected) {
         var cy = 0,
         matchedPosition = 0,
         matchedHeight = 0;
@@ -174,12 +224,64 @@ lc.subjectgraph = function() {
         }
     };
 
+    // caching this highlighted object so we're not creating new ones on mousemove
+    var highlighted = {};
+    self.rollover = function(cy) {
+        var currentClass = self.getChildY(cy);
+
+        d3.select("#rollover")
+            .attr("fill", "black")
+            .attr("fill-opacity", .1)
+            .attr("x", 0)
+            .attr("y", currentClass.y)
+            .attr("height", currentClass.height)
+            .attr("width", 718);
+    };
+
+    // dive into the subject classes based on a click on the graph
+    self.graphClick = function(cy) {
+        var currentClass = self.getChildY(cy);
+        self.getChildrenID(currentClass.class.id);
+    };
+
+    self.getChildY = function(cy) {
+        var currentPosition = 0,
+            matchedPosition = 0,
+            matchedHeight = 0,
+            children = self.currentChildren || self.rootChildren,
+            total = self.currentTotal || self.rootTotal;
+
+        highlighted.class = null;
+        highlighted.height = null;
+        highlighted.y = cy;
+
+        if (!children || !children.length) {
+            // nothing to look for yet
+            return highlighted;
+        }
+
+        for (var i = 0; i < children.length; i++) {
+            var currentClass = children[i];
+            var rootHeight = percentHeight = (currentClass.count / total) * height;
+            if (currentPosition <= cy && currentPosition + rootHeight >= cy) {
+                highlighted.class = currentClass;
+                highlighted.height = rootHeight
+                highlighted.y = currentPosition;
+
+                return highlighted;
+            }
+            currentPosition += percentHeight;
+        }
+
+        return highlighted;
+    };
+
     self.calculateY = function(sort_number) {
-            var cy = 0,
-                    matchedPosition = 0,
-                    matchedHeight = 0,
-                    children = self.currentChildren || self.rootChildren,
-                    total = self.currentTotal || self.rootTotal;
+            var cy = 10,
+            matchedPosition = 0,
+            matchedHeight = 0,
+            children = self.currentChildren || self.rootChildren,
+            total = self.currentTotal || self.rootTotal;
 
             for (var i = 0; i < children.length; i++) {
                     var currentClass = children[i];
@@ -192,14 +294,16 @@ lc.subjectgraph = function() {
                     cy += percentHeight;
             }
 
-            return cy;
+            return cy+100;
     };
 
     self.reset = function() {
             self.currentChildren = null;
             self.currentTotal = null;
             self.initialized = false;
+            globalDepth = 0;
             self.update(sideBar, []);
+            breadcrumb.empty();
             d3.select("#graph-wrapper").classed("child",false);
             d3.selectAll(".schema").classed("selected",false);
             self.getChildren("top-level class");
@@ -207,10 +311,12 @@ lc.subjectgraph = function() {
     self.hide = function() {
             $("#nav").hide();
             $("#nav-context").hide();
+            $("#labels").hide();
     };
     self.show = function() {
             $("#nav").show();
             $("#nav-context").show();
+            $("#labels").show();
     };
 
     self.getChildren("top-level class");

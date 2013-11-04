@@ -10,41 +10,49 @@
         <div id="title-wrapper">
             <h1>Library Explorer</h1>
             <div id="nav-bar">
-                <div id="show-search">Start a new search</div>
+                <div id="show-search"><img src="img/magnifier.png">Start a new search</div>
                 <div>About</div>
                 <div>Instructions</div>
             </div>
         </div>
         <div id="search-form">
-            <div class="search-label">lock</div>
             <div class="form-row">
-                <label><div class="box"></div>Subject Keyword</label><input id="search-lcsh_keyword" type="text" value=""></input>
+                <label>Subject Keyword</label>
+                <input id="search-lcsh_keyword" type="text" value="" style="width:240px;"></input>
+                <div class="clear"></div>
             </div>
             <div class="form-row">
-                <label><div class="box"></div>Author Name</label><input id="search-creator" type="text" value=""></input>
+                <label>Author Name</label>
+                <input id="search-creator" type="text" value="" style="width:267px;"></input>
+                <div class="clear"></div>
             </div>
             <div class="form-row">
-                <label><div class="box"></div>Title</label><input id="search-title" type="text" value=""></input>
+                <label>Title</label>
+                <input id="search-title" type="text" value="" style="width:330px;"></input>
+                <div class="clear"></div>
             </div>
             <div class="form-row">
-                <label><div class="box"></div>Year Range</label>
+                <label>Year Range</label>
                 <input id="search-year_0" type="text" value="" style="width:40px;"></input>
                 <span style="float:left; width:20px; text-align:center;"> - </span>
                 <input id="search-year_1" type="text" value="" style="width:40px;"></input>
+                <div class="clear"></div>
             </div>
-            <div class="form-row">
-                <label><div class="box"></div>Call Number Range</label>
+            <!-- <div class="form-row">
+                <label>Call Number Range</label>
                 <input id="search-range_0" type="text" value="" style="width:100px;"></input>
                 <span style="float:left; width:20px; text-align:center;"> - </span>
                 <input id="search-range_1" type="text" value="" style="width:100px;"></input>
+            </div> -->
+            <div class="form-row">
+                <label>Call Number Subject</label>
+                <input id="search-lcsh" type="text" value="" style="width:213px;"></input>
+                <div class="clear"></div>
             </div>
             <div class="form-row">
-                <label><div class="box"></div>Call Number Subject</label><input id="search-lcsh" type="text" value=""></input>
-            </div>
-            <div class="form-row">
-                <label><div class="box"></div>Format</label>
+                <label>Format</label>
                 <select id="search-format">
-                    <option>All</option>
+                    <option>All Formats</option>
                     <option>Book</option>
                     <option>Serial</option>
                     <option>Map</option>
@@ -58,8 +66,9 @@
                 </select>
             </div>
             <div class="form-row">
-                <label><div class="box"></div>Language</label>
+                <label>Language</label>
                 <select id="search-language">
+                    <option>All Languages</option>
                     <option>English</option>
                     <option>German</option>
                     <option>French</option>
@@ -343,8 +352,9 @@
                 </select>
             </div>
             <div class="form-row">
-                <label><div class="box"></div>Library</label>
-                <select id="search-library">
+                <label>Library</label>
+                <select id="search-holding_libs">
+                    <option>All Libraries</option>
                     <option>AFR - Afro-American Studies          </option>
                     <option>AJP - Botany Arboretum               </option>
                     <option>ANT - Andover Newton Theol           </option>
@@ -457,17 +467,18 @@
                     <option>WOL - Wolbach Library                </option>
                 </select>
             </div>
-            <div class="form-row">
+            <!-- <div class="form-row">
                 <div class="result-sort selected">
                     <div class="sort-box"></div>Most Popular
                 </div>
                 <div class="result-sort">
                     <div class="sort-box"></div>Most Recent
                 </div>
-            </div>
+            </div> -->
             <input id="search" type="submit"/></br>
         </div>
 
+        <div id="searchTerm"></div>
         <div class="left-half">
             <div id="info-wrapper">
                 <div class="info-title">
@@ -476,7 +487,7 @@
                         <div class="note">prev</div>
                     </div>
                     <div class="sort-heading">
-                        <h3>1 of 200</h3>
+                        <h3><span class="index">0</span> of <span class="total">0</span></h3>
                         <p>Sorted by <span class="sorter">title</span></p>
                     </div>
                     <div class="book-sort next">
@@ -497,10 +508,6 @@
                     <div class="pub_date_numeric" name="publishing date">
                         <p class="infoLabel"><span class="tick"></span>Publishing Date</p>
                         <p class="field"></p>
-                    </div>
-                    <div class="loc_call_num_subject">
-                        <p class="infoLabel">Call Number Subject</p>
-                        <ul class="field"></ul>
                     </div>
                     <div class="lcsh">
                         <p class="infoLabel">Library of Congress Subject Headers</p>
@@ -532,13 +539,16 @@
         <div class="right-half">
             <div id="graph-wrapper">
                 <div id="graph-reset">reset</div>
-                <div id="searchTerm"></div>
+                <div id="breadcrumb"></div>
                 <div id="tooltip">Currently selected:</div>
                 <svg id="nav"></svg>
                 <svg id="nav-context"></svg>
+                <svg id="labels">
+                    <rect id="rollover"></rect>
+                </svg>
                 <div id="graph"></div>
                 <div id="histogram">
-                    <div class="reset">reset</div>
+                    <!-- <div class="reset">reset</div> -->
                     <svg></svg>
                     <div id="slider-range"></div>
                     <div class="axis_labels">Publication Date</div>
@@ -547,8 +557,8 @@
             </div>
             <div id="sort">
                 <h2>Display</h2>
+                <div id="show-graph" class="graph-toggle selected"><span></span> Scatter</div>
                 <div id="show-list" class="graph-toggle"><span></span> List</div>
-                <div id="show-graph" class="graph-toggle"><span></span> Scatter</div>
                 <!-- <div id="stack-circles">Stack Circles</div> -->
                 <ul class="y_toggle graph">
                     <li>Y-Position By:</li>

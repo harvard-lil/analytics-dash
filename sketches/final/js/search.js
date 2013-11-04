@@ -6,8 +6,9 @@ lc.search = function() {
         $("#search-form").slideToggle();
     });
 
-    $("#search-form label").click(function(){
-        $(this).parent().toggleClass("locked");
+    $("#search-form .clear").click(function(){
+        // $(this).parent().toggleClass("locked");
+        $(this).parent().removeClass("filled").find("input").val("");
     });
     $("#search-form .result-sort").click(function(){
         $("#search-form .result-sort").removeClass("selected");
@@ -30,10 +31,13 @@ lc.search = function() {
         defaultParams = '&limit=250&facet=pub_date_numeric&key=5239997b68e033fbf2854d77c6295310&filter:collection:hollis_catalog',
         search = getQueryVariable('search') || 'los angeles';
 
-    var graphTitle = $("#searchTerm")
+    var graphTitle = $("#searchTerm");
 
-    // dewey_call_nu
     $("#search").click(function() {
+        self.submitSearch(); 
+    });
+
+    self.submitSearch = function() {
         var searchTerms = {};
         searchTerms["year"] = [],
         searchTerms["range"] = [];
@@ -51,7 +55,9 @@ lc.search = function() {
                     searchTerms["range"][key.split("_")[1]] = t.val();
                 else
                     searchTerms[key] = t.val();
-                if (!t.parent().hasClass("locked")) t.val("");
+                t.parent().addClass("filled");
+            } else {
+                t.parent().removeClass("filled");
             }
         });
 
@@ -60,7 +66,7 @@ lc.search = function() {
             if (t.find(":selected") && t.prop('selectedIndex') != 0) {
                 var key = t.attr("id").split("-")[1];
                 searchTerms[key] = t.find(":selected").text();
-                if (!t.parent().hasClass("locked")) t.prop('selectedIndex',0);;
+                // if (!t.parent().hasClass("locked")) t.prop('selectedIndex',0);;
             }
         });
 
@@ -71,7 +77,7 @@ lc.search = function() {
         $("#search-form").slideUp();
 
         graphTitle.html("Searching... ");
-    });
+    };
 
     /*
         build out a query string of Solr filters for the Item API
@@ -104,6 +110,11 @@ lc.search = function() {
                     var format = terms[term];
                     var uppercased = format.charAt(0).toUpperCase() + format.slice(1);
                     query.push('filter=' + term + ':' + uppercased);
+                    break;
+
+                case 'holding_libs':
+                    var lib = terms[term].split(" - ")[0];
+                    query.push('filter=' + term + ':' + lib);
                     break;
 
                 // doing fuzzy keyword search on these
@@ -164,6 +175,11 @@ lc.search = function() {
                     prefix = prefix.replace('</b> items ', ' ' + format + '</b> ');
                     break;
 
+                case 'holding_libs':
+                    var lib = terms[term].split(" - ")[1];
+                    explanation.push('found in the ' + lib + ' collection');
+                    break;
+
                 // doing fuzzy keyword search on these
                 case 'title':
                     explanation.push('whose title contains ' + terms[term]);
@@ -178,9 +194,6 @@ lc.search = function() {
                 case 'lcsh':
                 case 'subject':
                     explanation.push('about <b>' + terms[term] + '</b>');
-                    break;
-
-                case 'collection':
                     break;
 
                 default:
@@ -208,6 +221,7 @@ lc.search = function() {
             success: function(response) {
                 console.log('response', response.docs.length, 'results');
                 if (!response.docs.length) {
+                    graphTitle.html("0 Results found with your parameters.");
                     console.log('zero results, bailing');
                     return;
                 }
@@ -238,6 +252,8 @@ lc.search = function() {
         		}
                 graphTitle.text('The graph below displays the 250 most popular items in our collection that meet your criteria: ' + fixedThingToPrint); // for now
                 */
+
+                $(".sort-heading").find(".total").text(response.docs.length);
 
                 graphTitle.html(self.buildSearchExplanation(response.docs, parameters));
 

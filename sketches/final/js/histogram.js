@@ -2,7 +2,7 @@ var lc = lc || {};
 
 lc.histogram = function() {
 
-    var gHeight = 70;
+    var gHeight = 40;
     var histoGroup = d3.select("#histogram").select("svg").attr("width","100%").attr("height",gHeight).append("g");
     var gWidth = $("#histogram").width();
     var booksByYear;
@@ -18,9 +18,10 @@ lc.histogram = function() {
 
         var minYear = parseInt(d3.min(booksByYear,function(d){ return d.key; })),
             maxYear = parseInt(d3.max(booksByYear,function(d){ if (d.key != "undefined") return d.key; })),
+            yearRange = maxYear - minYear,
             maxBooks = d3.max(booksByYear,function(d){ return d.values.length; });
 
-        var yearScale = d3.scale.linear().domain([minYear,maxYear]).range([0,gWidth-(gWidth/(maxYear-minYear))]),
+        var yearScale = d3.scale.linear().domain([minYear,maxYear]).range([0,gWidth-(gWidth/(yearRange))]),
             bookScale = d3.scale.linear().domain([0,maxBooks]).range([3,gHeight]);
 
         var bars = histoGroup.selectAll("rect").data(booksByYear);
@@ -30,7 +31,7 @@ lc.histogram = function() {
 
         bars.attr("fill","#808080")
             .attr("width",function(){
-                return gWidth/(maxYear-minYear);
+                return (gWidth/yearRange)*((yearRange-1)/yearRange);
             }).attr("height",function(d){
                 return bookScale(d.values.length);
             }).attr("y",function(d){
@@ -43,6 +44,8 @@ lc.histogram = function() {
                     return 0;
             }).on("mouseover",function(d){
                 showCounts(d);
+            }).on("mouseout",function(d){
+                hideCounts();
             });
 
         $("#histogram .reset").click(function(){
@@ -80,6 +83,9 @@ lc.histogram = function() {
 
     var bookCounts = d3.select("#bookCounts");
 
+    function hideCounts() {
+        bookCounts.text("");
+    }
     function showCounts(data) {
         bookCounts.text("We hold "+data.values.length + " items that meet your criteria that were published in "+ data.key );
     }
