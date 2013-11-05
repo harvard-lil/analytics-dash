@@ -79,7 +79,7 @@ h1 {
 
 #breadcrumb {
     position: absolute;
-    top: 375px;
+    top: 425px;
     left: -140px;
     height: 30px;
     width: 150px;
@@ -302,6 +302,23 @@ h1 {
     height: 80px;
 }
 
+#bookcounts{
+color:black;
+background-color: white;
+width:200px;
+height:25px;
+font-size: 10px;
+line-height: 14px;
+left: 150px;
+z-index: 200;
+position:absolute;
+padding: 6px;
+display:block;
+}
+
+#bookcounts-hidden{
+display:none;
+}
 #graph-reset {
     border: 1px solid #808080;
     color: #808080;
@@ -310,10 +327,10 @@ h1 {
     text-transform: uppercase;
     font-size: 12px;
     position: absolute;
-    margin-top: 350px;
+    margin-top: 400px;
     margin-left: -140px;
-    
 }
+
 #histogram .reset {
     left: 70px;
 }

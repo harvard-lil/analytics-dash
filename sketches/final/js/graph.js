@@ -63,7 +63,7 @@ lc.graph = function() {
         axes.append("text")
   	        .attr("class","axis_labels")
 	        .attr("id","y_axis")
-	        .text("Subject")
+	        .text("Overall Popularity")
 	        .attr("text-anchor","middle")
 	        .attr("transform","translate(35,"+(height/2)+") rotate(-90)")
     }
