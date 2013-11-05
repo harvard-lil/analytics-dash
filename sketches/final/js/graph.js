@@ -217,7 +217,12 @@ lc.graph = function() {
 
     	$(".sort-heading").find(".index").text(bookData.indexOf(currentBook) + 1);
 
-        info.select(".title .field").text(data.title);
+		if (data.id_inst){
+			info.select(".title .field").html("<a target='blank' href=http://holliscatalog.harvard.edu/?itemid=|library/m/aleph|"+ data.id_inst+">"+data.title+"</a>");
+		}		
+		else{
+        	info.select(".title .field").text(data.title);
+       	}
         if (data.creator) {
             info.select(".creator .field").html("<li>" + data.creator.join("</li><li>") + "</li>");
             info.selectAll(".creator li").on("click",function(){
@@ -247,7 +252,7 @@ lc.graph = function() {
 		if (data.loc_call_num_subject)
 			info.select(".loc_call_num_subject .field").text(data.loc_call_num_subject);
 
-		if (data.id_inst){
+	/*	if (data.id_inst){
 			info.select(".id_inst .field").html("<a target='blank' href=http://holliscatalog.harvard.edu/?itemid=|library/m/aleph|"+ data.id_inst+">click here</a>");
             
           //  info.selectAll(".id_inst li").on("click",function(){
@@ -257,7 +262,7 @@ lc.graph = function() {
             	//lc.search.submitSearch();
            // });
 		}
-
+*/
 		if (data.lcsh) {
             info.select(".lcsh .field").html("<li class='c'>" + data.lcsh.join("</li><li>") + "</li>");
             
