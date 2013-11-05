@@ -1,18 +1,39 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-        <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+        <script type="text/javascript" src="js/jquery.min.js" charset="utf-8"></script>
+        <script src="js/d3.v3.min.js" charset="utf-8"></script>
         <link href="jquery-ui.min.css" rel="stylesheet" type="text/css">
         <link href="style.css" rel="stylesheet" type="text/css">
     </head>
     <body>
+    <div id="shield"></div>
+        <div id="popup">
+            <h2>Harvard&#146;s library system holds over 12 million volumes.</h2>
+            
+		<p> Book Fisher is a new, visual way to seeing at the collection.</p>
+		<p><ol><b>1.</b> Click on the magnifying glass (top left) to <b>request library materials</b>. You can see 250 items at a time. We&#146;ve pre-loaded the search with keyword &#147;Finland&#148;	 to get you started.</p><p><b>2.</b> <b>Each dot represents a holding</b>. Rollover the dot for the title. Click on it to get <b>more information</b>. </p><p><b>3.</b> You can <b>sort</b> and <b>scale</b> the dots using the display controls (left). Sorting in different ways will help you to see patterns in the holdings.</p><p><b>4.</b> To remember an item, <b>place it in your carrel</b> by hitting the button on the lower right. You can also <b>export</b> and <b>save</b> your carrel&#146;s contents for later use. </p><p><b>5.</b> Lastly, you can <b>zoom</b> into the range by clicking on the colorful subject bar on the left or by dragging the time sliders below. Have fun exploring!</ol></p>
+        </div>
+		
+		
+        <div id="more-instructions">
+        <h2>Okay, you want more information?</h2>
+            
+		<p> 
+		The <b>DISPLAY CONTROL</b> on your left lets you sort the items by subject, or by using their circulation data. Popular books rise higher than the others. You can also scale each item by its page count, popularity, or you can let each dot be the same size. If you wish you can also just see the items in a sortable list.</p>
+		<p>
+		The <b>TIME CHART</b> below shows how many items in the collection meet your criteria by year of publication. This lets you get a sense of the overall size of the holdings in this subject. If you roll over a bar, you'll get an exact count of the holdings by years. The bar chart doubles as a slider that controls the zoom level for the main graph.</p>
+		<p>The colorful <b>SUBJECT BAR</b> allows you to dive into the complex taxonomy of the Library of Congress call number system. Each subject is subdivided into more subjects. The length of the segment corresponds to the relative size of this subject&#146;s holdings in Harvard&#146;s library. You can see that the library has far more books on Social Science than Medicine, for instance. This feature will be dramatically improved in the next few weeks. </p><p>The <b>INSPECTOR </b>on the right holds specific data about each item. You can also use the controls on the top to step through all of the items that are currently displayed. You can move alphabetically by title, author, or call #; or chronologically by date.</p>
+		</p>
+		</p>
+        </div>
+
         <div id="title-wrapper">
-            <h1>Library Explorer</h1>
+            <h1>BOOK FISHER<span id="subtitle">the Harvard Library Analytics Toolkit</span></h1>
             <div id="nav-bar">
                 <div id="show-search"><img src="img/magnifier.png">Start a new search</div>
-                <div>About</div>
-                <div>Instructions</div>
+                <div id="about">About</div>
+                <div id="instructions">Instructions</div>
             </div>
         </div>
         <div id="search-form">
@@ -481,12 +502,12 @@
         <div id="searchTerm"></div>
         <div class="left-half">
          <div id="sort">
-                <h2>Display</h2>
+                <h2>Display Control</h2>
                 <div id="show-graph" class="graph-toggle selected"><span></span> Scatter</div>
                 <div id="show-list" class="graph-toggle"><span></span> List</div>
                 <!-- <div id="stack-circles">Stack Circles</div> -->
                 <ul class="y_toggle graph">
-                    <li>Y-Position By:</li>
+                    <li>Y-Position By</li>
                     <li name="call_number_sort_order_y" class="selected"><span class="disc"></span>Call Number</li>
                     <li name="call_number_sort_order_y" class="disabled"></span>Popularity with:</li>
                     <li name="grads" class="indent"><span class="disc"></span>Graduates</li>
@@ -495,13 +516,13 @@
                     <li name="popularity_y" class="indent"><span class="disc"></span>Overall</li>
                 </ul>
                 <ul class="scale_toggle graph">
-                    <li>Scale By:</li>
+                    <li>Scale By</li>
                     <li name="shelfrank" class="selected"><span class="disc"></span>Overall Popularity</li>
                     <li name="pages"><span class="disc"></span>Number of Pages</li>
                     <li name="same"><span class="disc"></span>Same Scale For All</li>
                 </ul>
                 <ul class="list-sort-by list">
-                    <li>sort by:</li>
+                    <li>sort by</li>
                     <li name="shelfrank" class="selected"><span class="disc"></span>popularity</li>
                     <li name="pub_date_numeric"><span class="disc"></span>publication date</li>
                     <li name="loc_call_num_sort_order"><span class="disc"></span>subject</li>
@@ -515,7 +536,7 @@
                 <ul id="list"></ul>
             </div>
             <div id="graph-wrapper">
-                <div id="graph-reset">back</div>
+                <div id="graph-reset">reset</div>
                 <div id="breadcrumb"></div>
                 <div id="tooltip">Currently selected:</div>
                 <svg id="nav"></svg>
@@ -566,8 +587,12 @@
                         <p class="infoLabel"><span class="tick"></span>Publishing Date</p>
                         <p class="field"></p>
                     </div>
+                    <div class="loc_call_num_subject">
+                        <p class="infoLabel">Call Number Subject</p>
+                        <ul class="field"></ul>
+                    </div>
                     <div class="lcsh">
-                        <p class="infoLabel">Library of Congress Subject Headers</p>
+                        <p class="infoLabel">Library of Congress Subject Keywords</p>
                         <ul class="field"></ul>
                     </div>
                     <div class="lc" name="call number">
@@ -616,6 +641,24 @@
             .on("mouseout", function() {
                 lc.tooltip.hide();
             });
+
+		$("#popup").click(function(){
+            $(this).fadeOut();
+            $("#shield").fadeOut();
+        });
+
+  	$("#about").click(function(){
+  	    $("#popup").slideToggle();
+    });
+
+$("#instructions").click(function(){
+  	    $("#more-instructions").slideToggle();
+    });
+        
+$("#more-instructions").click(function(){
+            $(this).fadeOut();
+            $("#shield").fadeOut();
+        });
 
         // lc.subjectsorter
         //     .on("mouseover", function(d) {

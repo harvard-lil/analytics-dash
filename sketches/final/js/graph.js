@@ -121,14 +121,18 @@ lc.graph = function() {
         //runs the showInfo on mouseover
         circles.on("mouseover",function(d){
             lc.tooltip.show(d);
-
-        	if (svg.attr("class") == "frozen") return;
-  			this.parentNode.appendChild(this);
-            self.showInfo(d, true);
+         //   if (svg.attr("class") == "frozen") return;
+  		//	this.parentNode.appendChild(this);
+           //self.showInfo(d, true)
+            
         }).on("mouseout", function(d) {
         	lc.tooltip.hide();
         }).on("click",function(d){
-        	lc.carrel.sendToCarrel(d);
+	        lc.tooltip.show(d);
+	        self.showInfo(d, true);
+	        
+        	
+//        	lc.carrel.sendToCarrel(d);
         	// if (svg.attr("class") == "frozen") {
         	// 	this.parentNode.appendChild(this);
          //    	self.showInfo(d, true);
@@ -238,6 +242,9 @@ lc.graph = function() {
         if (data.language)
 			info.select(".language .field").text(data.language);
 
+		if (data.loc_call_num_subject)
+			info.select(".loc_call_num_subject .field").text(data.loc_call_num_subject);
+
 		if (data.lcsh) {
             info.select(".lcsh .field").html("<li class='c'>" + data.lcsh.join("</li><li>") + "</li>");
             info.selectAll(".lcsh li").on("click",function(){
@@ -248,7 +255,7 @@ lc.graph = function() {
 		}
 
   		if (inBox) {
-  			addToCarrel.text("Add This Item To The Carrel").on("click",function(){
+  			addToCarrel.text("Add This Item To Your Carrel").on("click",function(){
 	            lc.carrel.sendToCarrel(data);
 	        });
   		} else {
@@ -282,7 +289,8 @@ lc.graph = function() {
 		Rollover listener
     */
     $("#graph").mousemove(function(e) {
-    	lc.subjectgraph.rollover(e.offsetY);
+    if(y_axis_type=='call_number_sort_order_y'){
+    	lc.subjectgraph.rollover(e.offsetY);}
     }).click(function(e) {
     	console.log(e);
     	lc.subjectgraph.graphClick(e.offsetY);
@@ -296,7 +304,6 @@ lc.graph = function() {
     // $(".x_toggle span").click(x_axis_button);
     $(".y_toggle li").click(y_axis_button);
     $(".scale_toggle li").click(radius_button);
-
 
 	// Searching by results
 	$("#creator li").live("click",function(){

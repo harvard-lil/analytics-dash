@@ -98,17 +98,18 @@ lc.subjectgraph = function() {
 
     self.update = function(parent, data, total) {
         var child = false;
-        if (parent.node().id == "nav") {
+        if (parent.node().id == "nav"){
             d3.select("#graph-wrapper").classed("child",true);
             child = true;
         }
+
         var groups = parent.selectAll(".schema")
             .data(data);
 
         var texts = d3.select("#labels").selectAll("text").data(data);
         texts.enter().append("text");
         texts.exit().remove();
-
+      
         var entering = groups.enter()
             .append("g")
             .attr("class", "schema");
@@ -153,12 +154,12 @@ lc.subjectgraph = function() {
             //     return schema.colorClass(d.class);
             // });
 
-        // rectangles.on("mouseover", function(d) {
-        //     self.mouseover(d);
-        // })
-        // .on("mouseout", function(d) {
-        //     self.mouseout(d);
-        // });
+         groups.on("mouseover", function(d) {
+             self.mouseover(d);
+         })
+         groups.on("mouseout", function(d) {
+             self.mouseout(d);
+         });
 
         // groups.select("rect")
         //     .transition()
@@ -228,15 +229,16 @@ lc.subjectgraph = function() {
     var highlighted = {};
     self.rollover = function(cy) {
         var currentClass = self.getChildY(cy);
-
-        d3.select("#rollover")
+		self.show();
+    var pieces = d3.select("#rollover")
             .attr("fill", "black")
             .attr("fill-opacity", .1)
             .attr("x", 0)
             .attr("y", currentClass.y)
             .attr("height", currentClass.height)
-            .attr("width",620);
+            .attr("width",640);
     };
+
 
     // dive into the subject classes based on a click on the graph
   /*  self.graphClick = function(cy) {

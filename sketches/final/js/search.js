@@ -29,7 +29,7 @@ lc.search = function() {
 
     var baseurl = 'http://librarycloud.law.harvard.edu/v1/api/item/',
         defaultParams = '&limit=250&facet=pub_date_numeric&key=5239997b68e033fbf2854d77c6295310&filter:collection:hollis_catalog',
-        search = getQueryVariable('search') || 'los angeles';
+        search = getQueryVariable('search') || 'Boston';
 
     var graphTitle = $("#searchTerm");
 
@@ -271,7 +271,7 @@ lc.search = function() {
     };
 
     // initial search request
-    self.runSearch({'lcsh_keyword': 'los angeles'});
+    self.runSearch({'lcsh_keyword': 'boston'});
 
     return self;
 }();
