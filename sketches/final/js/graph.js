@@ -28,6 +28,8 @@ lc.graph = function() {
 
 	var yscale = d3.scale.linear().domain([0,16000000]).range([gHeight, 0]);
 
+	var linkouturl = "http://holliscatalog.harvard.edu/?itemid=|library/m/aleph|009455802";
+	
     svg.append("clipPath").attr("id","graph-box")
     	.append("rect").attr("width",gWidth).attr("height",gHeight);
 
@@ -245,15 +247,33 @@ lc.graph = function() {
 		if (data.loc_call_num_subject)
 			info.select(".loc_call_num_subject .field").text(data.loc_call_num_subject);
 
+		if (data.id_inst){
+			info.select(".id_inst .field").html("<a target='blank' href=http://holliscatalog.harvard.edu/?itemid=|library/m/aleph|"+ data.id_inst+">click here</a>");
+            
+          //  info.selectAll(".id_inst li").on("click",function(){
+            //	var id_inst = $(this).text();
+            //	console.log(id_inst);
+            //	$("#search-id_inst").val(id_inst);
+            	//lc.search.submitSearch();
+           // });
+		}
+
 		if (data.lcsh) {
             info.select(".lcsh .field").html("<li class='c'>" + data.lcsh.join("</li><li>") + "</li>");
+            
             info.selectAll(".lcsh li").on("click",function(){
             	var lcsh = $(this).text();
             	$("#search-lcsh").val(lcsh);
             	lc.search.submitSearch();
             });
 		}
+		
 
+		if (data.id_inst){
+		linkouturl= "href=http://holliscatalog.harvard.edu/?itemid=|library/m/aleph|"+ data.id_inst;
+		console.log(linkouturl);
+		}
+		
   		if (inBox) {
   			addToCarrel.text("Add This Item To Your Carrel").on("click",function(){
 	            lc.carrel.sendToCarrel(data);
@@ -316,6 +336,12 @@ lc.graph = function() {
 			"lcsh_keyword": $(this).text()
 		});
 	});
+
+	$("#id_inst").live("click",function(){
+	console.log("hi!");
+		});
+	
+
 
 	var sortTitles = {
 		"call_number_sort_order_y" : "subject",
