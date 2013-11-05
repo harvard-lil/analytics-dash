@@ -106,9 +106,9 @@ lc.subjectgraph = function() {
         var groups = parent.selectAll(".schema")
             .data(data);
 
-        var texts = d3.select("#labels").selectAll("text").data(data);
-        texts.enter().append("text");
-        texts.exit().remove();
+      //  var texts = d3.select("#labels").selectAll("text").data(data);
+      //  texts.enter().append("text");
+      //  texts.exit().remove();
       
         var entering = groups.enter()
             .append("g")
@@ -136,7 +136,7 @@ lc.subjectgraph = function() {
 
         var yOffset = 0,
             ty = 0;
-
+/*
         texts.attr("x", child ? 34 : 0)
             .attr("y",function(d){
                 d.height = (d.count / total) * height;
@@ -153,7 +153,7 @@ lc.subjectgraph = function() {
             // .attr("fill", function(d) {
             //     return schema.colorClass(d.class);
             // });
-
+*/
          groups.on("mouseover", function(d) {
              self.mouseover(d);
          })
@@ -236,7 +236,7 @@ lc.subjectgraph = function() {
             .attr("x", 0)
             .attr("y", currentClass.y)
             .attr("height", currentClass.height)
-            .attr("width",640);
+            .attr("width","100%");
     };
 
 
