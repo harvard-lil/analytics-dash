@@ -36,7 +36,7 @@ h1 {
 }
 #search-form {
     width: 450px;
-    height: 300px;
+    height: 250px;
     background-color: white;
     display: none;
     position: fixed;
@@ -52,7 +52,7 @@ h1 {
     border: 1px solid #808080;
     color: #808080;
     position: absolute;
-    top: 260px;
+    top: 202px;
     right: 20px;
     cursor: pointer;
     text-transform: uppercase;
