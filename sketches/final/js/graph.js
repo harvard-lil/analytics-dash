@@ -12,7 +12,7 @@ lc.graph = function() {
 
     // default scaling / axes
     var x_axis_type = "chronological_x";
-    var y_axis_type = "call_number_sort_order_y";
+    var y_axis_type = "popularity_y";
 	var radius_type = "shelfrank";
 
 	var formatAsYear= d3.format("04d");
