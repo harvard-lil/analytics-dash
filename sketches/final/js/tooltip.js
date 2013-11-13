@@ -19,9 +19,9 @@ lc.tooltip = function() {
 
 	self.show = function(row) {
 		 if (row.class) {
-		 	tooltip.html(row.lastname);
+		 	tooltip.html(row.lastname + ': ' + row.start+ ' - ' +row.end );
 		  } else if (row.creator) {
-		 	tooltip.html(row.title);
+		 	tooltip.html(row.title+ ': ' + row.loc_call_num_sort_order);
 		 } else {
 		 //	tooltip.html(row)
 		 }

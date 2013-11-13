@@ -177,17 +177,20 @@ var schema = function() {
 
 	self.colorClass = function(classID) {
    		var firstChar = classID.charCodeAt(0);
+   		console.log(firstChar);
    		// interpolate between start and end color
 		var percent = ((firstChar - 65) / 25);
 
 		// // go from 0 to 330 hue
    		return d3.hsl(percent * (endColor.h - startColor.h), 1, .5);
    		// return lcObjectArray[classID.substr(0,1)].color;
+   		
 	};
 
 	self.color = function(row, modifier) {
    		var firstChar = row.ClassLetters.charCodeAt(0);
    		// interpolate between start and end color
+   		console.log("hi");
 
    		var add = 0;
    		if (modifier) {

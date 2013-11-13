@@ -150,8 +150,11 @@ lc.graph = function() {
     	var circles = circleGroup.selectAll("circle");
     	circles.attr("fill",function(d){
 	        if (d.call_num && lcObjectArray[d.call_num[0].substr(0,1)]){
+	        	var colorname = d.call_num[0].substr(0,1);
+//	        	console.log("color should be " + colorname);
 	        	return lcObjectArray[d.call_num[0].substr(0,1)].color;
         	} else {
+//        		console.log("didnt get anything");
 	         	return "black";
 	        }
 		})
