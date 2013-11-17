@@ -15,6 +15,12 @@ lc.search = function() {
         $(this).addClass("selected");
     });
 
+    $("#search-form").keypress(function(e){
+        if ( event.which == 13 ) {
+            self.submitSearch();
+        }
+    });
+
     var getQueryVariable = function(variable) {
         var query = window.location.search.substring(1);
         var vars = query.split("&");

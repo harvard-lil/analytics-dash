@@ -177,7 +177,6 @@ var schema = function() {
 
 	self.colorClass = function(classID) {
    		var firstChar = classID.charCodeAt(0);
-   		console.log(firstChar);
    		// interpolate between start and end color
 		var percent = ((firstChar - 65) / 25);
 

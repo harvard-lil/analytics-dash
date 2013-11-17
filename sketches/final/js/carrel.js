@@ -93,7 +93,6 @@ lc.carrel = function() {
             var book = "|||";
             headings.forEach(function(d){
                 var t = item[d];
-                console.log(t, t instanceof Array)
                 if (t instanceof Array) {
                     t = t.join("%%%");
                 } 

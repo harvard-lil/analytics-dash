@@ -417,7 +417,8 @@ lc.graph = function() {
 	            return yscale(d.shelfrank || 0);
 			case 'call_number_sort_order_y':
 				if (d.loc_call_num_sort_order){
-		            // return (yscale(d.loc_call_num_sort_order[0]));
+		            // yscale.domain([8000000,0]);
+		            // return yscale(d.loc_call_num_sort_order[0])
 		            return lc.subjectgraph.calculateY(d.loc_call_num_sort_order[0]);
 				}
 				else {

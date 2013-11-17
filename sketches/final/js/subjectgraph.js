@@ -295,8 +295,10 @@ lc.subjectgraph = function() {
                     var rootHeight = percentHeight = (currentClass.count / total) * height;
                     cy += percentHeight;
             }
-
-            return cy+100;
+            if (children.length)
+                return cy+100;
+            else
+                return -100;
     };
 
     self.reset = function() {
