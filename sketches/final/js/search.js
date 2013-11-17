@@ -265,6 +265,8 @@ lc.search = function() {
 
                 // lc.graph.drawArea(response.facets);
 
+                lc.subjectgraph.reset();
+
                 lc.graph.appendCircles(response.docs);
 
                 lc.histogram.appendHistogram(response.docs);

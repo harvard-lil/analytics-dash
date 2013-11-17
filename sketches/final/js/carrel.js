@@ -67,23 +67,23 @@ lc.carrel = function() {
         //     return (d.bookHeight - 20) + "px";
         // });
     }
+    var headings = ["title", "creator", "publisher", "call_num", "holding_libs", "lcsh", "id_isbn", "pub_date", "pub_location", "shelfrank", "language", "id_oclc", "note", "format"];
+    var displayHeadings = ["title", "creator", "publisher", "call number", "holding Libraries", "LCSH", "ISBN ID", "date of publication", "publishing location", "shelfrank", "language", "OCLC ID", "note", "format"];
 
     self.exportCarrel = function() {
-        var headings = ["title", "creator", "publisher", "call_num", "holding_libs", "lcsh", "score_holding_libs", "id_isbn", "id",  "title_sort", "score_checkouts_undergrad", "height", "title_link_friendly", "score_checkouts_grad", "pub_date", "loc_call_num_subject", "pub_location", "ut_id", "pages", "loc_call_num_sort_order", "score_checkouts_fac", "data_source", "dataset_tag", "score_recalls", "shelfrank",  "language", "id_inst", "ut_count", "id_oclc", "note", "format",  "pub_date_numeric", "source_record"];
-        var csv = [headings];
+        var strData = headings.join(",");
 
         carrel.forEach(function(item,i){
             var book = [];
             for (d in item) {
                 book.push(item[d]);
             }
-            csv.push(book);
+            book.join(",");
+            strData = strData.concat("\n"+book);
         });
 
-        download(csv, "dowload.csv", "text/csv");
+        download(strData, "dowload.csv", "text/csv");
     };
-    var headings = ["title", "creator", "publisher", "call_num", "holding_libs", "lcsh", "id_isbn", "pub_date", "pub_location", "shelfrank", "language", "id_oclc", "note", "format"];
-    var displayHeadings = ["title", "creator", "publisher", "call number", "holding Libraries", "LCSH", "ISBN ID", "date of publication", "publishing location", "shelfrank", "language", "OCLC ID", "note", "format"];
     function tableCarrel() {
         // var headings = ["title", "creator", "publisher", "call_num", "holding_libs", "lcsh", "score_holding_libs", "id_isbn", "id",  "title_sort", "score_checkouts_undergrad", "height", "title_link_friendly", "score_checkouts_grad", "pub_date", "loc_call_num_subject", "pub_location", "ut_id", "pages", "loc_call_num_sort_order", "score_checkouts_fac", "data_source", "dataset_tag", "score_recalls", "shelfrank",  "language", "id_inst", "ut_count", "id_oclc", "note", "format",  "pub_date_numeric", "source_record"];
 
@@ -143,10 +143,12 @@ lc.carrel = function() {
 
         } else { //safari
             var csvContent = "data:text/csv;charset=utf-8,";
-            strData.forEach(function(item, i){
-               var dataString = item.join(",");
-               csvContent += (i < carrel.length) ? dataString+ "\n" : dataString;
-            });
+            csvContent = csvContent.concat(strData);
+            // strData.forEach(function(item, i){
+            //    var dataString = item.join(",");
+            //    csvContent += (i < carrel.length) ? dataString+ "\n" : dataString;
+            // });
+            console.log(strData, csvContent, csvContent.concat(strData))
             var encodedUri = encodeURI(csvContent);
             window.open(encodedUri);
         }

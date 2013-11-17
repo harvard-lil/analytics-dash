@@ -74,7 +74,7 @@ lc.subjectgraph = function() {
                 var parent = response.docs[j];
                 var child_classes = parent.child_classes;
                 for (var i = 0; i < child_classes.length; i++) {
-                    var next = self.initialized || i+1 == child_classes.length ? null : processChild(child_classes[i+1]);
+                    var next = i+1 == child_classes.length ? null : processChild(child_classes[i+1]);
                     var child = processChild(child_classes[i], next);
                     total += child.count;
                     processedChildren.push(child);
@@ -279,7 +279,7 @@ lc.subjectgraph = function() {
     };
 
     self.calculateY = function(sort_number) {
-            var cy = 10,
+            var cy = 0,
             matchedPosition = 0,
             matchedHeight = 0,
             children = self.currentChildren || self.rootChildren,
@@ -287,18 +287,22 @@ lc.subjectgraph = function() {
 
             for (var i = 0; i < children.length; i++) {
                     var currentClass = children[i];
+                    
+                    // get the height of the current class rectangle
+                    var rootHeight = (currentClass.count / total) * height;
+
+                    // and if the sort number matches
                     if (currentClass.start <= sort_number && currentClass.end >= sort_number) {
                             matchedPosition = cy;
+
+                            // add percentage height of the sortnumber within the current class
                             matchedPosition += ((sort_number - currentClass.start) / currentClass.count) * rootHeight;
                             return matchedPosition;
                     }
-                    var rootHeight = percentHeight = (currentClass.count / total) * height;
-                    cy += percentHeight;
+                    
+                    cy += rootHeight;
             }
-            if (children.length)
-                return cy+100;
-            else
-                return -100;
+            return cy+100;
     };
 
     self.reset = function() {
