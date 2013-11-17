@@ -17,7 +17,7 @@ lc.graph = function() {
 
 	var formatAsYear= d3.format("04d");
 
-	var svg = d3.select("#graph").append("svg").attr("height",height).attr("width","100%");
+	var svg = d3.select("#graph").attr("height",height).attr("width","100%");
     width = $("#graph").width(),
     gWidth = width - 150;
 
@@ -317,11 +317,14 @@ lc.graph = function() {
 		Rollover listener
     */
     $("#graph").mousemove(function(e) {
-    if(y_axis_type=='call_number_sort_order_y'){
-    	lc.subjectgraph.rollover(e.offsetY);}
+    	if (y_axis_type=='call_number_sort_order_y')
+    		lc.subjectgraph.rollover(e.offsetY);
+    }).mouseout(function(){
+    	if (y_axis_type=='call_number_sort_order_y')
+    		lc.subjectgraph.rollout();
     }).click(function(e) {
-    	console.log(e);
-    	lc.subjectgraph.graphClick(e.offsetY);
+    	if (e.target.nodeName != "circle")
+    		lc.subjectgraph.graphClick(e.offsetY);
     });
 
     /*

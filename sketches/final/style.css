@@ -103,9 +103,9 @@ h1 {
 	text-align: left;
 	font-weight: normal;
     position: fixed;
-    top: 94px;
+    top: 104px;
     left: 40px;
-    padding: 10px;
+    padding: 5px 0;
     cursor: pointer;
     background: white;
     z-index: 1;
@@ -237,7 +237,7 @@ h1 {
     width: 718px;
     height: 530px;
     position: absolute;
-    left: 85px;
+    left: 80px;
     top: 0px;
     z-index: -1;
 }
@@ -247,6 +247,10 @@ h1 {
 }
 #labels .b{
     font-weight: bold;
+}
+#graph-labels text {
+    font-family: akkurat, futura, helvetica, sans-serif;
+    font-size: 12px;
 }
 #nav {
     height: 490px;
@@ -384,7 +388,7 @@ display:none;
 }
 #sort {
     position: fixed;
-    top: 140px;
+    top: 141px;
     left: 40px;
     width: 130px;
     border: 1px solid #ddd;
@@ -841,7 +845,7 @@ margin-right: auto;
 }
 
 #tooltip {
-    width: auto;
+    max-width: 300px;
     height: auto;
     position: absolute;
     margin-top: 20px;

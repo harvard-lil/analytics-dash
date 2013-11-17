@@ -74,7 +74,7 @@ lc.subjectgraph = function() {
                 var parent = response.docs[j];
                 var child_classes = parent.child_classes;
                 for (var i = 0; i < child_classes.length; i++) {
-                    var next = i+1 == child_classes.length ? null : processChild(child_classes[i+1]);
+                    var next = self.initialized || i+1 == child_classes.length ? null : processChild(child_classes[i+1]);
                     var child = processChild(child_classes[i], next);
                     total += child.count;
                     processedChildren.push(child);
@@ -106,9 +106,9 @@ lc.subjectgraph = function() {
         var groups = parent.selectAll(".schema")
             .data(data);
 
-      //  var texts = d3.select("#labels").selectAll("text").data(data);
-      //  texts.enter().append("text");
-      //  texts.exit().remove();
+       var texts = d3.select("#graph-labels").selectAll("text").data(data);
+       texts.enter().append("text");
+       texts.exit().remove();
       
         var entering = groups.enter()
             .append("g")
@@ -136,8 +136,8 @@ lc.subjectgraph = function() {
 
         var yOffset = 0,
             ty = 0;
-/*
-        texts.attr("x", child ? 34 : 0)
+
+        texts.attr("x", child ? 30 : 0)
             .attr("y",function(d){
                 d.height = (d.count / total) * height;
                 d.cy = ty;
@@ -153,13 +153,16 @@ lc.subjectgraph = function() {
             // .attr("fill", function(d) {
             //     return schema.colorClass(d.class);
             // });
-*/
-         groups.on("mouseover", function(d) {
-             self.mouseover(d);
-         })
-         groups.on("mouseout", function(d) {
-             self.mouseout(d);
-         });
+
+        groups.on("mouseover", function(d) {
+        // console.log(d,e,i, d3.event)
+         // self.mouseover(d);
+            self.rollover(d3.event.offsetY);
+        })
+        groups.on("mouseout", function(d) {
+         // self.mouseout(d);
+            self.rollout();
+        });
 
         // groups.select("rect")
         //     .transition()
@@ -184,7 +187,7 @@ lc.subjectgraph = function() {
         groups.exit().remove();
     };
 
-    function crumbize(d) {
+    self.crumbize = function(d) {
         var breadDepth = breadcrumb.find(".link") ? breadcrumb.find(".link").length : 0;
         var l = $("<span>").attr("class","link")
                 .html((d.depth == 0 ? "" : "<span class='tick'>></span>")+"<span class='item'>"+d.lastname+"</span>")
@@ -202,7 +205,7 @@ lc.subjectgraph = function() {
         if (d.depth == 0) l.css("color",schema.colorClass(d.class));
 
         breadcrumb.append(l);
-    }
+    };
 
     function classNameify(name) {
         return "t-"+String(name).replace(/^\s+|\s+$/g,'').toLowerCase().replace(/[^\w\s]/gi, '').split(" ").join("-");name.toLowerCase().replace(/^\s+|\s+$/g,'').replace(/[^\w\s]/gi, '').split(" ").join("-");
@@ -229,23 +232,37 @@ lc.subjectgraph = function() {
     var highlighted = {};
     self.rollover = function(cy) {
         var currentClass = self.getChildY(cy);
-		self.show();
-    var pieces = d3.select("#rollover")
-            .attr("fill", "black")
-            .attr("fill-opacity", .1)
-            .attr("x", 0)
-            .attr("y", currentClass.y)
-            .attr("height", currentClass.height)
-            .attr("width","100%");
+        console.log(currentClass)
+		// self.show();
+        d3.select("#graph-labels").style("display","none");
+        var rollover = d3.select("#rollover").style("display","block");
+
+        rollover.attr("transform","translate(0,"+currentClass.y+")")
+            .select("rect")
+                .attr("fill", "black")
+                .attr("fill-opacity", .1)
+                .attr("height", currentClass.height)
+                .attr("width","100%");
+
+        rollover.select("text")
+            .attr("x",(currentClass.class.depth == 0) ? 3 : 33)
+            .text(currentClass.class.lastname + ': ' + currentClass.class.start+ ' - ' +currentClass.class.end);
+            //.attr("fill",schema.colorClass(currentClass.class.class));
+    };
+    self.rollout = function() {
+        d3.select("#graph-labels").style("display","block");
+        d3.select("#rollover").style("display","none")
+            .select("text").text("");
     };
 
 
     // dive into the subject classes based on a click on the graph
-  /*  self.graphClick = function(cy) {
+    self.graphClick = function(cy) {
         var currentClass = self.getChildY(cy);
         self.getChildrenID(currentClass.class.id);
+        lc.subjectgraph.crumbize(currentClass.class);
     };
-*/
+
     self.getChildY = function(cy) {
         var currentPosition = 0,
             matchedPosition = 0,
