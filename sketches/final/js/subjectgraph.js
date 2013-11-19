@@ -188,7 +188,7 @@ lc.subjectgraph = function() {
 
     };
 
-    self.updateRelative = function(data) {
+    self.updateRelative = function(data, numBooks) {
         console.log("ok")
 
         // var heirarchy = {};
@@ -228,7 +228,7 @@ lc.subjectgraph = function() {
             if (d.key == "unavailable") {
                 d.values.call_num = "undefined";
             }
-        });
+        })
 
         console.log(nested)
         
@@ -238,6 +238,15 @@ lc.subjectgraph = function() {
             return 0;
             // return a.values.call_num.substr(0,1)] - b.values.call_num;
         });
+
+        for (var i = nested.length-1; i--; 0) {
+            if (nested[i].key == "undefined" || nested[i].key == "unavailable") {
+                var p = nested.splice(i,1);
+                console.log(p)
+                nested.push(p[0])
+            }
+        }
+        console.log(nested)
 
         var groups = d3.select("#nav").selectAll("rect.schema")
             .data(nested);
@@ -254,15 +263,17 @@ lc.subjectgraph = function() {
                 return d.className;
             })
             groups.select("rect").attr("height",function(d){
-                d.height = (d.values.length/data.length) * height;
+                if (d.key == "undefined") {
+                    d.height = (data.length-numBooks)/data.length * height;
+                }
+                d.height = (d.values.length/numBooks) * height;
                 return d.height;
             }).attr("y",function(d){
                 d.hy = hy;
                 hy += d.height;
                 return d.hy;
             }).attr("fill", function(d) {
-                if (d.values.call_num != "undefined" && d.values.call_num != "unavailable") {
-                    console.log(d.values.call_num);
+                if (d.key != "undefined" && d.key != "unavailable" && lcObjectArray[d.values.call_num.substr(0,1)]) {
                     return lcObjectArray[d.values.call_num.substr(0,1)].color;
                 }
                 else

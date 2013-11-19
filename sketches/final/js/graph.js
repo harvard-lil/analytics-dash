@@ -6,6 +6,7 @@ lc.graph = function() {
         gWidth = 800,
         gHeight = 480,
         bookData,
+        numBooks,
         currentBook;
 
     var circleColor = "blue";
@@ -114,13 +115,23 @@ lc.graph = function() {
 	}
 
 	self.appendCircles = function(data) {
+		bookData = data;
+		numBooks = data.length;
+		lc.subjectgraph.updateRelative(data, numBooks);
 
+		var undefs = [];
+		for (var i = data.length-1; i--; 0) {
+			if (!data[i].call_num) {
+				undefs.push(data[i]);
+				data.splice(i,1);
+			}
+		}
 		data.sort(function(a,b){
 			if (a.loc_call_num_sort_order && b.loc_call_num_sort_order)
 				return a.loc_call_num_sort_order[0] - b.loc_call_num_sort_order[0];
-			// else return 1;
+			else return 1;
 		});
-		bookData = data;
+		data = data.concat(undefs);
 
         var circles = circleGroup.selectAll("circle").data(data);
         //binds data to circles
@@ -152,7 +163,6 @@ lc.graph = function() {
         updateCircles();
         self.updateLabels(0);
         sortBooks("title", true);
-        lc.subjectgraph.updateRelative(data);
     }
     function updateCircles() {
     	var circles = circleGroup.selectAll("circle");
@@ -417,7 +427,7 @@ lc.graph = function() {
 	}
 
 	function calculateY(d) {
-		return (d / bookData.length) * (height*.9);
+		return (d / numBooks) * (height*.9) + (height*.05);
 		switch(y_axis_type) {
 			case 'grads':
 				yscale.domain([0,300]);

@@ -3,7 +3,7 @@ var lc = lc || {};
 lc.search = function() {
 
     $("#show-search").click(function(){
-        $("#search-form").slideToggle();
+        $("#search-fold").slideToggle();
     });
 
     $("#search-form .clear").click(function(){
@@ -39,7 +39,7 @@ lc.search = function() {
 
     var graphTitle = $("#searchTerm");
 
-    $("#search").click(function() {
+    $(".search").click(function() {
         self.submitSearch(); 
     });
 
@@ -52,6 +52,7 @@ lc.search = function() {
         $("#search-form input").each(function() {
             var t = $(this);
             console.log(t, t.val());
+            if ($(this).hasClass("search")) return;
             if (t.val()) {
                 // grabbing #search-year -> 'year'
                 var key = t.attr("id").split("-")[1];
@@ -80,7 +81,7 @@ lc.search = function() {
 
         self.runSearch(searchTerms);
 
-        $("#search-form").slideUp();
+        $("#search-fold").slideUp();
 
         graphTitle.html("Searching... ");
     };

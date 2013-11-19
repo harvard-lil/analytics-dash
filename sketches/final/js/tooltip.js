@@ -18,7 +18,6 @@ lc.tooltip = function() {
 	}
 
 	self.show = function(row) {
-		console.log(row)
 		 if (row.class) {
 		 	tooltip.html(row.lastname + ': ' + row.start+ ' - ' +row.end );
 		  } else if (row.creator && row.loc_call_num_sort_order && row.call_num) {

@@ -7,8 +7,9 @@ body, html {
     background: white;
     z-index: 1;
     top: 0;
-    left: 40px;
-    right: 20px;
+    left: 3%;
+    right: 3%;
+    border-bottom: 1px solid black;
 }
 #subtitle{
 	font-size:12px;
@@ -30,26 +31,85 @@ body, html {
     display: inline-block;
     text-decoration: underline;
 }
+
 #show-search {
-    position: absolute;
-    top: 70px;
+    float: left;
 }
 #show-search img {
     margin: 1px 5px 0 0;
     float: left;
 }
 #search-form {
-    width: 450px;
-    height: 250px;
+    width: 73%;
+    height: 70px;
     background-color: white;
-    display: none;
     position: fixed;
-    top: 94px;
-    left: 40px;
+    top: 80px;
     z-index: 2;
-    box-shadow: 5px 5px 10px #808080;
+    padding-left: 3%;
+    box-sizing: border-box;
 }
-#search {
+.top-control {
+    float: left;
+    margin-right: 20px;
+}
+.top-control:nth-child(1) {
+    width: 50%;
+}
+.search.top-control  {
+    position: relative;
+    top: auto;
+    right: auto;
+    margin-left: 10px;
+}
+
+#search-fold {
+    width: 40%;
+    top: 63px;
+    left: 60%;
+    position: absolute;
+    background-color: white;
+    border: 1px solid #808080;
+    z-index: 2;
+    display: none;
+}
+.form-row {
+    color: #aaa;
+    clear: both;
+}
+.form-row .clear {
+    height: 15px;
+    width: 15px;
+    background-image: url(img/clear-box.png);
+    background-position: 0 -15px;
+    float: right;
+    margin-right: 7px;
+    cursor: pointer;
+    display: none;
+}
+.form-row.filled .clear {
+    display: inline-block;
+}
+.form-row.filled .clear:hover {
+    background-position: 0 0;
+}
+.form-row label {
+    float: left;
+    margin-right: 10px;
+}
+.form-row input {
+    border: none;
+    background-color: #ddd;
+    float: left;
+    width: 200px;
+}
+#search-lcsh_keyword {
+    width: 100%;
+    height: 60px;
+    border: 1px solid #808080;
+    background-color: #eee;
+}
+.search {
     -webkit-appearance: none;
     -moz-appearance: none;
     background-color: transparent;
@@ -60,6 +120,10 @@ body, html {
     right: 20px;
     cursor: pointer;
     text-transform: uppercase;
+}
+#search:hover {
+    border-color: #000;
+    color: #000;
 }
 
 .result-sort {
@@ -103,69 +167,23 @@ body, html {
 
 #searchTerm {
 	font-size: 20px;
-    width: 60%;
+    width: 73%;
 	text-align: left;
 	font-weight: normal;
     position: fixed;
-    top: 104px;
-    left: 40px;
-    padding: 5px 0;
+    top: 140px;
+    padding: 5px 40px;
+    box-sizing: border-box;
     cursor: pointer;
     background: white;
     z-index: 1;
-}
-#search:hover {
-    border-color: #000;
-    color: #000;
-}
-.form-row {
-    width: 90%;
-    margin: 0 5%;
-    height: 30px;
-    clear: both;
-    color: #aaa;
-}
-.form-row:first-child {
-    margin-top: 20px;
-}
-.form-row .clear {
-    height: 15px;
-    width: 15px;
-    background-image: url(img/clear-box.png);
-    background-position: 0 -15px;
-    float: right;
-    margin-right: 7px;
-    cursor: pointer;
-    display: none;
-}
-.form-row.filled .clear {
-    display: inline-block;
-}
-.form-row.filled .clear:hover {
-    background-position: 0 0;
-}
-/*.form-row.locked .box {
-    background-color: #000;
-}
-.form-row.locked {
-    color: #000;
-}*/
-.form-row label {
-    float: left;
-    margin-right: 10px;
-}
-.form-row input {
-    border: none;
-    border-bottom: 1px solid black;
-    float: left;
-    width: 200px;
 }
 .right-half {
     width: 27%;
     position: fixed;
     height: 100%;
-    margin-top: 100px;
-    right: 20px;
+    margin-top: 80px;
+    right: 0px;
 }
 
 .left-half{
@@ -173,19 +191,17 @@ body, html {
     position: relative;
     float:left;
     height: 100%;
-    margin-top: 140px;
-    margin-left: 40px;
+    margin-top: 170px;
 }
 #graph-wrapper {
     position: absolute;
     top: 0px;
-    left:140px;
     width: 100%;
 }
 
 #carrel {
     font-size: 10px;
-    width: 100%;
+    width: 90%;
     position: absolute;
     bottom: 170px;
     height: 120px;
@@ -260,14 +276,14 @@ body, html {
     height: 490px;
     width: 30px;
     position: absolute;
-    left: 80px;
+    left: 90px;
     top: 0px;
 }
 #nav-context {
     height: 510px;
     width: 30px;
     position: absolute;
-    left: 50px;
+    left: 60px;
     top: 0px;
 }
 #graph-wrapper #graph-reset,
@@ -288,8 +304,9 @@ body, html {
     stroke: black;
 }
 #graph {
-	left: 140px;
-    width: 80%;
+    position: absolute;
+	left: 5%;
+    width: 90%;
 }
 #graph-subjects {
     height: 500px;
@@ -391,26 +408,22 @@ display:none;
     width: 15%;
 }
 #sort {
-    position: fixed;
-    top: 141px;
-    left: 40px;
-    width: 130px;
-    border: 1px solid #ddd;
-    padding: 10px;
 }
 #sort h2 {
     text-transform: uppercase;
-    border-bottom: 1px solid #ddd;
     margin: 0;
-    font-size: 16px;
-    text-align: center;
-    margin-bottom: 10px;
+    font-size: 12px;
+    margin-bottom: 2px;
     padding-bottom: 5px;
     font-weight: normal;
+    text-decoration: underline;
+}
+#sort .graph-type {
+    float: left;
 }
 #sort .graph-toggle {
     cursor: pointer;
-    margin: 10px 0px;
+    margin: 0 0 10px 0;
     display: block;
     width: 100px;
     font-size: 14px;
@@ -455,12 +468,20 @@ display:none;
     margin: 0;
     padding: 0;
     font-size: 12px;
-    margin-top: 15px;
+    width: 50%;
+    float: right;
 }
 #sort li {
     cursor: pointer;
     text-transform: capitalize;
-    margin-bottom: 5px;
+    margin-bottom: 2px;
+    color: #A6A6A6;
+}
+#sort li:hover {
+    color: #808080;
+}
+#sort li.selected {
+    color: black;
 }
 #sort .disabled {
     cursor: default;
@@ -477,6 +498,7 @@ display:none;
     border-radius: 5px;
     background-color: white;
     margin-right: 5px;
+    display: none;
 }
 #sort li:hover .disc {
     background-color: #ddd;
@@ -485,10 +507,11 @@ display:none;
     background: #000;
 }
 #sort li:first-child{
-    font-weight: bold;
     cursor: default !important;
+    color: black !important;
     text-decoration: underline;
     text-transform: uppercase;
+    margin-bottom: 5px;
 }
 #sort .list,
 .list #sort .graph {
@@ -509,9 +532,9 @@ display:none;
 }
 #info-wrapper {
     font-family:akkurat, univers, arial, sans-serif;
-    width: 100%;
+    width: 90%;
     position: absolute;
-    top: 40px;
+    top: 140px;
     font-size: 16px;
     box-sizing: border-box;
     height: 50%;
