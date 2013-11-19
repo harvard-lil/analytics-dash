@@ -27,7 +27,7 @@ body, html {
 }
 #nav-bar div {
     cursor: pointer;
-    margin-right: 30px;
+    margin-left: 30px;
     display: inline-block;
     text-decoration: underline;
 }
@@ -40,18 +40,19 @@ body, html {
     float: left;
 }
 #search-form {
-    width: 73%;
-    height: 70px;
+    width: 70%;
+    height: 60px;
     background-color: white;
     position: fixed;
-    top: 80px;
+    top: 68px;
     z-index: 2;
-    padding-left: 3%;
+    padding: 10px 0;
+    margin-left: 3%;
     box-sizing: border-box;
 }
 .top-control {
     float: left;
-    margin-right: 20px;
+    margin-right: 10px;
 }
 .top-control:nth-child(1) {
     width: 50%;
@@ -60,22 +61,35 @@ body, html {
     position: relative;
     top: auto;
     right: auto;
-    margin-left: 10px;
+    font-size: 20px;
+    padding: 8px 10px 7px;
+    margin-top: 0;
+}
+#export-all {
+    margin: 20px 0 0 20px;
 }
 
 #search-fold {
-    width: 40%;
-    top: 63px;
-    left: 60%;
-    position: absolute;
+    width: 50%;
     background-color: white;
     border: 1px solid #808080;
     z-index: 2;
+    padding: 0 10px 10px;
+    box-sizing: border-box;
     display: none;
+    position: absolute;
+    top: 50px;
+}
+#search-fold p {
+    margin: 10px 0;
+    text-transform: uppercase;
+    text-decoration: underline;
+    font-size: 12px;
 }
 .form-row {
     color: #aaa;
     clear: both;
+    height: 30px;
 }
 .form-row .clear {
     height: 15px;
@@ -101,13 +115,17 @@ body, html {
     border: none;
     background-color: #ddd;
     float: left;
+    padding: 3px 4px;
     width: 200px;
 }
 #search-lcsh_keyword {
     width: 100%;
-    height: 60px;
+    height: 40px;
     border: 1px solid #808080;
-    background-color: #eee;
+    background-color: #ddd;
+    font-size: 20px;
+    padding-left: 10px;
+    box-sizing: border-box;
 }
 .search {
     -webkit-appearance: none;
@@ -121,7 +139,7 @@ body, html {
     cursor: pointer;
     text-transform: uppercase;
 }
-#search:hover {
+.search:hover {
     border-color: #000;
     color: #000;
 }
@@ -171,7 +189,7 @@ body, html {
 	text-align: left;
 	font-weight: normal;
     position: fixed;
-    top: 140px;
+    top: 125px;
     padding: 5px 40px;
     box-sizing: border-box;
     cursor: pointer;
@@ -237,21 +255,20 @@ body, html {
     display: block;
 }
 .carrel-action {
+    font-family: 'Lucida Grande';
+    text-transform: uppercase;
     cursor: pointer;
-    margin-bottom: 3px;
-    float: right;
+    float: left;
+    margin-right: 10px;
     font-size: 14px;
     color: #808080;
-	border-color: #808080;
-    border-style: solid;
-    border-width: 1px;
-    padding:3px 6px;
-}
-.carrel-action:nth-child(2) {
-    float: right;
+	border: 1px solid #808080;
+    padding: 2px 6px 3px;
+    font-size: 11px;
 }
 .carrel-action:hover {
-    text-decoration: underline;
+    color: black;
+    border-color: black;
 }
 #labels {
     width: 718px;
@@ -534,7 +551,7 @@ display:none;
     font-family:akkurat, univers, arial, sans-serif;
     width: 90%;
     position: absolute;
-    top: 140px;
+    top: 120px;
     font-size: 16px;
     box-sizing: border-box;
     height: 50%;
@@ -635,16 +652,11 @@ display:none;
 }
 #add-to-carrel {
     position: absolute;
-    bottom: 300px;
-    text-align: left;
+    bottom: 5px;
     cursor: pointer;
     font-size: 14px;
     color: #808080;
     text-decoration: underline;
-    border-color: #808080;
-    border-style: solid;
-    border-width: 1px;
-    padding:3px 6px;
 }
 #add-to-carrel:hover {
     text-decoration: underline;

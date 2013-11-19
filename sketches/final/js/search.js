@@ -2,8 +2,11 @@ var lc = lc || {};
 
 lc.search = function() {
 
-    $("#show-search").click(function(){
-        $("#search-fold").slideToggle();
+    $("#search-lcsh_keyword").focus(function(){
+        $("#search-fold").slideDown();
+    })
+    $("#search-form").blur(function(){
+        $("#search-fold").slideUp();
     });
 
     $("#search-form .clear").click(function(){
@@ -36,7 +39,7 @@ lc.search = function() {
     var baseurl = 'http://librarycloud.law.harvard.edu/v1/api/item/',
         defaultParams = '&limit=250&facet=pub_date_numeric&key=5239997b68e033fbf2854d77c6295310&filter:collection:hollis_catalog',
         search = getQueryVariable('search') || 'Boston';
-		suffix = '&filter=call_num:*&filter=loc_call_num_sort_order:*'
+		// suffix = '&filter=call_num:*&filter=loc_call_num_sort_order:*'
     var graphTitle = $("#searchTerm");
 
     $(".search").click(function() {
@@ -218,7 +221,7 @@ lc.search = function() {
 
     self.runSearch = function(parameters) {
         var query = self.buildSearchQuery(parameters);
-        var url = baseurl + '?' + defaultParams + query + suffix;
+        var url = baseurl + '?' + defaultParams + query;// + suffix;
 
         console.log('searching', query);
 

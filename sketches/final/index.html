@@ -38,12 +38,11 @@
                     <input id="search-lcsh_keyword" type="text" value=""></input>
                     <!-- <div class="clear"></div> -->
                 </div>
-                <input class="search top-control" type="submit" value="Submit a New Search"/>
-                <div class="top-control" style="width:200px">
-                    <div>Export All Results</div>
-                    <div id="show-search" class="top-control"><img src="img/magnifier.png">Advanced Search</div>
-                </div>
+                <input class="search top-control" type="submit" value="Submit"/>
+                <div id="export-all" class="carrel-action">Export All Results to CSV</div>
+                    <!-- <div id="show-search" class="top-control"><img src="img/magnifier.png">View More Search Options</div> -->
                 <div id="search-fold">
+                    <p>Advanced Search Options</p>
                     <div class="form-row">
                         <label>Library</label>
                         <select id="search-holding_libs">
@@ -490,7 +489,6 @@
                             <option>Collection</option>
                         </select>
                     </div>
-                    <input class="search" type="submit"/></br>
                 </div>
             </div>
             <div id="searchTerm"></div>
@@ -516,7 +514,7 @@
                     <div id="slider-range"></div>
                     <div class="axis_labels">Publication Date</div>
                 </div>
-                <div id="bookCounts"></div>
+                <!-- <div id="bookCounts"></div> -->
             </div>
         </div>
         <div class="right-half">
@@ -598,14 +596,14 @@
                         <p class="field"></p>
                     </div>
                 </div>
+                <a id="add-to-carrel">Add this item to your carrel</a>
             </div>
-            <a id="add-to-carrel">Add this item to your carrel</a>
             <div id="carrel">
                 <div id="carrel-box">
                     <ul></ul>
                 </div>
-                <a id="table-carrel" class="carrel-action">View your carrel as a Table -></a>
-                <a id="export-carrel" class="carrel-action">Export it as a spreadsheet -></a>
+                <a id="table-carrel" class="carrel-action">View Carrel as a Table</a>
+                <a id="export-carrel" class="carrel-action">Export as a CSV</a>
             </div>
         </div>
     </body>
