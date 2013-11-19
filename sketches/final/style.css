@@ -13,22 +13,26 @@ body, html {
 #subtitle{
 	font-size:12px;
 }
-h1 {
+#title-wrapper h1 {
     font-size: 40px;
     margin: 10px 4px 4px 0px;
     text-transform: uppercase;
     letter-spacing: 1px;
+    float: left;
 }
 #nav-bar {
-    background: black;
-    padding: 8px;
-    color: white;
+    float: right;
+    margin-top: 35px;
 }
 #nav-bar div {
     cursor: pointer;
     margin-right: 30px;
     display: inline-block;
     text-decoration: underline;
+}
+#show-search {
+    position: absolute;
+    top: 70px;
 }
 #show-search img {
     margin: 1px 5px 0 0;
@@ -598,7 +602,7 @@ display:none;
 
 #info {
     position: absolute;
-    top: 70px;
+    top: 10px;
     bottom: 40px;
     right: 20px;
     left: 0;
@@ -799,6 +803,7 @@ circle .selected {
     background-color: rgba(255,255,255,.8);
     position: absolute;
     z-index: 199;
+    display: none;
 }
 
 #popup {
@@ -814,16 +819,15 @@ circle .selected {
     text-align: left;
     cursor: pointer;
     padding:16px 36px;
+    display: none;
 }
 #popup li{
-padding-bottom: 4px;
-}
-#popup p{
+    padding-bottom: 4px;
 }
 
-#popup img{
-margin-left: auto;
-margin-right: auto;
+#popup img {
+    margin-left: auto;
+    margin-right: auto;
     display: block;
 }
 

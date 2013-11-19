@@ -21,10 +21,12 @@ lc.tooltip = function() {
 		console.log(row)
 		 if (row.class) {
 		 	tooltip.html(row.lastname + ': ' + row.start+ ' - ' +row.end );
-		  } else if (row.creator) {
+		  } else if (row.creator && row.loc_call_num_sort_order && row.call_num) {
 		 	tooltip.html(row.title+ ': ' + String(row.loc_call_num_sort_order[0]).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,") + " " + row.call_num[0]);
+		 } else if (row.loc_call_num_sort_order) {
+		 	tooltip.html(row.title + " " + String(row.loc_call_num_sort_order[0]).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,"));
 		 } else {
-		 //	tooltip.html(row)
+		 	tooltip.html(row.title);
 		 }
 	//	tooltip.html(row.title + ' - ' + row.loc_call_num_subject.split("--")[0]);
 

@@ -21,10 +21,10 @@ lc.subjectgraph = function() {
     });
 
     self.search = function(query) {
-        $.ajax({
-                url: baseurl + '?' + encodeURI(query),
-                success: self.searchCompleted
-        });
+        // $.ajax({
+        //         url: baseurl + '?' + encodeURI(query),
+        //         success: self.searchCompleted
+        // });
     };
 
     self.getChildren = function(parent) {
@@ -185,6 +185,89 @@ lc.subjectgraph = function() {
 
         // remove divs when they leave
         groups.exit().remove();
+
+    };
+
+    self.updateRelative = function(data) {
+        console.log("ok")
+
+        // var heirarchy = {};
+        // data.forEach(function(d){
+        //     if (!d.loc_call_num_subject) return;
+        //     var num = d.loc_call_num_subject.split(" -- ");
+        //     var lookup = {};
+        //     for (var i = 0; i < num.length; i++) {
+        //         var s = num[i];
+        //         // console.log(s, lookup, num)
+        //         // lookup[s] = {};
+        //         console.log(s, lookup, heirarchy[lookup])
+        //         if (s in lookup) lookup[s].count++;   
+        //         else lookup[s] = {};
+                
+        //         heirarchy
+        //         lookup = heirarchy[s];
+        //     }
+        // });
+        // console.log(heirarchy)
+
+        var nested = d3.nest()
+            .key(function(d){
+                if (!d.loc_call_num_subject) return;
+                var k = d.loc_call_num_subject.split(" -- ")[0];
+                return k;
+            }).rollup(function(d){
+                for (var i = 0; i < d.length; i++) {
+                    if (d[i].call_num) {
+                        return {"call_num":d[i].call_num[0], "length":d.length};
+                    }
+                }
+                return {"call_num":"undefined", "length":d.length};
+            }).entries(data)
+
+        nested.forEach(function(d,i){
+            if (d.key == "unavailable") {
+                d.values.call_num = "undefined";
+            }
+        });
+
+        console.log(nested)
+        
+        nested.sort(function(a,b){
+            if(a.values.call_num.substr(0,1) < b.values.call_num.substr(0,1)) return -1;
+            if(a.values.call_num.substr(0,1) > b.values.call_num.substr(0,1)) return 1;
+            return 0;
+            // return a.values.call_num.substr(0,1)] - b.values.call_num;
+        });
+
+        var groups = d3.select("#nav").selectAll("rect.schema")
+            .data(nested);
+
+        var entering = groups.enter()
+            .append("g")
+            .attr("class", "schema");
+
+        var rectangles = entering.append("rect").attr("width","30");
+
+        var hy = 0;
+            groups.attr("id",function(d){
+                d.className = classNameify(d.key);
+                return d.className;
+            })
+            groups.select("rect").attr("height",function(d){
+                d.height = (d.values.length/data.length) * height;
+                return d.height;
+            }).attr("y",function(d){
+                d.hy = hy;
+                hy += d.height;
+                return d.hy;
+            }).attr("fill", function(d) {
+                if (d.values.call_num != "undefined" && d.values.call_num != "unavailable") {
+                    console.log(d.values.call_num);
+                    return lcObjectArray[d.values.call_num.substr(0,1)].color;
+                }
+                else
+                    return "#666";
+            });
     };
 
     self.crumbize = function(d) {
@@ -231,6 +314,7 @@ lc.subjectgraph = function() {
     // caching this highlighted object so we're not creating new ones on mousemove
     var highlighted = {};
     self.rollover = function(cy) {
+        return;
         var currentClass = self.getChildY(cy);
         console.log(currentClass)
 		// self.show();
@@ -250,6 +334,7 @@ lc.subjectgraph = function() {
             //.attr("fill",schema.colorClass(currentClass.class.class));
     };
     self.rollout = function() {
+        return;
         d3.select("#graph-labels").style("display","block");
         d3.select("#rollover").style("display","none")
             .select("text").text("");

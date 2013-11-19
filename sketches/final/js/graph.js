@@ -12,7 +12,7 @@ lc.graph = function() {
 
     // default scaling / axes
     var x_axis_type = "chronological_x";
-    var y_axis_type = "popularity_y";
+    var y_axis_type = "call_number_sort_order_y";
 	var radius_type = "shelfrank";
 
 	var formatAsYear= d3.format("04d");
@@ -27,6 +27,8 @@ lc.graph = function() {
 	var xscale = d3.scale.linear().domain([1850,yearEnd]).range([0,gWidth]);
 
 	var yscale = d3.scale.linear().domain([0,16000000]).range([gHeight, 0]);
+
+	var rscale = d3.scale.linear().domain([0,300]).range([2, 30]);
 
 	var linkouturl = "http://holliscatalog.harvard.edu/?itemid=|library/m/aleph|009455802";
 	
@@ -55,10 +57,10 @@ lc.graph = function() {
     		.attr("id","xAxis")
     		.attr("transform","translate(120," + gHeight +")");
 
-    	axes.append("g")
-    		.attr("class", "axis")
-    		.attr("id","yAxis")
-    		.attr("transform","translate(120,0)");
+    	// axes.append("g")
+    	// 	.attr("class", "axis")
+    	// 	.attr("id","yAxis")
+    	// 	.attr("transform","translate(120,0)");
 
         axes.append("text")
   	        .attr("class","axis_labels")
@@ -75,13 +77,13 @@ lc.graph = function() {
 		axes.select("#xAxis").call(xAxis);
 		axes.select("#yAxis").call(yAxis);
 
-		if (y_axis_type == 'call_number_sort_order_y') {
-			$("#yAxis").hide();
-			lc.subjectgraph.show();
-		} else {
-			$("#yAxis").show();
-			lc.subjectgraph.hide();
-		}
+		// if (y_axis_type == 'call_number_sort_order_y') {
+		// 	$("#yAxis").hide();
+		// 	lc.subjectgraph.show();
+		// } else {
+		// 	$("#yAxis").show();
+		// 	lc.subjectgraph.hide();
+		// }
 	}
 
 	var minYear, maxYear;
@@ -113,6 +115,11 @@ lc.graph = function() {
 
 	self.appendCircles = function(data) {
 
+		data.sort(function(a,b){
+			if (a.loc_call_num_sort_order && b.loc_call_num_sort_order)
+				return a.loc_call_num_sort_order[0] - b.loc_call_num_sort_order[0];
+			// else return 1;
+		});
 		bookData = data;
 
         var circles = circleGroup.selectAll("circle").data(data);
@@ -145,14 +152,17 @@ lc.graph = function() {
         updateCircles();
         self.updateLabels(0);
         sortBooks("title", true);
+        lc.subjectgraph.updateRelative(data);
     }
     function updateCircles() {
     	var circles = circleGroup.selectAll("circle");
     	circles.attr("fill",function(d){
-	        if (d.call_num && lcObjectArray[d.call_num[0].substr(0,1)]){
-	        	var colorname = d.call_num[0].substr(0,1);
-//	        	console.log("color should be " + colorname);
-	        	return lcObjectArray[d.call_num[0].substr(0,1)].color;
+	        if (d.call_num) {
+	        	if (lcObjectArray[d.call_num[0].substr(0,1)]) {
+		        	var colorname = d.call_num[0].substr(0,1);
+	//	        	console.log("color should be " + colorname);
+		        	return lcObjectArray[d.call_num[0].substr(0,1)].color;
+		        } else return "#808080";
         	} else {
 //        		console.log("didnt get anything");
 	         	return "black";
@@ -164,7 +174,7 @@ lc.graph = function() {
 		})
 		.duration(500)
 		.attr("cx", calculateX)
-		.attr("cy", calculateY)
+		.attr("cy", function(d,i){ return calculateY(i); })
 		.attr("r", calculateRadius);
 
     }
@@ -242,8 +252,10 @@ lc.graph = function() {
         	$("#info").css("border-top-color","#808080");
         }
 
-        if (data.call_num)
-           info.select(".lc .field").html(data.call_num.join("or "));
+		if (data.call_num)
+        	info.select(".lc .field").html(data.call_num.join("or "));
+        else
+       		info.select(".lc .field").html("Not Available");
 
         info.select(".pub_date_numeric .field").text(data.pub_date_numeric);
 
@@ -405,6 +417,7 @@ lc.graph = function() {
 	}
 
 	function calculateY(d) {
+		return (d / bookData.length) * (height*.9);
 		switch(y_axis_type) {
 			case 'grads':
 				yscale.domain([0,300]);
@@ -420,9 +433,9 @@ lc.graph = function() {
 	            return yscale(d.shelfrank || 0);
 			case 'call_number_sort_order_y':
 				if (d.loc_call_num_sort_order){
-		            // yscale.domain([8000000,0]);
+		            yscale.domain([8000000,0]);
 		            // return yscale(d.loc_call_num_sort_order[0])
-		            return lc.subjectgraph.calculateY(d.loc_call_num_sort_order[0]);
+		            // return lc.subjectgraph.calculateY(d.loc_call_num_sort_order[0]);
 				}
 				else {
 					return yscale(0);
@@ -439,13 +452,20 @@ lc.graph = function() {
 	}
 
 	function calculateRadius(d) {
+		rscale.domain([0,250]);
 		switch(radius_type) {
-			case 'pages':
-    			if (d.pages_numeric)
-					return Math.max(3,d.pages_numeric / 50);
-				else
-					return 3;
-				break;
+			// case 'pages':
+   //  			if (d.pages_numeric)
+			// 		return Math.max(3,d.pages_numeric / 50);
+			// 	else
+			// 		return 3;
+			// 	break;
+			case 'grads':
+				return  rscale(d.score_checkouts_grad || 0);
+			case 'undergrads':
+				return  rscale(d.score_checkouts_undergrad || 0);
+			case 'faculty':
+				return  rscale(d.score_checkouts_fac || 0);
 			case 'shelfrank':
 				if (d.shelfrank)
 					return Math.max(3,d.shelfrank / 5);
