@@ -117,7 +117,7 @@ lc.graph = function() {
 	self.appendCircles = function(data) {
 		bookData = data;
 		numBooks = data.length;
-		lc.subjectgraph.updateRelative(data, numBooks);
+		lc.subjectgraph.updateRelative(data, numBooks, 0);
 
 		var undefs = [];
 		for (var i = data.length-1; i--; 0) {
@@ -165,6 +165,7 @@ lc.graph = function() {
         sortBooks("title", true);
     }
     function updateCircles() {
+    	console.log("updateCircles")
     	var circles = circleGroup.selectAll("circle");
     	circles.attr("fill",function(d){
 	        if (d.call_num) {
@@ -346,6 +347,7 @@ lc.graph = function() {
     		lc.subjectgraph.rollout();
     }).click(function(e) {
     	if (e.target.nodeName != "circle")
+    		return;
     		lc.subjectgraph.graphClick(e.offsetY);
     });
 
@@ -368,12 +370,7 @@ lc.graph = function() {
 		lc.search.runSearch({
 			"lcsh_keyword": $(this).text()
 		});
-	});
-
-	$("#id_inst").live("click",function(){
-	console.log("hi!");
-		});
-	
+	});	
 
 
 	var sortTitles = {

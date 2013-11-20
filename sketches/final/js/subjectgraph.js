@@ -176,9 +176,9 @@ lc.subjectgraph = function() {
 
             crumbize(d);
 
-            d3.selectAll(".schema").classed("selected",false);
-            d3.select(this).classed("selected",true);
-            this.parentNode.appendChild(this);
+            // d3.selectAll(".schema").classed("selected",false);
+            // d3.select(this).classed("selected",true);
+            // this.parentNode.appendChild(this);
         });
 
         lc.graph.updateLabels(globalDepth);
@@ -190,14 +190,14 @@ lc.subjectgraph = function() {
 
     };
 
-    self.updateRelative = function(data, numBooks) {
+    self.updateRelative = function(data, numBooks, depth) {
 
         self.relative = true;
 
         var nested = d3.nest()
             .key(function(d){
                 if (!d.loc_call_num_subject) return;
-                var k = d.loc_call_num_subject.split(" -- ")[0];
+                var k = d.loc_call_num_subject.split(" -- ")[depth];
                 return k;
             }).rollup(function(d){
                 for (var i = 0; i < d.length; i++) {
@@ -205,7 +205,8 @@ lc.subjectgraph = function() {
                         return {
                             "call_num":d[i].call_num[0], 
                             "length":d.length,
-                            "depth":0
+                            "depth":depth,
+                            "books":d
                             };
                     }
                 }
@@ -216,11 +217,12 @@ lc.subjectgraph = function() {
             if (d.key == "unavailable") {
                 d.values.call_num = "undefined";
             }
-        })
+        });
+        if (nested.length == 1 && nested[0].key == "undefined") return;
         
         nested.sort(function(a,b){
-            if(a.values.call_num.substr(0,1) < b.values.call_num.substr(0,1)) return -1;
-            if(a.values.call_num.substr(0,1) > b.values.call_num.substr(0,1)) return 1;
+            if (a.values.call_num.substr(0,1) < b.values.call_num.substr(0,1)) return -1;
+            if (a.values.call_num.substr(0,1) > b.values.call_num.substr(0,1)) return 1;
             return 0;
         });
 
@@ -233,7 +235,9 @@ lc.subjectgraph = function() {
 
         self.relativeClasses = nested;
 
-        var groups = d3.select("#nav").selectAll("rect.schema")
+        var div = (depth == 0) ? "#nav" : "#nav-context";
+
+        var groups = d3.select(div).selectAll("rect.schema")
             .data(nested);
 
         var entering = groups.enter()
@@ -243,36 +247,42 @@ lc.subjectgraph = function() {
         var rectangles = entering.append("rect").attr("width","30");
 
         var hy = 0;
-            groups.attr("id",function(d){
-                d.className = classNameify(d.key);
-                return d.className;
-            })
-            groups.select("rect").attr("height",function(d){
-                if (d.key == "undefined") {
-                    d.height = (data.length-numBooks)/data.length * height;
-                }
-                d.height = (d.values.length/numBooks) * height;
-                return d.height;
-            }).attr("y",function(d){
-                d.y = hy;
-                hy += d.height;
-                return d.y;
-            }).attr("fill", function(d) {
-                if (d.key != "undefined" && d.key != "unavailable" && lcObjectArray[d.values.call_num.substr(0,1)]) {
-                    return lcObjectArray[d.values.call_num.substr(0,1)].color;
-                }
-                else
-                    return "#666";
-            });
+        groups.attr("id",function(d){
+            d.className = classNameify(d.key);
+            return d.className;
+        })
+        groups.select("rect").attr("height",function(d){
+            if (d.key == "undefined") {
+                d.height = (data.length-numBooks)/data.length * height;
+            }
+            d.height = (d.values.length/numBooks) * height;
+            return d.height;
+        }).attr("y",function(d){
+            d.values.class = d.key;
+            d.y = hy;
+            hy += d.height;
+            return d.y;
+        }).attr("fill", function(d) {
+            if (d.key != "undefined" && d.key != "unavailable" && lcObjectArray[d.values.call_num.substr(0,1)]) {
+                return lcObjectArray[d.values.call_num.substr(0,1)].color;
+            }
+            else
+                return "#666";
+        }).on("click",function(d){
+            self.updateRelative(d.values.books, d.values.length, d.values.depth+1);
+            self.crumbize(d.values);
+        });
+        groups.exit().remove();
     };
 
     self.crumbize = function(d) {
+        if (d.class == "undefined") return;
         var breadDepth = breadcrumb.find(".link") ? breadcrumb.find(".link").length : 0;
         var l = $("<span>").attr("class","link")
-                .html((d.depth == 0 ? "" : "<span class='tick'>></span>")+"<span class='item'>"+d.lastname+"</span>")
+                .html((d.depth == 0 ? "" : "<span class='tick'>></span>")+"<span class='item'>"+d.class+"</span>")
                 .click(function(){
-                    self.getChildrenID(d.id);
-                    self.updateBounds(d);
+                    // self.getChildrenID(d.id);
+                    // self.updateBounds(d);
                     breadcrumb.find(".link").each(function(i,e){
                         if (i > d.depth) $(this).remove();
                     });
@@ -281,7 +291,7 @@ lc.subjectgraph = function() {
         if (d.depth + 1 < breadDepth) breadcrumb.empty();
         else if (d.depth + 1 == breadDepth) breadcrumb.find(".link").eq(d.depth).remove();
 
-        if (d.depth == 0) l.css("color",schema.colorClass(d.class));
+        if (d.depth == 0) l.css("color",schema.colorClass(d.call_num));
 
         breadcrumb.append(l);
     };
@@ -348,7 +358,7 @@ lc.subjectgraph = function() {
     self.graphClick = function(cy) {
         var currentClass = self.getChildY(cy);
         self.getChildrenID(currentClass.class.id);
-        lc.subjectgraph.crumbize(currentClass.class);
+        self.crumbize(currentClass.class);
     };
 
     self.getChildY = function(cy) {

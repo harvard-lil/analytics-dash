@@ -171,10 +171,10 @@ body, html {
 
 #breadcrumb {
     position: absolute;
-    top: 425px;
-    left: -140px;
+    top: -15px;
+    left: 0;
     height: 30px;
-    width: 150px;
+    width: 70%;
 }
 #breadcrumb .link {
     font-size: 12px;
@@ -228,7 +228,7 @@ body, html {
     font-size: 10px;
     width: 90%;
     position: absolute;
-    top: 540px;
+    top: 542px;
     height: 120px;
 }
 #carrel-box {
@@ -296,14 +296,14 @@ body, html {
     height: 490px;
     width: 3%;
     position: absolute;
-    left: 6%;
+    left: 4%;
     top: 0px;
 }
 #nav-context {
     height: 510px;
     width: 3%;
     position: absolute;
-    left: 9%;
+    left: 7%;
     top: 0px;
 }
 #graph-wrapper #graph-reset,
@@ -644,7 +644,7 @@ body, html {
 #info {
     position: absolute;
     top: 10px;
-    bottom: 40px;
+    bottom: 30px;
     right: 10px;
     padding-right: 10px;
     left: 0;
