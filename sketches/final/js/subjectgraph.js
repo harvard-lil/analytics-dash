@@ -106,6 +106,8 @@ lc.subjectgraph = function() {
         var groups = parent.selectAll(".schema")
             .data(data);
 
+            console.log(data)
+
        var texts = d3.select("#graph-labels").selectAll("text").data(data);
        texts.enter().append("text");
        texts.exit().remove();
@@ -189,26 +191,8 @@ lc.subjectgraph = function() {
     };
 
     self.updateRelative = function(data, numBooks) {
-        console.log("ok")
 
-        // var heirarchy = {};
-        // data.forEach(function(d){
-        //     if (!d.loc_call_num_subject) return;
-        //     var num = d.loc_call_num_subject.split(" -- ");
-        //     var lookup = {};
-        //     for (var i = 0; i < num.length; i++) {
-        //         var s = num[i];
-        //         // console.log(s, lookup, num)
-        //         // lookup[s] = {};
-        //         console.log(s, lookup, heirarchy[lookup])
-        //         if (s in lookup) lookup[s].count++;   
-        //         else lookup[s] = {};
-                
-        //         heirarchy
-        //         lookup = heirarchy[s];
-        //     }
-        // });
-        // console.log(heirarchy)
+        self.relative = true;
 
         var nested = d3.nest()
             .key(function(d){
@@ -218,7 +202,11 @@ lc.subjectgraph = function() {
             }).rollup(function(d){
                 for (var i = 0; i < d.length; i++) {
                     if (d[i].call_num) {
-                        return {"call_num":d[i].call_num[0], "length":d.length};
+                        return {
+                            "call_num":d[i].call_num[0], 
+                            "length":d.length,
+                            "depth":0
+                            };
                     }
                 }
                 return {"call_num":"undefined", "length":d.length};
@@ -229,24 +217,21 @@ lc.subjectgraph = function() {
                 d.values.call_num = "undefined";
             }
         })
-
-        console.log(nested)
         
         nested.sort(function(a,b){
             if(a.values.call_num.substr(0,1) < b.values.call_num.substr(0,1)) return -1;
             if(a.values.call_num.substr(0,1) > b.values.call_num.substr(0,1)) return 1;
             return 0;
-            // return a.values.call_num.substr(0,1)] - b.values.call_num;
         });
 
         for (var i = nested.length-1; i--; 0) {
             if (nested[i].key == "undefined" || nested[i].key == "unavailable") {
                 var p = nested.splice(i,1);
-                console.log(p)
-                nested.push(p[0])
+                nested.push(p[0]);
             }
         }
-        console.log(nested)
+
+        self.relativeClasses = nested;
 
         var groups = d3.select("#nav").selectAll("rect.schema")
             .data(nested);
@@ -269,9 +254,9 @@ lc.subjectgraph = function() {
                 d.height = (d.values.length/numBooks) * height;
                 return d.height;
             }).attr("y",function(d){
-                d.hy = hy;
+                d.y = hy;
                 hy += d.height;
-                return d.hy;
+                return d.y;
             }).attr("fill", function(d) {
                 if (d.key != "undefined" && d.key != "unavailable" && lcObjectArray[d.values.call_num.substr(0,1)]) {
                     return lcObjectArray[d.values.call_num.substr(0,1)].color;
@@ -325,9 +310,14 @@ lc.subjectgraph = function() {
     // caching this highlighted object so we're not creating new ones on mousemove
     var highlighted = {};
     self.rollover = function(cy) {
-        return;
-        var currentClass = self.getChildY(cy);
-        console.log(currentClass)
+        var currentClass;
+        // currentClass = self.getChildY(cy);
+        self.relativeClasses.forEach(function(e,i){
+            if (cy > e.y) {
+                currentClass = e;
+                return;
+            }
+        })
 		// self.show();
         d3.select("#graph-labels").style("display","none");
         var rollover = d3.select("#rollover").style("display","block");
@@ -339,9 +329,11 @@ lc.subjectgraph = function() {
                 .attr("height", currentClass.height)
                 .attr("width","100%");
 
+        var ctx = self.relative ? currentClass.values : currentClass.class;
+
         rollover.select("text")
-            .attr("x",(currentClass.class.depth == 0) ? 3 : 33)
-            .text(currentClass.class.lastname + ': ' + currentClass.class.start+ ' - ' +currentClass.class.end);
+            .attr("x",(ctx.depth == 0) ? 3 : 33)
+            .text(self.relative ? currentClass.key : currentClass.class.name);
             //.attr("fill",schema.colorClass(currentClass.class.class));
     };
     self.rollout = function() {
