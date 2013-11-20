@@ -2,12 +2,17 @@ var lc = lc || {};
 
 lc.search = function() {
 
+    var searchForm = $("#search-form")
+
     $("#search-lcsh_keyword").focus(function(){
-        $("#search-fold").slideDown();
+        searchForm.find("#search-fold").slideDown();
     })
-    $("#search-form").blur(function(){
-        $("#search-fold").slideUp();
+    searchForm.blur(function(){
+        searchForm.find("#search-fold").slideUp();
     });
+    searchForm.find(".clear").click(function(){
+       searchForm.find("#search-fold").slideUp(); 
+    })
 
     $("#search-form .clear").click(function(){
         // $(this).parent().toggleClass("locked");

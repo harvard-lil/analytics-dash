@@ -1,10 +1,10 @@
 var lc = lc || {};
 
 lc.graph = function() {
-	var width = 1000,
-        height = 500,
-        gWidth = 800,
-        gHeight = 480,
+	var height = 500,
+        gHeight = height-20,
+        width,
+        gWidth,
         bookData,
         numBooks,
         currentBook;
@@ -18,9 +18,9 @@ lc.graph = function() {
 
 	var formatAsYear= d3.format("04d");
 
-	var svg = d3.select("#graph").attr("height",height).attr("width","100%");
+	var svg = d3.select("#graph").attr("height",height).attr("width","85%");
     width = $("#graph").width(),
-    gWidth = width - 150;
+    gWidth = width*.95;
 
     yearEnd = 2013;
 	var timescale = d3.scale.linear().domain([1850,yearEnd]).range([0,gWidth]);
@@ -36,7 +36,7 @@ lc.graph = function() {
     svg.append("clipPath").attr("id","graph-box")
     	.append("rect").attr("width",gWidth).attr("height",gHeight);
 
-    var circleGroup = svg.append("g").attr("class","circles").attr("transform","translate(120,0)").attr("clip-path","url(#graph-box)");
+    var circleGroup = svg.append("g").attr("class","circles").attr("transform","translate("+(width*.025)+",0)").attr("clip-path","url(#graph-box)");
 
     var axes = svg.append("g").attr("class","axes");
     // creates the axes
@@ -56,19 +56,19 @@ lc.graph = function() {
     	axes.append("g")
     		.attr("class", "axis")
     		.attr("id","xAxis")
-    		.attr("transform","translate(120," + gHeight +")");
+    		.attr("transform","translate("+ (width*.025) +"," + gHeight +")");
 
     	// axes.append("g")
     	// 	.attr("class", "axis")
     	// 	.attr("id","yAxis")
     	// 	.attr("transform","translate(120,0)");
 
-        axes.append("text")
-  	        .attr("class","axis_labels")
-	        .attr("id","y_axis")
-	        .text("Overall Popularity")
-	        .attr("text-anchor","middle")
-	        .attr("transform","translate(35,"+(height/2)+") rotate(-90)")
+        // axes.append("text")
+  	     //    .attr("class","axis_labels")
+	       //  .attr("id","y_axis")
+	       //  .text("Overall Popularity")
+	       //  .attr("text-anchor","middle")
+	       //  .attr("transform","translate(35,"+(height/2)+") rotate(-90)")
     }
     //defines function that ads labels to the axes
 

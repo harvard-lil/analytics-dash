@@ -1,5 +1,5 @@
 body, html {
-    font-family: brown, futura, neuzeit, akkurat, univers, helvetica, arial, sans-serif;
+    font-family: futura, brown, neuzeit, akkurat, univers, helvetica, arial, sans-serif;
     margin: 0;
 }
 #title-wrapper {
@@ -47,7 +47,6 @@ body, html {
     top: 68px;
     z-index: 2;
     padding: 10px 0;
-    margin-left: 3%;
     box-sizing: border-box;
 }
 .top-control {
@@ -78,13 +77,19 @@ body, html {
     box-sizing: border-box;
     display: none;
     position: absolute;
-    top: 50px;
+    top: 49px;
 }
 #search-fold p {
     margin: 10px 0;
     text-transform: uppercase;
     text-decoration: underline;
     font-size: 12px;
+}
+#search-fold .clear {
+    position: absolute;
+    bottom: -1px;
+    right: -1px;
+    margin-right: 0;
 }
 .form-row {
     color: #aaa;
@@ -113,7 +118,8 @@ body, html {
 }
 .form-row input {
     border: none;
-    background-color: #ddd;
+    background-color: #f7f7f7;
+    border: 1px solid #808080;
     float: left;
     padding: 3px 4px;
     width: 200px;
@@ -122,7 +128,7 @@ body, html {
     width: 100%;
     height: 40px;
     border: 1px solid #808080;
-    background-color: #ddd;
+    background-color: #f7f7f7;
     font-size: 20px;
     padding-left: 10px;
     box-sizing: border-box;
@@ -185,12 +191,12 @@ body, html {
 
 #searchTerm {
 	font-size: 20px;
-    width: 73%;
+    width: 70%;
 	text-align: left;
 	font-weight: normal;
     position: fixed;
     top: 125px;
-    padding: 5px 40px;
+    padding: 5px 0;
     box-sizing: border-box;
     cursor: pointer;
     background: white;
@@ -205,7 +211,8 @@ body, html {
 }
 
 .left-half{
-    width: 73%;
+    width: 70%;
+    margin-left: 3%;
     position: relative;
     float:left;
     height: 100%;
@@ -221,12 +228,12 @@ body, html {
     font-size: 10px;
     width: 90%;
     position: absolute;
-    bottom: 170px;
+    top: 540px;
     height: 120px;
 }
 #carrel-box {
     width: 100%;
-    height: 76px;
+    height: 90px;
     border: 1px solid #808080;
     margin-bottom: 7px;
     box-sizing: border-box;
@@ -278,29 +285,25 @@ body, html {
     top: 0px;
     z-index: -1;
 }
-#labels text {
-    font-family: akkurat, futura, helvetica, sans-serif;
+#labels text,
+#graph-labels text {
     font-size: 12px;
 }
 #labels .b{
     font-weight: bold;
 }
-#graph-labels text {
-    font-family: akkurat, futura, helvetica, sans-serif;
-    font-size: 12px;
-}
 #nav {
     height: 490px;
-    width: 30px;
+    width: 3%;
     position: absolute;
-    left: 90px;
+    left: 6%;
     top: 0px;
 }
 #nav-context {
     height: 510px;
-    width: 30px;
+    width: 3%;
     position: absolute;
-    left: 60px;
+    left: 9%;
     top: 0px;
 }
 #graph-wrapper #graph-reset,
@@ -322,8 +325,7 @@ body, html {
 }
 #graph {
     position: absolute;
-	left: 5%;
-    width: 90%;
+	left: 10%;
 }
 #graph-subjects {
     height: 500px;
@@ -335,7 +337,7 @@ body, html {
 }
 
 #histogram {
-    width: 80%;
+    width: 98%;
     position: absolute;
     top: 520px;
     margin-bottom: 16px;
@@ -345,21 +347,21 @@ body, html {
 }
 
 #bookcounts{
-color:black;
-background-color: white;
-width:200px;
-height:25px;
-font-size: 10px;
-line-height: 14px;
-left: 150px;
-z-index: 200;
-position:absolute;
-padding: 6px;
-display:block;
+    color:black;
+    background-color: white;
+    width:200px;
+    height:25px;
+    font-size: 10px;
+    line-height: 14px;
+    left: 150px;
+    z-index: 200;
+    position:absolute;
+    padding: 6px;
+    display:block;
 }
 
 #bookcounts-hidden{
-display:none;
+    display:none;
 }
 #graph-reset {
     border: 1px solid #808080;
@@ -381,9 +383,19 @@ display:none;
     border-color: #000;
     color: #000;
 }
-#histogram .axis_labels {
+#histogram .axis-label {
     text-align: center;
     margin-top: 20px;
+}
+.axis-label.vertical {
+    position: absolute;
+top: 250px;
+text-align: center;
+transform: rotate(-90deg);
+-webkit-transform: rotate(-90deg);
+-moz-transform: rotate(-90deg);
+-ms-transform: rotate(-90deg);
+left: -80px;
 }
 #slider-range {
     border: 1px solid #808080;
@@ -391,40 +403,31 @@ display:none;
     box-sizing: border-box;
 }
 .ui-slider-range {
-    background-color: rgba(0,0,0,.1);
-}
-.ui-slider-handle {
-    background-color: black;
-    left: 100%;
-    line-height: 60px;
-    text-align: center;
-    text-indent: -8px;
-    text-decoration: none;
-    color: black;
-    outline: none;
+    background-color: #f7f7f7;
 }
 .ui-slider-horizontal .ui-slider-handle {
-    width: 10px;
+    width: 36px;
     height: 16px;
-    top: -4px;
-    font-size: 12px;
-    line-height: 53px;
-    margin-left: -5px;
-    text-indent: -8px;
+    line-height: 16px;
     cursor: pointer;
+    text-indent: 0px;
+    top: -4px;
+    background: white;
+    border: 1px solid #808080;
+    color: #808080;
+    font-family: Lucida Grande;
+    font-size: 11px;
+    text-decoration: none;
+    text-align: center;
+    margin-left: -24px;
 }
+.ui-slider-horizontal .ui-slider-handle:hover {
+    color: black;
+    border-color: black;
+}
+
 #histogram rect {
     stroke: #fff;
-}
-#bookCounts {
-    position: absolute;
-    top: 580px;
-    left: 80%;
-    color: #808080;
-    font-size: 12px;
-    width: 15%;
-}
-#sort {
 }
 #sort h2 {
     text-transform: uppercase;
@@ -548,15 +551,14 @@ display:none;
     -webkit-box-shadow: 0 0 1px rgba(255,255,255,.5);
 }
 #info-wrapper {
-    font-family:akkurat, univers, arial, sans-serif;
     width: 90%;
     position: absolute;
     top: 120px;
     font-size: 16px;
     box-sizing: border-box;
-    height: 50%;
-    background: #eee;
-    border: 1px solid #ccc;
+    height: 400px;
+    background: #f7f7f7;
+    border: 1px solid #808080;
 }
 #info-wrapper h3 {
     font-weight: normal;
@@ -585,7 +587,6 @@ display:none;
     width: 60%;
 }
 #info-wrapper .sort-heading p {
-    font-family: courier, monospace;
     text-transform: uppercase;
     margin: 2px;
     font-size: 14px;
@@ -644,32 +645,28 @@ display:none;
     position: absolute;
     top: 10px;
     bottom: 40px;
-    right: 20px;
+    right: 10px;
+    padding-right: 10px;
     left: 0;
     overflow: scroll;
-    padding-left: 30px;
+    padding-left: 20px;
     border-top: 5px solid #eee;
 }
 #add-to-carrel {
     position: absolute;
-    bottom: 5px;
+    bottom: -1px;
     cursor: pointer;
-    font-size: 14px;
-    color: #808080;
-    text-decoration: underline;
-}
-#add-to-carrel:hover {
-    text-decoration: underline;
+    width: 100%;
+    padding: 4px 0 4px;
+    left: -1px;
+    text-align: center;
 }
 
 #info .infoLabel {
-    font-family: courier, monospace;
     font-size: 12px;
     line-height: 12px;
     margin: 15px 0 3px;
-    color: gray;
     text-transform:uppercase;
-    cursor: pointer;
 }
 #info .title .infoLabel {
     margin-top: 5px;
@@ -697,6 +694,11 @@ display:none;
     margin: 0;
     font-size: 14px;
 }
+#info .field {
+    color: #808080;
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 12px;
+}
 
 #info .title .field {
     font-weight: bold;
@@ -704,12 +706,14 @@ display:none;
     text-transform: capitalize;
     margin: 0;
 }
+#info .title a {
+    color: black;
+}
 
 #info ul {
     list-style-type: none;
     padding: 0;
     margin: 0;
-    font-size: 12px;
 }
 
 #info .field li {
@@ -719,9 +723,9 @@ display:none;
     text-decoration: underline;
 }
 #list-wrapper {
-    width: 75%;
+    width: 96%;
     display: none;
-    margin-left: 170px;
+    font-family: Helvetica;
 }
 .list #list-wrapper {
     display: block;
@@ -783,10 +787,14 @@ display:none;
 }
 #list .right {
     float: right;
-    max-width: 30%;
+}
+#list .subject {
+    max-width: 20%;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    float: right;
+    margin-right: 5px;
 }
 
 circle {
@@ -816,12 +824,10 @@ circle .selected {
 }
 
 .axis text {
-    font-family:akkurat, univers, arial, sans-serif;
     font-size: 11px;
 }
 
-.axis_labels {
-    font-family:akkurat, univers, arial, sans-serif;
+.axis-label {
     font-size: 16px;
     text-transform: uppercase;
     font-weight: bold;
