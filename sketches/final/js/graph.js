@@ -259,9 +259,9 @@ lc.graph = function() {
 
         if (data.call_num && lcObjectArray[data.call_num[0].substr(0,1)]) {
         	var c = lcObjectArray[data.call_num[0].substr(0,1)].color
-        	$("#info").css("border-top-color",c);
+        	$(".info-bar").css("background-color",c);
         } else {
-        	$("#info").css("border-top-color","#808080");
+        	$(".info-bar").css("background-color","#808080");
         }
 
 		if (data.call_num)
