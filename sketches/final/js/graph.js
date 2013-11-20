@@ -162,7 +162,7 @@ lc.graph = function() {
         });
 
         updateCircles();
-        self.updateLabels(0);
+        // self.updateLabels(0);
         sortBooks("title", true);
     }
     function updateCircles() {

@@ -288,6 +288,28 @@ lc.subjectgraph = function() {
             lc.graph.appendCircles(d.values.books);
             self.crumbize(d.values);
         });
+
+        var texts = d3.select("#graph-labels").selectAll("text").data(nested);
+        texts.enter().append("text");
+        texts.exit().remove();
+
+        var yOffset = 0,
+            ty = 0;
+
+        texts.attr("x", (depth == 0) ? 0 : 30)
+            .attr("y",function(d){
+                console.log(d)
+                d.height = (d.values.length / numBooks) * height;
+                d.cy = ty;
+                ty += d.height;
+                return d.cy + 10;
+            }).text(function(d){
+                if (d.cy - yOffset < 15) return;
+                yOffset = d.cy;
+                return d.key;
+            }).attr("class",function(d){
+                return classNameify(d.key);
+            });
     };
 
     self.crumbize = function(d) {

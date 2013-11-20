@@ -171,7 +171,7 @@ body, html {
 
 #breadcrumb {
     position: absolute;
-    top: -15px;
+    top: -10px;
     left: 0;
     height: 30px;
     width: 70%;
@@ -219,7 +219,7 @@ body, html {
 }
 #graph-wrapper {
     position: absolute;
-    top: 0px;
+    top: 10px;
     width: 100%;
 }
 
