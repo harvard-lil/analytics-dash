@@ -151,6 +151,9 @@ lc.graph = function() {
         }).on("click",function(d){
 	        lc.tooltip.show(d);
 	        self.showInfo(d, true);
+	        circles.classed("selected",false);
+	        d3.select(this).classed("selected",true);
+	        this.parentNode.appendChild(this);
 	        
         	
 //        	lc.carrel.sendToCarrel(d);
@@ -357,7 +360,7 @@ lc.graph = function() {
 
     */
     // $(".x_toggle span").click(x_axis_button);
-    $(".y_toggle li").click(y_axis_button);
+    // $(".y_toggle li").click(y_axis_button);
     $(".scale_toggle li").click(radius_button);
 
 	// Searching by results

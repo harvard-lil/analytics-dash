@@ -814,13 +814,11 @@ circle {
 }
 circle:hover {
     opacity: 1;
-    stroke: #000;
-    stroke-weight: 2;
+    stroke: #808080;
 }
-circle .selected {
+circle.selected {
     opacity: 1;
-    stroke: #0f0;
-    stroke-weight: 5;
+    stroke: #000;
 }
 
 
