@@ -194,6 +194,18 @@ lc.subjectgraph = function() {
 
         self.relative = true;
 
+        // reset
+        if (depth == 0) {
+            breadcrumb.find(".all").click(function(){
+                lc.graph.appendCircles(data);
+                self.updateRelative(data, data.length, 0);
+                breadcrumb.hide();
+            });
+            $("#nav-context").hide();
+        } else {
+            $("#nav-context").show();
+        }
+
         var nested = d3.nest()
             .key(function(d){
                 if (!d.loc_call_num_subject) return;
@@ -206,18 +218,20 @@ lc.subjectgraph = function() {
                             "call_num":d[i].call_num[0], 
                             "length":d.length,
                             "depth":depth,
-                            "books":d
-                            };
+                            "books":d 
+                        };
                     }
                 }
                 return {"call_num":"undefined", "length":d.length};
-            }).entries(data)
+            }).entries(data);
 
         nested.forEach(function(d,i){
             if (d.key == "unavailable") {
                 d.values.call_num = "undefined";
             }
         });
+
+        // if no more data to drill down
         if (nested.length == 1 && nested[0].key == "undefined") return;
         
         nested.sort(function(a,b){
@@ -226,6 +240,7 @@ lc.subjectgraph = function() {
             return 0;
         });
 
+        // pushing grey ones to the bottom of the graph
         for (var i = nested.length-1; i--; 0) {
             if (nested[i].key == "undefined" || nested[i].key == "unavailable") {
                 var p = nested.splice(i,1);
@@ -237,12 +252,14 @@ lc.subjectgraph = function() {
 
         var div = (depth == 0) ? "#nav" : "#nav-context";
 
-        var groups = d3.select(div).selectAll("rect.schema")
+        var groups = d3.select(div).selectAll(".schema")
             .data(nested);
 
         var entering = groups.enter()
             .append("g")
             .attr("class", "schema");
+
+        groups.exit().remove();
 
         var rectangles = entering.append("rect").attr("width","30");
 
@@ -252,9 +269,8 @@ lc.subjectgraph = function() {
             return d.className;
         })
         groups.select("rect").attr("height",function(d){
-            if (d.key == "undefined") {
+            if (d.key == "undefined")
                 d.height = (data.length-numBooks)/data.length * height;
-            }
             d.height = (d.values.length/numBooks) * height;
             return d.height;
         }).attr("y",function(d){
@@ -263,37 +279,39 @@ lc.subjectgraph = function() {
             hy += d.height;
             return d.y;
         }).attr("fill", function(d) {
-            if (d.key != "undefined" && d.key != "unavailable" && lcObjectArray[d.values.call_num.substr(0,1)]) {
+            if (d.key != "undefined" && d.key != "unavailable" && lcObjectArray[d.values.call_num.substr(0,1)])
                 return lcObjectArray[d.values.call_num.substr(0,1)].color;
-            }
             else
                 return "#666";
         }).on("click",function(d){
             self.updateRelative(d.values.books, d.values.length, d.values.depth+1);
+            lc.graph.appendCircles(d.values.books);
             self.crumbize(d.values);
         });
-        groups.exit().remove();
     };
 
     self.crumbize = function(d) {
         if (d.class == "undefined") return;
+
         var breadDepth = breadcrumb.find(".link") ? breadcrumb.find(".link").length : 0;
         var l = $("<span>").attr("class","link")
-                .html((d.depth == 0 ? "" : "<span class='tick'>></span>")+"<span class='item'>"+d.class+"</span>")
+                .html("<span class='tick'>></span><span class='item'>"+d.class+"</span>")
                 .click(function(){
                     // self.getChildrenID(d.id);
                     // self.updateBounds(d);
+                    self.updateRelative(d.books, d.length, d.depth+1);
+                    lc.graph.appendCircles(d.books);
                     breadcrumb.find(".link").each(function(i,e){
                         if (i > d.depth) $(this).remove();
                     });
                 });
 
-        if (d.depth + 1 < breadDepth) breadcrumb.empty();
+        if (d.depth + 1 < breadDepth) breadcrumb.find(".link").remove();
         else if (d.depth + 1 == breadDepth) breadcrumb.find(".link").eq(d.depth).remove();
 
         if (d.depth == 0) l.css("color",schema.colorClass(d.call_num));
 
-        breadcrumb.append(l);
+        breadcrumb.show().append(l);
     };
 
     function classNameify(name) {
@@ -327,17 +345,15 @@ lc.subjectgraph = function() {
                 currentClass = e;
                 return;
             }
-        })
+        });
 		// self.show();
         d3.select("#graph-labels").style("display","none");
         var rollover = d3.select("#rollover").style("display","block");
 
         rollover.attr("transform","translate(0,"+currentClass.y+")")
             .select("rect")
-                .attr("fill", "black")
-                .attr("fill-opacity", .1)
-                .attr("height", currentClass.height)
-                .attr("width","100%");
+            .attr("width","100%")
+            .attr("height", currentClass.height);
 
         var ctx = self.relative ? currentClass.values : currentClass.class;
 
@@ -347,7 +363,6 @@ lc.subjectgraph = function() {
             //.attr("fill",schema.colorClass(currentClass.class.class));
     };
     self.rollout = function() {
-        return;
         d3.select("#graph-labels").style("display","block");
         d3.select("#rollover").style("display","none")
             .select("text").text("");
@@ -356,9 +371,20 @@ lc.subjectgraph = function() {
 
     // dive into the subject classes based on a click on the graph
     self.graphClick = function(cy) {
-        var currentClass = self.getChildY(cy);
-        self.getChildrenID(currentClass.class.id);
-        self.crumbize(currentClass.class);
+        // var currentClass = self.getChildY(cy);
+        // self.getChildrenID(currentClass.class.id);
+        // self.crumbize(currentClass.class);
+        var d;
+        self.relativeClasses.forEach(function(e,i){
+            if (cy > e.y) {
+                d = e;
+                return;
+            }
+        });
+        self.updateRelative(d.values.books, d.values.length, d.values.depth+1);
+        lc.graph.appendCircles(d.values.books);
+        self.crumbize(d.values);
+
     };
 
     self.getChildY = function(cy) {
@@ -426,7 +452,7 @@ lc.subjectgraph = function() {
             self.initialized = false;
             globalDepth = 0;
             self.update(sideBar, []);
-            breadcrumb.empty();
+            breadcrumb.hide();
             d3.select("#graph-wrapper").classed("child",false);
             d3.selectAll(".schema").classed("selected",false);
             self.getChildren("top-level class");

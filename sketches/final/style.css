@@ -175,8 +175,7 @@ body, html {
     left: 0;
     height: 30px;
     width: 70%;
-}
-#breadcrumb .link {
+    display: none;
     font-size: 12px;
 }
 #breadcrumb .tick {
@@ -278,10 +277,10 @@ body, html {
     border-color: black;
 }
 #labels {
-    width: 718px;
+    width: 86%;
     height: 530px;
     position: absolute;
-    left: 80px;
+    left: 7%;
     top: 0px;
     z-index: -1;
 }
@@ -291,6 +290,9 @@ body, html {
 }
 #labels .b{
     font-weight: bold;
+}
+#rollover rect {
+    fill: #f7f7f7;
 }
 #nav {
     height: 490px;

@@ -117,23 +117,24 @@ lc.graph = function() {
 	self.appendCircles = function(data) {
 		bookData = data;
 		numBooks = data.length;
-		lc.subjectgraph.updateRelative(data, numBooks, 0);
 
-		var undefs = [];
+		var undefs = [],
+			defs = [];
 		for (var i = data.length-1; i--; 0) {
 			if (!data[i].call_num) {
 				undefs.push(data[i]);
-				data.splice(i,1);
+			} else {
+				defs.push(data[i]);
 			}
 		}
-		data.sort(function(a,b){
+		defs.sort(function(a,b){
 			if (a.loc_call_num_sort_order && b.loc_call_num_sort_order)
 				return a.loc_call_num_sort_order[0] - b.loc_call_num_sort_order[0];
 			else return 1;
 		});
-		data = data.concat(undefs);
+		var newData = defs.concat(undefs);
 
-        var circles = circleGroup.selectAll("circle").data(data);
+        var circles = circleGroup.selectAll("circle").data(newData);
         //binds data to circles
         circles.enter().append("circle");
         circles.exit().remove();
@@ -347,7 +348,6 @@ lc.graph = function() {
     		lc.subjectgraph.rollout();
     }).click(function(e) {
     	if (e.target.nodeName != "circle")
-    		return;
     		lc.subjectgraph.graphClick(e.offsetY);
     });
 
@@ -424,7 +424,8 @@ lc.graph = function() {
 	}
 
 	function calculateY(d) {
-		return (d / numBooks) * (height*.9) + (height*.05);
+		console.log(numBooks)
+		return (d / numBooks) * height;
 		switch(y_axis_type) {
 			case 'grads':
 				yscale.domain([0,300]);

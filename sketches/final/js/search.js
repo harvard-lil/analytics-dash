@@ -276,6 +276,8 @@ lc.search = function() {
 
                 lc.subjectgraph.reset();
 
+                lc.subjectgraph.updateRelative(response.docs, response.docs.length, 0);
+                
                 lc.graph.appendCircles(response.docs);
 
                 lc.histogram.appendHistogram(response.docs);
