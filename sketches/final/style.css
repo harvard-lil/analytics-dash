@@ -339,7 +339,7 @@ body, html {
 #histogram {
     width: 98%;
     position: absolute;
-    top: 520px;
+    top: 510px;
     margin-bottom: 16px;
     padding: 0 40px 0 130px;
     box-sizing: border-box;
@@ -385,17 +385,17 @@ body, html {
 }
 #histogram .axis-label {
     text-align: center;
-    margin-top: 20px;
+    margin-top: 15px;
 }
 .axis-label.vertical {
     position: absolute;
-top: 250px;
-text-align: center;
-transform: rotate(-90deg);
--webkit-transform: rotate(-90deg);
--moz-transform: rotate(-90deg);
--ms-transform: rotate(-90deg);
-left: -80px;
+    top: 250px;
+    text-align: center;
+    transform: rotate(-90deg);
+    -webkit-transform: rotate(-90deg);
+    -moz-transform: rotate(-90deg);
+    -ms-transform: rotate(-90deg);
+    left: -80px;
 }
 #slider-range {
     border: 1px solid #808080;
