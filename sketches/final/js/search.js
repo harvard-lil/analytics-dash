@@ -156,7 +156,7 @@ lc.search = function() {
     };
 
     self.buildSearchExplanation = function(docs, terms) {
-        var prefix = 'The <b>' + docs.length + ' most popular</b> items ';
+        var prefix = 'The <b>' + (250+oldData.length) + ' most popular</b> items ';
         if (terms['collection']) {
             var catalog = terms['collection'].split('_').join(' ');
             prefix += ' in the ' + catalog;
@@ -286,8 +286,8 @@ lc.search = function() {
                 lc.subjectgraph.reset();
 
                 // if (start > 0) {
-                    var newData = oldData.concat(response.docs);
-                    oldData = newData;
+                var newData = oldData.concat(response.docs);
+                oldData = newData;
                 // } else {
                 //     newData = response.docs;
                 //     oldData = [];
