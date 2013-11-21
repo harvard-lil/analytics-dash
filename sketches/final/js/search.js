@@ -285,13 +285,13 @@ lc.search = function() {
 
                 lc.subjectgraph.reset();
 
-                if (start > 0) {
+                // if (start > 0) {
                     var newData = oldData.concat(response.docs);
                     oldData = newData;
-                } else {
-                    newData = response.docs;
-                    oldData = [];
-                }
+                // } else {
+                //     newData = response.docs;
+                //     oldData = [];
+                // }
 
                 lc.subjectgraph.updateRelative(newData, newData.length, 0);
                 
