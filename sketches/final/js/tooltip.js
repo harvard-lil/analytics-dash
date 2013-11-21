@@ -8,7 +8,7 @@ lc.tooltip = function() {
 		$("#graph").mousemove(function(e) {
 			tooltip.css({
 				top: e.offsetY,
-				left: e.offsetX + 10
+				left: e.offsetX
 			});
 		});
 	};

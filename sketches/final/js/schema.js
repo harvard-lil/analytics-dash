@@ -181,8 +181,8 @@ var schema = function() {
 		var percent = ((firstChar - 65) / 25);
 
 		// // go from 0 to 330 hue
-   		return d3.hsl(percent * (endColor.h - startColor.h), 1, .5);
-   		// return lcObjectArray[classID.substr(0,1)].color;
+   		// return d3.hsl(percent * (endColor.h - startColor.h), 1, .5);
+   		return lcObjectArray[classID.substr(0,1)].color;
    		
 	};
 
@@ -239,87 +239,87 @@ var schema = function() {
 
 var lcObjectArray = {
 	"A":{
-		color: "#ff0000",
+		color: "#FF393E",
 		subject: "General Works"
 	},
 	"B":{
-		color: "#ff3800",
+		color: "#FF0000",
 		subject: "Philosophy, Psychology, Religion"
 	},
 	"C":{
-		color: "#ff7000",
+		color: "#FF4C00",
 		subject: "Auxillary Sciences of History"
 	},
 	"D":{
-		color: "#ffa800",
+		color: "#FF7700",
 		subject: "History: General & Outside the Americas"
 	},
 	"E":{
-		color: "#ffe000",
+		color: "#FF9F00",
 		subject: "History: United States"
 	},
 	"F":{
-		color: "#e6ff00",
+		color: "#FFC500",
 		subject:  "History: United States Local & America"
 	},
 	"G":{
-		color: "#adff00",
+		color: "#F9F700",
 		subject:  "Geography, Anthropology, Recreation"
 	},
 	"H":{
-		color: "#75ff00",
+		color: "#BBFF00",
 		subject:  "Social Sciences"
 	},
 	"J":{
-		color: "#05ff00",
+		color: "#62FF00",
 		subject:  "Political Science"
 	},
 	"K":{
-		color: "#00ff33",
+		color: "#00FF56",
 		subject:  "Law"
 	},
 	"L":{
-		color: "#00ff6b",
+		color: "#00FF73",
 		subject:  "Education"
 	},
 	"M":{
-		color: "#00ffa3",
+		color: "#00FF8F",
 		subject:  "Music"
 	},
 	"N":{
-		color: "#00ffdb",
+		color: "#00E6C9",
 		subject:  "Fine Arts"
 	},
 	"P":{
-		color: "#00b3ff",
+		color: "#00FCFD",
 		subject:  "Language and Literature"
 	},
 	"Q":{
-		color: "#007aff",
+		color: "#00AEFF",
 		subject:  "Science"
 	},
 	"R":{
-		color: "#00b3ff",
+		color: "#0060FF",
 		subject:  "Medicine"
 	},
 	"S":{
-		color: "#0042ff",
+		color: "#0000FF",
 		subject:  "Science"
 	},
 	"T":{
-		color: "#000aff",
+		color: "#6800FF",
 		subject:  "Agriculture"
 	},
 	"U":{
-		color: "#6600ff",
+		color: "#9100FF",
 		subject:  "Military Science"
 	},
 	"V":{
-		color: "#9e00ff",
+		color: "#C900FF",
 		subject:  "Naval Science"
 	},
 	"Z":{
-		color: "#ff0080",
+		color: "#FF12C1",
 		subject:  "Library Science & Information Resources"
 	}
 };

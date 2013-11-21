@@ -51,6 +51,14 @@ lc.search = function() {
         self.submitSearch(); 
     });
 
+    var start = 0;
+    $(".more").click(function(){
+        start += 250;
+        console.log("start",start)
+        defaultParams = "&start="+start+defaultParams;
+        self.runSearch({'lcsh_keyword': 'boston'});
+    })
+
     self.submitSearch = function() {
         var searchTerms = {};
         searchTerms["year"] = [],
@@ -224,6 +232,8 @@ lc.search = function() {
         return search;
     };
 
+    var oldData = [];
+
     self.runSearch = function(parameters) {
         var query = self.buildSearchQuery(parameters);
         var url = baseurl + '?' + defaultParams + query;// + suffix;
@@ -276,13 +286,17 @@ lc.search = function() {
 
                 lc.subjectgraph.reset();
 
-                lc.subjectgraph.updateRelative(response.docs, response.docs.length, 0);
+                var newData = oldData.concat(response.docs);
+                console.log(newData.length, newData[0], newData[250], response.docs[0])
+                oldData = newData;
+
+                lc.subjectgraph.updateRelative(newData, newData.length, 0);
                 
-                lc.graph.appendCircles(response.docs);
+                lc.graph.appendCircles(newData);
 
-                lc.histogram.appendHistogram(response.docs);
+                lc.histogram.appendHistogram(newData);
 
-                lc.list.saveDocs(response.docs);
+                lc.list.saveDocs(newData);
 
                 d3.select("#graph svg").attr("class","");
             }

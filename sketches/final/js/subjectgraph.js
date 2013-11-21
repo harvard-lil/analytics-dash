@@ -106,8 +106,6 @@ lc.subjectgraph = function() {
         var groups = parent.selectAll(".schema")
             .data(data);
 
-            console.log(data)
-
        var texts = d3.select("#graph-labels").selectAll("text").data(data);
        texts.enter().append("text");
        texts.exit().remove();
@@ -298,7 +296,6 @@ lc.subjectgraph = function() {
 
         texts.attr("x", (depth == 0) ? 0 : 30)
             .attr("y",function(d){
-                console.log(d)
                 d.height = (d.values.length / numBooks) * height;
                 d.cy = ty;
                 ty += d.height;
