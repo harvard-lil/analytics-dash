@@ -262,9 +262,9 @@ lc.graph = function() {
         if (data.creator) {
             info.select(".creator .field").html("<li>" + data.creator.join("</li><li>") + "</li>");
             info.selectAll(".creator li").on("click",function(){
-            	var creator = $(this).text();
-            	$("#search-creator").val(creator);
-            	lc.search.submitSearch();
+	            lc.search.runSearch({
+					"creator": $(this).text()
+				});
             });
         }
 
@@ -289,32 +289,19 @@ lc.graph = function() {
 
 		if (data.loc_call_num_subject)
 			info.select(".loc_call_num_subject .field").text(data.loc_call_num_subject);
-
-	/*	if (data.id_inst){
-			info.select(".id_inst .field").html("<a target='blank' href=http://holliscatalog.harvard.edu/?itemid=|library/m/aleph|"+ data.id_inst+">click here</a>");
-            
-          //  info.selectAll(".id_inst li").on("click",function(){
-            //	var id_inst = $(this).text();
-            //	console.log(id_inst);
-            //	$("#search-id_inst").val(id_inst);
-            	//lc.search.submitSearch();
-           // });
-		}
-*/
+		
 		if (data.lcsh) {
             info.select(".lcsh .field").html("<li class='c'>" + data.lcsh.join("</li><li>") + "</li>");
             
             info.selectAll(".lcsh li").on("click",function(){
-            	var lcsh = $(this).text();
-            	$("#search-lcsh").val(lcsh);
-            	lc.search.submitSearch();
+            	lc.search.runSearch({
+					"lcsh_keyword": $(this).text()
+				});
             });
 		}
-		
 
 		if (data.id_inst){
-		linkouturl= "href=http://holliscatalog.harvard.edu/?itemid=|library/m/aleph|"+ data.id_inst;
-		console.log(linkouturl);
+			linkouturl= "href=http://holliscatalog.harvard.edu/?itemid=|library/m/aleph|"+ data.id_inst;
 		}
 		
   		if (inBox) {
@@ -370,18 +357,6 @@ lc.graph = function() {
     // $(".x_toggle span").click(x_axis_button);
     // $(".y_toggle li").click(y_axis_button);
     $(".scale_toggle li").click(radius_button);
-
-	// Searching by results
-	$("#creator li").live("click",function(){
-		lc.search.runSearch({
-			"creator": $(this).text()
-		});
-	});
-	$("#lcsh li").live("click",function(){
-		lc.search.runSearch({
-			"lcsh_keyword": $(this).text()
-		});
-	});
 
 	$("#export-all").click(function(){
 		lc.carrel.exportAll(bookData);

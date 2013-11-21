@@ -8,14 +8,11 @@ lc.search = function() {
     $("#search-lcsh_keyword").focus(function(){
         searchForm.find("#search-fold").slideDown();
     })
-    searchForm.blur(function(){
-        searchForm.find("#search-fold").slideUp();
-    });
-    searchForm.find(".clear").click(function(){
+    searchForm.find(".hide-search").click(function(){
        searchForm.find("#search-fold").slideUp(); 
     })
 
-    $("#search-form .clear").click(function(){
+    searchForm.find(".clear").click(function(){
         // $(this).parent().toggleClass("locked");
         $(this).parent().removeClass("filled").find("input").val("");
     });
@@ -113,6 +110,7 @@ lc.search = function() {
     self.buildSearchQuery = function(terms) {
         var query = [];
         for (var term in terms) {
+            console.log(term)
             switch (term) {
                 // parsing '2001-2004' to 'filter=pub_date_numeric:[2001 TO 2004]'
                 case 'year':

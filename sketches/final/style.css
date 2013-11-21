@@ -86,7 +86,7 @@ body, html {
     text-decoration: underline;
     font-size: 12px;
 }
-#search-fold .clear {
+#search-fold .hide-search {
     position: absolute;
     bottom: -1px;
     right: -1px;
@@ -102,8 +102,8 @@ body, html {
     width: 15px;
     background-image: url(img/clear-box.png);
     background-position: 0 -15px;
-    float: right;
-    margin-right: 7px;
+    float: left;
+    margin: 5px 7px;
     cursor: pointer;
     display: none;
 }
