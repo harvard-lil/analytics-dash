@@ -146,10 +146,11 @@ lc.subjectgraph = function() {
             }).text(function(d){
                 if (d.cy - yOffset < 15) return;
                 yOffset = d.cy;
-                return d.lastname;
+                return d.key;
             }).attr("class",function(d){
-                return classNameify(d.lastname);
+                return classNameify(d.key);
             });
+
             // .attr("fill", function(d) {
             //     return schema.colorClass(d.class);
             // });
@@ -291,7 +292,7 @@ lc.subjectgraph = function() {
         texts.enter().append("text");
         texts.exit().remove();
 
-        var yOffset = 0,
+        var yOffset = height,
             ty = 0;
 
         texts.attr("x", (depth == 0) ? 0 : 30)
@@ -301,12 +302,21 @@ lc.subjectgraph = function() {
                 ty += d.height;
                 return d.cy + 10;
             }).text(function(d){
-                if (d.cy - yOffset < 15) return;
-                yOffset = d.cy;
                 return d.key;
             }).attr("class",function(d){
-                return classNameify(d.key);
-            });
+                return d.className;
+            }).style("display","none");
+
+        console.log(texts)
+        for (var i = texts[0].length-1; i--; 0) {
+            console.log(d3.select(texts[0][i]))
+            d3.select(texts[0][i]).each(function(d){
+                console.log(d.key, d.cy, yOffset, yOffset-d.cy)
+                if (yOffset - d.cy < 15) return;
+                yOffset = d.cy;
+                d3.select(this).style("display","block");
+            })
+        }
     };
 
     self.crumbize = function(d) {

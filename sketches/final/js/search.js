@@ -286,9 +286,13 @@ lc.search = function() {
 
                 lc.subjectgraph.reset();
 
-                var newData = oldData.concat(response.docs);
-                console.log(newData.length, newData[0], newData[250], response.docs[0])
-                oldData = newData;
+                if (start > 0) {
+                    var newData = oldData.concat(response.docs);
+                    oldData = newData;
+                } else {
+                    newData = response.docs;
+                    oldData = [];
+                }
 
                 lc.subjectgraph.updateRelative(newData, newData.length, 0);
                 
