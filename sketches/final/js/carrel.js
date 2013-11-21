@@ -71,19 +71,29 @@ lc.carrel = function() {
     var displayHeadings = ["title", "creator", "publisher", "call number", "holding Libraries", "LCSH", "ISBN ID", "date of publication", "publishing location", "shelfrank", "language", "OCLC ID", "note", "format"];
 
     self.exportCarrel = function() {
+        self.exportAll(carrel);
+    };
+    self.exportAll = function(data) {
         var strData = headings.join(",");
 
-        carrel.forEach(function(item,i){
+        data.forEach(function(item,i){
             var book = [];
-            for (d in item) {
-                book.push(item[d]);
-            }
-            book.join(",");
+            headings.forEach(function(d){
+                var t = item[d];
+                if (t instanceof Array) {
+                    t = t.join("; ");
+                }
+                t = String(t).replace(/,/g, '.');
+                book.push(t);
+            });
+            book.join("\t")
             strData = strData.concat("\n"+book);
+            
         });
 
         download(strData, "dowload.csv", "text/csv");
     };
+
     function tableCarrel() {
         // var headings = ["title", "creator", "publisher", "call_num", "holding_libs", "lcsh", "score_holding_libs", "id_isbn", "id",  "title_sort", "score_checkouts_undergrad", "height", "title_link_friendly", "score_checkouts_grad", "pub_date", "loc_call_num_subject", "pub_location", "ut_id", "pages", "loc_call_num_sort_order", "score_checkouts_fac", "data_source", "dataset_tag", "score_recalls", "shelfrank",  "language", "id_inst", "ut_count", "id_oclc", "note", "format",  "pub_date_numeric", "source_record"];
 

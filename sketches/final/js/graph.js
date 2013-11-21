@@ -381,8 +381,11 @@ lc.graph = function() {
 		lc.search.runSearch({
 			"lcsh_keyword": $(this).text()
 		});
-	});	
+	});
 
+	$("#export-all").click(function(){
+		lc.carrel.exportAll(bookData);
+	})
 
 	var sortTitles = {
 		"call_number_sort_order_y" : "subject",
