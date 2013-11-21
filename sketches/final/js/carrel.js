@@ -158,7 +158,6 @@ lc.carrel = function() {
             //    var dataString = item.join(",");
             //    csvContent += (i < carrel.length) ? dataString+ "\n" : dataString;
             // });
-            console.log(strData, csvContent, csvContent.concat(strData))
             var encodedUri = encodeURI(csvContent);
             window.open(encodedUri);
         }

@@ -139,7 +139,7 @@ lc.graph = function() {
         var circles = circleGroup.selectAll("circle").data(newData);
         //binds data to circles
         circles.enter().append("circle");
-        circles.exit().transition().remove();
+        circles.exit().remove();
         console.log(newData.length, circleGroup.selectAll("circle")[0].length, circles[0].length)
 
         //runs the showInfo on mouseover

@@ -2,7 +2,8 @@ var lc = lc || {};
 
 lc.search = function() {
 
-    var searchForm = $("#search-form")
+    var searchForm = $("#search-form");
+    var searchTerms = {};
 
     $("#search-lcsh_keyword").focus(function(){
         searchForm.find("#search-fold").slideDown();
@@ -43,6 +44,7 @@ lc.search = function() {
     };
 
     var baseurl = 'http://librarycloud.law.harvard.edu/v1/api/item/',
+        cachedParams = '&limit=250&facet=pub_date_numeric&key=5239997b68e033fbf2854d77c6295310&filter:collection:hollis_catalog',
         defaultParams = '&limit=250&facet=pub_date_numeric&key=5239997b68e033fbf2854d77c6295310&filter:collection:hollis_catalog',
         search = getQueryVariable('search') || 'Boston';
 		// suffix = '&filter=call_num:*&filter=loc_call_num_sort_order:*'
@@ -57,13 +59,16 @@ lc.search = function() {
         start += 250;
         console.log("start",start)
         defaultParams = "&start="+start+defaultParams;
-        self.runSearch({'lcsh_keyword': 'boston'});
+        console.log(searchTerms)
+        self.runSearch(searchTerms);
     })
 
     self.submitSearch = function() {
-        var searchTerms = {};
+        searchTerms = {};
         searchTerms["year"] = [],
         searchTerms["range"] = [];
+        start = 0;
+        defaultParams = cachedParams;
 
         // grabbing all fields entered in in the form
         $("#search-form input").each(function() {
@@ -156,7 +161,7 @@ lc.search = function() {
     };
 
     self.buildSearchExplanation = function(docs, terms) {
-        var prefix = 'The <b>' + (250+oldData.length) + ' most popular</b> items ';
+        var prefix = 'The <b>' + (oldData.length) + ' most popular</b> items ';
         if (terms['collection']) {
             var catalog = terms['collection'].split('_').join(' ');
             prefix += ' in the ' + catalog;
@@ -279,19 +284,20 @@ lc.search = function() {
 
                 $(".sort-heading").find(".total").text(response.docs.length);
 
-                graphTitle.html(self.buildSearchExplanation(response.docs, parameters));
-
                 // lc.graph.drawArea(response.facets);
 
                 lc.subjectgraph.reset();
 
-                // if (start > 0) {
-                var newData = oldData.concat(response.docs);
+                console.log("s",start)
+
+                if (start > 0) {
+                    var newData = oldData.concat(response.docs);
+                } else {
+                    newData = response.docs;
+                }
                 oldData = newData;
-                // } else {
-                //     newData = response.docs;
-                //     oldData = [];
-                // }
+
+                graphTitle.html(self.buildSearchExplanation(response.docs, parameters));
 
                 lc.subjectgraph.updateRelative(newData, newData.length, 0);
                 
@@ -307,7 +313,8 @@ lc.search = function() {
     };
 
     // initial search request
-    self.runSearch({'lcsh_keyword': 'boston'});
+    searchTerms = {'lcsh_keyword': 'boston'};
+    self.runSearch(searchTerms);
 
     return self;
 }();

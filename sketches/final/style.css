@@ -175,7 +175,7 @@ body, html {
     top: -10px;
     left: 0;
     height: 30px;
-    width: 70%;
+    width: 100%;
     display: none;
     font-size: 12px;
 }
@@ -501,7 +501,7 @@ body, html {
 #sort li {
     cursor: pointer;
     text-transform: capitalize;
-    margin-bottom: 2px;
+    margin-bottom: 1px;
     color: #A6A6A6;
 }
 #sort li:hover {

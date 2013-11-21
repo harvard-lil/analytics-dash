@@ -44,6 +44,7 @@ lc.list = function() {
             }).on("dblclick",function(d){
                 lc.carrel.sendToCarrel(d);
             });
+        self.sortList("shelfrank", "down");
     };
 
     self.hideList = function() {
