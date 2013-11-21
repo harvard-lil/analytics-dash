@@ -198,7 +198,7 @@ lc.subjectgraph = function() {
             breadcrumb.find(".all").click(function(){
                 lc.graph.appendCircles(data);
                 self.updateRelative(data, data.length, 0);
-                breadcrumb.hide();
+                breadcrumb.css("visibility","hidden");
             });
             $("#nav-context").hide();
         } else {
@@ -337,7 +337,8 @@ lc.subjectgraph = function() {
 
         if (d.depth == 0) l.css("color",schema.colorClass(d.call_num));
 
-        breadcrumb.show().append(l);
+        breadcrumb.css("visibility","visible").append(l);
+        console.log("visibile", breadcrumb)
     };
 
     function classNameify(name) {
@@ -478,7 +479,7 @@ lc.subjectgraph = function() {
             self.initialized = false;
             globalDepth = 0;
             self.update(sideBar, []);
-            breadcrumb.hide();
+            breadcrumb.css("visibility","hidden");
             d3.select("#graph-wrapper").classed("child",false);
             d3.selectAll(".schema").classed("selected",false);
             self.getChildren("top-level class");

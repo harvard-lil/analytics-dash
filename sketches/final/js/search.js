@@ -144,6 +144,7 @@ lc.search = function() {
 
                 // doing fuzzy keyword search on these
                 case 'title':
+                case 'loc_call_num_subject':
                     query.push('filter=' + term + '_keyword:' + terms[term]);
                     break;
 
@@ -220,6 +221,9 @@ lc.search = function() {
                     break;
                 case 'language':
                     explanation.push('in <b>' + terms[term] + '</b>');
+                    break;
+                case 'loc_call_num_subject':
+                    explanation.push('with a call number subject of <b>' + terms[term] + '</b>');
                     break;
                 case 'lcsh_keyword':
                 case 'lcsh':

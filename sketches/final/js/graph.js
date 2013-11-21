@@ -287,9 +287,15 @@ lc.graph = function() {
         if (data.language)
 			info.select(".language .field").text(data.language);
 
-		if (data.loc_call_num_subject)
-			info.select(".loc_call_num_subject .field").text(data.loc_call_num_subject);
-		
+		if (data.loc_call_num_subject) {
+			info.select(".loc_call_num_subject .field").text(data.loc_call_num_subject)
+				.on("click",function(){
+	            	lc.search.runSearch({
+						"loc_call_num_subject": $(this).text()
+					});
+	            });
+		}
+
 		if (data.lcsh) {
             info.select(".lcsh .field").html("<li class='c'>" + data.lcsh.join("</li><li>") + "</li>");
             

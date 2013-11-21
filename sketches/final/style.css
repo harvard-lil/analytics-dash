@@ -171,12 +171,9 @@ body, html {
 }
 
 #breadcrumb {
-    position: absolute;
-    top: -10px;
-    left: 0;
-    height: 30px;
+    visibility: hidden;
+    margin: 5px 0 10px;
     width: 100%;
-    display: none;
     font-size: 12px;
 }
 #breadcrumb .tick {
@@ -191,15 +188,9 @@ body, html {
 
 #searchTerm {
 	font-size: 20px;
-    width: 70%;
+    width: 100%;
 	text-align: left;
 	font-weight: normal;
-    position: fixed;
-    top: 125px;
-    padding: 5px 0;
-    box-sizing: border-box;
-    cursor: pointer;
-    background: white;
     z-index: 1;
 }
 .right-half {
@@ -216,11 +207,10 @@ body, html {
     position: relative;
     float:left;
     height: 100%;
-    margin-top: 170px;
+    margin-top: 130px;
 }
 #graph-wrapper {
-    position: absolute;
-    top: 10px;
+    position: relative;
     width: 100%;
 }
 
