@@ -26,6 +26,7 @@ lc.search = function() {
     $("#search-form").keypress(function(e){
         if ( event.which == 13 ) {
             self.submitSearch();
+            $(this).find("input").blur();
         }
     });
 
@@ -67,8 +68,6 @@ lc.search = function() {
         // grabbing all fields entered in in the form
         $("#search-form input").each(function() {
             var t = $(this);
-            console.log(t, t.val());
-            if ($(this).hasClass("search")) return;
             if (t.val()) {
                 // grabbing #search-year -> 'year'
                 var key = t.attr("id").split("-")[1];

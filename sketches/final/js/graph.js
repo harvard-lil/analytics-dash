@@ -134,10 +134,13 @@ lc.graph = function() {
 		});
 		var newData = defs.concat(undefs);
 
+		console.log("appendCircles")
+
         var circles = circleGroup.selectAll("circle").data(newData);
         //binds data to circles
         circles.enter().append("circle");
         circles.exit().remove();
+        console.log(newData.length, circleGroup.selectAll("circle")[0].length, circles[0].length)
 
         //runs the showInfo on mouseover
         circles.on("mouseover",function(d){
@@ -164,6 +167,9 @@ lc.graph = function() {
         	// svg.attr("class","frozen");
         });
 
+        var c = circleGroup.selectAll("circle");
+        console.log(c[0].length)
+
         updateCircles();
         // self.updateLabels(0);
         sortBooks("title", true);
@@ -171,21 +177,23 @@ lc.graph = function() {
     function updateCircles() {
     	console.log("updateCircles")
     	var circles = circleGroup.selectAll("circle");
+    	var delayScale = d3.scale.linear().domain([0,500]).range([5,.5]),
+    		delay = delayScale(numBooks);
+
+    	console.log(circles[0].length)
     	circles.attr("fill",function(d){
 	        if (d.call_num) {
 	        	if (lcObjectArray[d.call_num[0].substr(0,1)]) {
 		        	var colorname = d.call_num[0].substr(0,1);
-	//	        	console.log("color should be " + colorname);
 		        	return lcObjectArray[d.call_num[0].substr(0,1)].color;
 		        } else return "#808080";
         	} else {
-//        		console.log("didnt get anything");
 	         	return "black";
 	        }
 		})
 		.transition()
 		.delay(function(d,i){
-			return i*5;
+			return i*delay;
 		})
 		.duration(500)
 		.attr("cx", calculateX)
@@ -427,7 +435,6 @@ lc.graph = function() {
 	}
 
 	function calculateY(d) {
-		console.log(numBooks)
 		return (d / numBooks) * height;
 		switch(y_axis_type) {
 			case 'grads':

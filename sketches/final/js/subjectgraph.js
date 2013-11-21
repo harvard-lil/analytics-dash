@@ -307,11 +307,8 @@ lc.subjectgraph = function() {
                 return d.className;
             }).style("display","none");
 
-        console.log(texts)
         for (var i = texts[0].length-1; i--; 0) {
-            console.log(d3.select(texts[0][i]))
             d3.select(texts[0][i]).each(function(d){
-                console.log(d.key, d.cy, yOffset, yOffset-d.cy)
                 if (yOffset - d.cy < 15) return;
                 yOffset = d.cy;
                 d3.select(this).style("display","block");

@@ -63,6 +63,7 @@ body, html {
     font-size: 20px;
     padding: 8px 10px 7px;
     margin-top: 0;
+    font-family: Lucida Grande;
 }
 #export-all {
     margin: 20px 0 0 20px;
