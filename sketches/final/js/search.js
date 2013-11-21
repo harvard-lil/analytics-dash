@@ -146,9 +146,15 @@ lc.search = function() {
 
                 // doing fuzzy keyword search on these
                 case 'title':
+                    query.push('filter=' + term + '_keyword:' + terms[term]);
+                    break;
+
                 case 'creator':
                 case 'subject':
-                    query.push('filter=' + term + '_keyword:' + terms[term]);
+                    var words = terms[term].split(" ");
+                    words.forEach(function(e,i){ 
+                        query.push('filter=' + term + '_keyword:' + e);
+                    })
                     break;
 
                 // 'collection': 'hollis_catalog' -> 'filter=collection:hollis_catalog'
