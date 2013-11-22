@@ -21,10 +21,23 @@ lc.subjectgraph = function() {
     });
 
     self.search = function(query) {
-        // $.ajax({
-        //         url: baseurl + '?' + encodeURI(query),
-        //         success: self.searchCompleted
-        // });
+        $.ajax({
+                url: baseurl + '?' + encodeURI(query),
+                success: function(response){
+                    // self.searchCompleted
+                    console.log(response.docs[0].child_classes)
+                    var classes = response.docs[0].child_classes;
+                    d3.selectAll(".schema").each(function(d){
+                        classes.forEach(function(e){
+                            var id = e.split("%%")[4];
+                            if (d.key == id) {
+                                d.id = id;
+                                console.log(id)
+                            }
+                        })
+                    })
+                }
+        });
     };
 
     self.getChildren = function(parent) {
@@ -288,6 +301,8 @@ lc.subjectgraph = function() {
             self.crumbize(d.values);
         });
 
+        self.getChildren("top-level class");
+
         var texts = d3.select("#graph-labels").selectAll("text").data(nested);
         texts.enter().append("text");
         texts.exit().remove();
@@ -340,6 +355,18 @@ lc.subjectgraph = function() {
         breadcrumb.css("visibility","visible").append(l);
         console.log("visibile", breadcrumb)
     };
+
+    $(".repopulate").click(function(){
+        var trail = [];
+        console.log(breadcrumb.find(".item"))
+        breadcrumb.find(".item").each(function(i,e){
+            if (i == 0) return;
+            console.log(e, $(e).text())
+            trail.push($(e).text())
+        })
+        console.log(trail,trail.join(" -- "))
+        lc.search.runSearch({"loc_call_num_subject_keyword":trail.join(" -- ")}, true);
+    })
 
     function classNameify(name) {
         return "t-"+String(name).replace(/^\s+|\s+$/g,'').toLowerCase().replace(/[^\w\s]/gi, '').split(" ").join("-");name.toLowerCase().replace(/^\s+|\s+$/g,'').replace(/[^\w\s]/gi, '').split(" ").join("-");
@@ -495,7 +522,7 @@ lc.subjectgraph = function() {
             $("#labels").show();
     };
 
-    self.getChildren("top-level class");
+    // self.getChildren("top-level class");
 
     return self;
 }();

@@ -134,8 +134,6 @@ lc.graph = function() {
 		});
 		var newData = defs.concat(undefs);
 
-		console.log("appendCircles")
-
         var circles = circleGroup.selectAll("circle").data(newData);
         //binds data to circles
         circles.enter()
@@ -160,12 +158,10 @@ lc.graph = function() {
         sortBooks("title", true);
     }
     function updateCircles() {
-    	console.log("updateCircles")
     	var circles = circleGroup.selectAll("circle");
     	var delayScale = d3.scale.linear().domain([0,500]).range([5,.5]),
     		delay = delayScale(numBooks);
 
-    	console.log(circles[0].length)
     	circles.attr("fill",function(d){
 	        if (d.call_num) {
 	        	if (lcObjectArray[d.call_num[0].substr(0,1)]) {

@@ -54,9 +54,7 @@ lc.search = function() {
     var start = 0;
     $(".more").click(function(){
         start += 250;
-        console.log("start",start)
         defaultParams = "&start="+start+defaultParams;
-        console.log(searchTerms)
         self.runSearch(searchTerms);
     })
 
@@ -110,7 +108,6 @@ lc.search = function() {
     self.buildSearchQuery = function(terms) {
         var query = [];
         for (var term in terms) {
-            console.log(term)
             switch (term) {
                 // parsing '2001-2004' to 'filter=pub_date_numeric:[2001 TO 2004]'
                 case 'year':
@@ -246,7 +243,12 @@ lc.search = function() {
 
     var oldData = [];
 
-    self.runSearch = function(parameters) {
+    self.runSearch = function(parameters, noReset) {
+        if (noReset) {
+            for (p in searchTerms) {
+                parameters[p] = searchTerms[p];
+            }
+        }
         var query = self.buildSearchQuery(parameters);
         var url = baseurl + '?' + defaultParams + query;// + suffix;
 
@@ -295,8 +297,6 @@ lc.search = function() {
                 // lc.graph.drawArea(response.facets);
 
                 lc.subjectgraph.reset();
-
-                console.log("s",start)
 
                 if (start > 0) {
                     var newData = oldData.concat(response.docs);
