@@ -5,7 +5,9 @@ lc.histogram = function() {
     var gHeight = 40;
     var histoGroup = d3.select("#histogram").select("svg").attr("width","100%").attr("height",gHeight).append("g");
     var gWidth = $("#histogram").width();
-    var booksByYear;
+    var booksByYear,
+        minYear,
+        maxYear;
 
     self.appendHistogram = function(data) {
 
@@ -16,9 +18,9 @@ lc.histogram = function() {
             return a.key - b.key;
         });
 
-        var minYear = parseInt(d3.min(booksByYear,function(d){ return d.key; })),
-            maxYear = parseInt(d3.max(booksByYear,function(d){ if (d.key != "undefined") return d.key; })),
-            yearRange = maxYear - minYear,
+        minYear = parseInt(d3.min(booksByYear,function(d){ return d.key; }));
+        maxYear = parseInt(d3.max(booksByYear,function(d){ if (d.key != "undefined") return d.key; }));
+        var yearRange = maxYear - minYear,
             maxBooks = d3.max(booksByYear,function(d){ return d.values.length; });
 
         var yearScale = d3.scale.linear().domain([minYear,maxYear]).range([0,gWidth-(gWidth/(yearRange))]),
@@ -64,7 +66,13 @@ lc.histogram = function() {
         setSlider(minYear, maxYear);
     };
 
-    function setSlider(minYear, maxYear) {
+    self.returnYearRange = function(){
+        return [minYear, maxYear];
+    };
+
+    function setSlider(min, max) {
+        minYear = min;
+        maxYear = max;
         $("#slider-range").slider("values",[minYear, maxYear]);
         $(".ui-slider-handle:first").text(minYear);
         $(".ui-slider-handle:last").text(maxYear);

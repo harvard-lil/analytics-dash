@@ -358,14 +358,19 @@ lc.subjectgraph = function() {
 
     $(".repopulate").click(function(){
         var trail = [];
-        console.log(breadcrumb.find(".item"))
         breadcrumb.find(".item").each(function(i,e){
             if (i == 0) return;
-            console.log(e, $(e).text())
             trail.push($(e).text())
-        })
-        console.log(trail,trail.join(" -- "))
-        lc.search.runSearch({"loc_call_num_subject_keyword":trail.join(" -- ")}, true);
+        });
+        var yearRange = lc.histogram.returnYearRange();
+        
+        if (trail.length)
+            lc.search.runSearch(
+                {"loc_call_num_subject_keyword":trail.join(" -- "),
+                 "year":yearRange
+            }, true);
+        else
+            lc.search.runSearch({"year":yearRange}, true);
     })
 
     function classNameify(name) {
