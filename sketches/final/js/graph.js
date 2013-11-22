@@ -138,17 +138,13 @@ lc.graph = function() {
 
         var circles = circleGroup.selectAll("circle").data(newData);
         //binds data to circles
-        circles.enter().append("circle");
+        circles.enter()
+        	.append("circle");
         circles.exit().remove();
-        console.log(newData.length, circleGroup.selectAll("circle")[0].length, circles[0].length)
 
         //runs the showInfo on mouseover
         circles.on("mouseover",function(d){
             lc.tooltip.show(d);
-         //   if (svg.attr("class") == "frozen") return;
-  		//	this.parentNode.appendChild(this);
-           //self.showInfo(d, true)
-            
         }).on("mouseout", function(d) {
         	lc.tooltip.hide();
         }).on("click",function(d){
@@ -157,18 +153,7 @@ lc.graph = function() {
 	        circles.classed("selected",false);
 	        d3.select(this).classed("selected",true);
 	        this.parentNode.appendChild(this);
-	        
-        	
-//        	lc.carrel.sendToCarrel(d);
-        	// if (svg.attr("class") == "frozen") {
-        	// 	this.parentNode.appendChild(this);
-         //    	self.showInfo(d, true);
-        	// }
-        	// svg.attr("class","frozen");
         });
-
-        var c = circleGroup.selectAll("circle");
-        console.log(c[0].length)
 
         updateCircles();
         // self.updateLabels(0);
@@ -190,7 +175,7 @@ lc.graph = function() {
         	} else {
 	         	return "black";
 	        }
-		})
+		}).attr("id",function(d){ return "c-"+d.id; })
 		.transition()
 		.delay(function(d,i){
 			return i*delay;
@@ -235,6 +220,18 @@ lc.graph = function() {
     		dir = $(this).hasClass("next");
     	sortBooks(sortBy, dir);
     });
+    $(document).keydown(function (e) {
+		if (e.keyCode == 38) { // up arrow
+		 	sortBooks("call_num",false);
+		} else if (e.keyCode == 40) { // down arrow
+		 	sortBooks("call_num",true);
+		} else if (e.keyCode == 37) { // left arrow
+		 	sortBooks("pub_date_numeric",false);
+		} else if (e.keyCode == 39) { // right arrow
+		 	sortBooks("pub_date_numeric",true);
+		}
+	});
+
 
     function sortBooks(sortBy, dir) {
     	bookData.sort(function(a,b){
@@ -246,6 +243,8 @@ lc.graph = function() {
     	});
     	var index = (bookData.indexOf(currentBook) + (dir ? 1 : -1) + bookData.length)%bookData.length;
     	showInfo(bookData[index],true);
+    	circleGroup.selectAll("circle").classed("selected",false);
+    	circleGroup.select("#c-"+bookData[index].id).classed("selected",true);
     }
 
     self.showInfo = function(data, inBox) {
