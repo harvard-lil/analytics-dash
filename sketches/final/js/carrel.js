@@ -22,7 +22,7 @@ lc.carrel = function() {
         carrel.splice(index,1);
         updateCarrelBoxes();
     }
-    var carrelHeight = 70;
+    var carrelHeight = $("#carrel-box").height()-15;
     var widthScale = d3.scale.linear().domain([0,600]).range([5,30]);
     var heightScale = d3.scale.linear().domain([0,14]).range([carrelHeight-30,carrelHeight]);
 
