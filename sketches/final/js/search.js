@@ -54,6 +54,10 @@ lc.search = function() {
     var start = 0;
     $(".more").click(function(){
         start += 250;
+        if (start > 750) return;
+        else if (start == 750) {
+            $(this).addClass("inactive");
+        }
         defaultParams = "&start="+start+defaultParams;
         self.runSearch(searchTerms);
     })
@@ -63,6 +67,7 @@ lc.search = function() {
         searchTerms["year"] = [],
         searchTerms["range"] = [];
         start = 0;
+        $(".more").removeClass("inactive");
         defaultParams = cachedParams;
 
         // grabbing all fields entered in in the form
@@ -169,7 +174,6 @@ lc.search = function() {
             prefix += ' in the ' + catalog;
         }
 
-        console.log('making explanation', terms);
         var explanation = [];
         for (var term in terms) {
             switch (term) {

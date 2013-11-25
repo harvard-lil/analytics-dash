@@ -25,14 +25,14 @@ lc.subjectgraph = function() {
                 url: baseurl + '?' + encodeURI(query),
                 success: function(response){
                     // self.searchCompleted
-                    console.log(response.docs[0].child_classes)
+                    // console.log(response.docs[0].child_classes)
                     var classes = response.docs[0].child_classes;
                     d3.selectAll(".schema").each(function(d){
                         classes.forEach(function(e){
                             var id = e.split("%%")[4];
                             if (d.key == id) {
                                 d.id = id;
-                                console.log(id)
+                                // console.log(id)
                             }
                         })
                     })
@@ -225,9 +225,10 @@ lc.subjectgraph = function() {
                 return k;
             }).rollup(function(d){
                 for (var i = 0; i < d.length; i++) {
-                    if (d[i].call_num) {
+                    if (d[i].call_num && d[i].loc_call_num_sort_order) {
                         return {
                             "call_num":d[i].call_num[0], 
+                            "sort_order":d[i].loc_call_num_sort_order,
                             "length":d.length,
                             "depth":depth,
                             "books":d 
@@ -245,10 +246,17 @@ lc.subjectgraph = function() {
 
         // if no more data to drill down
         if (nested.length == 1 && nested[0].key == "undefined") return;
+        else if (nested.length == 1) {
+            // var d = nested[0];
+            // d.values.class = d.key;
+            // self.crumbize(d.values, true);
+            // self.updateRelative(d.values.books, d.values.length, d.values.depth+1);
+            // return;
+        }
         
         nested.sort(function(a,b){
-            if (a.values.call_num.substr(0,1) < b.values.call_num.substr(0,1)) return -1;
-            if (a.values.call_num.substr(0,1) > b.values.call_num.substr(0,1)) return 1;
+            if (a.values.call_num < b.values.call_num) return -1;
+            if (a.values.call_num > b.values.call_num) return 1;
             return 0;
         });
 
@@ -331,15 +339,16 @@ lc.subjectgraph = function() {
         }
     };
 
-    self.crumbize = function(d) {
+    self.crumbize = function(d, dead) {
         if (d.class == "undefined") return;
 
         var breadDepth = breadcrumb.find(".link") ? breadcrumb.find(".link").length : 0;
-        var l = $("<span>").attr("class","link")
+        var l = $("<span>").attr("class","link"+(dead ? " dead" : ""))
                 .html("<span class='tick'>></span><span class='item'>"+d.class+"</span>")
                 .click(function(){
                     // self.getChildrenID(d.id);
                     // self.updateBounds(d);
+                    if (dead) return;
                     self.updateRelative(d.books, d.length, d.depth+1);
                     lc.graph.appendCircles(d.books);
                     breadcrumb.find(".link").each(function(i,e){
@@ -353,7 +362,6 @@ lc.subjectgraph = function() {
         if (d.depth == 0) l.css("color",schema.colorClass(d.call_num));
 
         breadcrumb.css("visibility","visible").append(l);
-        console.log("visibile", breadcrumb)
     };
 
     $(".repopulate").click(function(){

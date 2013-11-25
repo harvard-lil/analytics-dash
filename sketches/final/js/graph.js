@@ -271,7 +271,7 @@ lc.graph = function() {
         }
 
 		if (data.call_num)
-        	info.select(".lc .field").html(data.call_num.join("or "));
+        	info.select(".lc .field").html(data.call_num[0].split("%%").join("<br>"));
         else
        		info.select(".lc .field").html("Not Available");
 
@@ -414,7 +414,7 @@ lc.graph = function() {
 	}
 
 	function calculateY(d) {
-		return (d / numBooks) * height;
+		return (d / numBooks) * gHeight;
 		switch(y_axis_type) {
 			case 'grads':
 				yscale.domain([0,300]);

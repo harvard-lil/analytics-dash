@@ -64,9 +64,17 @@ body, html {
     padding: 8px 10px 7px;
     margin-top: 0;
     font-family: Lucida Grande;
+    margin-right: 40px;
 }
-#export-all {
-    margin: 20px 0 0 20px;
+#search-form .carrel-action {
+    padding: 6px 5px;
+    text-align: center;
+}
+.carrel-action.inactive,
+.carrel-action.inactive:hover {
+    color: #ddd;
+    border-color: #ddd;
+    cursor: default;
 }
 
 #search-fold {
@@ -184,6 +192,13 @@ body, html {
 }
 #breadcrumb .item:hover {
     text-decoration: underline;
+}
+#breadcrumb .dead {
+    opacity: .5;
+}
+#breadcrumb .dead .item:hover {
+    text-decoration: none;
+    cursor: default;
 }
 
 #searchTerm {
