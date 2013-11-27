@@ -257,6 +257,7 @@ lc.search = function() {
         var url = baseurl + '?' + defaultParams + query;// + suffix;
 
         console.log('searching', query);
+        self.clearCircles();
 
         lc.list.hideList();
         $.ajax({

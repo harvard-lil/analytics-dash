@@ -114,6 +114,11 @@ lc.graph = function() {
 		updateCircles();
 	}
 
+	self.clearCircles = function() {
+		var c = circleGroup.selectAll("circle").data([]);
+		c.exit().transition().attr("r",0).remove();
+	}
+
 	self.appendCircles = function(data) {
 		bookData = data;
 		numBooks = data.length;
@@ -137,9 +142,8 @@ lc.graph = function() {
 
         var circles = circleGroup.selectAll("circle").data(newData);
         //binds data to circles
-        circles.enter()
-        	.append("circle");
-        circles.exit().remove();
+        circles.enter().append("circle");
+        circles.exit().transition().attr("r",0).remove();
 
         //runs the showInfo on mouseover
         circles.on("mouseover",function(d){
@@ -415,7 +419,7 @@ lc.graph = function() {
 	}
 
 	function calculateY(d) {
-		return (d / numBooks) * gHeight;
+		return (d / numBooks) * (gHeight*.95) + (gHeight*.025);
 		switch(y_axis_type) {
 			case 'grads':
 				yscale.domain([0,300]);
