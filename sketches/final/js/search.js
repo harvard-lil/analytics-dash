@@ -317,7 +317,7 @@ lc.search = function() {
 
                 lc.histogram.appendHistogram(newData);
 
-                lc.list.saveDocs(newData);
+                // lc.list.saveDocs(newData);
 
                 d3.select("#graph svg").attr("class","");
             }

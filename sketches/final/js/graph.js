@@ -133,6 +133,7 @@ lc.graph = function() {
 			else return 1;
 		});
 		var newData = defs.concat(undefs);
+		lc.list.saveDocs(newData);
 
         var circles = circleGroup.selectAll("circle").data(newData);
         //binds data to circles
