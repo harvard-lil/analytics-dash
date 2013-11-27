@@ -19,12 +19,10 @@ lc.list = function() {
 
     self.saveDocs = function(docs) {
         documents = docs;
+        self.updateList();
     };
 
-    self.showList = function() {
-
-        visWrapper.addClass("list");
-
+    self.updateList = function() {
         var items = list.selectAll("li").data(documents);
         var entering = items.enter().append("li").attr("class","item");
 
@@ -45,6 +43,10 @@ lc.list = function() {
                 lc.carrel.sendToCarrel(d);
             });
         self.sortList("shelfrank", "down");
+    }
+
+    self.showList = function() {
+        visWrapper.addClass("list");
     };
 
     self.hideList = function() {
