@@ -141,9 +141,9 @@ lc.graph = function() {
 		lc.list.saveDocs(newData);
 
         var circles = circleGroup.selectAll("circle").data(newData);
+        circles.exit().remove();
         //binds data to circles
         circles.enter().append("circle");
-        circles.exit().transition().attr("r",0).remove();
 
         //runs the showInfo on mouseover
         circles.on("mouseover",function(d){
@@ -223,9 +223,9 @@ lc.graph = function() {
     });
     $(document).keydown(function (e) {
 		if (e.keyCode == 38) { // up arrow
-		 	sortBooks("call_num",false);
+		 	sortBooks("loc_call_num_sort_order",false);
 		} else if (e.keyCode == 40) { // down arrow
-		 	sortBooks("call_num",true);
+		 	sortBooks("loc_call_num_sort_order",true);
 		} else if (e.keyCode == 37) { // left arrow
 		 	sortBooks("pub_date_numeric",false);
 		} else if (e.keyCode == 39) { // right arrow
@@ -419,7 +419,7 @@ lc.graph = function() {
 	}
 
 	function calculateY(d) {
-		return (d / numBooks) * (gHeight*.95) + (gHeight*.025);
+		return (d / numBooks) * (gHeight*.99) + (gHeight*.005);
 		switch(y_axis_type) {
 			case 'grads':
 				yscale.domain([0,300]);

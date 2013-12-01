@@ -64,7 +64,7 @@ body, html {
     padding: 8px 10px 7px;
     margin-top: 0;
     font-family: Lucida Grande;
-    margin-right: 40px;
+    margin-right: 15px;
 }
 #search-form .carrel-action {
     padding: 6px 5px;
@@ -75,6 +75,34 @@ body, html {
     color: #ddd;
     border-color: #ddd;
     cursor: default;
+}
+.search-history {
+    float: left;
+    margin-right: 10px;
+    color: #808080;
+}
+.search-index-title {
+    text-transform: uppercase;
+    font-size: 12px;
+    font-family: Lucida Grande;
+}
+.search-index {
+    cursor: pointer;
+    float: left;
+    font-size: 25px;
+    line-height: 25px;
+}
+.prev-search {
+    margin-left: 23px;
+}
+.search-index:hover {
+    color: #000;
+}
+.search-index.inactive,
+.search-index.inactive:hover {
+    color: #808080;
+    cursor: default;
+    color: #ddd;
 }
 
 #search-fold {

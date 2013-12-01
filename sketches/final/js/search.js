@@ -3,7 +3,9 @@ var lc = lc || {};
 lc.search = function() {
 
     var searchForm = $("#search-form");
-    var searchTerms = {};
+    var searchTerms = {},
+        previousSearches = [],
+        searchIndex = 0;
 
     $("#search-lcsh_keyword").focus(function(){
         searchForm.find("#search-fold").slideDown();
@@ -26,6 +28,11 @@ lc.search = function() {
             self.submitSearch();
             $(this).find("input").blur();
         }
+    });
+
+    $(document).click(function(e){
+        if (e.pageY > 345 || e.pageX > 545)
+            searchForm.find("#search-fold").slideUp();
     });
 
     var getQueryVariable = function(variable) {
@@ -64,6 +71,7 @@ lc.search = function() {
 
     self.submitSearch = function() {
         searchTerms = {};
+        searchIndex = previousSearches.length;
         searchTerms["year"] = [],
         searchTerms["range"] = [];
         start = 0;
@@ -245,6 +253,30 @@ lc.search = function() {
         return search;
     };
 
+    $(".next-search").click(function(){
+        if (searchIndex == previousSearches.length - 1) return;
+        runSearch(previousSearches[searchIndex+1]);
+        searchIndex += 1;
+        updateSearchUI();
+    });
+    $(".prev-search").click(function(){
+        if (searchIndex == 0) return;
+        runSearch(previousSearches[searchIndex-1]);
+        searchIndex -= 1;
+        updateSearchUI();
+    });
+    function updateSearchUI() {
+        if (previousSearches.length == 0) return;
+        if (searchIndex > 0)
+            $(".prev-search").removeClass("inactive");
+        else
+            $(".prev-search").addClass("inactive");
+        if (searchIndex+1 < previousSearches.length)
+            $(".next-search").removeClass("inactive");
+        else
+            $(".next-search").addClass("inactive");
+    }
+
     var oldData = [];
 
     self.runSearch = function(parameters, noReset) {
@@ -253,6 +285,10 @@ lc.search = function() {
                 parameters[p] = searchTerms[p];
             }
         }
+        if (previousSearches.indexOf(parameters) == -1) {
+            previousSearches.push(parameters);
+        }
+        updateSearchUI();
         var query = self.buildSearchQuery(parameters);
         var url = baseurl + '?' + defaultParams + query;// + suffix;
 
