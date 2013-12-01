@@ -7,7 +7,8 @@ lc.histogram = function() {
     var gWidth = $("#histogram").width();
     var booksByYear,
         minYear,
-        maxYear;
+        maxYear,
+        changeRange = false;
 
     self.appendHistogram = function(data) {
 
@@ -60,6 +61,7 @@ lc.histogram = function() {
             max: maxYear,
             values: [ minYear, maxYear ],
             slide: function( event, ui ) {
+                changeRange = true;
                 setSlider(ui.values[0], ui.values[1]);
             }
         });
@@ -67,8 +69,13 @@ lc.histogram = function() {
     };
 
     self.returnYearRange = function(){
-        return [minYear, maxYear];
+        if (changeRange)
+            return [minYear, maxYear];
     };
+
+    self.setYearRange = function(range) {
+        setSlider(range[0], range[1]);
+    }
 
     function setSlider(min, max) {
         minYear = min;

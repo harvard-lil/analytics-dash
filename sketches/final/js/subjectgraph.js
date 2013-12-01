@@ -211,7 +211,7 @@ lc.subjectgraph = function() {
             breadcrumb.find(".all").click(function(){
                 lc.graph.appendCircles(data);
                 self.updateRelative(data, data.length, 0);
-                breadcrumb.css("visibility","hidden");
+                // breadcrumb.css("visibility","hidden");
             });
             $("#nav-context").hide();
         } else {
@@ -339,16 +339,16 @@ lc.subjectgraph = function() {
         }
     };
 
-    self.crumbize = function(d, dead) {
+    self.crumbize = function(d) {
+        console.log(d.class)
         if (d.class == "undefined") return;
 
         var breadDepth = breadcrumb.find(".link") ? breadcrumb.find(".link").length : 0;
-        var l = $("<span>").attr("class","link"+(dead ? " dead" : ""))
+        var l = $("<span>").attr("class","link")
                 .html("<span class='tick'>></span><span class='item'>"+d.class+"</span>")
                 .click(function(){
                     // self.getChildrenID(d.id);
                     // self.updateBounds(d);
-                    if (dead) return;
                     self.updateRelative(d.books, d.length, d.depth+1);
                     lc.graph.appendCircles(d.books);
                     breadcrumb.find(".link").each(function(i,e){
@@ -364,22 +364,27 @@ lc.subjectgraph = function() {
         breadcrumb.css("visibility","visible").append(l);
     };
 
-    $(".repopulate").click(function(){
+    self.returnSubjectString = function() {
         var trail = [];
         breadcrumb.find(".item").each(function(i,e){
             if (i == 0) return;
             trail.push($(e).text())
         });
-        var yearRange = lc.histogram.returnYearRange();
-        
-        if (trail.length)
-            lc.search.runSearch(
-                {"loc_call_num_subject_keyword":trail.join(" -- "),
-                 "year":yearRange
-            }, true);
-        else
-            lc.search.runSearch({"year":yearRange}, true);
-    })
+        return trail.join(" -- ");
+    }
+    self.setSubjectString = function(subjectStr) {
+        var trail = subjectStr.split(" -- ");
+        for (var i = 0; i < trail.length; i++) {
+            console.log(trail[i], classNameify(trail[i]), d3.select("#"+classNameify(trail[i])))
+            d3.select("#"+classNameify(trail[i]))
+            .each(function(d){
+                console.log(d)
+                self.updateRelative(d.values.books, d.values.length, d.values.depth+1);
+                lc.graph.appendCircles(d.values.books);
+                self.crumbize(d.values);
+            });
+        }
+    }
 
     function classNameify(name) {
         return "t-"+String(name).replace(/^\s+|\s+$/g,'').toLowerCase().replace(/[^\w\s]/gi, '').split(" ").join("-");name.toLowerCase().replace(/^\s+|\s+$/g,'').replace(/[^\w\s]/gi, '').split(" ").join("-");
@@ -514,15 +519,16 @@ lc.subjectgraph = function() {
     };
 
     self.reset = function() {
-            self.currentChildren = null;
-            self.currentTotal = null;
-            self.initialized = false;
+            // self.currentChildren = null;
+            // self.currentTotal = null;
+            // self.initialized = false;
             globalDepth = 0;
-            self.update(sideBar, []);
+            // self.update(sideBar, []);
+            breadcrumb.find(".link").remove()
             breadcrumb.css("visibility","hidden");
-            d3.select("#graph-wrapper").classed("child",false);
-            d3.selectAll(".schema").classed("selected",false);
-            self.getChildren("top-level class");
+            // d3.select("#graph-wrapper").classed("child",false);
+            // d3.selectAll(".schema").classed("selected",false);
+            // self.getChildren("top-level class");
     };
     self.hide = function() {
             $("#nav").hide();

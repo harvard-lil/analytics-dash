@@ -60,14 +60,35 @@ lc.search = function() {
 
     var start = 0;
     $(".more").click(function(){
-        start += 250;
-        if (start > 750) return;
-        else if (start == 750) {
-            $(this).addClass("inactive");
+        addMoreResults();
+    });
+
+    function addMoreResults() {
+        var subjectString = lc.subjectgraph.returnSubjectString(),
+            yearRange = lc.histogram.returnYearRange();
+
+        if (subjectString) searchTerms["loc_call_num_subject_keyword"] = subjectString;
+        if (yearRange) searchTerms["year"] = yearRange;
+
+        /*
+            if new search is same as old, increment
+            search history:
+                do we store history?
+                is it just the original search?
+                is it a bunch of queries?
+        */
+
+        if (!subjectString && !yearRange) {
+            start += 250;
+            if (start > 750) return;
+            else if (start == 750) {
+                $(this).addClass("inactive");
+            }
+            defaultParams = "&start="+start+defaultParams;
         }
-        defaultParams = "&start="+start+defaultParams;
-        self.runSearch(searchTerms);
-    })
+
+        self.runSearch(searchTerms, true);
+    }
 
     self.submitSearch = function() {
         searchTerms = {};
@@ -190,7 +211,6 @@ lc.search = function() {
                     var range = terms[term];
                     if (range.length == 2) {
                         explanation.push('published <b>between ' + range[0] + ' and ' + range[1] + '</b>');
-                        console.log('year range', range);
                     }
                     break;
 
@@ -231,7 +251,7 @@ lc.search = function() {
                 case 'language':
                     explanation.push('in <b>' + terms[term] + '</b>');
                     break;
-                case 'loc_call_num_subject':
+                case 'loc_call_num_subject_keyword':
                     explanation.push('with a call number subject of <b>' + terms[term] + '</b>');
                     break;
                 case 'lcsh_keyword':
@@ -337,12 +357,11 @@ lc.search = function() {
 
                 // lc.graph.drawArea(response.facets);
 
-                lc.subjectgraph.reset();
-
-                if (start > 0) {
+                if (noReset) {
                     var newData = oldData.concat(response.docs);
                 } else {
                     newData = response.docs;
+                    lc.subjectgraph.reset();
                 }
                 oldData = newData;
 
@@ -353,6 +372,13 @@ lc.search = function() {
                 lc.graph.appendCircles(newData);
 
                 lc.histogram.appendHistogram(newData);
+
+                if (noReset) {
+                    if ("loc_call_num_subject_keyword" in searchTerms)
+                        lc.subjectgraph.setSubjectString(searchTerms["loc_call_num_subject_keyword"]);
+                    if ("year" in searchTerms)
+                        lc.histogram.setYearRange(searchTerms["year"]);
+                }
 
                 // lc.list.saveDocs(newData);
 
