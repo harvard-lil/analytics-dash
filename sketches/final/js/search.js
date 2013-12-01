@@ -76,6 +76,7 @@ lc.search = function() {
                 do we store history?
                 is it just the original search?
                 is it a bunch of queries?
+                dedupe
         */
 
         if (!subjectString && !yearRange) {

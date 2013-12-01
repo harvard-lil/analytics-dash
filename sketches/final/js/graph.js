@@ -121,11 +121,12 @@ lc.graph = function() {
 
 	self.appendCircles = function(data) {
 		bookData = data;
+		console.log(data)
 		numBooks = data.length;
 
 		var undefs = [],
 			defs = [];
-		for (var i = data.length-1; i--; 0) {
+		for (var i = data.length-1; i >= 0; i--) {
 			if (!data[i].call_num) {
 				undefs.push(data[i]);
 			} else {
@@ -139,6 +140,8 @@ lc.graph = function() {
 		});
 		var newData = defs.concat(undefs);
 		lc.list.saveDocs(newData);
+
+		console.log(bookData, data, newData, newData.length, defs.length, undefs.length)
 
         var circles = circleGroup.selectAll("circle").data(newData);
         circles.exit().remove();
@@ -183,7 +186,7 @@ lc.graph = function() {
 		})
 		.duration(500)
 		.attr("cx", calculateX)
-		.attr("cy", function(d,i){ return calculateY(i); })
+		.attr("cy", function(d,i){ console.log(d.title); return calculateY(i); })
 		.attr("r", calculateRadius);
 
     }
@@ -419,6 +422,7 @@ lc.graph = function() {
 	}
 
 	function calculateY(d) {
+		console.log(d, numBooks, (d / numBooks) * (gHeight*.99) + (gHeight*.005))
 		return (d / numBooks) * (gHeight*.99) + (gHeight*.005);
 		switch(y_axis_type) {
 			case 'grads':

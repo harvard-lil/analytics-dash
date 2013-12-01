@@ -224,6 +224,7 @@ lc.subjectgraph = function() {
                 var k = d.loc_call_num_subject.split(" -- ")[depth];
                 return k;
             }).rollup(function(d){
+                // for (var i = d.length-1; i > 0; i--) {
                 for (var i = 0; i < d.length; i++) {
                     if (d[i].call_num && d[i].loc_call_num_sort_order) {
                         return {
