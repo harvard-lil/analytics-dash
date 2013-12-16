@@ -224,7 +224,8 @@ body, html {
 #breadcrumb .dead {
     opacity: .5;
 }
-#breadcrumb .dead .item:hover {
+#breadcrumb .dead .item:hover,
+#breadcrumb .dead:hover {
     text-decoration: none;
     cursor: default;
 }

@@ -140,8 +140,6 @@ lc.graph = function() {
 		var newData = defs.concat(undefs);
 		lc.list.saveDocs(newData);
 
-		console.log(newData.length, defs.length, undefs.length)
-
         var circles = circleGroup.selectAll("circle").data(newData);
         circles.exit().remove();
         //binds data to circles
@@ -184,7 +182,7 @@ lc.graph = function() {
 			return i*delay;
 		})
 		.duration(500)
-		.attr("cx", function(d,i) { /*console.log(minYear, maxYear, d.pub_date_numeric);*/ return calculateX(d); })
+		.attr("cx", calculateX)
 		.attr("cy", function(d,i){ return calculateY(i); })
 		.attr("r", calculateRadius);
 
