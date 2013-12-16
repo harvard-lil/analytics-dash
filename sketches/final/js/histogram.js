@@ -19,7 +19,7 @@ lc.histogram = function() {
             return a.key - b.key;
         });
 
-        minYear = parseInt(d3.min(booksByYear,function(d){ return d.key; }));
+        minYear = parseInt(d3.min(booksByYear,function(d){ if (d.key != "undefined") return d.key; }));
         maxYear = parseInt(d3.max(booksByYear,function(d){ if (d.key != "undefined") return d.key; }));
         var yearRange = maxYear - minYear,
             maxBooks = d3.max(booksByYear,function(d){ return d.values.length; });

@@ -65,10 +65,15 @@ lc.search = function() {
 
     function addMoreResults() {
         var subjectString = lc.subjectgraph.returnSubjectString(),
-            yearRange = lc.histogram.returnYearRange();
+            yearRange = lc.histogram.returnYearRange(),
+            newTerms = {};
 
-        if (subjectString) searchTerms["loc_call_num_subject_keyword"] = subjectString;
-        if (yearRange) searchTerms["year"] = yearRange;
+        for (item in searchTerms) {
+            newTerms[item] = searchTerms[item];
+        }
+
+        if (subjectString) newTerms["loc_call_num_subject_keyword"] = subjectString;
+        if (yearRange) newTerms["year"] = yearRange;
 
         /*
             if new search is same as old, increment
@@ -86,14 +91,15 @@ lc.search = function() {
                 $(this).addClass("inactive");
             }
             defaultParams = "&start="+start+defaultParams;
+            self.runSearch(newTerms, true);
+            return;
         }
 
-        self.runSearch(searchTerms, true);
+        self.runSearch(newTerms, false);
     }
 
     self.submitSearch = function() {
         searchTerms = {};
-        searchIndex = previousSearches.length;
         searchTerms["year"] = [],
         searchTerms["range"] = [];
         start = 0;
@@ -275,15 +281,15 @@ lc.search = function() {
     };
 
     $(".next-search").click(function(){
-        if (searchIndex == previousSearches.length - 1) return;
-        runSearch(previousSearches[searchIndex+1]);
+        if (searchIndex == previousSearches.length) return;
         searchIndex += 1;
+        runSearch(previousSearches[searchIndex]);
         updateSearchUI();
     });
     $(".prev-search").click(function(){
         if (searchIndex == 0) return;
-        runSearch(previousSearches[searchIndex-1]);
         searchIndex -= 1;
+        runSearch(previousSearches[searchIndex]);
         updateSearchUI();
     });
     function updateSearchUI() {
@@ -292,7 +298,7 @@ lc.search = function() {
             $(".prev-search").removeClass("inactive");
         else
             $(".prev-search").addClass("inactive");
-        if (searchIndex+1 < previousSearches.length)
+        if (searchIndex < previousSearches.length-1)
             $(".next-search").removeClass("inactive");
         else
             $(".next-search").addClass("inactive");
@@ -308,6 +314,7 @@ lc.search = function() {
         }
         if (previousSearches.indexOf(parameters) == -1) {
             previousSearches.push(parameters);
+            searchIndex = previousSearches.length-1;
         }
         updateSearchUI();
         var query = self.buildSearchQuery(parameters);
@@ -377,7 +384,7 @@ lc.search = function() {
                 if (noReset) {
                     if ("loc_call_num_subject_keyword" in searchTerms)
                         lc.subjectgraph.setSubjectString(searchTerms["loc_call_num_subject_keyword"]);
-                    if ("year" in searchTerms)
+                    if ("year" in searchTerms && searchTerms["year"].length)
                         lc.histogram.setYearRange(searchTerms["year"]);
                 }
 

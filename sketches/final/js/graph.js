@@ -94,9 +94,9 @@ lc.graph = function() {
 		var max = d3.max(data,function(d){ return d.pub_date_numeric; });
 		self.updateDateRange(min,max);
 
-		var LCClow = d3.min(data,function(d){ if (d.loc_call_num_sort_order) return d.loc_call_num_sort_order[0]; });
-		var LCChigh = d3.max(data,function(d){ if (d.loc_call_num_sort_order) return d.loc_call_num_sort_order[0]; });
-		self.updateLCCRange(LCClow, LCChigh);
+		// var LCClow = d3.min(data,function(d){ if (d.loc_call_num_sort_order) return d.loc_call_num_sort_order[0]; });
+		// var LCChigh = d3.max(data,function(d){ if (d.loc_call_num_sort_order) return d.loc_call_num_sort_order[0]; });
+		// self.updateLCCRange(LCClow, LCChigh);
 	};
 
 	self.updateDateRange = function(min, max) {
@@ -121,7 +121,6 @@ lc.graph = function() {
 
 	self.appendCircles = function(data) {
 		bookData = data;
-		console.log(data)
 		numBooks = data.length;
 
 		var undefs = [],
@@ -141,7 +140,7 @@ lc.graph = function() {
 		var newData = defs.concat(undefs);
 		lc.list.saveDocs(newData);
 
-		console.log(bookData, data, newData, newData.length, defs.length, undefs.length)
+		console.log(newData.length, defs.length, undefs.length)
 
         var circles = circleGroup.selectAll("circle").data(newData);
         circles.exit().remove();
@@ -185,8 +184,8 @@ lc.graph = function() {
 			return i*delay;
 		})
 		.duration(500)
-		.attr("cx", calculateX)
-		.attr("cy", function(d,i){ console.log(d.title); return calculateY(i); })
+		.attr("cx", function(d,i) { /*console.log(minYear, maxYear, d.pub_date_numeric);*/ return calculateX(d); })
+		.attr("cy", function(d,i){ return calculateY(i); })
 		.attr("r", calculateRadius);
 
     }
@@ -422,7 +421,6 @@ lc.graph = function() {
 	}
 
 	function calculateY(d) {
-		console.log(d, numBooks, (d / numBooks) * (gHeight*.99) + (gHeight*.005))
 		return (d / numBooks) * (gHeight*.99) + (gHeight*.005);
 		switch(y_axis_type) {
 			case 'grads':
