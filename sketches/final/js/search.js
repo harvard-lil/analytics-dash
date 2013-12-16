@@ -327,7 +327,6 @@ lc.search = function() {
         $.ajax({
             url: url,
             success: function(response) {
-                console.log('response', response.docs.length, 'results');
                 if (!response.docs.length) {
                     graphTitle.html("0 Results found with your parameters.");
                     console.log('zero results, bailing');
