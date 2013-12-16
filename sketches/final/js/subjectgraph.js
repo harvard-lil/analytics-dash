@@ -16,6 +16,8 @@ lc.subjectgraph = function() {
             context = d3.select("#nav-context"),
             breadcrumb = $("#breadcrumb");
 
+    self.finishedNested = false;
+
     $("#graph-reset").click(function(){
         self.reset();
     });
@@ -226,15 +228,20 @@ lc.subjectgraph = function() {
                 var k = d.loc_call_num_subject.split(" -- ")[depth];
                 return k;
             }).rollup(function(d){
-                for (var i = d.length-1; i > 0; i--) {
-                    if (d[i].call_num && d[i].loc_call_num_sort_order) {
+                // for (var i = d.length-1; i > -1; i--) {
+                for (var i = 0; i < d.length; i++) {
+                    // console.log(d[i].loc_call_num_subject, d[i].loc_call_num_sort_order)
+                    if (d[i].call_num && d[i].loc_call_num_sort_order[0]) {
+                        // console.log("sweet", d[i].call_num[0], d[i].loc_call_num_sort_order[0])
                         return {
                             "call_num":d[i].call_num[0], 
-                            "sort_order":d[i].loc_call_num_sort_order,
+                            "sort_order":d[i].loc_call_num_sort_order[0],
                             "length":d.length,
                             "depth":depth,
                             "books":d 
                         };
+                    } else {
+                        continue;
                     }
                 }
                 return {"call_num":"undefined", "length":d.length};
@@ -247,8 +254,9 @@ lc.subjectgraph = function() {
         });
         
         nested.sort(function(a,b){
-            if (a.values.call_num < b.values.call_num) return -1;
-            if (a.values.call_num > b.values.call_num) return 1;
+            // console.log(a.key, a.values.sort_order, b.key, b.values.sort_order)
+            if (a.values.sort_order < b.values.sort_order) return -1;
+            if (a.values.sort_order > b.values.sort_order) return 1;
             return 0;
         });
 
@@ -334,13 +342,15 @@ lc.subjectgraph = function() {
 
         // if no more data to drill down
         if (nested.length == 1 && nested[0].key == "undefined") return;
-        else if (nested.length == 1) {
+        else if (nested.length == 1 && !self.finishedNested) {
             $(".item.all").addClass("dead");
             var d = nested[0];
             d.values.class = d.key;
             self.crumbize(d.values, true);
             self.updateRelative(d.values.books, d.values.length, d.values.depth+1);
             return;
+        } else {
+            self.finishedNested = true;
         }
     };
 

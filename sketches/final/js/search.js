@@ -374,6 +374,7 @@ lc.search = function() {
 
                 graphTitle.html(self.buildSearchExplanation(response.docs, parameters));
 
+                lc.subjectgraph.finishedNested = false;
                 lc.subjectgraph.updateRelative(newData, newData.length, 0);
                 
                 lc.graph.appendCircles(newData);
