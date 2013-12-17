@@ -396,7 +396,7 @@ lc.search = function() {
     };
 
     // initial search request
-    searchTerms = {'lcsh_keyword': 'boston'};
+    searchTerms = {'lcsh_keyword': 'doctor'};
     self.runSearch(searchTerms);
 
     return self;
