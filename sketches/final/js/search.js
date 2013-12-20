@@ -335,33 +335,7 @@ lc.search = function() {
 
                 lc.graph.dataPrep(response.docs);
 
-                /*
-				var graphLabel = "The graph below displays the in our";
-				var queries = query.split('&filter=');
-				var secondhalf = queries[1];
-				var thingToPrint = "";
-
-  				for (var i=1;i<queries.length;i++) {
-					console.log(queries[i]);
-					var typeAndTerm = queries[i];
-					var typeOfTerm = (typeAndTerm.split(':')[0]);
-					console.log(typeOfTerm);
-					var term = (typeAndTerm.split(':')[1]);
-					console.log(term);
-					thingToPrint= thingToPrint + typeOfTerm +term+"'";
-					thingToPrint = thingToPrint.replace(/lcsh_keyword/gi, "library of Congress Keyword is ");
-					thingToPrint = thingToPrint.replace(/pub_date_numeric/gi, "publication date is between");
-					thingToPrint = thingToPrint.replace(/TO/gi, "and ");
-					thingToPrint = thingToPrint.replace(/creator/gi, "author is ");
-					thingToPrint = thingToPrint.replace(/collection/gi, "publication date is ");
-					fixedThingToPrint= unescape(thingToPrint);
-        		}
-                graphTitle.text('The graph below displays the 250 most popular items in our collection that meet your criteria: ' + fixedThingToPrint); // for now
-                */
-
                 $(".sort-heading").find(".total").text(response.docs.length);
-
-                // lc.graph.drawArea(response.facets);
 
                 if (noReset) {
                     var newData = oldData.concat(response.docs);
@@ -373,9 +347,8 @@ lc.search = function() {
 
                 graphTitle.html(self.buildSearchExplanation(response.docs, parameters));
 
+                lc.subjectgraph.finishedNesting = false;
                 lc.subjectgraph.updateRelative(newData, newData.length, 0);
-
-                console.log(newData)
                 
                 lc.graph.appendCircles(newData);
 
@@ -388,15 +361,13 @@ lc.search = function() {
                         lc.histogram.setYearRange(searchTerms["year"]);
                 }
 
-                // lc.list.saveDocs(newData);
-
                 d3.select("#graph svg").attr("class","");
             }
         });
     };
 
     // initial search request
-    searchTerms = {'lcsh_keyword': 'doctor'};
+    searchTerms = {'lcsh_keyword': 'bird'};
     self.runSearch(searchTerms);
 
     return self;

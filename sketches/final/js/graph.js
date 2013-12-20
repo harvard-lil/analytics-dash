@@ -263,14 +263,13 @@ lc.graph = function() {
     self.showInfo = function(data, inBox) {
     	currentBook = data;
 
-    	$(".sort-heading").find(".index").text(bookData.indexOf(currentBook) + 1);
+    	// $(".sort-heading").find(".index").text(bookData.indexOf(currentBook) + 1);
 
-		if (data.id_inst){
+		if (data.id_inst)
 			info.select(".title .field").html("<a target='blank' href=http://holliscatalog.harvard.edu/?itemid=|library/m/aleph|"+ data.id_inst+">"+data.title+"</a>");
-		}		
-		else{
+		else
         	info.select(".title .field").text(data.title);
-       	}
+       	
         if (data.creator) {
             info.select(".creator .field").html("<li>" + data.creator.join("</li><li>") + "</li>");
             info.selectAll(".creator li").on("click",function(){
@@ -287,17 +286,13 @@ lc.graph = function() {
         	$(".info-bar").css("background-color","#808080");
         }
 
-		if (data.call_num)
-        	info.select(".lc .field").html(data.call_num.join("<br>"));
-        else
-       		info.select(".lc .field").html("Not Available");
+        info.select(".lc .field").html(data.call_num ? data.call_num.join("<br>") : "Not Available");
 
-        info.select(".pub_date_numeric .field").text(data.pub_date_numeric);
+        info.select(".pub_date_numeric .field").text(data.pub_date_numeric ? data.pub_date_numeric : "Not Available");
 
         info.select(".pages_numeric .field").text(data.pages_numeric ? data.pages_numeric : "Format: "+data.format);
 
-        if (data.language)
-			info.select(".language .field").text(data.language);
+		info.select(".language .field").text(data.language ? data.language : "Not Available");
 
 		if (data.loc_call_num_subject) {
 			info.select(".loc_call_num_subject .field")
@@ -320,9 +315,9 @@ lc.graph = function() {
             });
 		}
 
-		if (data.id_inst){
-			linkouturl= "href=http://holliscatalog.harvard.edu/?itemid=|library/m/aleph|"+ data.id_inst;
-		}
+		// if (data.id_inst){
+		// 	linkouturl= "href=http://holliscatalog.harvard.edu/?itemid=|library/m/aleph|"+ data.id_inst;
+		// }
 		
   		if (inBox) {
   			addToCarrel.text("Add This Item To Your Carrel").on("click",function(){

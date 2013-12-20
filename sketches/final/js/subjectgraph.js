@@ -24,8 +24,6 @@ lc.subjectgraph = function() {
         $.ajax({
                 url: baseurl + '?' + encodeURI(query),
                 success: function(response){
-                    // self.searchCompleted
-                    // console.log(response.docs[0].child_classes)
                     var classes = response.docs[0].child_classes;
                     d3.selectAll(".schema").each(function(d){
                         classes.forEach(function(e){
@@ -201,6 +199,8 @@ lc.subjectgraph = function() {
 
     // };
 
+    self.finishedNesting = false;
+
     self.updateRelative = function(data, numBooks, depth) {
 
         self.relative = true;
@@ -232,14 +232,13 @@ lc.subjectgraph = function() {
                 };
             }).entries(data);
 
-        nested.forEach(function(d,i){
-            if (d.key == "unavailable") {
-                d.values.call_num = "undefined";
-            }
-        });
+        // nested.forEach(function(d,i){
+        //     if (d.key == "unavailable") {
+        //         d.values.call_num = "undefined";
+        //     }
+        // });
         
         nested.sort(function(a,b){
-            // console.log(a.key, a.values.sort_order, b.key, b.values.sort_order)
             if (a.values.sort_order < b.values.sort_order) return -1;
             if (a.values.sort_order > b.values.sort_order) return 1;
             return 0;
@@ -258,7 +257,6 @@ lc.subjectgraph = function() {
         // reset
         if (depth == 0) {
             breadcrumb.find(".all").click(function(){
-                console.log(data, nested)
                 lc.graph.appendCircles(data);
                 self.updateRelative(data, data.length, 0);
             });
@@ -320,7 +318,7 @@ lc.subjectgraph = function() {
                 ty += d.height;
                 return d.cy + 10;
             }).text(function(d){
-                return d.key;
+                return showProperTitle(d.key, d.values.depth);
             }).attr("class",function(d){
                 return d.className;
             }).style("display","none");
@@ -334,28 +332,30 @@ lc.subjectgraph = function() {
         }
 
         // if no more data to drill down
-        if (nested.length == 1) {
+        if (nested.length == 1 && !self.finishedNesting) {
             var needsNesting = false;
             nested[0].values.books.forEach(function(e,i){
+                if (!e.loc_call_num_subject) return;
                 var l = e.loc_call_num_subject[0].split(" -- ").length;
                 if (l > depth) {
                     needsNesting = true;
-                    return;
                 }
             })
             if (!needsNesting) return;
 
-            $(".item.all").addClass("dead");
+            $(".item.all").addClass("dead").unbind("click");
+            $(".link").eq(depth-1).addClass("dead").unbind("click");
             var d = nested[0];
             d.values.class = d.key;
             self.crumbize(d.values, true);
             
             self.updateRelative(d.values.books, d.values.length, d.values.depth+1);
+        } else {
+            self.finishedNesting = true;
         }
     };
 
-    self.crumbize = function(d, dead) {
-        console.log(d.class, d.depth)
+    self.crumbize = function(d) {
         if (d.class == "undefined" && d.depth > 0) return;
 
         var breadDepth = breadcrumb.find(".link") ? breadcrumb.find(".link").length : 0;
@@ -368,9 +368,6 @@ lc.subjectgraph = function() {
                         if (i > d.depth) $(this).remove();
                     });
                 });
-        if (dead) {
-            $(".link").eq(d.depth-1).addClass("dead").click(function(){ return; });
-        }
 
         if (d.depth + 1 < breadDepth) breadcrumb.find(".link").remove();
         else if (d.depth + 1 == breadDepth) breadcrumb.find(".link").eq(d.depth).remove();
@@ -403,6 +400,11 @@ lc.subjectgraph = function() {
 
     function classNameify(name) {
         return "t-"+String(name).replace(/^\s+|\s+$/g,'').toLowerCase().replace(/[^\w\s]/gi, '').split(" ").join("-");name.toLowerCase().replace(/^\s+|\s+$/g,'').replace(/[^\w\s]/gi, '').split(" ").join("-");
+    }
+    function showProperTitle(key, depth) {
+        if (depth == 0 && key == "undefined") return "No Call Number Available";
+        else if (key == "undefined") return "No Further Categories";
+        else return key;
     }
 
     self.updateBounds = function(selected) {
@@ -446,7 +448,7 @@ lc.subjectgraph = function() {
 
         rollover.select("text")
             .attr("x",(ctx.depth == 0) ? 3 : 33)
-            .text(self.relative ? currentClass.key : currentClass.class.name);
+            .text(showProperTitle(currentClass.key, currentClass.values.depth));
             //.attr("fill",schema.colorClass(currentClass.class.class));
     };
     self.rollout = function() {

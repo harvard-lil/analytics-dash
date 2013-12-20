@@ -31,7 +31,7 @@ lc.list = function() {
         items.html(function(d){
                 return "<span class='left'><span class='title'>" + d.title + "</span>, " + 
                         (d.creator ? d.creator.join(", ") : "") + "</span><span class='right'> | " + 
-                        d.pub_date_numeric + "</span><span class='subject'>" + 
+                        (d.pub_date_numeric ? d.pub_date_numeric : "unknown") + "</span><span class='subject'>" + 
                         (d.loc_call_num_subject ? d.loc_call_num_subject[0].split("--")[0] : "") +"</span>";
             }).style("border-bottom-color", function(d){
                 if (d.call_num && lcObjectArray[d.call_num[0].substr(0,1)]){
