@@ -623,6 +623,11 @@
         $("#instructions").click(function(){
             showPopup("more-instructions");
         });
+
+        var h = $(window).height(),
+            iH = h - 200 - 160;
+        $("#info-wrapper").height(iH);
+        $("#carrel").css("top",140+iH+"px");
         
     </script>
 </html>
