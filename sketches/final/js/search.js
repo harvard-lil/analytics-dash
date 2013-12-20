@@ -319,6 +319,13 @@ lc.search = function() {
         var query = self.buildSearchQuery(parameters);
         var url = baseurl + '?' + defaultParams + query;// + suffix;
 
+        var hash = [];
+        for (param in parameters) {
+            if (parameters[param].length)
+                hash.push(param+"="+parameters[param]);
+        }
+        window.location.hash = hash.join("&");
+
         console.log('searching', query);
         self.clearCircles();
 
@@ -367,7 +374,15 @@ lc.search = function() {
     };
 
     // initial search request
-    searchTerms = {'lcsh_keyword': 'bird'};
+    window.location.hash.substr(1,window.location.hash.length)
+        .split("&").forEach(function(d,i){
+            var terms = d.split("=");
+            if (terms[0] == "year" || terms[0] == "range") {
+                var a = terms[1].split(",");
+                searchTerms[terms[0]] = [a[0],a[1]];
+            } else    
+                searchTerms[terms[0]] = terms[1];
+        });
     self.runSearch(searchTerms);
 
     return self;
