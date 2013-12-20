@@ -764,12 +764,10 @@ body, html {
     margin: 0;
 }
 
-#info .field li,
-.loc_call_num_subject .field {
+#info .field li {
     cursor: pointer;
 }
-#info .field li:hover,
-.loc_call_num_subject .field:hover {
+#info .field li:hover {
     text-decoration: underline;
 }
 #list-wrapper {

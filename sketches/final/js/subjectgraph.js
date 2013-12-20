@@ -16,8 +16,6 @@ lc.subjectgraph = function() {
             context = d3.select("#nav-context"),
             breadcrumb = $("#breadcrumb");
 
-    self.finishedNested = false;
-
     $("#graph-reset").click(function(){
         self.reset();
     });
@@ -52,25 +50,25 @@ lc.subjectgraph = function() {
         very hacky code to patch holes because some categories say their end
         is in the 8 millions, screwing up the structure
     */
-    var globalDepth = 0;
+    // self.globalDepth = 0;
 
-    var processChild = function(childString, next) {
-            var values = childString.split('%%');
-            var nameparts = values[3].split('--');
-            var parts = nameparts.length-1;
-            var lastname = nameparts[parts];
-            globalDepth = parts;
-            return {
-                    'class': values[0],
-                    'start': +values[1],
-                    'end'  : next ? next.start - 1 : +values[2],
-                    'count': next ? (next.start - 1) - values[1] : values[2] - values[1],
-                    'name' : values[3],
-                    'id'   : values[4],
-                    'depth' : parts,
-                    'lastname' : nameparts[parts]
-            };
-    };
+    // var processChild = function(childString, next) {
+    //         var values = childString.split('%%');
+    //         var nameparts = values[3].split('--');
+    //         var parts = nameparts.length-1;
+    //         var lastname = nameparts[parts];
+    //         globalDepth = parts;
+    //         return {
+    //                 'class': values[0],
+    //                 'start': +values[1],
+    //                 'end'  : next ? next.start - 1 : +values[2],
+    //                 'count': next ? (next.start - 1) - values[1] : values[2] - values[1],
+    //                 'name' : values[3],
+    //                 'id'   : values[4],
+    //                 'depth' : parts,
+    //                 'lastname' : nameparts[parts]
+    //         };
+    // };
 
     var getID = function(d) {
             var id = d.lastname.toLowerCase();
@@ -79,131 +77,129 @@ lc.subjectgraph = function() {
                                 .replace(/-+/g, '-'); // collapse dashes
     };
 
-    self.searchCompleted = function(response) {
-            var processedChildren = [],
-                    total = 0;
+    // self.searchCompleted = function(response) {
+    //         var processedChildren = [],
+    //                 total = 0;
 
-            // parse through all child classes
-            for (var j = 0; j < response.docs.length; j++) {
-                var parent = response.docs[j];
-                var child_classes = parent.child_classes;
-                for (var i = 0; i < child_classes.length; i++) {
-                    var next = self.initialized || i+1 == child_classes.length ? null : processChild(child_classes[i+1]);
-                    var child = processChild(child_classes[i], next);
-                    total += child.count;
-                    processedChildren.push(child);
-                }
-            }
+    //         // parse through all child classes
+    //         for (var j = 0; j < response.docs.length; j++) {
+    //             var parent = response.docs[j];
+    //             var child_classes = parent.child_classes;
+    //             for (var i = 0; i < child_classes.length; i++) {
+    //                 var next = self.initialized || i+1 == child_classes.length ? null : processChild(child_classes[i+1]);
+    //                 var child = processChild(child_classes[i], next);
+    //                 total += child.count;
+    //                 processedChildren.push(child);
+    //             }
+    //         }
 
-            if (!self.initialized) {
-                    self.rootChildren = processedChildren;
-                    self.rootTotal = total;
-                    self.update(context, processedChildren, total);
-                    self.initialized = true;
-            } else {
-                    self.currentChildren = processedChildren;
-                    self.currentTotal = total;
-                    self.update(sideBar, processedChildren, total);
-                    lc.graph.updateLabels(globalDepth);
-            }
+    //         if (!self.initialized) {
+    //                 self.rootChildren = processedChildren;
+    //                 self.rootTotal = total;
+    //                 self.update(context, processedChildren, total);
+    //                 self.initialized = true;
+    //         } else {
+    //                 self.currentChildren = processedChildren;
+    //                 self.currentTotal = total;
+    //                 self.update(sideBar, processedChildren, total);
+    //                 lc.graph.updateLabels(globalDepth);
+    //         }
 
-            self.selected();
-    };
+    //         self.selected();
+    // };
 
-    self.update = function(parent, data, total) {
-        var child = false;
-        if (parent.node().id == "nav"){
-            d3.select("#graph-wrapper").classed("child",true);
-            child = true;
-        }
+    // self.update = function(parent, data, total) {
+    //     var child = false;
+    //     if (parent.node().id == "nav"){
+    //         d3.select("#graph-wrapper").classed("child",true);
+    //         child = true;
+    //     }
 
-        var groups = parent.selectAll(".schema")
-            .data(data);
+    //     var groups = parent.selectAll(".schema")
+    //         .data(data);
 
-       var texts = d3.select("#graph-labels").selectAll("text").data(data);
-       texts.enter().append("text");
-       texts.exit().remove();
+    //    var texts = d3.select("#graph-labels").selectAll("text").data(data);
+    //    texts.enter().append("text");
+    //    texts.exit().remove();
       
-        var entering = groups.enter()
-            .append("g")
-            .attr("class", "schema");
+    //     var entering = groups.enter()
+    //         .append("g")
+    //         .attr("class", "schema");
 
-        var rectangles = entering.append("rect");
+    //     var rectangles = entering.append("rect");
 
-        var cy = 0;
+    //     var cy = 0;
 
-        groups.attr("id", function(d) { return getID(d); })
-            .attr("transform",function(d){
-                d.height = (d.count / total) * height;
-                d.cy = cy;
-                cy += d.height;
+    //     groups.attr("id", function(d) { return getID(d); })
+    //         .attr("transform",function(d){
+    //             d.height = (d.count / total) * height;
+    //             d.cy = cy;
+    //             cy += d.height;
 
-                return "translate(0,"+d.cy+")";
-            });
+    //             return "translate(0,"+d.cy+")";
+    //         });
 
-        groups.select("rect").attr("width",30)
-            .attr("fill", function(d) {
-                return schema.colorClass(d.class);
-            }).attr("height", function(d) {
-                return d.height;
-            });
+    //     groups.select("rect").attr("width",30)
+    //         .attr("fill", function(d) {
+    //             return schema.colorClass(d.class);
+    //         }).attr("height", function(d) {
+    //             return d.height;
+    //         });
 
-        var yOffset = 0,
-            ty = 0;
+    //     var yOffset = 0,
+    //         ty = 0;
 
-        texts.attr("x", child ? 30 : 0)
-            .attr("y",function(d){
-                d.height = (d.count / total) * height;
-                d.cy = ty;
-                ty += d.height;
-                return d.cy + 10;
-            }).text(function(d){
-                if (d.cy - yOffset < 15) return;
-                yOffset = d.cy;
-                return d.key;
-            }).attr("class",function(d){
-                return classNameify(d.key);
-            });
+    //     texts.attr("x", child ? 30 : 0)
+    //         .attr("y",function(d){
+    //             d.height = (d.count / total) * height;
+    //             d.cy = ty;
+    //             ty += d.height;
+    //             return d.cy + 10;
+    //         }).text(function(d){
+    //             if (d.cy - yOffset < 15) return;
+    //             yOffset = d.cy;
+    //             return d.key;
+    //         }).attr("class",function(d){
+    //             return classNameify(d.key);
+    //         });
 
-            // .attr("fill", function(d) {
-            //     return schema.colorClass(d.class);
-            // });
+    //         // .attr("fill", function(d) {
+    //         //     return schema.colorClass(d.class);
+    //         // });
 
-        groups.on("mouseover", function(d) {
-        // console.log(d,e,i, d3.event)
-         // self.mouseover(d);
-            self.rollover(d3.event.offsetY);
-        })
-        groups.on("mouseout", function(d) {
-         // self.mouseout(d);
-            self.rollout();
-        });
+    //     groups.on("mouseover", function(d) {
+    //     // console.log(d,e,i, d3.event)
+    //      // self.mouseover(d);
+    //         self.rollover(d3.event.offsetY);
+    //     })
+    //     groups.on("mouseout", function(d) {
+    //      // self.mouseout(d);
+    //         self.rollout();
+    //     });
 
-        // groups.select("rect")
-        //     .transition()
-        //     .attr("width", 30);
+    //     // groups.select("rect")
+    //     //     .transition()
+    //     //     .attr("width", 30);
 
-        groups.on("click", function(d) {
-            self.getChildrenID(d.id);
-            self.updateBounds(d);
+    //     groups.on("click", function(d) {
+    //         self.getChildrenID(d.id);
+    //         self.updateBounds(d);
 
-            crumbize(d);
+    //         crumbize(d);
 
-            // d3.selectAll(".schema").classed("selected",false);
-            // d3.select(this).classed("selected",true);
-            // this.parentNode.appendChild(this);
-        });
+    //         // d3.selectAll(".schema").classed("selected",false);
+    //         // d3.select(this).classed("selected",true);
+    //         // this.parentNode.appendChild(this);
+    //     });
 
-        lc.graph.updateLabels(globalDepth);
-        d3.select("#rollover")
-            .attr("width", 0)
+    //     lc.graph.updateLabels(globalDepth);
+    //     d3.select("#rollover")
+    //         .attr("width", 0)
 
-        // remove divs when they leave
-        groups.exit().remove();
+    //     // remove divs when they leave
+    //     groups.exit().remove();
 
-    };
-
-    self.finishedNested = false;
+    // };
 
     self.updateRelative = function(data, numBooks, depth) {
 
@@ -212,13 +208,9 @@ lc.subjectgraph = function() {
         var nested = d3.nest()
             .key(function(d){
                 if (!d.loc_call_num_subject) return;
-                var k = d.loc_call_num_subject.split(" -- ")[depth];
+                var k = d.loc_call_num_subject[0].split(" -- ")[depth];
                 return k;
             }).rollup(function(d){
-                d.sort(function(a,b){
-                    if (a.loc_call_num_sort_order && b.loc_call_num_sort_order)
-                    return a.loc_call_num_sort_order[0] - b.loc_call_num_sort_order[0];
-                })
 
                 // for (var i = 0; i < d.length; i++) {
                 for (var i = d.length-1; i > -1; i--) {
@@ -294,8 +286,6 @@ lc.subjectgraph = function() {
             return d.className;
         })
         groups.select("rect").attr("height",function(d){
-            // if (d.key == "undefined")
-            //     d.height = (data.length-numBooks)/data.length * height;
             d.height = (d.values.length/numBooks) * height;
             return d.height;
         }).attr("y",function(d){
@@ -344,15 +334,23 @@ lc.subjectgraph = function() {
         }
 
         // if no more data to drill down
-        if (nested.length == 1 && !self.finishedNested) {
+        if (nested.length == 1) {
+            var needsNesting = false;
+            nested[0].values.books.forEach(function(e,i){
+                var l = e.loc_call_num_subject[0].split(" -- ").length;
+                if (l > depth) {
+                    needsNesting = true;
+                    return;
+                }
+            })
+            if (!needsNesting) return;
+
             $(".item.all").addClass("dead");
             var d = nested[0];
             d.values.class = d.key;
             self.crumbize(d.values, true);
+            
             self.updateRelative(d.values.books, d.values.length, d.values.depth+1);
-            return;
-        } else {
-            self.finishedNested = true;
         }
     };
 
@@ -364,8 +362,6 @@ lc.subjectgraph = function() {
         var l = $("<span>").attr("class","link")
                 .html("<span class='tick'>></span><span class='item'>"+d.class+"</span>")
                 .click(function(){
-                    // self.getChildrenID(d.id);
-                    // self.updateBounds(d);
                     self.updateRelative(d.books, d.length, d.depth+1);
                     lc.graph.appendCircles(d.books);
                     breadcrumb.find(".link").each(function(i,e){
@@ -462,9 +458,6 @@ lc.subjectgraph = function() {
 
     // dive into the subject classes based on a click on the graph
     self.graphClick = function(cy) {
-        // var currentClass = self.getChildY(cy);
-        // self.getChildrenID(currentClass.class.id);
-        // self.crumbize(currentClass.class);
         var d;
         self.relativeClasses.forEach(function(e,i){
             if (cy > e.y) {
@@ -542,7 +535,7 @@ lc.subjectgraph = function() {
             // self.currentChildren = null;
             // self.currentTotal = null;
             // self.initialized = false;
-            globalDepth = 0;
+            // globalDepth = 0;
             // self.update(sideBar, []);
             breadcrumb.find(".link").remove()
             breadcrumb.css("visibility","hidden");

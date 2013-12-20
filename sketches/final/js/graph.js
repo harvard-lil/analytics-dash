@@ -235,13 +235,25 @@ lc.graph = function() {
 
 
     function sortBooks(sortBy, dir) {
-    	bookData.sort(function(a,b){
-  			if (a[sortBy] < b[sortBy])
-  				return -1;
-  			if ((a[sortBy] > b[sortBy]))
-  				return 1;
-  			return 0;
-    	});
+    	if (sortBy == "loc_call_num_sort_order") {
+    		bookData.sort(function(a,b){
+	    		if (!a.loc_call_num_sort_order || !b.loc_call_num_sort_order) return;
+	  			if (a.loc_call_num_sort_order[0] < b.loc_call_num_sort_order[0])
+	  				return -1;
+	  			if (a.loc_call_num_sort_order[0] > b.loc_call_num_sort_order[0])
+	  				return 1;
+	  			return 0;
+	    	});
+    	}
+	    else
+	    	bookData.sort(function(a,b){
+	  			if (a[sortBy] < b[sortBy])
+	  				return -1;
+	  			if (a[sortBy] > b[sortBy])
+	  				return 1;
+	  			return 0;
+	    	});
+	    	
     	var index = (bookData.indexOf(currentBook) + (dir ? 1 : -1) + bookData.length)%bookData.length;
     	showInfo(bookData[index],true);
     	circleGroup.selectAll("circle").classed("selected",false);
@@ -276,7 +288,7 @@ lc.graph = function() {
         }
 
 		if (data.call_num)
-        	info.select(".lc .field").html(data.call_num[0].split("%%").join("<br>"));
+        	info.select(".lc .field").html(data.call_num.join("<br>"));
         else
        		info.select(".lc .field").html("Not Available");
 
@@ -288,7 +300,9 @@ lc.graph = function() {
 			info.select(".language .field").text(data.language);
 
 		if (data.loc_call_num_subject) {
-			info.select(".loc_call_num_subject .field").text(data.loc_call_num_subject)
+			info.select(".loc_call_num_subject .field")
+				.html("<li>" + data.loc_call_num_subject.join("</li><li>") + "</li>");
+			info.selectAll(".loc_call_num_subject li")
 				.on("click",function(){
 	            	lc.search.runSearch({
 						"loc_call_num_subject": $(this).text()
@@ -345,10 +359,10 @@ lc.graph = function() {
 		Rollover listener
     */
     $("#graph").mousemove(function(e) {
-    	if (y_axis_type=='call_number_sort_order_y')
+    	// if (y_axis_type=='call_number_sort_order_y')
     		lc.subjectgraph.rollover(e.offsetY);
     }).mouseout(function(){
-    	if (y_axis_type=='call_number_sort_order_y')
+    	// if (y_axis_type=='call_number_sort_order_y')
     		lc.subjectgraph.rollout();
     }).click(function(e) {
     	if (e.target.nodeName != "circle")
@@ -368,23 +382,23 @@ lc.graph = function() {
 		lc.carrel.exportAll(bookData);
 	})
 
-	var sortTitles = {
-		"call_number_sort_order_y" : "subject",
-		"grads" : "Graduate Students",
-		"undergrads" : "Undergraduate Students",
-		"faculty" : "faculty",
-		"popularity_y" : "overall popularity"
-	}
+	// var sortTitles = {
+	// 	"call_number_sort_order_y" : "subject",
+	// 	"grads" : "Graduate Students",
+	// 	"undergrads" : "Undergraduate Students",
+	// 	"faculty" : "faculty",
+	// 	"popularity_y" : "overall popularity"
+	// }
 
-	function y_axis_button(e){
-		y_axis_type = $(e.target).attr("name");
+	// function y_axis_button(e){
+	// 	y_axis_type = $(e.target).attr("name");
 
-		$(".y_toggle li").removeClass("selected");
-		$(this).addClass("selected");
+	// 	$(".y_toggle li").removeClass("selected");
+	// 	$(this).addClass("selected");
 
-		set_y_axis();
-		axes.select("#y_axis").text(sortTitles[y_axis_type]);
-	}
+	// 	set_y_axis();
+	// 	axes.select("#y_axis").text(sortTitles[y_axis_type]);
+	// }
 
 	function radius_button(e){
 		radius_type = $(e.target).attr("name");
@@ -400,50 +414,50 @@ lc.graph = function() {
 		return xscale(d.pub_date_numeric || 0);
 	}
 
-	lc.subjectgraph.on("selected", function() {
-		if (y_axis_type == 'call_number_sort_order_y')
-			set_y_axis();
-	});
+	// lc.subjectgraph.on("selected", function() {
+	// 	if (y_axis_type == 'call_number_sort_order_y')
+	// 		set_y_axis();
+	// });
 
-	function set_y_axis(){
-		var circles = circleGroup.selectAll("circle");
-		circles
-		.transition()
-		// .ease("linear")
-		.duration(500)
-		.delay(function(d,i){
-			return i*2;
-		})
-		.attr("cy", calculateY);
-		updateAxes();
-	}
+	// function set_y_axis(){
+	// 	var circles = circleGroup.selectAll("circle");
+	// 	circles
+	// 	.transition()
+	// 	// .ease("linear")
+	// 	.duration(500)
+	// 	.delay(function(d,i){
+	// 		return i*2;
+	// 	})
+	// 	.attr("cy", calculateY);
+	// 	updateAxes();
+	// }
 
 	function calculateY(d) {
 		return (d / numBooks) * (gHeight*.99) + (gHeight*.005);
-		switch(y_axis_type) {
-			case 'grads':
-				yscale.domain([0,300]);
-				return  yscale(d.score_checkouts_grad || 0);
-			case 'undergrads':
-				yscale.domain([0,300]);
-				return  yscale(d.score_checkouts_undergrad || 0);
-			case 'faculty':
-				yscale.domain([0,300]);
-				return  yscale(d.score_checkouts_fac || 0);
-			case 'popularity_y':
-				yscale.domain([0,100]);
-	            return yscale(d.shelfrank || 0);
-			case 'call_number_sort_order_y':
-				if (d.loc_call_num_sort_order){
-		            yscale.domain([8000000,0]);
-		            // return yscale(d.loc_call_num_sort_order[0])
-		            // return lc.subjectgraph.calculateY(d.loc_call_num_sort_order[0]);
-				}
-				else {
-					return yscale(0);
-				}
-				break;
-		}
+		// switch(y_axis_type) {
+		// 	case 'grads':
+		// 		yscale.domain([0,300]);
+		// 		return  yscale(d.score_checkouts_grad || 0);
+		// 	case 'undergrads':
+		// 		yscale.domain([0,300]);
+		// 		return  yscale(d.score_checkouts_undergrad || 0);
+		// 	case 'faculty':
+		// 		yscale.domain([0,300]);
+		// 		return  yscale(d.score_checkouts_fac || 0);
+		// 	case 'popularity_y':
+		// 		yscale.domain([0,100]);
+	 //            return yscale(d.shelfrank || 0);
+		// 	case 'call_number_sort_order_y':
+		// 		if (d.loc_call_num_sort_order){
+		//             yscale.domain([8000000,0]);
+		//             // return yscale(d.loc_call_num_sort_order[0])
+		//             // return lc.subjectgraph.calculateY(d.loc_call_num_sort_order[0]);
+		// 		}
+		// 		else {
+		// 			return yscale(0);
+		// 		}
+		// 		break;
+		// }
 	}
 
 	function set_radius(){
