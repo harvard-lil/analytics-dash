@@ -74,21 +74,12 @@ lc.search = function() {
         if (subjectString) newTerms["loc_call_num_subject_keyword"] = subjectString;
         if (yearRange) newTerms["year"] = yearRange;
 
-        /*
-            if new search is same as old, increment
-            search history:
-                do we store history?
-                is it just the original search?
-                is it a bunch of queries?
-                dedupe
-        */
-
         if (!subjectString && !yearRange) {
-            start += 250;
             if (start > 750) return;
-            else if (start == 750) {
-                $(this).addClass("inactive");
-            }
+
+            start += 250;
+            if (start == 750) $(".more").addClass("inactive");
+
             defaultParams = "&start="+start+defaultParams;
             self.runSearch(newTerms, true);
             return;
@@ -203,7 +194,7 @@ lc.search = function() {
     };
 
     self.buildSearchExplanation = function(docs, terms) {
-        var prefix = 'The <b>' + (oldData.length) + ' most popular</b> items ';
+        var prefix = 'The <b>' + (oldData.length) + ' most popular</b> items';
         if (terms['collection']) {
             var catalog = terms['collection'].split('_').join(' ');
             prefix += ' in the ' + catalog;
@@ -216,7 +207,7 @@ lc.search = function() {
                 case 'year':
                     var range = terms[term];
                     if (range.length == 2) {
-                        explanation.push('published <b>between ' + range[0] + ' and ' + range[1] + '</b>');
+                        explanation.push(' published <b>between ' + range[0] + ' and ' + range[1] + '</b>');
                     }
                     break;
 
@@ -224,7 +215,7 @@ lc.search = function() {
                 case 'range':
                     var range = terms[term];
                     if (range.length == 2) {
-                        explanation.push('a Library of Congress Call Number <b>between ' + range[0] + ' and ' + range[1] + '</b>');
+                        explanation.push(' a Library of Congress Call Number <b>between ' + range[0] + ' and ' + range[1] + '</b>');
                     }
                     break;
 
@@ -239,40 +230,39 @@ lc.search = function() {
                     } else {
                         format = format.split(' ').pop().split('/').pop().toLowerCase() + 's';
                     }
-                    prefix = prefix.replace('</b> items ', ' ' + format + '</b> ');
+                    prefix = prefix.replace('items', ' <b>' + format + '</b>');
                     break;
 
                 case 'holding_libs':
                     var lib = terms[term].split(" - ")[1];
-                    explanation.push('found in the ' + lib + ' collection');
+                    explanation.push(' found in the ' + lib + ' collection');
                     break;
 
                 // doing fuzzy keyword search on these
                 case 'title':
-                    explanation.push('whose title contains ' + terms[term]);
+                    explanation.push(' whose title contains ' + terms[term]);
                     break;
                 case 'creator':
-                    explanation.push('created by <b>' + terms[term] + '</b>');
+                    explanation.push(' created by <b>' + terms[term] + '</b>');
                     break;
                 case 'language':
-                    explanation.push('in <b>' + terms[term] + '</b>');
+                    explanation.push(' in <b>' + terms[term] + '</b>');
                     break;
                 case 'loc_call_num_subject_keyword':
-                    explanation.push('with a call number subject of <b>' + terms[term] + '</b>');
+                    explanation.push(' with a call number subject of <b>' + terms[term] + '</b>');
                     break;
                 case 'lcsh_keyword':
                 case 'lcsh':
                 case 'subject':
-                    explanation.push('about <b>' + terms[term] + '</b>');
+                    explanation.push(' about <b>' + terms[term] + '</b>');
                     break;
 
                 default:
-                    explanation.push('with ' + term + ' matching ' + terms[term]);
+                    explanation.push(' with ' + term + ' matching ' + terms[term]);
                     break;
             }
         }
-
-        return prefix + explanation.join(', ') + '.';
+            return prefix + explanation.join(',') + '.';
     };
 
     self.getSearchTerm = function() {
@@ -321,6 +311,7 @@ lc.search = function() {
 
         var hash = [];
         for (param in parameters) {
+            console.log(parameters)
             if (parameters[param].length)
                 hash.push(param+"="+parameters[param]);
         }
@@ -376,6 +367,7 @@ lc.search = function() {
     // initial search request
     window.location.hash.substr(1,window.location.hash.length)
         .split("&").forEach(function(d,i){
+            if (!d.length) return;
             var terms = d.split("=");
             if (terms[0] == "year" || terms[0] == "range") {
                 var a = terms[1].split(",");

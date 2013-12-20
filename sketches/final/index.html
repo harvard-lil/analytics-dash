@@ -11,18 +11,18 @@
         <div id="popup">
             <h2>Harvard&#146;s library system holds over 12 million volumes.</h2>
     		<p> The Harvard Library Analytics Toolkit is a new, visual way to explore the collection.</p>
-    		<p><b>1.</b> Click on the magnifying glass (top left) to <b>request library materials</b>. You can see 250 items at a time. We&#146;ve pre-loaded the search with keyword &#147;Boston&#148; to get you started.</p>
+    		<p><b>1.</b> Start typing into the searchbar (top left) to <b>request library materials</b>. You can see 250 items at a time.</p>
             <p><b>2.</b> <b>Each dot represents a holding</b>. Rollover the dot for the title. Click on it to get <b>more information</b>. </p>
-            <p><b>3.</b> You can <b>sort</b> and <b>scale</b> the dots using the display controls (left). Sorting in different ways will help you to see patterns in the holdings.</p>
+            <p><b>3.</b> You can <b>sort</b> and <b>scale</b> the dots using the display controls on the top right.</p>
             <p><b>4.</b> To remember an item, <b>place it in your carrel</b> by hitting the button on the lower right. You can also <b>export</b> and <b>save</b> your carrel&#146;s contents for later use. </p>
             <p><b>5.</b> Lastly, you can <b>zoom</b> into the range by clicking on the colorful subject bar on the left or by dragging the time sliders below. Have fun exploring!</p>
         </div>
         <div id="more-instructions">
             <h2>Okay, you want more information?</h2>
-    		<p>The <b>DISPLAY CONTROL</b> on your left lets you sort the items by subject, or by using their circulation data. Popular books rise higher than the others. You can also scale each item by its page count, popularity, or you can let each dot be the same size. If you wish you can also just see the items in a sortable list.</p>
-    		<p>The <b>TIME CHART</b> below shows how many items in the collection meet your criteria by year of publication. This lets you get a sense of the overall size of the holdings in this subject. If you roll over a bar, you'll get an exact count of the holdings by years. The bar chart doubles as a slider that controls the zoom level for the main graph.</p>
-    		<p>The colorful <b>SUBJECT BAR</b> allows you to dive into the complex taxonomy of the Library of Congress call number system. Each subject is subdivided into more subjects. The length of the segment corresponds to the relative size of this subject&#146;s holdings in Harvard&#146;s library. You can see that the library has far more books on Social Science than Medicine, for instance. This feature will be dramatically improved in the next few weeks. </p>
-            <p>The <b>INSPECTOR </b>on the right holds specific data about each item. You can also use the controls on the top to step through all of the items that are currently displayed. You can move alphabetically by title, author, or call #; or chronologically by date.</p>
+    		<p>The <b>DISPLAY CONTROL</b> on the top left lets you scale each item by its page count, popularity, or you can let each dot be the same size. If you want more information about your current collection, you  can also view the items in a sortable list.</p>
+    		<p>The <b>TIME CHART</b> below shows how many items in the collection meet your criteria by year of publication. This lets you get a sense of the overall size of the holdings in this subject. The bar chart doubles as a slider that controls the zoom level for the main graph.</p>
+    		<p>The colorful <b>SUBJECT BAR</b> allows you to dive into the complex taxonomy of the Library of Congress call number system. Each subject is subdivided into more subjects. The length of the segment corresponds to the number of items returned in each subject of Harvard&#146;s library.</p>
+            <p>The <b>INSPECTOR </b>on the right holds specific data about each item. If you'd like to save the item for later, you can add it to your Carrel. You can also start a more specific search by clicking on any author name, call number subject, or subject keyword.</p>
         </div>
 
         <div id="title-wrapper">
@@ -36,7 +36,6 @@
             <div id="search-form">
                 <div class="top-control">
                     <input id="search-lcsh_keyword" type="text" value=""></input>
-                    <!-- <div class="clear"></div> -->
                 </div>
                 <div class="search top-control">Submit</div>
                 <div class="search-history">
@@ -467,17 +466,6 @@
                         <input id="search-year_1" type="text" value="" style="width:40px;"></input>
                         <div class="clear"></div>
                     </div>
-                    <!-- <div class="form-row">
-                        <label>Call Number Range</label>
-                        <input id="search-range_0" type="text" value="" style="width:100px;"></input>
-                        <span style="float:left; width:20px; text-align:center;"> - </span>
-                        <input id="search-range_1" type="text" value="" style="width:100px;"></input>
-                    </div> 
-                    <div class="form-row">
-                        <label>Call Number Subject</label>
-                        <input id="search-lcsh" type="text" value="" style="width:213px;"></input>
-                        <div class="clear"></div>
-                    </div>-->
                     <div class="form-row">
                         <label>Format</label>
                         <select id="search-format">
@@ -555,21 +543,6 @@
                 </ul>
             </div>
             <div id="info-wrapper">
-                <!-- <div class="info-title">
-                    <div class="book-sort">
-                        <div class="tri"></div>
-                        <div class="note">prev</div>
-                    </div>
-                    <div class="sort-heading">
-                        <h3><span class="index">0</span> of <span class="total">0</span></h3>
-                        <p>Sorted by <span class="sorter">title</span></p>
-                    </div>
-                    <div class="book-sort next">
-                        <div class="tri"></div>
-                        <div class="note">next</div>
-                    </div>
-                </div> -->
-                <!-- <div class="notch"></div> -->
                 <div class="info-bar"></div>
                 <div id="info">
                     <div class="title" name="title">
@@ -626,32 +599,30 @@
     <script type="text/javascript" src="js/search.js"></script>
     <script type="text/javascript" src="js/tooltip.js"></script>
     <script type="text/javascript">
-        lc.tooltip.initialize();
 
-        lc.subjectgraph
-            .on("mouseover", function(d) {
-                lc.tooltip.show(d);
-            })
-            .on("mouseout", function() {
-                lc.tooltip.hide();
-            });
+        function hidePopup(id) {
+            $("#"+id).fadeOut();
+            $("#shield").fadeOut();
+        }
+        function showPopup(id) {
+            console.log(id)
+            $("#"+id).fadeIn();
+            $("#shield").fadeIn();   
+        }
 
 		$("#popup").click(function(){
-            $(this).fadeOut();
-            $("#shield").fadeOut();
+            hidePopup("popup");
+        });
+        $("#more-instructions").click(function(){
+            hidePopup("more-instructions");
         });
 
       	$("#about").click(function(){
-      	    $("#popup").slideToggle();
+      	    showPopup("popup");
         });
-
         $("#instructions").click(function(){
-            $("#more-instructions").slideToggle();
+            showPopup("more-instructions");
         });
         
-        $("#more-instructions").click(function(){
-            $(this).fadeOut();
-            $("#shield").fadeOut();
-        });
     </script>
 </html>
