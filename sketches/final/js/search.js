@@ -25,8 +25,15 @@ lc.search = function() {
 
     $("#search-form").keypress(function(e){
         if ( event.which == 13 ) {
-            self.submitSearch();
+            self.submitSearch("search-form");
             $(this).find("input").blur();
+        }
+    });
+    $("#welcome").keypress(function(e){
+        if ( event.which == 13 ) {
+            self.submitSearch("welcome");
+            $("#welcome").fadeOut();
+            $("#shield").fadeOut();
         }
     });
 
@@ -54,7 +61,8 @@ lc.search = function() {
     var graphTitle = $("#searchTerm");
 
     $(".search").click(function() {
-        self.submitSearch(); 
+        var id = $(this).parent().attr("id");
+        self.submitSearch(id);
     });
 
     var start = 0;
@@ -88,7 +96,7 @@ lc.search = function() {
         self.runSearch(newTerms, false);
     }
 
-    self.submitSearch = function() {
+    self.submitSearch = function(id) {
         searchTerms = {};
         searchTerms["year"] = [],
         searchTerms["range"] = [];
@@ -97,7 +105,7 @@ lc.search = function() {
         defaultParams = cachedParams;
 
         // grabbing all fields entered in in the form
-        $("#search-form input").each(function() {
+        $("#"+id+" input").each(function() {
             var t = $(this);
             if (t.val()) {
                 // grabbing #search-year -> 'year'
@@ -114,12 +122,11 @@ lc.search = function() {
             }
         });
 
-        $("#search-form select").each(function() {
+        $("#"+id+" select").each(function() {
             var t = $(this);
             if (t.find(":selected") && t.prop('selectedIndex') != 0) {
                 var key = t.attr("id").split("-")[1];
                 searchTerms[key] = t.find(":selected").text();
-                // if (!t.parent().hasClass("locked")) t.prop('selectedIndex',0);;
             }
         });
 
