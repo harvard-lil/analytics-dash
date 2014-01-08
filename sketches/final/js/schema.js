@@ -239,87 +239,87 @@ var schema = function() {
 
 var lcObjectArray = {
 	"A":{
-		color: "#FF393E",
+		color: "#6C6C79",
 		subject: "General Works"
 	},
 	"B":{
-		color: "#FF0000",
+		color: "#CC0000",
 		subject: "Philosophy, Psychology, Religion"
 	},
 	"C":{
-		color: "#FF4C00",
+		color: "#CC3333",
 		subject: "Auxillary Sciences of History"
 	},
 	"D":{
-		color: "#FF7700",
+		color: "#FF0048",
 		subject: "History: General & Outside the Americas"
 	},
 	"E":{
-		color: "#FF9F00",
+		color: "#FF8659",
 		subject: "History: United States"
 	},
 	"F":{
-		color: "#FFC500",
+		color: "#FF991A",
 		subject:  "History: United States Local & America"
 	},
 	"G":{
-		color: "#F9F700",
+		color: "#99CC00",
 		subject:  "Geography, Anthropology, Recreation"
 	},
 	"H":{
-		color: "#BBFF00",
+		color: "#00B55E",
 		subject:  "Social Sciences"
 	},
 	"J":{
-		color: "#62FF00",
+		color: "#3366FF",
 		subject:  "Political Science"
 	},
 	"K":{
-		color: "#00FF56",
+		color: "#9900CC",
 		subject:  "Law"
 	},
 	"L":{
-		color: "#00FF73",
+		color: "#8DCEFC",
 		subject:  "Education"
 	},
 	"M":{
-		color: "#00FF8F",
+		color: "#FF66CC",
 		subject:  "Music"
 	},
 	"N":{
-		color: "#00E6C9",
+		color: "#993300",
 		subject:  "Fine Arts"
 	},
 	"P":{
-		color: "#00FCFD",
+		color: "#DDDDDD",
 		subject:  "Language and Literature"
 	},
 	"Q":{
-		color: "#00AEFF",
+		color: "#FFDC00",
 		subject:  "Science"
 	},
 	"R":{
-		color: "#0060FF",
+		color: "#269900",
 		subject:  "Medicine"
 	},
 	"S":{
-		color: "#0000FF",
-		subject:  "Science"
-	},
-	"T":{
-		color: "#6800FF",
+		color: "#FFFF66",
 		subject:  "Agriculture"
 	},
+	"T":{
+		color: "#216675",
+		subject:  "Technology"
+	},
 	"U":{
-		color: "#9100FF",
+		color: "#FFDC00",
 		subject:  "Military Science"
 	},
 	"V":{
-		color: "#C900FF",
+		color: "#000563",
 		subject:  "Naval Science"
 	},
 	"Z":{
-		color: "#FF12C1",
+		color: "#CC0000",
 		subject:  "Library Science & Information Resources"
 	}
 };

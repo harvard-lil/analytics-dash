@@ -478,11 +478,17 @@ lc.graph = function() {
 			case 'faculty':
 				return  rscale(d.score_checkouts_fac || 0);
 			case 'shelfrank':
-				if (d.shelfrank)
-					return Math.max(3,d.shelfrank / 5);
-				else
+				if (d.shelfrank){
+					if (d.shelfrank<2){
+						return 2;
+						}
+					else {
+						return Math.max(6,d.shelfrank / 4);
+						}
+					}
+				else{
 					return 3;
-				break;
+					}	
 			case 'same':
 				return 6;
 				break;

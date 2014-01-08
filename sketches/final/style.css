@@ -1,5 +1,5 @@
 body, html {
-    font-family: futura, brown, neuzeit, akkurat, univers, helvetica, arial, sans-serif;
+    font-family: akkurat, futura, brown, neuzeit, akkurat, univers, helvetica, arial, sans-serif;
     margin: 0;
     min-width: 1050px;
 }
@@ -266,6 +266,7 @@ body, html {
 #graph-wrapper {
     position: relative;
     width: 100%;
+    background: black;
 }
 
 #carrel {
@@ -333,14 +334,14 @@ body, html {
 #labels text,
 #graph-labels text {
     font-size: 12px;
-    fill: #808080;
-    font-family: Helvetica, Arial, sans-serif;
+    fill: #000;
+    font-family: Akkurat, Helvetica, Arial, sans-serif;
 }
 #labels .b{
     font-weight: bold;
 }
 #rollover rect {
-    fill: #f7f7f7;
+    fill: #bbb;
 }
 #rollover text {
     fill: black;
@@ -449,7 +450,7 @@ body, html {
     -webkit-transform: rotate(-90deg);
     -moz-transform: rotate(-90deg);
     -ms-transform: rotate(-90deg);
-    left: -80px;
+    left: -40px;
 }
 #slider-range {
     border: 1px solid #808080;
@@ -997,8 +998,8 @@ circle.selected {
     max-width: 150px;
     height: auto;
     position: absolute;
-    margin-top: 20px;
-    margin-left: 20px;
+    margin-top: 40px;
+    margin-left: 40px;
     z-index: 100;
     padding: 10px;
     font-family: Helvetica, Arial, sans-serif;
