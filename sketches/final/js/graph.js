@@ -262,7 +262,7 @@ lc.graph = function() {
 
     self.showInfo = function(data, inBox) {
     	currentBook = data;
-
+		self.clearInfo();
     	// $(".sort-heading").find(".index").text(bookData.indexOf(currentBook) + 1);
 
 		if (data.id_inst)
@@ -326,11 +326,26 @@ lc.graph = function() {
   		} else {
   			addToCarrel.text("Remove This Item From The Carrel").on("click",function(){
 	            lc.carrel.removeFromCarrel(data);
-	            info.select("#add-to-carrel").text("Add This Item To The Carrel").on("click",function(){
+	            info.select("#add-to-carrel").text("Add Me Item To The Carrel").on("click",function(){
 		            lc.carrel.sendToCarrel(data);
 		        });
 	        });
   		}
+    };
+
+    self.clearInfo = function() {
+           info.select(".creator .field").html("Not Available");
+           info.select(".title .field").html("Not Available");
+           info.select(".creator .field").html("Not Available");
+           info.selectAll(".creator li").html("Not Available");
+           info.select(".lc .field").html("Not Available");
+	       info.select(".pub_date_numeric .field").text("Not Available");
+           info.select(".pages_numeric .field").text("Not Available");
+		   info.select(".language .field").text("Not Available");
+		   info.select(".loc_call_num_subject .field").html("Not Available");
+		   info.selectAll(".loc_call_num_subject li").html("Not Available");
+           info.select(".lcsh .field").html("Not Available");
+           info.selectAll(".lcsh li").html("Not Available");
     };
 
     // $("#stack-circles").click(function(){
@@ -480,14 +495,14 @@ lc.graph = function() {
 			case 'shelfrank':
 				if (d.shelfrank){
 					if (d.shelfrank<2){
-						return 2;
+						return 4;
 						}
 					else {
-						return Math.max(6,d.shelfrank / 4);
+						return Math.max(6,d.shelfrank);
 						}
 					}
 				else{
-					return 3;
+					return 4;
 					}	
 			case 'same':
 				return 6;

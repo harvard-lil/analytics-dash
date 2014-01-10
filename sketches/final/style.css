@@ -1,5 +1,5 @@
 body, html {
-    font-family: akkurat, futura, brown, neuzeit, akkurat, univers, helvetica, arial, sans-serif;
+    font-family: georgia, futura, brown, neuzeit, akkurat, univers, helvetica, arial, sans-serif;
     margin: 0;
     min-width: 1050px;
 }
@@ -266,7 +266,6 @@ body, html {
 #graph-wrapper {
     position: relative;
     width: 100%;
-    background: black;
 }
 
 #carrel {
@@ -341,7 +340,7 @@ body, html {
     font-weight: bold;
 }
 #rollover rect {
-    fill: #bbb;
+    fill: #DDD;
 }
 #rollover text {
     fill: black;
@@ -377,10 +376,11 @@ body, html {
 .schema.selected rect {
     stroke: black;
 }
+skype
 #graph {
     position: absolute;
 	left: 10%;
-}
+	}
 #graph-subjects {
     height: 500px;
     width: 100%;
@@ -995,17 +995,24 @@ circle.selected {
 }
 
 #tooltip {
-    max-width: 150px;
+    max-width: 250px;
     height: auto;
     position: absolute;
-    margin-top: 40px;
-    margin-left: 40px;
+    margin-top: 180px;
+    margin-left: 180px;
     z-index: 100;
     padding: 10px;
     font-family: Helvetica, Arial, sans-serif;
-    font-size: 14px;
+    font-size: 10px;
+    line-height: 12px;
     color: white;
-    background-color: rgba(0, 0, 0, 0.8);
+    background-color: #000;
     text-transform: capitalize;
     display: none;
+}
+
+#tooltip h1{
+   font-family: "Baskerville Old Face", georgia;
+   font-size: 16px;
+   line-height: 16px;
 }
