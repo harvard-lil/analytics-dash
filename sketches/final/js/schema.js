@@ -291,7 +291,7 @@ var lcObjectArray = {
 		subject:  "Fine Arts"
 	},
 	"P":{
-		color: "#EEEEEE",
+		color: "#999",
 		subject:  "Language and Literature"
 	},
 	"Q":{

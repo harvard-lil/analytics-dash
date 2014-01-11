@@ -314,6 +314,15 @@ lc.graph = function() {
 				});
             });
 		}
+		info.select(".shelfrank .field").text(data.shelfrank ? data.shelfrank : "");
+		info.select(".score_downloads .field").text(data.score_downloads ? data.score_downloads : "");
+		info.select(".score_holding_libs .field").text(data.score_holding_libs ? data.score_holding_libs : "");
+		info.select(".score_recalls .field").text(data.score_recalls ? data.score_recalls : "");
+		info.select(".score_checkouts_undergrad .field").text(data.score_checkouts_undergrad ? data.score_checkouts_undergrad : "");
+		info.select(".score_checkouts_grad .field").text(data.score_checkouts_grad ? data.score_checkouts_grad : "");
+		info.select(".score_checkouts_fac .field").text(data.score_checkouts_fac ? data.score_checkouts_fac : "");
+		info.select(".score_total .field").text(data.score_total ? data.score_total : "");
+
 
 		// if (data.id_inst){
 		// 	linkouturl= "href=http://holliscatalog.harvard.edu/?itemid=|library/m/aleph|"+ data.id_inst;
@@ -478,7 +487,8 @@ lc.graph = function() {
 	}
 
 	function calculateRadius(d) {
-		rscale.domain([0,250]);
+		rscale.domain([0,500]);
+		rscale.range([1,50]);
 		switch(radius_type) {
 			// case 'pages':
    //  			if (d.pages_numeric)
@@ -487,6 +497,7 @@ lc.graph = function() {
 			// 		return 3;
 			// 	break;
 			case 'grads':
+				rscale.domain([0,500]);
 				return  rscale(d.score_checkouts_grad || 0);
 			case 'undergrads':
 				return  rscale(d.score_checkouts_undergrad || 0);
@@ -494,11 +505,12 @@ lc.graph = function() {
 				return  rscale(d.score_checkouts_fac || 0);
 			case 'shelfrank':
 				if (d.shelfrank){
+				rscale.domain([0,100]);
 					if (d.shelfrank<2){
 						return 4;
 						}
 					else {
-						return Math.max(6,d.shelfrank);
+						return Math.max(6,rscale(d.shelfrank));
 						}
 					}
 				else{

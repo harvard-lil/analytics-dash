@@ -21,9 +21,9 @@ lc.tooltip = function() {
 		 if (row.class) {
 		 	tooltip.html(row.lastname + ': ' + row.start+ ' - ' +row.end );
 		  } else if (row.creator && row.loc_call_num_sort_order && row.call_num) {
-		 	tooltip.html('<h1>'+ row.title+ '</h1><br> Shelf Rank: '+ String(row.shelfrank));
+		 	tooltip.html('<h1>'+ row.title+ '</h1><br>'+ row.format);
 		 } else if (row.loc_call_num_sort_order) {
-		 	tooltip.html(row.title + " " + String(row.loc_call_num_sort_order[0]).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,"));
+		 	tooltip.html('<h1>'+ row.title+ '</h1><br>'+ row.format);
 		 } else {
 		 	tooltip.html(row.title);
 		 }

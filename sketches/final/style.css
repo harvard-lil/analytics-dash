@@ -376,11 +376,12 @@ body, html {
 .schema.selected rect {
     stroke: black;
 }
-skype
+
 #graph {
     position: absolute;
 	left: 10%;
 	}
+	
 #graph-subjects {
     height: 500px;
     width: 100%;
@@ -726,11 +727,23 @@ skype
 }
 
 #info .infoLabel {
-    font-size: 12px;
+    font-size: 10px;
     line-height: 12px;
     margin: 15px 0 3px;
     text-transform:uppercase;
+    font-family: georgia, serif;
+	color: #808080;
 }
+#info .circInfoLabel {
+    font-size: 10px;
+    line-height: 12px;
+    margin: 3px 0 3px;
+    text-transform:uppercase;
+    font-family: georgia, serif;
+	color: #808080;
+}
+
+
 #info .title .infoLabel {
     margin-top: 5px;
 }
@@ -758,8 +771,8 @@ skype
     font-size: 14px;
 }
 #info .field {
-    color: #808080;
-    font-family: Helvetica, Arial, sans-serif;
+    color: #000000;
+    font-family: akkurat, Helvetica, Arial, sans-serif;
     font-size: 12px;
 }
 
