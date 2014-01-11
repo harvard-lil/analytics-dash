@@ -7,28 +7,14 @@ lc.tooltip = function() {
 	self.initialize = function() {
 		$("#graph").mousemove(function(e) {
 			tooltip.css({
-				top: e.offsetY,
-				left: e.offsetX
+				top: e.offsetY + 10,
+				left: e.offsetX + 110
 			});
 		});
 	};
 
-	var commas = function(x) {
-	    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-	}
-
-	self.show = function(row) {
-		 if (row.class) {
-		 	tooltip.html(row.lastname + ': ' + row.start+ ' - ' +row.end );
-		  } else if (row.creator && row.loc_call_num_sort_order && row.call_num) {
-		 	tooltip.html('<h1>'+ row.title+ '</h1><br>'+ row.format);
-		 } else if (row.loc_call_num_sort_order) {
-		 	tooltip.html('<h1>'+ row.title+ '</h1><br>'+ row.format);
-		 } else {
-		 	tooltip.html(row.title);
-		 }
-	//	tooltip.html(row.title + ' - ' + row.loc_call_num_subject.split("--")[0]);
-
+	self.show = function(row) { 
+		tooltip.html(row.title);
 		tooltip.show();
 	};
 

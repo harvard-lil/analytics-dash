@@ -72,7 +72,6 @@ lc.search = function() {
 
     function addMoreResults() {
         var subjectString = lc.subjectgraph.returnSubjectString(),
-            yearRange = lc.histogram.returnYearRange(),
             newTerms = {};
 
         for (item in searchTerms) {
@@ -80,9 +79,7 @@ lc.search = function() {
         }
 
         if (subjectString) newTerms["loc_call_num_subject_keyword"] = subjectString;
-        if (yearRange) newTerms["year"] = yearRange;
-
-        if (!subjectString && !yearRange) {
+        else {
             if (start > 750) return;
 
             start += 250;

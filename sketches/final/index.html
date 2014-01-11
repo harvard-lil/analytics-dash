@@ -7,7 +7,7 @@
         <link href="style.css" rel="stylesheet" type="text/css">
     </head>
     <body>
-        <div id="shield"></div>
+        <!-- <div id="shield"></div>
         <div id="welcome" class="overlay">
             <h2>Welcome to the Library Collection Explorer!</h2>
             <p>Let's get you started with a search.</p>
@@ -133,7 +133,7 @@
                 </select>
             </div>
             <div class="search">Submit</div>
-        </div>
+        </div> -->
         <div id="popup" class="overlay">
             <h2>Harvard&#146;s library system holds over 12 million volumes.</h2>
     		<p> The Harvard Library Analytics Toolkit is a new, visual way to explore the collection.</p>
@@ -619,7 +619,7 @@
                 <ul id="list"></ul>
             </div>
             <div id="graph-wrapper">
-                <div id="tooltip">Currently selected:</div>
+                <div id="tooltip"></div>
                 <svg id="nav"></svg>
                 <svg id="nav-context"></svg>
                 <svg id="labels">
@@ -632,12 +632,10 @@
                 <div class="axis-label vertical">Subject</div>
                 <svg id="graph"></svg>
                 <div id="histogram">
-                	<div id="bookcounts"></div>
                     <svg></svg>
                     <div id="slider-range"></div>
                     <div class="axis-label">Publication Date</div>
                 </div>
-                <!-- <div id="bookCounts"></div> -->
             </div>
         </div>
         <div class="right-half">
@@ -789,6 +787,8 @@
             iH = h - 200 - 160;
         $("#info-wrapper").height(iH);
         $("#carrel").css("top",140+iH+"px");
+
+        lc.tooltip.initialize();
         
     </script>
 </html>

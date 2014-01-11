@@ -8,7 +8,6 @@ lc.histogram = function() {
     var booksByYear,
         minYear,
         maxYear,
-        totalBooks,
         changeRange = false;
 
     self.appendHistogram = function(data) {
@@ -92,22 +91,6 @@ lc.histogram = function() {
                 return "#ddd";
         });
         lc.graph.updateDateRange(minYear,maxYear);
-    }
-
-    self.getBooksByYear = function() {
-        return booksByYear;
-    };
-
-    var bookCounts = d3.select("#bookCounts");
-
-    function hideCounts() {
-        bookCounts.text("");
-    }
-    function showCounts(data) {
-        bookCounts.text("We hold "+data.values.length + " items that meet your criteria that were published in "+ data.key )
-        .attr("color","black")
-        .attr("id","bookcounts")
-        ;
     }
 
     return self;
