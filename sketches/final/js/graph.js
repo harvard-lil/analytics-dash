@@ -9,11 +9,6 @@ lc.graph = function() {
         numBooks,
         currentBook;
 
-    var circleColor = "blue";
-
-    // default scaling / axes
-    var x_axis_type = "chronological_x";
-    var y_axis_type = "call_number_sort_order_y";
 	var radius_type = "shelfrank";
 
 	var formatAsYear= d3.format("04d");
@@ -23,11 +18,7 @@ lc.graph = function() {
     gWidth = width*.95;
 
     yearEnd = 2013;
-	var timescale = d3.scale.linear().domain([1850,yearEnd]).range([0,gWidth]);
-
 	var xscale = d3.scale.linear().domain([1850,yearEnd]).range([0,gWidth]);
-
-	var yscale = d3.scale.linear().domain([0,16000000]).range([gHeight, 0]);
 
 	var rscale = d3.scale.linear().domain([0,300]).range([2, 30]);
 
@@ -46,46 +37,14 @@ lc.graph = function() {
 		.orient("bottom")
 		.tickFormat(formatAsYear);
 
-	var yAxis = d3.svg.axis()
-		.scale(yscale)
-		.orient("left")
-		.tickFormat(formatAsYear);
-
     function appendAxes() {
-
     	axes.append("g")
     		.attr("class", "axis")
     		.attr("id","xAxis")
     		.attr("transform","translate("+ (width*.025) +"," + gHeight +")");
-
-    	// axes.append("g")
-    	// 	.attr("class", "axis")
-    	// 	.attr("id","yAxis")
-    	// 	.attr("transform","translate(120,0)");
-
-        // axes.append("text")
-  	     //    .attr("class","axis_labels")
-	       //  .attr("id","y_axis")
-	       //  .text("Overall Popularity")
-	       //  .attr("text-anchor","middle")
-	       //  .attr("transform","translate(35,"+(height/2)+") rotate(-90)")
     }
-    //defines function that ads labels to the axes
 
     appendAxes();
-
-    function updateAxes() {
-		axes.select("#xAxis").call(xAxis);
-		axes.select("#yAxis").call(yAxis);
-
-		// if (y_axis_type == 'call_number_sort_order_y') {
-		// 	$("#yAxis").hide();
-		// 	lc.subjectgraph.show();
-		// } else {
-		// 	$("#yAxis").show();
-		// 	lc.subjectgraph.hide();
-		// }
-	}
 
 	var minYear, maxYear;
 
@@ -93,26 +52,14 @@ lc.graph = function() {
 		var min = d3.min(data,function(d){ return d.pub_date_numeric; });
 		var max = d3.max(data,function(d){ return d.pub_date_numeric; });
 		self.updateDateRange(min,max);
-
-		// var LCClow = d3.min(data,function(d){ if (d.loc_call_num_sort_order) return d.loc_call_num_sort_order[0]; });
-		// var LCChigh = d3.max(data,function(d){ if (d.loc_call_num_sort_order) return d.loc_call_num_sort_order[0]; });
-		// self.updateLCCRange(LCClow, LCChigh);
 	};
 
 	self.updateDateRange = function(min, max) {
 		minYear = min - .5, maxYear = max + .5;
-		timescale.domain([minYear,maxYear]);
 		xscale.domain([minYear,maxYear]);
-		updateAxes();
+		axes.select("#xAxis").call(xAxis);
 		updateCircles();
-		// updateBars();
 	};
-
-	self.updateLCCRange = function(min, max) {
-		yscale.domain([max,min]);
-		updateAxes();
-		updateCircles();
-	}
 
 	self.clearCircles = function() {
 		var c = circleGroup.selectAll("circle").data([]);
@@ -159,9 +106,9 @@ lc.graph = function() {
         });
 
         updateCircles();
-        // self.updateLabels(0);
         sortBooks("title", true);
     }
+
     function updateCircles() {
     	var circles = circleGroup.selectAll("circle");
     	var delayScale = d3.scale.linear().domain([0,500]).range([5,.5]),
@@ -235,7 +182,7 @@ lc.graph = function() {
 
 
     function sortBooks(sortBy, dir) {
-    	if (sortBy == "loc_call_num_sort_order") {
+    	if (sortBy == "loc_call_num_sort_order")
     		bookData.sort(function(a,b){
 	    		if (!a.loc_call_num_sort_order || !b.loc_call_num_sort_order) return;
 	  			if (a.loc_call_num_sort_order[0] < b.loc_call_num_sort_order[0])
@@ -244,7 +191,6 @@ lc.graph = function() {
 	  				return 1;
 	  			return 0;
 	    	});
-    	}
 	    else
 	    	bookData.sort(function(a,b){
 	  			if (a[sortBy] < b[sortBy])
@@ -262,8 +208,7 @@ lc.graph = function() {
 
     self.showInfo = function(data, inBox) {
     	currentBook = data;
-
-    	// $(".sort-heading").find(".index").text(bookData.indexOf(currentBook) + 1);
+		self.clearInfo();
 
 		if (data.id_inst)
 			info.select(".title .field").html("<a target='blank' href=http://holliscatalog.harvard.edu/?itemid=|library/m/aleph|"+ data.id_inst+">"+data.title+"</a>");
@@ -314,10 +259,14 @@ lc.graph = function() {
 				});
             });
 		}
-
-		// if (data.id_inst){
-		// 	linkouturl= "href=http://holliscatalog.harvard.edu/?itemid=|library/m/aleph|"+ data.id_inst;
-		// }
+		info.select(".shelfrank .field").text(data.shelfrank ? data.shelfrank : "");
+		info.select(".score_downloads .field").text(data.score_downloads ? data.score_downloads : "");
+		info.select(".score_holding_libs .field").text(data.score_holding_libs ? data.score_holding_libs : "");
+		info.select(".score_recalls .field").text(data.score_recalls ? data.score_recalls : "");
+		info.select(".score_checkouts_undergrad .field").text(data.score_checkouts_undergrad ? data.score_checkouts_undergrad : "");
+		info.select(".score_checkouts_grad .field").text(data.score_checkouts_grad ? data.score_checkouts_grad : "");
+		info.select(".score_checkouts_fac .field").text(data.score_checkouts_fac ? data.score_checkouts_fac : "");
+		info.select(".score_total .field").text(data.score_total ? data.score_total : "");
 		
   		if (inBox) {
   			addToCarrel.text("Add This Item To Your Carrel").on("click",function(){
@@ -333,67 +282,38 @@ lc.graph = function() {
   		}
     };
 
-    // $("#stack-circles").click(function(){
-    // 	stackCircles();
-    // });
-
-    // function stackCircles() {
-    // 	var circles = circleGroup.selectAll("circle");
-    // 	var yearObj = {};
-    // 	circles.attr("r",3).each(function(d){
-    // 		if (d.pub_date_numeric in yearObj) {
-    // 			yearObj[d.pub_date_numeric]++;
-    // 		} else {
-    // 			yearObj[d.pub_date_numeric] = 0;
-    // 		}
-    // 		d3.select(this).attr("cy",gHeight-5-(yearObj[d.pub_date_numeric]*7));
-    // 	});
-    // }
+    self.clearInfo = function() {
+           info.select(".creator .field").html("Not Available");
+           info.select(".title .field").html("Not Available");
+           info.select(".creator .field").html("Not Available");
+           info.selectAll(".creator li").html("Not Available");
+           info.select(".lc .field").html("Not Available");
+	       info.select(".pub_date_numeric .field").text("Not Available");
+           info.select(".pages_numeric .field").text("Not Available");
+		   info.select(".language .field").text("Not Available");
+		   info.select(".loc_call_num_subject .field").html("Not Available");
+		   info.selectAll(".loc_call_num_subject li").html("Not Available");
+           info.select(".lcsh .field").html("Not Available");
+           info.selectAll(".lcsh li").html("Not Available");
+    };
 
     /*
 		Rollover listener
     */
     $("#graph").mousemove(function(e) {
-    	// if (y_axis_type=='call_number_sort_order_y')
-    		lc.subjectgraph.rollover(e.offsetY);
+    	lc.subjectgraph.rollover(e.offsetY);
     }).mouseout(function(){
-    	// if (y_axis_type=='call_number_sort_order_y')
-    		lc.subjectgraph.rollout();
+    	lc.subjectgraph.rollout();
     }).click(function(e) {
     	if (e.target.nodeName != "circle")
     		lc.subjectgraph.graphClick(e.offsetY);
     });
 
-    /*
-
-		Axes toggle and Scale toggle buttons
-
-    */
-    // $(".x_toggle span").click(x_axis_button);
-    // $(".y_toggle li").click(y_axis_button);
     $(".scale_toggle li").click(radius_button);
 
 	$("#export-all").click(function(){
 		lc.carrel.exportAll(bookData);
 	})
-
-	// var sortTitles = {
-	// 	"call_number_sort_order_y" : "subject",
-	// 	"grads" : "Graduate Students",
-	// 	"undergrads" : "Undergraduate Students",
-	// 	"faculty" : "faculty",
-	// 	"popularity_y" : "overall popularity"
-	// }
-
-	// function y_axis_button(e){
-	// 	y_axis_type = $(e.target).attr("name");
-
-	// 	$(".y_toggle li").removeClass("selected");
-	// 	$(this).addClass("selected");
-
-	// 	set_y_axis();
-	// 	axes.select("#y_axis").text(sortTitles[y_axis_type]);
-	// }
 
 	function radius_button(e){
 		radius_type = $(e.target).attr("name");
@@ -409,50 +329,8 @@ lc.graph = function() {
 		return xscale(d.pub_date_numeric || 0);
 	}
 
-	// lc.subjectgraph.on("selected", function() {
-	// 	if (y_axis_type == 'call_number_sort_order_y')
-	// 		set_y_axis();
-	// });
-
-	// function set_y_axis(){
-	// 	var circles = circleGroup.selectAll("circle");
-	// 	circles
-	// 	.transition()
-	// 	// .ease("linear")
-	// 	.duration(500)
-	// 	.delay(function(d,i){
-	// 		return i*2;
-	// 	})
-	// 	.attr("cy", calculateY);
-	// 	updateAxes();
-	// }
-
 	function calculateY(d) {
 		return (d / numBooks) * (gHeight*.99) + (gHeight*.005);
-		// switch(y_axis_type) {
-		// 	case 'grads':
-		// 		yscale.domain([0,300]);
-		// 		return  yscale(d.score_checkouts_grad || 0);
-		// 	case 'undergrads':
-		// 		yscale.domain([0,300]);
-		// 		return  yscale(d.score_checkouts_undergrad || 0);
-		// 	case 'faculty':
-		// 		yscale.domain([0,300]);
-		// 		return  yscale(d.score_checkouts_fac || 0);
-		// 	case 'popularity_y':
-		// 		yscale.domain([0,100]);
-	 //            return yscale(d.shelfrank || 0);
-		// 	case 'call_number_sort_order_y':
-		// 		if (d.loc_call_num_sort_order){
-		//             yscale.domain([8000000,0]);
-		//             // return yscale(d.loc_call_num_sort_order[0])
-		//             // return lc.subjectgraph.calculateY(d.loc_call_num_sort_order[0]);
-		// 		}
-		// 		else {
-		// 			return yscale(0);
-		// 		}
-		// 		break;
-		// }
 	}
 
 	function set_radius(){
@@ -463,14 +341,9 @@ lc.graph = function() {
 	}
 
 	function calculateRadius(d) {
-		rscale.domain([0,250]);
+		rscale.domain([0,500]);
+		rscale.range([3,25]);
 		switch(radius_type) {
-			// case 'pages':
-   //  			if (d.pages_numeric)
-			// 		return Math.max(3,d.pages_numeric / 50);
-			// 	else
-			// 		return 3;
-			// 	break;
 			case 'grads':
 				return  rscale(d.score_checkouts_grad || 0);
 			case 'undergrads':
@@ -478,13 +351,13 @@ lc.graph = function() {
 			case 'faculty':
 				return  rscale(d.score_checkouts_fac || 0);
 			case 'shelfrank':
-				if (d.shelfrank)
-					return Math.max(3,d.shelfrank / 5);
-				else
-					return 3;
-				break;
+				if (d.shelfrank){
+					rscale.domain([0,100]);
+					return rscale(d.shelfrank);
+				} else
+					return 4;
 			case 'same':
-				return 6;
+				return 4;
 				break;
 		}
 	}

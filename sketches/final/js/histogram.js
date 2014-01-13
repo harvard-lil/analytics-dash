@@ -19,6 +19,7 @@ lc.histogram = function() {
             return a.key - b.key;
         });
 
+		
         minYear = parseInt(d3.min(booksByYear,function(d){ if (d.key != "undefined") return d.key; }));
         maxYear = parseInt(d3.max(booksByYear,function(d){ if (d.key != "undefined") return d.key; }));
         var yearRange = maxYear - minYear,
@@ -90,22 +91,6 @@ lc.histogram = function() {
                 return "#ddd";
         });
         lc.graph.updateDateRange(minYear,maxYear);
-    }
-
-    self.getBooksByYear = function() {
-        return booksByYear;
-    };
-
-    var bookCounts = d3.select("#bookCounts");
-
-    function hideCounts() {
-        bookCounts.text("");
-    }
-    function showCounts(data) {
-        bookCounts.text("We hold "+data.values.length + " items that meet your criteria that were published in "+ data.key )
-        .attr("color","red")
-        .attr("id","bookcounts")
-        ;
     }
 
     return self;

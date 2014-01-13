@@ -1,4 +1,5 @@
 body, html {
+    /*font-family: georgia, futura, brown, neuzeit, akkurat, univers, helvetica, arial, sans-serif;*/
     font-family: futura, brown, neuzeit, akkurat, univers, helvetica, arial, sans-serif;
     margin: 0;
     min-width: 1050px;
@@ -340,7 +341,7 @@ body, html {
     font-weight: bold;
 }
 #rollover rect {
-    fill: #f7f7f7;
+    fill: #eee;
 }
 #rollover text {
     fill: black;
@@ -376,10 +377,12 @@ body, html {
 .schema.selected rect {
     stroke: black;
 }
+
 #graph {
     position: absolute;
 	left: 10%;
-}
+	}
+	
 #graph-subjects {
     height: 500px;
     width: 100%;
@@ -449,7 +452,7 @@ body, html {
     -webkit-transform: rotate(-90deg);
     -moz-transform: rotate(-90deg);
     -ms-transform: rotate(-90deg);
-    left: -80px;
+    left: -40px;
 }
 #slider-range {
     border: 1px solid #808080;
@@ -725,11 +728,23 @@ body, html {
 }
 
 #info .infoLabel {
-    font-size: 12px;
+    font-size: 10px;
     line-height: 12px;
     margin: 15px 0 3px;
     text-transform:uppercase;
+    font-family: georgia, serif;
+	color: #808080;
 }
+#info .circInfoLabel {
+    font-size: 10px;
+    line-height: 12px;
+    margin: 3px 0 3px;
+    text-transform:uppercase;
+    font-family: georgia, serif;
+	color: #808080;
+}
+
+
 #info .title .infoLabel {
     margin-top: 5px;
 }
@@ -757,7 +772,7 @@ body, html {
     font-size: 14px;
 }
 #info .field {
-    color: #808080;
+    color: #000000;
     font-family: Helvetica, Arial, sans-serif;
     font-size: 12px;
 }
@@ -994,17 +1009,15 @@ circle.selected {
 }
 
 #tooltip {
-    max-width: 150px;
+    max-width: 175px;
     height: auto;
     position: absolute;
-    margin-top: 20px;
-    margin-left: 20px;
     z-index: 100;
     padding: 10px;
     font-family: Helvetica, Arial, sans-serif;
-    font-size: 14px;
+    font-size: 12px;
     color: white;
-    background-color: rgba(0, 0, 0, 0.8);
+    background-color: #000;
     text-transform: capitalize;
     display: none;
 }
