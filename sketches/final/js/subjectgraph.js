@@ -9,7 +9,7 @@ var lc = lc || {};
 
 lc.subjectgraph = function() {
     var self = d3.dispatch("click", "mouseover", "mouseout", "selected"),
-            baseurl = 'http://hlslwebtest.law.harvard.edu/v1/api/lc_class/',
+            baseurl = 'http://librarycloud.harvard.edu/v1/api/lc_class/',
             height = $("#nav").height()-10,
             selected = null,
             sideBar = d3.select("#nav"),
@@ -22,6 +22,7 @@ lc.subjectgraph = function() {
 
     self.search = function(query) {
         $.ajax({
+        				dataType: "jsonp",
                 url: baseurl + '?' + encodeURI(query),
                 success: function(response){
                     var classes = response.docs[0].child_classes;

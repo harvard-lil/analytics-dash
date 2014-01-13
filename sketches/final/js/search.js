@@ -54,8 +54,8 @@ lc.search = function() {
         return(false);
     };
     var baseurl = 'http://librarycloud.harvard.edu/v1/api/item',
-        cachedParams = '&limit=250&facet=pub_date_numeric&key=5239997b68e033fbf2854d77c6295310&filter:collection:hollis_catalog',
-        defaultParams = '&limit=250&facet=pub_date_numeric&key=5239997b68e033fbf2854d77c6295310&filter:collection:hollis_catalog',
+        cachedParams = '&limit=250&facet=pub_date_numeric&key=5239997b68e033fbf2854d77c6295310&filter=collection:hollis_catalog',
+        defaultParams = '&limit=250&facet=pub_date_numeric&key=5239997b68e033fbf2854d77c6295310&filter=collection:hollis_catalog',
         search = getQueryVariable('search') || 'Boston';
 		// suffix = '&filter=call_num:*&filter=loc_call_num_sort_order:*'
     var graphTitle = $("#searchTerm");
@@ -179,6 +179,9 @@ lc.search = function() {
 
                 // doing fuzzy keyword search on these
                 case 'title':
+                    query.push('filter=main_' + term + '_keyword:' + terms[term]);
+                    break;
+                                    
                 case 'loc_call_num_subject':
                     query.push('filter=' + term + '_keyword:' + terms[term]);
                     break;
@@ -329,6 +332,7 @@ lc.search = function() {
 
         lc.list.hideList();
         $.ajax({
+        		dataType: "jsonp",
             url: url,
             success: function(response) {
                 if (!response.docs.length) {
