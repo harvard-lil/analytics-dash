@@ -402,24 +402,11 @@ body, html {
     -moz-box-sizing: border-box;
     height: 80px;
 }
-
-#bookcounts{
-    color:black;
-    background-color: white;
-    width:200px;
-    height:25px;
+#histogram text {
     font-size: 10px;
-    line-height: 14px;
-    left: 150px;
-    z-index: 200;
-    position:absolute;
-    padding: 6px;
-    display:block;
+    text-anchor: middle;
 }
 
-#bookcounts-hidden{
-    display:none;
-}
 #graph-reset {
     border: 1px solid #808080;
     color: #808080;
@@ -743,6 +730,9 @@ body, html {
     font-family: georgia, serif;
 	color: #808080;
 }
+#info .circulation-data {
+    margin-top: 15px;
+}
 
 
 #info .title .infoLabel {
@@ -1013,11 +1003,12 @@ circle.selected {
     height: auto;
     position: absolute;
     z-index: 100;
-    padding: 10px;
+    padding: 8px 10px 10px 10px;
     font-family: Helvetica, Arial, sans-serif;
-    font-size: 12px;
-    color: white;
-    background-color: #000;
+    font-size: 14px;
+    color: black;
+    background-color: rgba(255,255,255,1);
     text-transform: capitalize;
     display: none;
+    border: 1px solid #808080;
 }

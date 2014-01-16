@@ -11,8 +11,19 @@ lc.carrel = function() {
     $("#table-carrel").click(function(){
         tableCarrel();
     });
+
+    self.bookInCarrel = function(object) {
+        if (!carrel.length) return false;
+        var exists = false;
+        carrel.forEach(function(d,i){
+            if (d == object) exists = true;
+        });
+        return exists;
+    }
     
     self.sendToCarrel = function(bookData) {
+        if (self.bookInCarrel(bookData)) return;
+
         carrel.push(bookData);
         updateCarrelBoxes();
     };
@@ -30,7 +41,7 @@ lc.carrel = function() {
         var carrelBoxes = carrelBox.selectAll("li").data(carrel);
         carrelBoxes.enter().append("li")
             .on("click",function(d){
-                lc.graph.showInfo(d, false);
+                lc.graph.showInfo(d);
             })//.append("span");
         carrelBoxes.exit().remove();
 

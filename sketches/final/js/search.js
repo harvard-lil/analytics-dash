@@ -65,7 +65,7 @@ lc.search = function() {
         self.submitSearch(id);
     });
 
-    var start = 0;
+    var start = 250;
     $(".more").click(function(){
         addMoreResults();
     });
@@ -80,10 +80,11 @@ lc.search = function() {
 
         if (subjectString) newTerms["loc_call_num_subject_keyword"] = subjectString;
         else {
+            console.log(start)
             if (start > 750) return;
 
-            start += 250;
             if (start == 750) $(".more").addClass("inactive");
+            start += 250;
 
             defaultParams = "&start="+start+defaultParams;
             self.runSearch(newTerms, true);
@@ -97,7 +98,7 @@ lc.search = function() {
         searchTerms = {};
         searchTerms["year"] = [],
         searchTerms["range"] = [];
-        start = 0;
+        start = 250;
         $(".more").removeClass("inactive");
         defaultParams = cachedParams;
 
@@ -132,8 +133,6 @@ lc.search = function() {
         self.runSearch(searchTerms);
 
         $("#search-fold").slideUp();
-
-        graphTitle.html("Searching... ");
     };
 
     /*
@@ -197,8 +196,12 @@ lc.search = function() {
         return encodeURI('&' + query.join('&'));
     };
 
-    self.buildSearchExplanation = function(docs, terms) {
-        var prefix = 'The <b>' + (oldData.length) + ' most popular</b> items';
+    self.buildSearchExplanation = function(docs, terms, num_found) {
+        var prettyNumber = d3.format("0,000");
+        if (docs.length < num_found)
+            var prefix = 'The <b>' + (oldData.length) + ' most popular</b> items out of ' + prettyNumber(num_found);
+        else
+            var prefix = '<b>' + (oldData.length) + '</b> items';
         if (terms['collection']) {
             var catalog = terms['collection'].split('_').join(' ');
             prefix += ' in the ' + catalog;
@@ -269,10 +272,6 @@ lc.search = function() {
             return prefix + explanation.join(',') + '.';
     };
 
-    self.getSearchTerm = function() {
-        return search;
-    };
-
     $(".next-search").click(function(){
         if (searchIndex == previousSearches.length) return;
         searchIndex += 1;
@@ -299,16 +298,30 @@ lc.search = function() {
 
     var oldData = [];
 
+    // I'm so sorry
+    function hasObjectInArray(object, array) {
+        var exists = false;
+        array.forEach(function(d,i){
+            var innerMatch = true;
+            for (x in d) {
+                if (d[x] != object[x]) innerMatch = false;
+            }
+            if (innerMatch) exists = true;
+        });
+        return exists;
+    }
+
     self.runSearch = function(parameters, noReset) {
         if (noReset) {
             for (p in searchTerms) {
                 parameters[p] = searchTerms[p];
             }
         }
-        if (previousSearches.indexOf(parameters) == -1) {
+        if (!hasObjectInArray(parameters, previousSearches)) {
             previousSearches.push(parameters);
             searchIndex = previousSearches.length-1;
         }
+        graphTitle.html("Searching... ");
         updateSearchUI();
         var query = self.buildSearchQuery(parameters);
         var url = baseurl + '?' + defaultParams + query;// + suffix;
@@ -328,6 +341,7 @@ lc.search = function() {
         $.ajax({
             url: url,
             success: function(response) {
+                console.log(response)
                 if (!response.docs.length) {
                     graphTitle.html("0 Results found with your parameters.");
                     console.log('zero results, bailing');
@@ -347,7 +361,7 @@ lc.search = function() {
                 }
                 oldData = newData;
 
-                graphTitle.html(self.buildSearchExplanation(response.docs, parameters));
+                graphTitle.html(self.buildSearchExplanation(response.docs, parameters, response.num_found));
 
                 lc.subjectgraph.finishedNesting = false;
                 lc.subjectgraph.updateRelative(newData, newData.length, 0);

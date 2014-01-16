@@ -99,7 +99,7 @@ lc.graph = function() {
         	lc.tooltip.hide();
         }).on("click",function(d){
 	        lc.tooltip.show(d);
-	        self.showInfo(d, true);
+	        self.showInfo(d);
 	        circles.classed("selected",false);
 	        d3.select(this).classed("selected",true);
 	        this.parentNode.appendChild(this);
@@ -201,12 +201,12 @@ lc.graph = function() {
 	    	});
 	    	
     	var index = (bookData.indexOf(currentBook) + (dir ? 1 : -1) + bookData.length)%bookData.length;
-    	showInfo(bookData[index],true);
+    	showInfo(bookData[index]);
     	circleGroup.selectAll("circle").classed("selected",false);
     	circleGroup.select("#c-"+bookData[index].id).classed("selected",true);
     }
 
-    self.showInfo = function(data, inBox) {
+    self.showInfo = function(data) {
     	currentBook = data;
 		self.clearInfo();
 
@@ -232,11 +232,8 @@ lc.graph = function() {
         }
 
         info.select(".lc .field").html(data.call_num ? data.call_num.join("<br>") : "Not Available");
-
         info.select(".pub_date_numeric .field").text(data.pub_date_numeric ? data.pub_date_numeric : "Not Available");
-
         info.select(".pages_numeric .field").text(data.pages_numeric ? data.pages_numeric : "Format: "+data.format);
-
 		info.select(".language .field").text(data.language ? data.language : "Not Available");
 
 		if (data.loc_call_num_subject) {
@@ -245,7 +242,7 @@ lc.graph = function() {
 			info.selectAll(".loc_call_num_subject li")
 				.on("click",function(){
 	            	lc.search.runSearch({
-						"loc_call_num_subject": $(this).text()
+						"loc_call_num_subject_keyword": $(this).text()
 					});
 	            });
 		}
@@ -259,16 +256,17 @@ lc.graph = function() {
 				});
             });
 		}
-		info.select(".shelfrank .field").text(data.shelfrank ? data.shelfrank : "");
-		info.select(".score_downloads .field").text(data.score_downloads ? data.score_downloads : "");
-		info.select(".score_holding_libs .field").text(data.score_holding_libs ? data.score_holding_libs : "");
-		info.select(".score_recalls .field").text(data.score_recalls ? data.score_recalls : "");
-		info.select(".score_checkouts_undergrad .field").text(data.score_checkouts_undergrad ? data.score_checkouts_undergrad : "");
-		info.select(".score_checkouts_grad .field").text(data.score_checkouts_grad ? data.score_checkouts_grad : "");
-		info.select(".score_checkouts_fac .field").text(data.score_checkouts_fac ? data.score_checkouts_fac : "");
-		info.select(".score_total .field").text(data.score_total ? data.score_total : "");
+		// info.select(".shelfrank .field").text(data.shelfrank ? data.shelfrank : "");
+		// info.select(".score_downloads .field").text(data.score_downloads ? data.score_downloads : "");
+		// info.select(".score_holding_libs .field").text(data.score_holding_libs ? data.score_holding_libs : "");
+		// info.select(".score_recalls .field").text(data.score_recalls ? data.score_recalls : "");
+		// info.select(".score_checkouts_undergrad .field").text(data.score_checkouts_undergrad ? data.score_checkouts_undergrad : "");
+		// info.select(".score_checkouts_grad .field").text(data.score_checkouts_grad ? data.score_checkouts_grad : "");
+		// info.select(".score_checkouts_fac .field").text(data.score_checkouts_fac ? data.score_checkouts_fac : "");
+		// info.select(".score_total .field").text(data.score_total ? data.score_total : "");
+		self.showCircInfo(data);
 		
-  		if (inBox) {
+  		if (!lc.carrel.bookInCarrel(data)) {
   			addToCarrel.text("Add This Item To Your Carrel").on("click",function(){
 	            lc.carrel.sendToCarrel(data);
 	        });
@@ -282,15 +280,23 @@ lc.graph = function() {
   		}
     };
 
+    self.showCircInfo = function(data) {
+    	var scores = ["shelfrank","score_downloads","score_holding_libs","score_recalls","score_checkouts_undergrad",
+    	"score_checkouts_grad","score_checkouts_fac","score_total"];
+
+    	scores.forEach(function(s,i){
+    		var d = info.select("."+s);
+    		if (data[s])
+    			d.style("display","block").select(".field").text(data[s]);
+    		else d.style("display","none");
+    	});
+    }
+
     self.clearInfo = function() {
            info.select(".creator .field").html("Not Available");
            info.select(".title .field").html("Not Available");
            info.select(".creator .field").html("Not Available");
            info.selectAll(".creator li").html("Not Available");
-           info.select(".lc .field").html("Not Available");
-	       info.select(".pub_date_numeric .field").text("Not Available");
-           info.select(".pages_numeric .field").text("Not Available");
-		   info.select(".language .field").text("Not Available");
 		   info.select(".loc_call_num_subject .field").html("Not Available");
 		   info.selectAll(".loc_call_num_subject li").html("Not Available");
            info.select(".lcsh .field").html("Not Available");
@@ -340,24 +346,27 @@ lc.graph = function() {
 				.attr("r", calculateRadius);
 	}
 
+	var minR = 4,
+		maxR = 25;
+
 	function calculateRadius(d) {
-		rscale.domain([0,500]);
-		rscale.range([3,25]);
+		rscale.domain([0,300]);
+		rscale.range([minR,maxR]);
 		switch(radius_type) {
 			case 'grads':
-				return  rscale(d.score_checkouts_grad || 0);
+				return  Math.min(maxR, rscale(d.score_checkouts_grad || 0));
 			case 'undergrads':
-				return  rscale(d.score_checkouts_undergrad || 0);
+				return  Math.min(maxR, rscale(d.score_checkouts_undergrad || 0));
 			case 'faculty':
-				return  rscale(d.score_checkouts_fac || 0);
+				return  Math.min(maxR, rscale(d.score_checkouts_fac || 0));
 			case 'shelfrank':
 				if (d.shelfrank){
 					rscale.domain([0,100]);
-					return rscale(d.shelfrank);
+					return Math.min(maxR, rscale(d.shelfrank));
 				} else
-					return 4;
+					return minR;
 			case 'same':
-				return 4;
+				return minR;
 				break;
 		}
 	}

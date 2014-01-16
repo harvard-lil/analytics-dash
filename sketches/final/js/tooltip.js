@@ -13,8 +13,9 @@ lc.tooltip = function() {
 		});
 	};
 
-	self.show = function(row) { 
-		tooltip.html(row.title);
+	self.show = function(item) { 
+		var c = lcObjectArray[item.call_num[0].substr(0,1)].color || "#ccc";
+		tooltip.html(item.title).css("border-top","5px solid "+c);
 		tooltip.show();
 	};
 

@@ -2,10 +2,11 @@ var lc = lc || {};
 
 lc.histogram = function() {
 
-    var gHeight = 40;
-    var histoGroup = d3.select("#histogram").select("svg").attr("width","100%").attr("height",gHeight).append("g");
-    var gWidth = $("#histogram").width();
-    var booksByYear,
+    var gHeight = 50,
+        chart = d3.select("#histogram").select("svg").attr("width","100%").attr("height",gHeight),
+        histoGroup = chart.insert("g","text"),
+        gWidth = $("#histogram").width(),
+        booksByYear,
         minYear,
         maxYear,
         changeRange = false;
@@ -26,7 +27,7 @@ lc.histogram = function() {
             maxBooks = d3.max(booksByYear,function(d){ return d.values.length; });
 
         var yearScale = d3.scale.linear().domain([minYear,maxYear]).range([0,gWidth-(gWidth/(yearRange))]),
-            bookScale = d3.scale.linear().domain([0,maxBooks]).range([3,gHeight]);
+            bookScale = d3.scale.linear().domain([0,maxBooks]).range([3,gHeight-10]);
 
         var bars = histoGroup.selectAll("rect").data(booksByYear);
 
@@ -49,8 +50,18 @@ lc.histogram = function() {
             }).on("mouseover",function(d){
                 showCounts(d);
             }).on("mouseout",function(d){
-                hideCounts();
+                // hideCounts();
             });
+
+        var text = chart.select("text");
+
+        function showCounts(d) {
+            var num = d.values.length;
+            text.text(num)
+                .attr("x",yearScale(d.key) + (gWidth/yearRange)*((yearRange-1)/yearRange)/2)
+                // .attr("y",function(){ return gHeight - bookScale(d.values.length) - 2; });
+                .attr("y",8)
+        }
 
         $("#histogram .reset").click(function(){
             setSlider(minYear, maxYear)
