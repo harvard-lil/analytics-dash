@@ -913,6 +913,7 @@ circle.selected {
     background-color: rgba(255,255,255,.8);
     position: absolute;
     z-index: 199;
+    display: none;
 }
 .overlay {
     font-size: 14px;

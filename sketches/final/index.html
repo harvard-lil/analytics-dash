@@ -7,8 +7,8 @@
         <link href="style.css" rel="stylesheet" type="text/css">
     </head>
     <body>
-        <!-- <div id="shield"></div>
-        <div id="welcome" class="overlay">
+        <div id="shield"></div>
+        <!-- <div id="welcome" class="overlay">
             <h2>Welcome to the Library Collection Explorer!</h2>
             <p>Let's get you started with a search.</p>
             <div class="half l">
@@ -136,18 +136,19 @@
         </div> -->
         <div id="popup" class="overlay">
             <h2>Harvard&#146;s library system holds over 12 million volumes.</h2>
-    		<p> The Harvard Library Analytics Toolkit is a new, visual way to explore the collection.</p>
+    		<p>Haystacks is a new, visual way to explore the collection.</p>
     		<p><b>1.</b> Start typing into the searchbar (top left) to <b>request library materials</b>. You can see 250 items at a time.</p>
             <p><b>2.</b> <b>Each dot represents a holding</b>. Rollover the dot for the title. Click on it to get <b>more information</b>. </p>
-            <p><b>3.</b> You can <b>sort</b> and <b>scale</b> the dots using the display controls on the top right.</p>
+            <p><b>3.</b> You can <b>scale</b> the dots using the display controls on the top right.</p>
             <p><b>4.</b> To remember an item, <b>place it in your carrel</b> by hitting the button on the lower right. You can also <b>export</b> and <b>save</b> your carrel&#146;s contents for later use. </p>
             <p><b>5.</b> Lastly, you can <b>zoom</b> into the range by clicking on the colorful subject bar on the left or by dragging the time sliders below. Have fun exploring!</p>
         </div>
         <div id="more-instructions" class="overlay">
-            <h2>Okay, you want more information?</h2>
-    		<p>The <b>DISPLAY CONTROL</b> on the top left lets you scale each item by its page count, popularity, or you can let each dot be the same size. If you want more information about your current collection, you  can also view the items in a sortable list.</p>
+            <!-- <h2>Okay, you want more information?</h2> -->
+    		<p>The <b>DISPLAY CONTROL</b> on the top right lets you scale each item by its page count, popularity, or you can let each dot be the same size. If you want more information about your current collection, you  can also view the items in a sortable list.</p>
+            <p>The <b>GRAPH</b> plots each item by its subject heading and date of publication. You can click on a dot to view more information about it in the Inspector. You can also use your arrow keys to explore the dots, &#8593; or &#8595; to navigate subject headings, and &#8592; or &#8594; to navigate the date of publication.</p>
+            <p>The colorful <b>SUBJECT BAR</b> allows you to dive into the complex taxonomy of the Library of Congress call number system. Each subject is subdivided into more subjects, which you can explore by clicking on a bar. The height of the segment corresponds to the number of items returned in each subject of Harvard&#146;s library.</p>
     		<p>The <b>TIME CHART</b> below shows how many items in the collection meet your criteria by year of publication. This lets you get a sense of the overall size of the holdings in this subject. The bar chart doubles as a slider that controls the zoom level for the main graph.</p>
-    		<p>The colorful <b>SUBJECT BAR</b> allows you to dive into the complex taxonomy of the Library of Congress call number system. Each subject is subdivided into more subjects. The length of the segment corresponds to the number of items returned in each subject of Harvard&#146;s library.</p>
             <p>The <b>INSPECTOR </b>on the right holds specific data about each item. If you'd like to save the item for later, you can add it to your Carrel. You can also start a more specific search by clicking on any author name, call number subject, or subject keyword.</p>
         </div>
 
@@ -776,9 +777,14 @@
             showPopup("more-instructions");
         });
 
+        $("#shield").click(function(){
+            hidePopup("popup");
+            hidePopup("more-instructions");
+        });
+
         $("#welcome .search").click(function(){
             hidePopup("welcome");
-        })
+        });
 
         var h = $(window).height(),
             iH = h - 200 - 160;
