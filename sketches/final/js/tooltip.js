@@ -14,7 +14,7 @@ lc.tooltip = function() {
 	};
 
 	self.show = function(item) { 
-		var c = lcObjectArray[item.call_num[0].substr(0,1)].color || "#ccc";
+		var c = item.call_num ? lcObjectArray[item.call_num[0].substr(0,1)].color : "#666";
 		tooltip.html(item.title).css("border-top","5px solid "+c);
 		tooltip.show();
 	};

@@ -276,7 +276,7 @@ lc.search = function() {
     };
 
     $(".next-search").click(function(){
-        if (searchIndex == previousSearches.length) return;
+        if (searchIndex == previousSearches.length || previousSearches.length == 1) return;
         searchIndex += 1;
         runSearch(previousSearches[searchIndex]);
         updateSearchUI();
@@ -288,7 +288,9 @@ lc.search = function() {
         updateSearchUI();
     });
     function updateSearchUI() {
-        if (previousSearches.length == 0) return;
+        console.log(previousSearches, previousSearches.length)
+        if (previousSearches.length == 1) return;
+        console.log("past",searchIndex)
         if (searchIndex > 0)
             $(".prev-search").removeClass("inactive");
         else
@@ -320,6 +322,7 @@ lc.search = function() {
                 parameters[p] = searchTerms[p];
             }
         }
+        console.log("in array",hasObjectInArray(parameters, previousSearches))
         if (!hasObjectInArray(parameters, previousSearches)) {
             previousSearches.push(parameters);
             searchIndex = previousSearches.length-1;
@@ -345,10 +348,8 @@ lc.search = function() {
         		dataType: "jsonp",
             url: url,
             success: function(response) {
-                console.log(response)
                 if (!response.docs.length) {
                     graphTitle.html("0 Results found with your parameters.");
-                    console.log('zero results, bailing');
                     return;
                 }
 

@@ -347,7 +347,7 @@ lc.graph = function() {
 	}
 
 	var minR = 4,
-		maxR = 25;
+		maxR = 20;
 
 	function calculateRadius(d) {
 		rscale.domain([0,300]);

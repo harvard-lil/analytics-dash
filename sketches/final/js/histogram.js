@@ -47,21 +47,22 @@ lc.histogram = function() {
             }).attr("opacity",function(d){
                 if (d.key == "undefined")
                     return 0;
-            }).on("mouseover",function(d){
-                showCounts(d);
-            }).on("mouseout",function(d){
-                // hideCounts();
             });
+            // .on("mouseover",function(d){
+            //     showCounts(d);
+            // }).on("mouseout",function(d){
+            //     hideCounts();
+            // });
 
-        var text = chart.select("text");
+        // var text = chart.select("text");
 
-        function showCounts(d) {
-            var num = d.values.length;
-            text.text(num)
-                .attr("x",yearScale(d.key) + (gWidth/yearRange)*((yearRange-1)/yearRange)/2)
-                // .attr("y",function(){ return gHeight - bookScale(d.values.length) - 2; });
-                .attr("y",8)
-        }
+        // function showCounts(d) {
+        //     var num = d.values.length;
+        //     text.text(num)
+        //         .attr("x",yearScale(d.key) + (gWidth/yearRange)*((yearRange-1)/yearRange)/2)
+        //         // .attr("y",function(){ return gHeight - bookScale(d.values.length) - 2; });
+        //         .attr("y",8)
+        // }
 
         $("#histogram .reset").click(function(){
             setSlider(minYear, maxYear)
