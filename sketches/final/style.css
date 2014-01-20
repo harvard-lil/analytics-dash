@@ -43,6 +43,7 @@ body, html {
 }
 #search-form {
     width: 70%;
+    min-width: 800px;
     height: 60px;
     background-color: white;
     position: fixed;
@@ -79,9 +80,14 @@ body, html {
     border-color: #ddd;
     cursor: default;
 }
+#export-all {
+    float: right;
+    margin-right: 7%;
+}
+
 .search-history {
-    float: left;
-    margin-right: 10px;
+    float: right;
+    margin-right: 20px;
     color: #808080;
 }
 .search-index-title {
@@ -260,6 +266,7 @@ body, html {
 
 .left-half{
     width: 70%;
+    min-width: 800px;
     margin-left: 3%;
     position: relative;
     float:left;

@@ -67,6 +67,7 @@ lc.search = function() {
 
     var start = 250;
     $(".more").click(function(){
+        if ($(this).hasClass("inactive")) return;
         addMoreResults();
     });
 
@@ -78,11 +79,14 @@ lc.search = function() {
             newTerms[item] = searchTerms[item];
         }
 
-        if (subjectString) newTerms["loc_call_num_subject_keyword"] = subjectString;
+        console.log(subjectString, newTerms)
+
+        if (subjectString && newTerms["loc_call_num_subject_keyword"] != subjectString) 
+            newTerms["loc_call_num_subject_keyword"] = subjectString;
         else {
             if (start > 750) return;
 
-            if (start == 750) $(".more").addClass("inactive");
+            if (start == 750) lc.subjectgraph.toggleInactive(true);
             start += 250;
 
             defaultParams = "&start="+start+defaultParams;
@@ -90,7 +94,7 @@ lc.search = function() {
             return;
         }
 
-        self.runSearch(newTerms, false);
+        self.runSearch(newTerms);
     }
 
     self.submitSearch = function(id) {
@@ -98,7 +102,7 @@ lc.search = function() {
         searchTerms["year"] = [],
         searchTerms["range"] = [];
         start = 250;
-        $(".more").removeClass("inactive");
+        lc.subjectgraph.toggleInactive(false);
         defaultParams = cachedParams;
 
         // grabbing all fields entered in in the form
@@ -319,6 +323,7 @@ lc.search = function() {
                 parameters[p] = searchTerms[p];
             }
         }
+        console.log("if", start, parameters, previousSearches, hasObjectInArray(parameters, previousSearches))
         if (!hasObjectInArray(parameters, previousSearches)) {
             previousSearches.push(parameters);
             searchIndex = previousSearches.length-1;
@@ -337,6 +342,8 @@ lc.search = function() {
 
         console.log('searching', query);
         self.clearCircles();
+        lc.subjectgraph.reset();
+        lc.graph.clearInspector();
 
         lc.list.hideList();
         $.ajax({
@@ -345,9 +352,12 @@ lc.search = function() {
             success: function(response) {
                 if (!response.docs.length) {
                     graphTitle.html("0 Results found with your parameters.");
+                    lc.subjectgraph.toggleInactive(true);
                     return;
                 }
 
+                var notMore = (response.num_found == response.docs.length) || (start == 1000);
+                lc.subjectgraph.toggleInactive(notMore);
 
                 lc.graph.dataPrep(response.docs);
 
@@ -373,8 +383,6 @@ lc.search = function() {
                 if (noReset) {
                     if ("loc_call_num_subject_keyword" in searchTerms)
                         lc.subjectgraph.setSubjectString(searchTerms["loc_call_num_subject_keyword"]);
-                    if ("year" in searchTerms && searchTerms["year"].length)
-                        lc.histogram.setYearRange(searchTerms["year"]);
                 }
 
                 d3.select("#graph svg").attr("class","");

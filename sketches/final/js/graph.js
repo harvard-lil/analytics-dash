@@ -296,6 +296,10 @@ lc.graph = function() {
            info.selectAll(".lcsh li").html("Not Available");
     };
 
+    self.clearInspector = function(){
+    	info.selectAll(".field").text("");
+    }
+
     /*
 		Rollover listener
     */

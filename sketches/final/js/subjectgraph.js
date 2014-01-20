@@ -383,6 +383,10 @@ lc.subjectgraph = function() {
             return cy+100;
     };
 
+    self.toggleInactive = function(inactive) {
+        breadcrumb.find(".more").toggleClass("inactive",inactive);
+    };
+
     self.reset = function() {
             breadcrumb.find(".link.secondary").remove()
             breadcrumb.find(".link").hide();
