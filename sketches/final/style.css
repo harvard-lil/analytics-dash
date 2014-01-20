@@ -388,6 +388,7 @@ body, html {
 }
 .schema rect {
     stroke: white;
+    cursor: pointer;
 }
 .schema.selected rect {
     stroke: black;
@@ -885,6 +886,7 @@ body, html {
 
 circle {
     opacity: .5;
+    cursor: pointer;
 }
 circle:hover {
     opacity: 1;
@@ -1019,7 +1021,6 @@ circle.selected {
     height: auto;
     position: absolute;
     z-index: 100;
-    padding: 8px 10px 10px 10px;
     font-family: Helvetica, Arial, sans-serif;
     font-size: 14px;
     color: black;
@@ -1027,4 +1028,11 @@ circle.selected {
     text-transform: capitalize;
     display: none;
     border: 1px solid #808080;
+}
+.bar {
+    width: 100%;
+    height: 5px;
+}
+.title {
+    padding: 8px;
 }

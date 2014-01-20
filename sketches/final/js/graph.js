@@ -308,8 +308,10 @@ lc.graph = function() {
     }).mouseout(function(){
     	lc.subjectgraph.rollout();
     }).click(function(e) {
-    	if (e.target.nodeName != "circle")
+    	if (e.target.nodeName != "circle") {
     		lc.subjectgraph.graphClick(e.offsetY);
+    		lc.subjectgraph.rollover(e.offsetY);
+    	}
     });
 
     $(".scale_toggle li").click(radius_button);
@@ -343,7 +345,7 @@ lc.graph = function() {
 				.attr("r", calculateRadius);
 	}
 
-	var minR = 4,
+	var minR = 5,
 		maxR = 20;
 
 	function calculateRadius(d) {
