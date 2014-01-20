@@ -13,7 +13,7 @@ lc.graph = function() {
 
 	var formatAsYear= d3.format("04d");
 
-	var svg = d3.select("#graph").attr("height",height).attr("width","85%");
+	var svg = d3.select("#graph").attr("height",height).attr("width","91%");
     width = $("#graph").width(),
     gWidth = width*.95;
 
@@ -256,14 +256,7 @@ lc.graph = function() {
 				});
             });
 		}
-		// info.select(".shelfrank .field").text(data.shelfrank ? data.shelfrank : "");
-		// info.select(".score_downloads .field").text(data.score_downloads ? data.score_downloads : "");
-		// info.select(".score_holding_libs .field").text(data.score_holding_libs ? data.score_holding_libs : "");
-		// info.select(".score_recalls .field").text(data.score_recalls ? data.score_recalls : "");
-		// info.select(".score_checkouts_undergrad .field").text(data.score_checkouts_undergrad ? data.score_checkouts_undergrad : "");
-		// info.select(".score_checkouts_grad .field").text(data.score_checkouts_grad ? data.score_checkouts_grad : "");
-		// info.select(".score_checkouts_fac .field").text(data.score_checkouts_fac ? data.score_checkouts_fac : "");
-		// info.select(".score_total .field").text(data.score_total ? data.score_total : "");
+
 		self.showCircInfo(data);
 		
   		if (!lc.carrel.bookInCarrel(data)) {

@@ -80,7 +80,6 @@ lc.search = function() {
 
         if (subjectString) newTerms["loc_call_num_subject_keyword"] = subjectString;
         else {
-            console.log(start)
             if (start > 750) return;
 
             if (start == 750) $(".more").addClass("inactive");
@@ -288,9 +287,7 @@ lc.search = function() {
         updateSearchUI();
     });
     function updateSearchUI() {
-        console.log(previousSearches, previousSearches.length)
         if (previousSearches.length == 1) return;
-        console.log("past",searchIndex)
         if (searchIndex > 0)
             $(".prev-search").removeClass("inactive");
         else
@@ -322,7 +319,6 @@ lc.search = function() {
                 parameters[p] = searchTerms[p];
             }
         }
-        console.log("in array",hasObjectInArray(parameters, previousSearches))
         if (!hasObjectInArray(parameters, previousSearches)) {
             previousSearches.push(parameters);
             searchIndex = previousSearches.length-1;
@@ -334,7 +330,6 @@ lc.search = function() {
 
         var hash = [];
         for (param in parameters) {
-            console.log(parameters)
             if (parameters[param].length)
                 hash.push(param+"="+parameters[param]);
         }

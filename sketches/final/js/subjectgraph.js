@@ -191,7 +191,7 @@ lc.subjectgraph = function() {
             if (!needsNesting) return;
 
             $(".item.all").addClass("dead").unbind("click");
-            $(".link").eq(depth-1).addClass("dead").unbind("click");
+            $(".link.secondary").eq(depth-1).addClass("dead").unbind("click");
             var d = nested[0];
             d.values.class = d.key;
             self.crumbize(d.values, true);
@@ -205,8 +205,8 @@ lc.subjectgraph = function() {
     self.crumbize = function(d) {
         if (d.class == "undefined" && d.depth > 0) return;
 
-        var breadDepth = breadcrumb.find(".link") ? breadcrumb.find(".link").length : 0;
-        var l = $("<span>").attr("class","link")
+        var breadDepth = breadcrumb.find(".secondary") ? breadcrumb.find(".secondary").length : 0;
+        var l = $("<span>").attr("class","link secondary")
                 .html("<span class='tick'>></span><span class='item'>"+d.class+"</span>")
                 .click(function(){
                     self.updateRelative(d.books, d.length, d.depth+1);
@@ -216,13 +216,14 @@ lc.subjectgraph = function() {
                     });
                 });
 
-        if (d.depth + 1 < breadDepth) breadcrumb.find(".link").remove();
-        else if (d.depth + 1 == breadDepth) breadcrumb.find(".link").eq(d.depth).remove();
+        if (d.depth < breadDepth) breadcrumb.find(".link.secondary").remove();
+        else if (d.depth == breadDepth) breadcrumb.find(".link.secondary").eq(d.depth).remove();
 
         if (d.class == "undefined") l.css("color","#666");
         else if (d.depth == 0) l.css("color",lcObjectArray[d.call_num.substr(0,1)].color);
 
-        breadcrumb.css("visibility","visible").append(l);
+        breadcrumb.find(".more").before(l)
+        breadcrumb.find(".link").show();
     };
 
     self.returnSubjectString = function() {
@@ -381,8 +382,8 @@ lc.subjectgraph = function() {
     };
 
     self.reset = function() {
-            breadcrumb.find(".link").remove()
-            breadcrumb.css("visibility","hidden");
+            breadcrumb.find(".link.secondary").remove()
+            breadcrumb.find(".link").hide();
             $(".item.all").removeClass("dead");
     };
     self.hide = function() {

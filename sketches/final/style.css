@@ -218,10 +218,12 @@ body, html {
 }
 
 #breadcrumb {
-    visibility: hidden;
-    margin: 5px 0 10px;
+    margin: 5px 0 10px -20px;
     width: 100%;
     font-size: 12px;
+}
+#breadcrumb .link {
+    display: none;
 }
 #breadcrumb .tick {
     margin: 0 10px;
@@ -323,11 +325,17 @@ body, html {
     color: black;
     border-color: black;
 }
+.carrel-action.more {
+    float: none;
+    display: inline-block;
+    width: auto;
+    margin-left: 20px;
+}
 #labels {
-    width: 86%;
+    width: 90%;
     height: 530px;
     position: absolute;
-    left: 7%;
+    left: 3%;
     top: 0px;
     z-index: -1;
 }
@@ -350,14 +358,14 @@ body, html {
     height: 490px;
     width: 3%;
     position: absolute;
-    left: 4%;
+    left: 0;
     top: 0px;
 }
 #nav-context {
     height: 510px;
     width: 3%;
     position: absolute;
-    left: 7%;
+    left: 3%;
     top: 0px;
 }
 #graph-wrapper #graph-reset,
@@ -380,8 +388,8 @@ body, html {
 
 #graph {
     position: absolute;
-	left: 10%;
-	}
+	left: 4%;
+}
 	
 #graph-subjects {
     height: 500px;
@@ -393,11 +401,11 @@ body, html {
 }
 
 #histogram {
-    width: 98%;
+    width: 97%;
     position: absolute;
     top: 510px;
     margin-bottom: 16px;
-    padding: 0 40px 0 130px;
+    padding: 0 40px 0 6%;
     box-sizing: border-box;
     -moz-box-sizing: border-box;
     height: 80px;
@@ -439,7 +447,7 @@ body, html {
     -webkit-transform: rotate(-90deg);
     -moz-transform: rotate(-90deg);
     -ms-transform: rotate(-90deg);
-    left: -40px;
+    left: -55px;
 }
 #slider-range {
     border: 1px solid #808080;
