@@ -216,6 +216,8 @@ lc.subjectgraph = function() {
                     });
                 });
 
+        breadcrumb.find(".more").text("show more in this category");
+
         if (d.depth < breadDepth) breadcrumb.find(".link.secondary").remove();
         else if (d.depth == breadDepth) breadcrumb.find(".link.secondary").eq(d.depth).remove();
 
@@ -384,6 +386,7 @@ lc.subjectgraph = function() {
     self.reset = function() {
             breadcrumb.find(".link.secondary").remove()
             breadcrumb.find(".link").hide();
+            breadcrumb.find(".more").text("show more matching items");
             $(".item.all").removeClass("dead");
     };
     self.hide = function() {
