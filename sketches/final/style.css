@@ -571,24 +571,6 @@ body, html {
     margin-left: 14px;
     color: #808080;
 }
-#sort .indent .disc {
-    margin-right: 19px;
-}
-#sort .disc {
-    width: 8px;
-    height: 8px;
-    display: inline-block;
-    border-radius: 5px;
-    background-color: white;
-    margin-right: 5px;
-    display: none;
-}
-#sort li:hover .disc {
-    background-color: #ddd;
-}
-#sort li.selected .disc {
-    background: #000;
-}
 #sort li:first-child{
     cursor: default !important;
     color: black !important;
