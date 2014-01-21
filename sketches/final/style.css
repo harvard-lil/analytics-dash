@@ -224,12 +224,13 @@ body, html {
 }
 
 #breadcrumb {
-    margin: 5px 0 10px -20px;
+    margin: 5px 0 10px 0;
     width: 100%;
     font-size: 12px;
 }
-#breadcrumb .link {
+#breadcrumb .bc-wrapper {
     display: none;
+    margin-right: 20px;
 }
 #breadcrumb .tick {
     margin: 0 10px;
@@ -251,7 +252,7 @@ body, html {
 
 #searchTerm {
 	font-size: 20px;
-    width: 100%;
+    width: 93%;
 	text-align: left;
 	font-weight: normal;
     z-index: 1;
@@ -336,7 +337,6 @@ body, html {
     float: none;
     display: inline-block;
     width: auto;
-    margin-left: 20px;
 }
 #labels {
     width: 90%;
@@ -935,14 +935,14 @@ circle.selected {
 .overlay {
     font-size: 14px;
     line-height: 22px;
-    margin-right:25%;
+    margin-right:20%;
     background-color: white;
     border: 2px solid black;
     position: absolute;
     z-index: 200;
-    left: 25%;
-    top: 20%;
-    width: 50%;
+    left: 20%;
+    top: 15%;
+    width: 60%;
     text-align: left;
     cursor: pointer;
     padding:16px 36px;

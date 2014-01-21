@@ -78,8 +78,6 @@ lc.search = function() {
             newTerms[item] = searchTerms[item];
         }
 
-        console.log(subjectString, newTerms)
-
         if (subjectString && newTerms["loc_call_num_subject_keyword"] != subjectString) 
             newTerms["loc_call_num_subject_keyword"] = subjectString;
         else {
@@ -130,8 +128,6 @@ lc.search = function() {
             }
         });
 
-        console.log('searching ', searchTerms);
-
         self.runSearch(searchTerms);
 
         $("#search-fold").slideUp();
@@ -150,7 +146,6 @@ lc.search = function() {
                     var range = terms[term];
                     if (range.length == 2) {
                         query.push('filter=pub_date_numeric:[' + range[0] + ' TO ' + range[1] + ']');
-                        console.log('year range', range);
                     }
                     break;
 
@@ -159,7 +154,6 @@ lc.search = function() {
                     var range = terms[term];
                     if (range.length == 2) {
                         query.push('filter=loc_call_num_sort_order:[' + range[0] + ' TO ' + range[1] + ']');
-                        console.log('call number range', range);
                     }
                     break;
 
@@ -322,7 +316,6 @@ lc.search = function() {
                 parameters[p] = searchTerms[p];
             }
         }
-        console.log("if", start, parameters, previousSearches, hasObjectInArray(parameters, previousSearches))
         if (!hasObjectInArray(parameters, previousSearches)) {
             previousSearches.push(parameters);
             searchIndex = previousSearches.length-1;
@@ -339,7 +332,6 @@ lc.search = function() {
         }
         window.location.hash = hash.join("&");
 
-        console.log('searching', query);
         self.clearCircles();
         lc.subjectgraph.reset();
         lc.graph.clearInspector();

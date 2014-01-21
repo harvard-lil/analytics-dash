@@ -106,6 +106,7 @@ lc.subjectgraph = function() {
             breadcrumb.find(".all").click(function(){
                 lc.graph.appendCircles(data);
                 self.updateRelative(data, data.length, 0);
+                breadcrumb.find(".bc-wrapper").hide();
             });
             $("#nav-context").hide();
         } else {
@@ -211,7 +212,7 @@ lc.subjectgraph = function() {
                 .click(function(){
                     self.updateRelative(d.books, d.length, d.depth+1);
                     lc.graph.appendCircles(d.books);
-                    breadcrumb.find(".link").each(function(i,e){
+                    breadcrumb.find(".link.secondary").each(function(i,e){
                         if (i > d.depth) $(this).remove();
                     });
                 });
@@ -224,8 +225,7 @@ lc.subjectgraph = function() {
         if (d.class == "undefined") l.css("color","#666");
         else if (d.depth == 0) l.css("color",lcObjectArray[d.call_num.substr(0,1)].color);
 
-        breadcrumb.find(".more").before(l)
-        breadcrumb.find(".link").show();
+        breadcrumb.find(".bc-wrapper").show().append(l);
     };
 
     self.returnSubjectString = function() {
@@ -278,7 +278,8 @@ lc.subjectgraph = function() {
     var highlighted = {};
     self.rollover = function(cy) {
         var currentClass;
-        // currentClass = self.getChildY(cy);
+        if (!self.relativeClasses) return;
+        
         self.relativeClasses.forEach(function(e,i){
             if (cy > e.y) {
                 currentClass = e;
@@ -389,7 +390,7 @@ lc.subjectgraph = function() {
 
     self.reset = function() {
             breadcrumb.find(".link.secondary").remove()
-            breadcrumb.find(".link").hide();
+            breadcrumb.find(".bc-wrapper").hide();
             breadcrumb.find(".more").text("show more matching items");
             $(".item.all").removeClass("dead");
     };
