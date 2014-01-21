@@ -9,13 +9,12 @@ lc.search = function() {
 
     $("#search-lcsh_keyword").focus(function(){
         searchForm.find("#search-fold").slideDown();
-    })
+    });
     searchForm.find(".hide-search").click(function(){
        searchForm.find("#search-fold").slideUp(); 
-    })
+    });
 
     searchForm.find(".clear").click(function(){
-        // $(this).parent().toggleClass("locked");
         $(this).parent().removeClass("filled").find("input").val("");
     });
     $("#search-form .result-sort").click(function(){

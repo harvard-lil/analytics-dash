@@ -94,6 +94,7 @@ lc.graph = function() {
 
         //runs the showInfo on mouseover
         circles.on("mouseover",function(d){
+        	this.parentNode.appendChild(this);
             lc.tooltip.show(d);
         }).on("mouseout", function(d) {
         	lc.tooltip.hide();

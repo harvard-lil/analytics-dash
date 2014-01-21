@@ -445,7 +445,7 @@ body, html {
 }
 #histogram .axis-label {
     text-align: center;
-    margin-top: 15px;
+    margin-top: 10px;
 }
 .axis-label.vertical {
     position: absolute;
@@ -617,7 +617,7 @@ body, html {
 #info-wrapper {
     width: 90%;
     position: absolute;
-    top: 120px;
+    top: 110px;
     font-size: 16px;
     box-sizing: border-box;
     -moz-box-sizing: border-box;

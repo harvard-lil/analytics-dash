@@ -2,7 +2,7 @@ var lc = lc || {};
 
 lc.histogram = function() {
 
-    var gHeight = 50,
+    var gHeight = 40,
         chart = d3.select("#histogram").select("svg").attr("width","100%").attr("height",gHeight),
         histoGroup = chart.insert("g","text"),
         gWidth = $("#histogram").width(),
@@ -27,7 +27,7 @@ lc.histogram = function() {
             maxBooks = d3.max(booksByYear,function(d){ return d.values.length; });
 
         var yearScale = d3.scale.linear().domain([minYear,maxYear]).range([0,gWidth-(gWidth/(yearRange))]),
-            bookScale = d3.scale.linear().domain([0,maxBooks]).range([3,gHeight-10]);
+            bookScale = d3.scale.linear().domain([0,maxBooks]).range([3,gHeight]);
 
         var bars = histoGroup.selectAll("rect").data(booksByYear);
 

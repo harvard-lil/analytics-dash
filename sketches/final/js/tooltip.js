@@ -16,12 +16,12 @@ lc.tooltip = function() {
 	self.show = function(item) { 
 		var c = item.call_num ? lcObjectArray[item.call_num[0].substr(0,1)].color : "#666";
 		tooltip.find(".bar").css("background-color",c);
-		tooltip.find(".title").html(item.title)
+		tooltip.find(".title").html(item.title);
 		tooltip.show();
 	};
 
 	self.hide = function() {
-		// tooltip.hide();
+		tooltip.hide();
 	}
 
 	return self;
