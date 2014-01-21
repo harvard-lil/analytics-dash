@@ -64,7 +64,7 @@ lc.graph = function() {
 	self.clearCircles = function() {
 		var c = circleGroup.selectAll("circle").data([]);
 		c.exit().transition().attr("r",0).remove();
-	}
+	};
 
 	self.appendCircles = function(data) {
 		bookData = data;
@@ -88,13 +88,11 @@ lc.graph = function() {
 		lc.list.saveDocs(newData);
 
         var circles = circleGroup.selectAll("circle").data(newData);
-        circles.exit().remove();
         //binds data to circles
         circles.enter().append("circle");
 
         //runs the showInfo on mouseover
         circles.on("mouseover",function(d){
-        	this.parentNode.appendChild(this);
             lc.tooltip.show(d);
         }).on("mouseout", function(d) {
         	lc.tooltip.hide();
@@ -103,12 +101,12 @@ lc.graph = function() {
 	        self.showInfo(d);
 	        circles.classed("selected",false);
 	        d3.select(this).classed("selected",true);
-	        this.parentNode.appendChild(this);
         });
 
         updateCircles();
+        circles.exit().remove();
         sortBooks("title", true);
-    }
+    };
 
     function updateCircles() {
     	var circles = circleGroup.selectAll("circle");
@@ -261,13 +259,13 @@ lc.graph = function() {
 		self.showCircInfo(data);
 		
   		if (!lc.carrel.bookInCarrel(data)) {
-  			addToCarrel.text("Add This Item To Your Carrel").on("click",function(){
+  			addToCarrel.text("Add This Item To Your Stack").on("click",function(){
 	            lc.carrel.sendToCarrel(data);
 	        });
   		} else {
-  			addToCarrel.text("Remove This Item From The Carrel").on("click",function(){
+  			addToCarrel.text("Remove This Item From Your Stack").on("click",function(){
 	            lc.carrel.removeFromCarrel(data);
-	            info.select("#add-to-carrel").text("Add This Item To The Carrel").on("click",function(){
+	            info.select("#add-to-carrel").text("Add This Item To Your Stack").on("click",function(){
 		            lc.carrel.sendToCarrel(data);
 		        });
 	        });
@@ -299,7 +297,7 @@ lc.graph = function() {
 
     self.clearInspector = function(){
     	info.selectAll(".field").text("");
-    }
+    };
 
     /*
 		Rollover listener
