@@ -809,7 +809,7 @@ body, html {
 #list-sort-by li {
     display: inline-block;
     cursor: pointer;
-    margin-right;
+    margin-right: 0;
 }
 #list-sort-by li:hover {
     background-color: yellow;
