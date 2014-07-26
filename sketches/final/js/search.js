@@ -301,6 +301,7 @@ lc.search = function() {
     function hasObjectInArray(object, array) {
         var exists = false;
         array.forEach(function(d,i){
+            if ($.isEmptyObject(d) && !$.isEmptyObject(object)) return;
             var innerMatch = true;
             for (x in d) {
                 if (d[x] != object[x]) innerMatch = false;
@@ -316,6 +317,7 @@ lc.search = function() {
                 parameters[p] = searchTerms[p];
             }
         }
+
         if (!hasObjectInArray(parameters, previousSearches)) {
             previousSearches.push(parameters);
             searchIndex = previousSearches.length-1;

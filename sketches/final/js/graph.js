@@ -1,7 +1,7 @@
 var lc = lc || {};
 
 lc.graph = function() {
-	var height = 500,
+	var height = $(window).height() - 300,
         gHeight = height-20,
         width,
         gWidth,
@@ -13,7 +13,9 @@ lc.graph = function() {
 
 	var formatAsYear= d3.format("04d");
 
-	var svg = d3.select("#graph").attr("height",height).attr("width","91%");
+	d3.select("#graph-wrapper").style("height",height + "px");
+	var svg = d3.select("#graph").attr("height","100%").attr("width","91%");
+	d3.select(".axis-label.vertical").style("top",height/2 + "px");
     width = $("#graph").width(),
     gWidth = width*.95;
 

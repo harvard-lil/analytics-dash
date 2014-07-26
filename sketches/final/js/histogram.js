@@ -3,7 +3,9 @@ var lc = lc || {};
 lc.histogram = function() {
 
     var gHeight = 40,
-        chart = d3.select("#histogram").select("svg").attr("width","100%").attr("height",gHeight),
+        hHeight = $(window).height() - 290,
+        chart = d3.select("#histogram").style("top",hHeight+"px")
+            .select("svg").attr("width","100%").attr("height",gHeight),
         histoGroup = chart.insert("g","text"),
         gWidth = $("#histogram").width(),
         booksByYear,

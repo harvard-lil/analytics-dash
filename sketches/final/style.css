@@ -411,8 +411,6 @@ body, html {
 #histogram {
     width: 97%;
     position: absolute;
-    top: 510px;
-    margin-bottom: 16px;
     padding: 0 40px 0 6%;
     box-sizing: border-box;
     -moz-box-sizing: border-box;
