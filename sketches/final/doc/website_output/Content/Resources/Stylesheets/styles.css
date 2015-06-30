@@ -1,0 +1,526 @@
+/*<meta />*/
+
+body
+{
+	color: #000000;
+	font-family: Arial;
+	font-size: 0.8em;
+	line-height: 1.7em;
+	margin-bottom: 17px;
+	margin-left: 17px;
+	margin-top: 0px;
+	max-width: 100%;
+}
+
+Div.GlossaryPageDefinition
+{
+	
+}
+
+Div.GlossaryPageHeading
+{
+	
+}
+
+Div.GlossaryPageTerm
+{
+	
+}
+
+h1
+{
+	background-color: #3e3e3e;
+	border-bottom-color: #BED230;
+	border-bottom-style: solid;
+	border-bottom-width: 2px;
+	color: #ffffff;
+	font-size: 1.3em;
+	font-weight: normal;
+	margin-bottom: 8px;
+	margin-left: -17px;
+	margin-right: -17px;
+	margin-top: 0px;
+	padding-bottom: 10px;
+	padding-left: 17px;
+	padding-right: 17px;
+	padding-top: 10px;
+	width: 100%;
+}
+
+h2
+{
+	font-size: 1.2em;
+	margin-bottom: 4px;
+	margin-top: 20px;
+}
+
+h3
+{
+	font-size: 1.1em;
+	margin-bottom: 4px;
+	margin-top: 16px;
+}
+
+h4
+{
+	
+}
+
+li
+{
+	margin-bottom: 6px;
+	margin-top: 6px;
+	orphans: 2;
+	widows: 2;
+}
+
+MadCap|glossaryProxy
+{
+	
+}
+
+MadCap|indexProxy
+{
+	
+}
+
+MadCap|tocProxy
+{
+	
+}
+
+MadCap|xref
+{
+	color: #2D8DCC;
+	font-weight: bold;
+	mc-format: '{para}';
+	text-decoration: underline;
+}
+
+MadCap|xref:hover
+{
+	color: #BED230;
+}
+
+p
+{
+	margin-bottom: 8px;
+	margin-top: 8px;
+}
+
+p.EmptyPageText
+{
+	
+}
+
+p.FrameFooterText
+{
+	
+}
+
+p.IndexHeading
+{
+	
+}
+
+p.ManualTitle1
+{
+	
+}
+
+p.ManualTitle2
+{
+	
+}
+
+p.ManualVersionNumber
+{
+	color: #000000;
+}
+
+span.field
+{
+	font-weight: bold;
+	font-style: normal;
+}
+
+span.link
+{
+	font-weight: bold;
+	font-style: normal;
+}
+
+span.button1
+{
+	font-weight: bold;
+	font-style: normal;
+}
+
+@media print
+{
+	body
+	{
+		font-size: 10pt;
+		line-height: 20px;
+		margin: 12px;
+		color: #000000;
+	}
+
+	Div.GlossaryPageDefinition
+	{
+		font-size: 9pt;
+	}
+
+	Div.GlossaryPageHeading
+	{
+		border-bottom-color: #bed230;
+		border-bottom-style: solid;
+		border-bottom-width: 1px;
+		color: #bed230;
+		font-size: 11pt;
+	}
+
+	Div.GlossaryPageTerm
+	{
+		color: #bed230;
+		font-size: 10pt;
+		padding-bottom: 10px;
+		padding-top: 10px;
+	}
+
+	div.logo
+	{
+		align: center;
+		mc-float: center;
+		text-align: center;
+		margin-bottom: 0.3in;
+		margin-top: 2.00in;
+	}
+
+	h1
+	{
+		background-color: transparent;
+		border-bottom: none;
+		font-family: 'Century Gothic';
+		font-size: 22pt;
+		line-height: 24pt;
+		margin-left: 0;
+		margin-right: 0;
+		margin-top: 0;
+		padding: 0;
+		mc-auto-number-format: '{chapnum}. ';
+		mc-auto-number-position: inside-head;
+		mc-auto-number-offset: 5pt;
+		margin-bottom: 30px;
+		color: #ff0000;
+	}
+
+	h1.noNum
+	{
+		background-color: transparent;
+		border-bottom: none;
+		color: #ff0000;
+		font-family: 'Century Gothic';
+		font-size: 22pt;
+		line-height: 24pt;
+		margin-left: 0;
+		margin-right: 0;
+		margin-top: 0;
+		padding: 0;
+		margin-bottom: 30px;
+		mc-auto-number-format: '{ }';
+	}
+
+	h2
+	{
+		font-size: 16pt;
+		font-weight: bold;
+		font-style: normal;
+		margin-top: 20pt;
+	}
+
+	h2.top
+	{
+		page-break-before: always;
+		font-weight: bold;
+		font-style: normal;
+		font-size: 16pt;
+	}
+
+	h3
+	{
+		font-size: 12pt;
+		font-weight: bold;
+		font-style: normal;
+		mc-heading-level: 3;
+	}
+
+	h4
+	{
+		font-size: 10pt;
+		font-weight: bold;
+		font-style: italic;
+		mc-heading-level: 4;
+	}
+
+	MadCap|glossaryProxy
+	{
+		border-top: none;
+	}
+
+	MadCap|indexProxy
+	{
+		border-top: none;
+	}
+
+	MadCap|tocProxy
+	{
+		border-top: none;
+		margin-right: 0.25in;
+	}
+
+	p
+	{
+		font-size: 10pt;
+		margin-bottom: 10pt;
+	}
+
+	p.EmptyPageText
+	{
+		font-size: 10pt;
+		font-weight: bold;
+	}
+
+	p.FrameFooterText
+	{
+		font-family: 'Century Gothic';
+		font-size: 24pt;
+	}
+
+	p.IndexHeading
+	{
+		font-size: 11pt;
+		padding-top: 16px;
+		text-align: left;
+		margin-bottom: 1pt;
+		margin-top: 8pt;
+	}
+
+	p.ManualTitle1
+	{
+		font-family: 'Century Gothic';
+		font-size: 9pt;
+		margin-bottom: 0;
+		margin-top: O;
+		text-align: center;
+	}
+
+	p.ManualTitle2
+	{
+		color: #c90016;
+		font-family: 'Century Gothic';
+		font-size: 22pt;
+		line-height: 0;
+		margin-bottom: 0;
+		margin-top: 0;
+		text-align: center;
+	}
+
+	p.ManualVersionNumber
+	{
+		font-size: 12pt;
+		margin-top: 12pt;
+		text-align: center;
+		font-family: 'Century Gothic';
+	}
+
+	p.TOC1
+	{
+		font-size: 12pt;
+		font-weight: normal;
+		margin-bottom: 6px;
+		margin-top: 12px;
+	}
+
+	p.TOC2
+	{
+		font-size: 8pt;
+		font-weight: normal;
+		margin-bottom: 2px;
+		margin-left: 0.20in;
+		margin-top: 2px;
+	}
+
+	p.TOC3
+	{
+		font-size: 8pt;
+		font-weight: normal;
+		margin-bottom: 2px;
+		margin-left: 0.30in;
+		margin-top: 2px;
+	}
+
+	p.ContentsTitle
+	{
+		color: #c90016;
+		font-family: 'Century Gothic';
+		font-size: 22pt;
+		line-height: 0;
+		margin-bottom: 0;
+		margin-top: 0;
+		text-align: left;
+		page-break-before: always;
+	}
+
+	p.FigCap
+	{
+		font-weight: bold;
+		font-style: normal;
+		font-size: 9pt;
+		margin-top: 4pt;
+		mc-auto-number-format: 'CF:Figure {chapnum}‑{n+}. ';
+		margin-bottom: 4pt;
+	}
+
+	Div.ImageStep
+	{
+		margin-top: 10pt;
+		margin-bottom: 14pt;
+		page-break-inside: avoid;
+	}
+
+	MadCap|xref.figure
+	{
+		font-weight: normal;
+		font-style: normal;
+		text-decoration: none;
+		color: #000000;
+	}
+
+	p.figAnchor
+	{
+		page-break-after: avoid;
+		margin-bottom: 6pt;
+		margin-top: 4px;
+	}
+
+	p.Index1
+	{
+		margin-bottom: 4pt;
+		margin-top: 4px;
+	}
+
+	p.Index2
+	{
+		margin-bottom: 4pt;
+		margin-top: 4px;
+	}
+
+	img.Step
+	{
+		mc-thumbnail: none;
+		max-width: 5.75in;
+	}
+
+	img.BodyText
+	{
+		max-width: 6.25in;
+	}
+
+	th
+	{
+		text-align: left;
+		padding-left: 2px;
+		padding-right: 2px;
+		padding-top: 2px;
+		padding-bottom: 2px;
+		border-left-style: solid;
+		border-left-width: 1px;
+		border-right-style: solid;
+		border-right-width: 1px;
+		border-top-style: solid;
+		border-top-width: 1px;
+		border-bottom-style: solid;
+		border-bottom-width: 1px;
+	}
+
+	MadCap|xref.pagenum
+	{
+		color: #000000;
+		text-decoration: none;
+		font-weight: normal;
+		font-style: normal;
+	}
+
+	img.short
+	{
+		max-height: 3.00in;
+	}
+}
+
+p.top
+{
+	margin-bottom: 8px;
+	margin-top: 8px;
+	page-break-before: always;
+}
+
+div.ImageStep
+{
+	
+}
+
+MadCap|xref.figure
+{
+	mc-format: '{paranumonly}';
+	color: #000000;
+}
+
+p.Title
+{
+	
+}
+
+span.Title
+{
+	font-weight: normal;
+	font-style: italic;
+}
+
+p.figAnchor
+{
+	margin-bottom: 2pt;
+}
+
+p.FigCap
+{
+	margin-top: 2pt;
+}
+
+MadCap|xref.pagenum
+{
+	mc-format: '{page}';
+}
+
+img.online
+{
+	mc-thumbnail: hover;
+}
+
+li.top
+{
+	page-break-before: always;
+}
+
+p.drop_head
+{
+	margin-bottom: 8px;
+	margin-top: 8px;
+	font-style: italic;
+}
+
+MadCap|dropDownHead
+{
+	font-style: italic;
+}
+

@@ -9,7 +9,7 @@ var lc = lc || {};
 
 lc.subjectgraph = function() {
     var self = d3.dispatch("click", "mouseover", "mouseout", "selected"),
-            baseurl = 'http://librarycloud.harvard.edu/v1/api/lc_class/',
+            baseurl = 'http://hlslwebtest.law.harvard.edu/v1/api/lc_class/',
             height = $(window).height() - 320,
             selected = null,
             sideBar = d3.select("#nav"),

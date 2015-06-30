@@ -52,7 +52,7 @@ lc.search = function() {
         }
         return(false);
     };
-    var baseurl = 'http://librarycloud.harvard.edu/v1/api/item',
+    var baseurl = 'http://hlslwebtest.law.harvard.edu/v1/api/item',
         cachedParams = '&limit=250&facet=pub_date_numeric&key=5239997b68e033fbf2854d77c6295310&filter=collection:hollis_catalog',
         defaultParams = '&limit=250&facet=pub_date_numeric&key=5239997b68e033fbf2854d77c6295310&filter=collection:hollis_catalog',
         search = getQueryVariable('search') || 'Boston';
@@ -81,6 +81,8 @@ lc.search = function() {
         if (subjectString && newTerms["loc_call_num_subject_keyword"] != subjectString) 
             newTerms["loc_call_num_subject_keyword"] = subjectString;
         else {
+        	// pdnote
+        	//alert("start: " + start);
             if (start > 750) return;
 
             if (start == 750) lc.subjectgraph.toggleInactive(true);
@@ -198,6 +200,8 @@ lc.search = function() {
     self.buildSearchExplanation = function(docs, terms, num_found) {
         var prettyNumber = d3.format("0,000");
         if (docs.length < num_found)
+            //var prefix = 'The <b>' + (oldData.length) + ' most popular</b> items out of ' + prettyNumber(num_found);
+            // pdnote
             var prefix = 'The <b>' + (oldData.length) + ' most popular</b> items out of ' + prettyNumber(num_found);
         else
             var prefix = '<b>' + (oldData.length) + '</b> items';
@@ -296,6 +300,8 @@ lc.search = function() {
     }
 
     var oldData = [];
+    // pdnote
+    var newDataStore = [];
 
     // I'm so sorry
     function hasObjectInArray(object, array) {
@@ -363,6 +369,8 @@ lc.search = function() {
                     lc.subjectgraph.reset();
                 }
                 oldData = newData;
+                //pdnote
+                newDataStore = newData;
 
                 graphTitle.html(self.buildSearchExplanation(response.docs, parameters, response.num_found));
 

@@ -4,6 +4,9 @@ body, html {
     margin: 0;
     min-width: 1050px;
 }
+a.doc {
+  color: black;
+} 
 #title-wrapper {
     position: fixed;
     background: white;
@@ -325,7 +328,7 @@ body, html {
     margin-right: 10px;
     font-size: 14px;
     color: #808080;
-	border: 1px solid #808080;
+		border: 1px solid #808080;
     padding: 2px 6px 3px;
     font-size: 11px;
 }

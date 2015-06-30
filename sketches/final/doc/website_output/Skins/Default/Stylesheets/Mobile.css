@@ -1,0 +1,568 @@
+/*<meta />*/
+
+@media only screen and (max-width: 767px)
+{
+	.buttons
+	{
+		top: 67px;
+	}
+
+	.button
+	{
+		background-repeat: no-repeat;
+		background-position: center center;
+	}
+
+	.button.print-button
+	{
+		display: none;
+	}
+
+	.button.remove-highlight-button
+	{
+		display: none;
+	}
+
+	#contentBodyInner
+	{
+		top: 98px;
+	}
+
+	.tree-node .new-indicator
+	{
+		
+	}
+
+	#index .tree-node > div
+	{
+		
+	}
+
+	#navigation
+	{
+		
+	}
+
+	.tab
+	{
+		
+	}
+
+	.tab-collapsed .tabs-nav-text
+	{
+		
+	}
+
+	.tabs
+	{
+		
+	}
+
+	.tabs li
+	{
+		
+	}
+
+	.tabs li span
+	{
+		
+	}
+
+	.tabs-nav
+	{
+		
+	}
+
+	.tabs-nav li
+	{
+		line-height: 40px;
+	}
+
+	.tabs-nav li
+	{
+		
+	}
+
+	.tabs-nav li div span
+	{
+		
+	}
+
+	.tab-icon #TocTab.tabs-nav-inactive .tabs-nav-icon
+	{
+		background-repeat: no-repeat;
+		background-position: 11px center;
+		height: 40px;
+		margin: 0;
+	}
+
+	.tab-icon #IndexTab.tabs-nav-inactive .tabs-nav-icon
+	{
+		background-repeat: no-repeat;
+		background-position: 11px center;
+		height: 40px;
+		margin: 0;
+	}
+
+	.tab-icon #GlossaryTab.tabs-nav-inactive .tabs-nav-icon
+	{
+		background-repeat: no-repeat;
+		background-position: 11px center;
+		height: 40px;
+		margin: 0;
+	}
+
+	.tab-icon #BrowseSequencesTab.tabs-nav-inactive .tabs-nav-icon
+	{
+		background-repeat: no-repeat;
+		background-position: 11px center;
+		height: 40px;
+		margin: 0;
+	}
+
+	.tab-icon #CommunityTab.tabs-nav-inactive .tabs-nav-icon
+	{
+		background-repeat: no-repeat;
+		background-position: 11px center;
+	}
+
+	.tab-icon #SearchTab.tabs-nav-inactive .tabs-nav-icon
+	{
+		background-repeat: no-repeat;
+		background-position: 11px center;
+		height: 40px;
+		margin: 0;
+	}
+
+	.tab-icon #TocTab.tabs-nav-active .tabs-nav-icon
+	{
+		background-repeat: no-repeat;
+		background-position: 11px center;
+	}
+
+	.tab-icon #IndexTab.tabs-nav-active .tabs-nav-icon
+	{
+		background-repeat: no-repeat;
+		background-position: 11px center;
+	}
+
+	.tab-icon #GlossaryTab.tabs-nav-active .tabs-nav-icon
+	{
+		background-repeat: no-repeat;
+		background-position: 11px center;
+	}
+
+	.tab-icon #BrowseSequencesTab.tabs-nav-active .tabs-nav-icon
+	{
+		background-repeat: no-repeat;
+		background-position: 11px center;
+	}
+
+	.tab-icon #CommunityTab.tabs-nav-active .tabs-nav-icon
+	{
+		background-repeat: no-repeat;
+		background-position: 11px center;
+	}
+
+	.tab-icon #SearchTab.tabs-nav-active .tabs-nav-icon
+	{
+		background-repeat: no-repeat;
+		background-position: 11px center;
+	}
+
+	.tabs-panel
+	{
+		
+	}
+
+	.tabs-panel-content
+	{
+		
+	}
+
+	#search-sidebar
+	{
+		
+	}
+
+	#home
+	{
+		text-shadow: none;
+		-webkit-text-shadow: none;
+		-moz-text-shadow: none;
+	}
+
+	#home-text
+	{
+		line-height: 40px;
+	}
+
+	#home-icon
+	{
+		background-repeat: no-repeat;
+		background-position: 11px center;
+	}
+
+	#responsiveHeader .logo
+	{
+		background-repeat: no-repeat;
+		background-position: center center;
+	}
+
+	#responsiveHeader .logo > img
+	{
+		
+	}
+
+	/* Navigation slide out Styles*/
+
+	#contentBody[role="main"]
+	{
+		width: 100%;
+	}
+
+	.hide-extras.active [role="main"]
+	{
+		width: 80%;
+	}
+
+	.hide-extras.active #navigation[role="complementary"]
+	{
+		width: 80%;
+		display: block;
+	}
+
+	.active #contentBody[role="main"]
+	{
+		margin-right: -80%;
+	}
+
+	/*Offcanvas styles for pane position set right*/
+
+	.right-layout .active #contentBody[role="main"]
+	{
+		margin-right: 80%;
+	}
+
+	.non-collapsable
+	{
+		width: 100%;
+	}
+
+	.show-for-xlarge-up
+	{
+		display: none !important;
+	}
+
+	#responsiveHeader
+	{
+		
+	}
+
+	body
+	{
+		
+	}
+
+	#browseSequences.tabs-panel-content
+	{
+		
+	}
+
+	#community.tabs-panel-content
+	{
+		
+	}
+
+	#glossary.tabs-panel-content
+	{
+		
+	}
+
+	#index.tabs-panel-content
+	{
+		
+	}
+
+	#index .tree-node.tree-node-expanded > div
+	{
+		
+	}
+
+	#index .tree-node.tree-node-collapsed > div
+	{
+		
+	}
+
+	#index .tree-node.tree-node-collapsed.tree-node-selected > div
+	{
+		
+	}
+
+	#index .tree-node.tree-node-expanded.tree-node-selected > div
+	{
+		
+	}
+
+	#index .tree-node.tree-node-leaf > div
+	{
+		
+	}
+
+	#index .tree-node.tree-node-leaf.tree-node-selected > div
+	{
+		
+	}
+
+	#search.tabs-panel-content
+	{
+		
+	}
+
+	#toc.tabs-panel-content
+	{
+		
+	}
+
+	.tree-node.tree-node-leaf > div
+	{
+		
+	}
+
+	.tree-node.tree-node-leaf.tree-node-selected > div
+	{
+		
+	}
+
+	.tree-node.tree-node-expanded > div
+	{
+		
+	}
+
+	.tree-node.tree-node-expanded.tree-node-selected > div
+	{
+		
+	}
+
+	.tree-node.tree-node-collapsed.tree-node-selected > div
+	{
+		
+	}
+
+	.tree-node.tree-node-collapsed > div
+	{
+		
+	}
+
+	.tree-node div
+	{
+		
+	}
+
+	.tree-node div .label
+	{
+		
+	}
+
+	.menu-icon a span
+	{
+		
+	}
+
+	.tabs-nav li.tab-collapsed
+	{
+		line-height: 40px;
+	}
+
+	.tabs-nav li#BrowseSequencesTab
+	{
+		
+	}
+
+	.tabs-nav li#GlossaryTab
+	{
+		
+	}
+
+	.tabs-nav li#IndexTab
+	{
+		
+	}
+
+	.tabs-nav li#SearchTab
+	{
+		
+	}
+
+	.tabs-nav li#TocTab
+	{
+		
+	}
+
+	.tabs-nav li.tabs-nav-active
+	{
+		text-shadow: none;
+		-webkit-text-shadow: none;
+		-moz-text-shadow: none;
+	}
+
+	.tabs-nav li.tabs-nav-active .tabs-nav-text
+	{
+		
+	}
+
+	#show-hide-navigation
+	{
+		
+	}
+
+	.tabs-nav li#BrowseSequencesTab.tabs-nav-active
+	{
+		
+	}
+
+	.tabs-nav li#CommunityTab.tabs-nav-active
+	{
+		
+	}
+
+	.tabs-nav li#GlossaryTab.tabs-nav-active
+	{
+		
+	}
+
+	.tabs-nav li#IndexTab.tabs-nav-active
+	{
+		
+	}
+
+	.tabs-nav li#SearchTab.tabs-nav-active
+	{
+		
+	}
+
+	.tabs-nav li#TocTab.tabs-nav-active
+	{
+		
+	}
+
+	.tabs-nav li.tabs-nav-inactive
+	{
+		text-shadow: none;
+		-webkit-text-shadow: none;
+		-moz-text-shadow: none;
+	}
+
+	.tabs-nav li.tabs-nav-inactive .tabs-nav-text
+	{
+		
+	}
+
+	.tabs-nav li#BrowseSequencesTab.tabs-nav-inactive
+	{
+		
+	}
+
+	.tabs-nav li#CommunityTab.tabs-nav-inactive
+	{
+		
+	}
+
+	.tabs-nav li#GlossaryTab.tabs-nav-inactive
+	{
+		
+	}
+
+	.tabs-nav li#IndexTab.tabs-nav-inactive
+	{
+		
+	}
+
+	.tabs-nav li#SearchTab.tabs-nav-inactive
+	{
+		
+	}
+
+	.tabs-nav li#TocTab.tabs-nav-inactive
+	{
+		
+	}
+
+	#search-field-sidebar
+	{
+		
+	}
+
+	#responsive-search-index
+	{
+		
+	}
+
+	#responsive-search-glossary
+	{
+		
+	}
+
+	#search-field
+	{
+		
+	}
+
+	.button.collapse-all-button
+	{
+		
+	}
+
+	.button.current-topic-index-button
+	{
+		text-shadow: none;
+		-webkit-text-shadow: none;
+		-moz-text-shadow: none;
+	}
+
+	.button.edit-user-profile-button
+	{
+		
+	}
+
+	.button.expand-all-button
+	{
+		
+	}
+
+	.button.login-button
+	{
+		
+	}
+
+	.button.next-topic-button
+	{
+		
+	}
+
+	.button.previous-topic-button
+	{
+		
+	}
+
+	.button.topic-ratings-button
+	{
+		
+	}
+
+	.button.topic-ratings-empty-button
+	{
+		
+	}
+
+	.button-separator
+	{
+		
+	}
+
+	#contentBody
+	{
+		
+	}
+}
+

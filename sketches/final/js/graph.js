@@ -24,8 +24,8 @@ lc.graph = function() {
 
 	var rscale = d3.scale.linear().domain([0,300]).range([2, 30]);
 
-	var linkouturl = "http://holliscatalog.harvard.edu/?itemid=|library/m/aleph|009455802";
-	
+	var linkouturl = "http://hollis.harvard.edu/primo_library/libweb/action/dlDisplay.do?vid=HVD&docId=HVD_ALEPH|009455802";
+		
     svg.append("clipPath").attr("id","graph-box")
     	.append("rect").attr("width",gWidth).attr("height",gHeight);
 
@@ -212,7 +212,7 @@ lc.graph = function() {
 		self.clearInfo();
 
 		if (data.id_inst)
-			info.select(".title .field").html("<a target='blank' href=http://holliscatalog.harvard.edu/?itemid=|library/m/aleph|"+ data.id_inst+">"+data.title+"</a>");
+			info.select(".title .field").html("<a target='blank' href=http://hollis.harvard.edu/primo_library/libweb/action/dlDisplay.do?vid=HVD&docId=HVD_ALEPH"+ data.id_inst+">"+data.title+"</a>");
 		else
         	info.select(".title .field").text(data.title);
        	
