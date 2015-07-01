@@ -1,4 +1,0 @@
-AuthType Basic
-AuthName "Restricted Access"
-AuthUserFile /usr/local/etc/.htpasswd
-Require user haystacks
