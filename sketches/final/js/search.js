@@ -1,6 +1,9 @@
 var lc = lc || {};
 
 lc.search = function() {
+	
+		// pdmod
+		var response_docs_length = 0;
 
     var searchForm = $("#search-form");
     var searchTerms = {},
@@ -90,11 +93,12 @@ lc.search = function() {
         if (subjectString && newTerms["loc_call_num_subject_keyword"] != subjectString) 
             newTerms["loc_call_num_subject_keyword"] = subjectString;
         else {
-        	// pdnote
-        	//alert("start: " + start);
-            if (start > 750) return;
+        	
+        		// pdmod (20150903): changed both start tests below to 500 from 750 to fix paging
+            if (start > 500) return;
 
-            if (start == 750) lc.subjectgraph.toggleInactive(true);
+            if (start == 500) lc.subjectgraph.toggleInactive(true);
+            
             start += 250;
 
             defaultParams = "&start="+start+defaultParams;
@@ -109,7 +113,8 @@ lc.search = function() {
         searchTerms = {};
         searchTerms["year"] = [],
         searchTerms["range"] = [];
-        start = 250;
+        //start = 250;
+        start = 0;
         lc.subjectgraph.toggleInactive(false);
         defaultParams = cachedParams;
 
@@ -210,8 +215,6 @@ lc.search = function() {
     self.buildSearchExplanation = function(docs, terms, num_found) {
         var prettyNumber = d3.format("0,000");
         if (docs.length < num_found)
-            //var prefix = 'The <b>' + (oldData.length) + ' most popular</b> items out of ' + prettyNumber(num_found);
-            // pdnote
             var prefix = 'The <b>' + (oldData.length) + ' most popular</b> items out of ' + prettyNumber(num_found);
         else
             var prefix = '<b>' + (oldData.length) + '</b> items';
@@ -310,8 +313,6 @@ lc.search = function() {
     }
 
     var oldData = [];
-    // pdnote
-    var newDataStore = [];
 
     // I'm so sorry
     function hasObjectInArray(object, array) {
@@ -365,8 +366,13 @@ lc.search = function() {
                     return;
                 }
 
-                var notMore = (response.num_found == response.docs.length) || (start == 1000);
-                lc.subjectgraph.toggleInactive(notMore);
+								// pdmod (20150903)
+								response_docs_length = response.docs.length;
+            		if (response_docs_length < 250) lc.subjectgraph.toggleInactive(true);
+
+								// pdmod (20150903)
+                //var notMore = (response.num_found == response.docs.length) || (start == 1000);
+                //lc.subjectgraph.toggleInactive(notMore);
 
                 lc.graph.dataPrep(response.docs);
 
@@ -379,8 +385,6 @@ lc.search = function() {
                     lc.subjectgraph.reset();
                 }
                 oldData = newData;
-                //pdnote
-                newDataStore = newData;
 
                 graphTitle.html(self.buildSearchExplanation(response.docs, parameters, response.num_found));
 
