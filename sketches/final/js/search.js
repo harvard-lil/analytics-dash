@@ -13,6 +13,11 @@ lc.search = function() {
     searchForm.find(".hide-search").click(function(){
        searchForm.find("#search-fold").slideUp(); 
     });
+    
+    // pdmod (20150902)
+    $("#form-submit").click(function(){
+    	searchForm.find("#search-fold").slideUp();
+    });
 
     searchForm.find(".clear").click(function(){
         $(this).parent().removeClass("filled").find("input").val("");
@@ -26,6 +31,8 @@ lc.search = function() {
         if ( event.which == 13 ) {
             self.submitSearch("search-form");
             $(this).find("input").blur();
+        // pdmod (20150902)
+				searchForm.find("#search-fold").slideUp();            
         }
     });
     $("#welcome").keypress(function(e){
@@ -36,10 +43,12 @@ lc.search = function() {
         }
     });
 
+		/* pdmod (20150902)
     $(document).click(function(e){
         if (e.pageY > 345 || e.pageX > 545)
             searchForm.find("#search-fold").slideUp();
     });
+    */
 
     var getQueryVariable = function(variable) {
         var query = window.location.search.substring(1);
@@ -132,7 +141,8 @@ lc.search = function() {
 
         self.runSearch(searchTerms);
 
-        $("#search-fold").slideUp();
+				// pdmod (20150902)
+        /* $("#search-fold").slideUp(); */
     };
 
     /*

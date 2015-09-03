@@ -31,7 +31,10 @@
                 <div class="top-control">
                     <input id="search-lcsh_keyword" type="text" value=""></input>
                 </div>
-                <div class="search top-control">Submit</div>
+                <!-- pdmod (20150902) -->
+                <div id="form-submit" class="search top-control">Submit</div>
+                <!-- pdmod (20150902) -->
+                <div id="form-reset" class="search top-control">Reset</div>
                 <div id="export-all" class="carrel-action" style="width:90px">Export All Results to CSV</div>
                 <div class="search-history">
                     <div class="search-index-title">search history</div>
@@ -663,5 +666,18 @@
 
         lc.tooltip.initialize();
         
+        // pdmod (20150902)
+        $("#form-reset").click(function(){
+				  $("#search-lcsh_keyword").val("");
+				  $("#search-creator").val("");
+				  $("#search-title").val("");
+				  $("#search-year_0").val("");
+				  $("#search-year_1").val("");
+				  $("#search-format").val("");
+				  $("#search-language").val("");
+				  $("#search-holding_libs").val("");
+				  $("#form-submit").click();
+				});
+                
     </script>
 </html>
